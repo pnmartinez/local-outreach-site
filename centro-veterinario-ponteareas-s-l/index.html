@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centro Veterinario Ponteareas S.L · Vigo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #f3f7f5;
+  --ink: #10231c;
+  --muted: #5b6e66;
+  --accent: #0f8f6b;
+  --accent2: #16332a;
+  --line: #d5e3dc;
+  --display: "Cormorant Garamond", serif;
+  --body: "Nunito Sans", system-ui, sans-serif;
+  --radius: 14px;
+  --pad: 28px; --gap: 28px; --hero: clamp(56px, 12vw, 128px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 28px var(--pad) 12px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mark { font-family: var(--display); font-style: italic; letter-spacing: 0; text-transform: none; font-size: 22px; }
+.urg { color: var(--accent); text-decoration: none; }
+.hero-mag {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px;
+  padding: 12px var(--pad) 56px; align-items: end;
+}
+.kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--accent2); }
+h1 {
+  font-family: var(--display); font-weight: 500; font-size: clamp(42px, 6.4vw, 88px);
+  line-height: .95; margin: 10px 0 18px; max-width: 14ch;
+}
+.lead { font-size: 18px; line-height: 1.55; max-width: 38ch; color: var(--muted); }
+.portrait {
+  min-height: 72vh; border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--bg) 35%, transparent)),
+    url("https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=1600&q=80") center 30%/cover;
+}
+.quote {
+  margin: 0 var(--pad) 48px; padding: 36px 0 0; border-top: 1px solid var(--line);
+  font-family: var(--display); font-style: italic; font-size: clamp(28px, 4vw, 48px);
+  max-width: 22ch;
+}
+.care-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  margin: 0 var(--pad) 56px; border: 1px solid var(--line);
+}
+.care { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.care:nth-child(3n) { border-right: 0; }
+.care h3 { margin: 0 0 8px; font-family: var(--display); font-size: 28px; font-weight: 500; }
+.care p { margin: 0; color: var(--muted); line-height: 1.45; }
+.band {
+  margin: 0 var(--pad) 72px; padding: 28px; background: var(--accent2); color: var(--bg);
+  display: flex; justify-content: space-between; gap: 20px; border-radius: var(--radius);
+}
+.band a { color: var(--bg); }
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .hero-mag { grid-template-columns: 1fr; gap: 22px; }
+  .portrait { min-height: 46vh; order: -1; }
+  .care-grid { grid-template-columns: 1fr; }
+  .care { border-right: 0; }
+  .band { flex-direction: column; }
+}
+
+
+#dsgB {
+  --st-bg: #fafcfb;
+  --st-fg: #0c1a15;
+  --st-accent: #0f8362;
+  --st-second: #16332a;
+  --st-glow: #0f8f6b;
+  --st-line: #cfd3d2;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .vb {
+  position: relative; overflow: clip;
+  background:
+    radial-gradient(90% 60% at 12% 0%, color-mix(in srgb, var(--st-glow) 16%, transparent), transparent 60%),
+    radial-gradient(70% 55% at 96% 30%, color-mix(in srgb, var(--st-second) 14%, transparent), transparent 62%),
+    var(--st-bg);
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+#dsgB .vb h1, #dsgB .vb h2, #dsgB .vb h3, #dsgB .vb .vb-brand {
+  font-family: "Gabarito", var(--display); font-weight: 700; letter-spacing: -.02em;
+}
+
+#dsgB .vb-veil { position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--st-bg); }
+#dsgB .vb-veil span {
+  position: absolute; left: 50%; top: 50%; width: 240vmax; height: 240vmax;
+  margin: -120vmax 0 0 -120vmax; border-radius: 50%; background: var(--st-glow);
+  transform: scale(0); opacity: .9;
+}
+#dsgB .vb-motes { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#dsgB .vb-motes i {
+  position: absolute; width: 9px; height: 9px; border-radius: 50%;
+  background: color-mix(in srgb, var(--st-glow) 55%, transparent); opacity: .5;
+}
+
+#dsgB .vb-rail {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; padding: 16px var(--pad);
+  background: color-mix(in srgb, var(--st-bg) 78%, transparent); backdrop-filter: blur(12px);
+}
+#dsgB .vb-brand { font-size: 17px; }
+#dsgB .vb-open {
+  display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--st-dim);
+  padding: 7px 14px; border-radius: 999px; background: color-mix(in srgb, var(--st-fg) 6%, transparent);
+}
+#dsgB .vb-open b {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--st-accent);
+  box-shadow: 0 0 10px var(--st-accent); animation: vbPulse 1.8s ease-in-out infinite;
+}
+@keyframes vbPulse { 50% { opacity: .3; transform: scale(.65); } }
+
+#dsgB .vb-hero {
+  position: relative; display: grid; grid-template-columns: minmax(300px, 44%) 1fr;
+  gap: clamp(20px, 4vw, 60px); align-items: center;
+  padding: clamp(30px, 5vw, 70px) var(--pad) clamp(60px, 9vw, 130px);
+}
+#dsgB .vb-hero-fig { position: relative; display: grid; place-items: center; }
+#dsgB .vb-organic { width: min(100%, 520px); height: auto; overflow: visible; }
+#dsgB .vb-blob { fill: url(#vbG); }
+#dsgB .vb-blob-ghost { fill: color-mix(in srgb, var(--st-glow) 18%, transparent); }
+#dsgB .vb-blob-hide { display: none; }
+#dsgB .vb-paw-big { fill: color-mix(in srgb, var(--st-bg) 80%, transparent); }
+#dsgB .vb-eyebrow { margin: 0 0 16px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-name {
+  margin: 0; font-size: clamp(38px, 5.6vw, 84px); line-height: .95;
+}
+#dsgB .vb-claim {
+  margin: 20px 0 0; max-width: 18ch; font-family: "Gabarito", var(--display);
+  font-weight: 500; font-size: clamp(19px, 2.3vw, 31px); line-height: 1.2; color: var(--st-second);
+}
+#dsgB .vb-lead { margin: 16px 0 0; max-width: 44ch; font-size: 15px; line-height: 1.75; color: var(--st-dim); }
+#dsgB .vb-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+#dsgB .vb-cta {
+  display: inline-block; text-decoration: none; background: var(--st-accent); color: var(--st-bg);
+  font-weight: 700; font-size: 15px; padding: 17px 30px; border-radius: 999px; will-change: transform;
+}
+#dsgB .vb-ghost {
+  text-decoration: none; color: var(--st-fg); font-size: 15px; padding: 16px 26px;
+  border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--st-fg) 20%, transparent);
+}
+#dsgB .vb-trail { position: absolute; left: 0; right: 0; bottom: 12px; width: 100%; height: 130px; pointer-events: none; }
+#dsgB .vb-paw { fill: color-mix(in srgb, var(--st-second) 40%, transparent); opacity: 0; }
+
+#dsgB .vb-care-sec { padding: clamp(50px, 8vw, 110px) var(--pad); }
+#dsgB .vb-kicker { margin: 0 0 12px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-h2 { margin: 0 0 44px; max-width: 20ch; font-size: clamp(27px, 3.8vw, 52px); line-height: 1.06; }
+#dsgB .vb-care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+#dsgB .vb-care {
+  position: relative; overflow: hidden; padding: 30px 26px 34px; border-radius: 30px;
+  background: color-mix(in srgb, var(--st-fg) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-fg) 8%, transparent);
+}
+#dsgB .vb-care-n { font-size: 12px; letter-spacing: .16em; color: var(--st-accent); }
+#dsgB .vb-care h3 { margin: 12px 0 10px; font-size: 23px; }
+#dsgB .vb-care p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--st-dim); }
+#dsgB .vb-stamp { position: absolute; right: 16px; bottom: 12px; width: 62px; height: 62px; opacity: 0; }
+#dsgB .vb-stamp-p { fill: color-mix(in srgb, var(--st-accent) 42%, transparent); }
+
+#dsgB .vb-deck-sec {
+  display: grid; grid-template-columns: 1fr minmax(300px, 46%); gap: clamp(24px, 4vw, 60px);
+  align-items: center; padding: clamp(40px, 7vw, 100px) var(--pad);
+}
+#dsgB .vb-deck-hint { margin: 26px 0 0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-deck { position: relative; height: clamp(340px, 46vw, 430px); }
+#dsgB .vb-deck-cards { position: absolute; inset: 0; display: grid; place-items: center; }
+#dsgB .vb-card {
+  position: absolute; width: min(94%, 380px); touch-action: none; cursor: grab;
+  user-select: none; will-change: transform;
+}
+#dsgB .vb-card-in {
+  border-radius: 34px; padding: 34px 32px 30px; min-height: 290px;
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--st-bg); border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
+  box-shadow: 0 26px 60px -30px color-mix(in srgb, var(--st-fg) 55%, transparent);
+}
+#dsgB .vb-card-n { font-size: 12px; letter-spacing: .18em; color: var(--st-accent); }
+#dsgB .vb-card h3 { margin: 0; font-size: 29px; }
+#dsgB .vb-card p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--st-dim); }
+#dsgB .vb-card-tag {
+  margin-top: auto; align-self: flex-start; font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; padding: 8px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--st-accent) 16%, transparent); color: var(--st-accent);
+}
+
+#dsgB .vb-hours {
+  margin: 0 var(--pad) clamp(40px, 6vw, 80px); padding: clamp(34px, 5vw, 62px) clamp(26px, 4vw, 54px);
+  border-radius: 40px; background: color-mix(in srgb, var(--st-second) 12%, transparent);
+  display: grid; gap: 30px; overflow: hidden;
+}
+#dsgB .vb-ribbon { width: 100%; height: 70px; overflow: visible; }
+#dsgB .vb-pulse-ghost { fill: none; stroke: color-mix(in srgb, var(--st-accent) 22%, transparent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+#dsgB .vb-pulse { fill: none; stroke: var(--st-accent); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+#dsgB .vb-hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+#dsgB .vb-hours-grid span { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--st-accent); margin-bottom: 8px; }
+#dsgB .vb-hours-grid b { font-size: 16px; line-height: 1.5; font-weight: 500; }
+#dsgB .vb-cta-big { justify-self: start; font-size: 16px; padding: 19px 34px; }
+#dsgB .vb-foot {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 22px var(--pad) 36px; font-size: 12px; color: var(--st-dim);
+}
+
+@media (max-width: 1080px) {
+  #dsgB .vb-hero, #dsgB .vb-deck-sec { grid-template-columns: 1fr; }
+  #dsgB .vb-care-grid { grid-template-columns: repeat(2, 1fr); }
+  #dsgB .vb-trail { display: none; }
+}
+@media (max-width: 640px) {
+  #dsgB .vb-care-grid, #dsgB .vb-hours-grid { grid-template-columns: 1fr; }
+  #dsgB .vb-open { display: none; }
+  #dsgB .vb-brand {
+    font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: calc(100% - 96px);
+  }
+}
+
+</style>
+</head>
+<body data-motion="animejs" data-layout="magazine" data-mode="lab">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="mark">Centro Veterinario Ponteareas S.L</span>
+  <a class="urg" href="tel:34886216151">Urgencias 24 h</a>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="hero-mag">
+  <div>
+    <p class="kicker">Vigo · Rúa dos Nardos</p>
+    <h1>Medicina para quien no puede contarlo.</h1>
+    <p class="lead">Consulta sin prisa. Cirugía, analítica y un teléfono que coge alguien que ya os conoce.</p>
+  </div>
+  <figure class="portrait" role="img" aria-label="Consulta veterinaria"></figure>
+</section>
+<p class="quote">Los vemos crecer. Eso no cabe en una ficha.</p>
+<section class="care-grid"><article class="care"><h3>Consulta</h3><p>Tiempo de verdad. Os sentamos y miramos al animal, no solo la pantalla.</p></article><article class="care"><h3>Vacunas y chip</h3><p>Calendario claro. Os avisamos nosotros, no al revés.</p></article><article class="care"><h3>Cirugía</h3><p>Quirofano propio. Os llamamos cuando despierta.</p></article><article class="care"><h3>Analítica</h3><p>Resultados el mismo día en la mayoría de pruebas.</p></article><article class="care"><h3>Urgencias</h3><p>Un número que coge. Si hay que derivar, lo decimos en el acto.</p></article><article class="care"><h3>Dieta y peso</h3><p>Planes que se pueden seguir en un piso, no en un folleto.</p></article></section>
+<section class="band">
+  <div>
+    <strong>L–V 10:00–20:00 · S 10:00–14:00</strong>
+    <div>Rúa dos Nardos, Vigo</div>
+  </div>
+  <a href="https://wa.me/34886216151">+34886216151 · WhatsApp</a>
+</section>
+<footer>Centro Veterinario Ponteareas S.L · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="vb">
+  <div class="vb-veil" aria-hidden="true"><span></span></div>
+  <div class="vb-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <header class="vb-rail">
+    <span class="vb-brand">Centro Veterinario Ponteareas S.L</span>
+    <span class="vb-open"><b></b>Abierto · Vigo</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="vb-hero">
+    <div class="vb-hero-fig" aria-hidden="true">
+      <svg class="vb-organic" viewBox="0 0 480 480">
+        <defs>
+          <linearGradient id="vbG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="var(--st-glow)" stop-opacity=".85"/>
+            <stop offset="1" stop-color="var(--st-second)" stop-opacity=".55"/>
+          </linearGradient>
+        </defs>
+        <path class="vb-blob-ghost" d="M 399.7 240.0 C 399.7 297.0 401.5 377.2 339.8 412.8 C 278.0 448.5 208.9 410.6 158.4 381.4 C 107.8 352.2 44.0 310.0 44.0 240.0 C 44.0 170.0 113.7 132.7 162.0 104.9 C 210.3 77.0 278.7 27.7 341.6 64.0 C 404.5 100.3 399.7 183.0 399.7 240.0 Z"/>
+        <path class="vb-blob" d="M 408.0 240.0 C 408.0 300.0 365.1 346.2 317.3 373.9 C 269.5 401.5 206.1 426.0 151.0 394.2 C 95.9 362.4 80.4 297.0 80.4 240.0 C 80.4 183.0 98.6 119.9 152.6 88.7 C 206.7 57.5 268.8 82.0 315.6 109.1 C 362.4 136.1 408.0 180.0 408.0 240.0 Z"/>
+        <g class="vb-blob-hide"><path class="vb-blob-src" data-blob="0" d="M 408.0 240.0 C 408.0 300.0 365.1 346.2 317.3 373.9 C 269.5 401.5 206.1 426.0 151.0 394.2 C 95.9 362.4 80.4 297.0 80.4 240.0 C 80.4 183.0 98.6 119.9 152.6 88.7 C 206.7 57.5 268.8 82.0 315.6 109.1 C 362.4 136.1 408.0 180.0 408.0 240.0 Z"/><path class="vb-blob-src" data-blob="1" d="M 387.8 240.0 C 387.8 292.8 389.6 367.0 332.4 400.0 C 275.2 433.1 211.2 398.0 164.4 370.9 C 117.6 343.9 58.6 304.8 58.6 240.0 C 58.6 175.2 123.1 140.7 167.8 114.9 C 212.5 89.1 275.9 43.4 334.1 77.0 C 392.3 110.7 387.8 187.2 387.8 240.0 Z"/><path class="vb-blob-src" data-blob="2" d="M 421.4 240.0 C 421.4 304.8 356.9 339.3 312.2 365.1 C 267.5 390.9 204.1 436.6 145.9 403.0 C 87.7 369.3 88.8 294.0 88.8 240.0 C 88.8 186.0 95.9 117.6 151.0 85.8 C 206.1 54.0 270.1 75.0 319.0 103.2 C 367.8 131.4 421.4 175.2 421.4 240.0 Z"/></g>
+        <g class="vb-paw-big" transform="rotate(0 240.0 266.0)"><ellipse cx="240.0" cy="285.2" rx="38.4" ry="32.0"/><ellipse cx="198.4" cy="237.2" rx="16.6" ry="21.8" transform="rotate(-22 198.4 237.2)"/><ellipse cx="225.6" cy="219.6" rx="16.6" ry="21.8" transform="rotate(-8 225.6 219.6)"/><ellipse cx="254.4" cy="219.6" rx="16.6" ry="21.8" transform="rotate(8 254.4 219.6)"/><ellipse cx="281.6" cy="237.2" rx="16.6" ry="21.8" transform="rotate(22 281.6 237.2)"/></g>
+      </svg>
+    </div>
+    <div class="vb-hero-copy">
+      <p class="vb-eyebrow">Rúa dos Nardos · Vigo</p>
+      <h1 class="vb-name" data-split>Centro Veterinario Ponteareas S.L</h1>
+      <p class="vb-claim">Medicina para quien no puede contarlo.</p>
+      <p class="vb-lead">Consulta sin prisa. Cirugía, analítica y un teléfono que coge alguien que ya os conoce.</p>
+      <div class="vb-actions">
+        <a class="vb-cta" href="https://wa.me/34886216151">Urgencias · WhatsApp</a>
+        <a class="vb-ghost" href="tel:34886216151">+34886216151</a>
+      </div>
+    </div>
+    <svg class="vb-trail" viewBox="0 0 760 200" aria-hidden="true"><g class="vb-paw" transform="rotate(74 70.0 82.0)"><ellipse cx="70.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="55.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 55.0 71.7)"/><ellipse cx="64.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 64.8 65.3)"/><ellipse cx="75.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 75.2 65.3)"/><ellipse cx="85.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 85.0 71.7)"/></g><g class="vb-paw" transform="rotate(78 188.0 110.0)"><ellipse cx="188.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="173.1" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 173.1 99.7)"/><ellipse cx="182.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 182.8 93.3)"/><ellipse cx="193.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 193.2 93.3)"/><ellipse cx="202.9" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 202.9 99.7)"/></g><g class="vb-paw" transform="rotate(82 306.0 82.0)"><ellipse cx="306.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="291.1" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 291.1 71.7)"/><ellipse cx="300.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 300.8 65.3)"/><ellipse cx="311.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 311.2 65.3)"/><ellipse cx="320.9" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 320.9 71.7)"/></g><g class="vb-paw" transform="rotate(86 424.0 110.0)"><ellipse cx="424.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="409.1" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 409.1 99.7)"/><ellipse cx="418.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 418.8 93.3)"/><ellipse cx="429.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 429.2 93.3)"/><ellipse cx="438.9" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 438.9 99.7)"/></g><g class="vb-paw" transform="rotate(90 542.0 82.0)"><ellipse cx="542.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="527.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 527.0 71.7)"/><ellipse cx="536.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 536.8 65.3)"/><ellipse cx="547.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 547.2 65.3)"/><ellipse cx="557.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 557.0 71.7)"/></g><g class="vb-paw" transform="rotate(94 660.0 110.0)"><ellipse cx="660.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="645.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 645.0 99.7)"/><ellipse cx="654.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 654.8 93.3)"/><ellipse cx="665.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 665.2 93.3)"/><ellipse cx="675.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 675.0 99.7)"/></g></svg>
+  </section>
+
+  <section class="vb-care-sec">
+    <p class="vb-kicker">Lo que hacemos</p>
+    <h2 class="vb-h2" data-split>Clínica de barrio con urgencias reales, no un mostrador de pienso.</h2>
+    <div class="vb-care-grid"><article class="vb-care"><span class="vb-care-n">01</span><h3>Consulta</h3><p>Tiempo de verdad. Os sentamos y miramos al animal, no solo la pantalla.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">02</span><h3>Vacunas y chip</h3><p>Calendario claro. Os avisamos nosotros, no al revés.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">03</span><h3>Cirugía</h3><p>Quirofano propio. Os llamamos cuando despierta.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">04</span><h3>Analítica</h3><p>Resultados el mismo día en la mayoría de pruebas.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">05</span><h3>Urgencias</h3><p>Un número que coge. Si hay que derivar, lo decimos en el acto.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">06</span><h3>Dieta y peso</h3><p>Planes que se pueden seguir en un piso, no en un folleto.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article></div>
+  </section>
+
+  <section class="vb-deck-sec">
+    <div class="vb-deck-copy">
+      <p class="vb-kicker">La clínica</p>
+      <h2 class="vb-h2">Los vemos crecer. Eso no cabe en una ficha.</h2>
+      <p class="vb-lead">Cada ficha es una visita de las de siempre. Tíralas a un lado para ver la siguiente.</p>
+      <p class="vb-deck-hint">Arrastra la ficha →</p>
+    </div>
+    <div class="vb-deck"><div class="vb-deck-cards"><article class="vb-card"><div class="vb-card-in"><span class="vb-card-n">01</span><h3>Consulta</h3><p>Tiempo de verdad. Os sentamos y miramos al animal, no solo la pantalla.</p><span class="vb-card-tag">Consulta Vigo</span></div></article><article class="vb-card"><div class="vb-card-in"><span class="vb-card-n">02</span><h3>Vacunas y chip</h3><p>Calendario claro. Os avisamos nosotros, no al revés.</p><span class="vb-card-tag">Consulta Vigo</span></div></article><article class="vb-card"><div class="vb-card-in"><span class="vb-card-n">03</span><h3>Cirugía</h3><p>Quirofano propio. Os llamamos cuando despierta.</p><span class="vb-card-tag">Consulta Vigo</span></div></article><article class="vb-card"><div class="vb-card-in"><span class="vb-card-n">04</span><h3>Analítica</h3><p>Resultados el mismo día en la mayoría de pruebas.</p><span class="vb-card-tag">Consulta Vigo</span></div></article></div></div>
+  </section>
+
+  <section class="vb-hours">
+    <svg class="vb-ribbon" viewBox="0 0 600 80" preserveAspectRatio="none" aria-hidden="true">
+      <path class="vb-pulse-ghost" d="M 0 40 L 150 40 C 178 40 186 18 208 18 C 230 18 236 40 258 40 L 286 40 L 300 66 L 322 6 L 342 58 L 356 40 L 600 40 L 750 40 C 778 40 786 18 808 18 C 830 18 836 40 858 40 L 886 40 L 900 66 L 922 6 L 942 58 L 956 40 L 1200 40"/>
+      <path class="vb-pulse" d="M 0 40 L 150 40 C 178 40 186 18 208 18 C 230 18 236 40 258 40 L 286 40 L 300 66 L 322 6 L 342 58 L 356 40 L 600 40 L 750 40 C 778 40 786 18 808 18 C 830 18 836 40 858 40 L 886 40 L 900 66 L 922 6 L 942 58 L 956 40 L 1200 40"/>
+    </svg>
+    <div class="vb-hours-grid">
+      <div><span>Dónde</span><b>Rúa dos Nardos, Vigo</b></div>
+      <div><span>Horario</span><b>L–V 10:00–20:00 · S 10:00–14:00</b></div>
+      <div><span>Teléfono</span><b>+34886216151</b></div>
+    </div>
+    <a class="vb-cta vb-cta-big" href="https://wa.me/34886216151">Escribir por WhatsApp</a>
+  </section>
+
+  <footer class="vb-foot">
+    <span>Centro Veterinario Ponteareas S.L</span>
+    <span>L–V 10:00–20:00 · S 10:00–14:00</span>
+  </footer>
+</div>
+
+</div>
+<script>
+
+function boot() {
+  if (typeof anime === "undefined") return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+  if (reduced) return;
+  anime({ targets: "h1", translateY: [22, 0], duration: 1200, easing: "easeOutExpo" });
+  anime({ targets: ".lead, .kicker", delay: 160, duration: 800, easing: "easeOutQuad" });
+  anime({ targets: ".portrait", scale: [1.04, 1], duration: 1400, easing: "easeOutExpo" });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      anime({ targets: e.target.querySelectorAll(".care"), translateY: [14, 0], delay: anime.stagger(70), duration: 650, easing: "easeOutQuad" });
+      io.disconnect();
+    });
+  }, { threshold: 0.15 });
+  const grid = document.querySelector(".care-grid");
+  if (grid) io.observe(grid);
+}
+const s = document.createElement("script");
+s.src = "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js";
+s.onload = boot;
+document.head.appendChild(s);
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb" : panel.querySelector(".vb") ? "vb" : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+
+window.__staticB = function (panel) {
+  var veil = panel.querySelector(".vb-veil");
+  if (veil) veil.remove();
+  panel.querySelectorAll(".vb-paw").forEach(function (p) { p.style.opacity = ".7"; });
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, svg = A.svg, utils = A.utils, createTimer = A.createTimer,
+      createDraggable = A.createDraggable, spring = A.spring;
+
+  var soft = spring({ stiffness: 90, damping: 14 });
+  window.__splitB(panel);
+
+  /* --- intro: the room opens as an iris, not a curtain --- */
+  var veil = panel.querySelector(".vb-veil");
+  var intro = createTimeline();
+  intro.add(veil.querySelector("span"), { scale: [0, 1], duration: 900, ease: "inOutQuart" }, 0);
+  intro.add(veil, {
+    opacity: [1, 0], duration: 460, ease: "outQuad",
+    onComplete: function () { veil.remove(); }
+  }, 620);
+  intro.add(panel.querySelectorAll(".vb-hero .vb-word"), {
+    y: [54, 0], opacity: [0, 1], duration: 1000, ease: soft, delay: stagger(70)
+  }, 700);
+  intro.add(panel.querySelectorAll(".vb-eyebrow, .vb-claim, .vb-lead, .vb-actions"), {
+    y: [26, 0], opacity: [0, 1], duration: 800, ease: "outExpo", delay: stagger(90)
+  }, 820);
+  intro.add(panel.querySelector(".vb-organic"), {
+    scale: [0.82, 1], rotate: [-7, 0], opacity: [0, 1], duration: 1200, ease: soft
+  }, 640);
+
+  /* --- the blob never settles: morph between the seeded shapes --- */
+  var blob = panel.querySelector(".vb-blob");
+  var ghost = panel.querySelector(".vb-blob-ghost");
+  var shapes = panel.querySelectorAll(".vb-blob-src");
+  if (svg.morphTo && shapes.length > 1) {
+    var cycle = createTimeline({ loop: true });
+    for (var i = 0; i < shapes.length; i++) {
+      cycle.add(blob, { d: svg.morphTo(shapes[(i + 1) % shapes.length], 0), duration: 2600, ease: "inOutSine" });
+      cycle.add(ghost, { d: svg.morphTo(shapes[(i + 2) % shapes.length], 0), duration: 2600, ease: "inOutSine" }, "-=2600");
+    }
+  }
+  animate(panel.querySelector(".vb-organic"), {
+    rotate: [0, 4, 0, -4, 0], duration: 16000, ease: "inOutSine", loop: true
+  });
+  animate(panel.querySelector(".vb-paw-big"), {
+    scale: [1, 1.05, 1], duration: 2600, ease: "inOutSine", loop: true
+  });
+
+  /* --- paw prints walk in, wait, and walk again --- */
+  animate(panel.querySelectorAll(".vb-paw"), {
+    opacity: [0, 0.75], scale: [0.6, 1], duration: 420, ease: "outBack",
+    delay: stagger(210, { start: 1400 }), loop: true, loopDelay: 2600, alternate: true
+  });
+
+  /* --- motes: parametric drift, cheap enough for a phone --- */
+  var motes = panel.querySelectorAll(".vb-motes i");
+  var seeds = [];
+  motes.forEach(function (m, n) {
+    seeds.push({ x: utils.random(2, 96, 2), y: utils.random(4, 92, 2), s: utils.random(0.5, 1.4, 2), p: n * 0.9 });
+    utils.set(m, { scale: seeds[n].s });
+    m.style.left = seeds[n].x + "%";
+    m.style.top = seeds[n].y + "%";
+  });
+  var t = 0;
+  createTimer({
+    frameRate: 30,
+    onUpdate: function () {
+      t += 0.014;
+      for (var n = 0; n < motes.length; n++) {
+        var s = seeds[n];
+        utils.set(motes[n], {
+          x: Math.sin(t + s.p) * 26 * s.s,
+          y: Math.cos(t * 0.8 + s.p) * 20 * s.s,
+          opacity: 0.22 + Math.abs(Math.sin(t * 0.7 + s.p)) * 0.4
+        });
+      }
+    }
+  });
+
+  /* --- care cards: spring in, stamp a paw on hover --- */
+  var careSec = panel.querySelector(".vb-care-sec");
+  animate(panel.querySelectorAll(".vb-h2 .vb-word"), {
+    y: [40, 0], opacity: [0, 1], duration: 900, ease: soft, delay: stagger(55),
+    autoplay: onScroll({ target: careSec, enter: "bottom-=140 top" })
+  });
+  animate(panel.querySelectorAll(".vb-care"), {
+    y: [46, 0], scale: [0.96, 1], opacity: [0, 1], duration: 900, ease: soft, delay: stagger(90),
+    autoplay: onScroll({ target: careSec, enter: "bottom-=140 top" })
+  });
+  panel.querySelectorAll(".vb-care").forEach(function (card) {
+    var stamp = card.querySelector(".vb-stamp");
+    card.addEventListener("mouseenter", function () {
+      animate(stamp, { opacity: [0, 1], scale: [0.5, 1], rotate: [-24, -8], duration: 620, ease: "outBack" });
+      animate(card, { y: -6, duration: 400, ease: "outQuad" });
+    });
+    card.addEventListener("mouseleave", function () {
+      animate(stamp, { opacity: 0, scale: 0.7, duration: 320, ease: "outQuad" });
+      animate(card, { y: 0, duration: 500, ease: soft });
+    });
+  });
+
+  /* --- the deck: only the top ficha is live; flick it and it goes to the back --- */
+  var deck = panel.querySelector(".vb-deck-cards");
+  var drags = new Map();
+  var busy = false;
+
+  function pose() {
+    var list = Array.prototype.slice.call(deck.children);
+    list.forEach(function (card, n) {
+      card.style.zIndex = String(list.length - n);
+      card.style.pointerEvents = n === 0 && !busy ? "auto" : "none";
+      var drag = drags.get(card);
+      if (drag) animate(drag, { x: 0, duration: 620, ease: soft });
+      animate(card.querySelector(".vb-card-in"), {
+        y: n * 18, scale: 1 - n * 0.055, rotate: n === 0 ? 0 : (n % 2 ? 3.4 : -3.4),
+        opacity: n > 2 ? 0 : 1, duration: 620, ease: soft
+      });
+    });
+  }
+
+  Array.prototype.slice.call(deck.children).forEach(function (card) {
+    var inner = card.querySelector(".vb-card-in");
+    drags.set(card, createDraggable(card, {
+      y: false,
+      velocityMultiplier: 0,
+      cursor: { onHover: "grab", onGrab: "grabbing" },
+      onGrab: function () {
+        animate(inner, { scale: 1.03, duration: 220, ease: "outQuad" });
+      },
+      onDrag: function (self) { utils.set(inner, { rotate: self.x * 0.04 }); },
+      onRelease: function (self) {
+        var flick = Math.abs(self.x) > 88 || Math.abs(self.velocity) > 0.35;
+        if (!flick) { pose(); return; }
+        busy = true;
+        var dir = self.x === 0 ? 1 : (self.x > 0 ? 1 : -1);
+        animate(self, { x: dir * 720, duration: 380, ease: "inCubic" });
+        animate(inner, {
+          rotate: dir * 22, opacity: 0, duration: 380, ease: "inCubic",
+          onComplete: function () {
+            utils.set(inner, { rotate: 0, opacity: 1 });
+            deck.appendChild(card);
+            busy = false;
+            pose();
+          }
+        });
+      }
+    }));
+  });
+  pose();
+  animate(deck.firstElementChild.querySelector(".vb-card-in"), {
+    rotate: [0, 5, -4, 0], duration: 1600, delay: 1800, ease: "inOutSine"
+  });
+
+  /* --- the ribbon is a live line, drawn as a sliding window --- */
+  var pulse = panel.querySelector(".vb-pulse");
+  if (pulse) {
+    animate(svg.createDrawable(pulse), {
+      draw: ["0 0", "0 0.5", "0.5 1", "1 1"], duration: 4200, ease: "linear", loop: true
+    });
+  }
+
+  /* --- CTA: magnetic, but soft --- */
+  panel.querySelectorAll(".vb-cta").forEach(function (el) {
+    el.addEventListener("mousemove", function (ev) {
+      var r = el.getBoundingClientRect();
+      animate(el, {
+        x: (ev.clientX - r.left - r.width / 2) * 0.26,
+        y: (ev.clientY - r.top - r.height / 2) * 0.4,
+        duration: 260, ease: "outQuad"
+      });
+    });
+    el.addEventListener("mouseleave", function () {
+      animate(el, { x: 0, y: 0, duration: 800, ease: spring({ stiffness: 70, damping: 10 }) });
+    });
+  });
+
+  animate(panel.querySelectorAll(".vb-hours-grid div, .vb-cta-big"), {
+    y: [30, 0], opacity: [0, 1], duration: 800, ease: soft, delay: stagger(90),
+    autoplay: onScroll({ target: panel.querySelector(".vb-hours"), enter: "bottom-=120 top" })
+  });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    import(SRC).then(function (A) { window.__initB(A, panelB); })
+      .catch(function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

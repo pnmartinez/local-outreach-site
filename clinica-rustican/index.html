@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clínica Rustican · Pereiro de Aguiar</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231c2418%22%2F%3E%3Cellipse%20cx%3D%2216%22%20cy%3D%2219%22%20rx%3D%227%22%20ry%3D%225.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%228.5%22%20cy%3D%2211.5%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%228.6%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228.6%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%2223.5%22%20cy%3D%2211.5%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #efe7da;
+  --ink: #2a221c;
+  --muted: #7a6e62;
+  --accent: #8b3a3a;
+  --accent2: #3d4f3a;
+  --line: #d8cdb8;
+  --display: "Newsreader", serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --radius: 4px;
+  --pad: 16px; --gap: 16px; --hero: clamp(40px, 8vw, 84px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 28px var(--pad) 12px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mark { font-family: var(--display); font-style: italic; letter-spacing: 0; text-transform: none; font-size: 22px; }
+.urg { color: var(--accent); text-decoration: none; }
+.hero-mag {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px;
+  padding: 12px var(--pad) 56px; align-items: end;
+}
+.kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--accent2); }
+h1 {
+  font-family: var(--display); font-weight: 500; font-size: clamp(42px, 6.4vw, 88px);
+  line-height: .95; margin: 10px 0 18px; max-width: 14ch;
+}
+.lead { font-size: 18px; line-height: 1.55; max-width: 38ch; color: var(--muted); }
+.portrait {
+  min-height: 72vh; border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--bg) 35%, transparent)),
+    url("https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1600&q=80") center 30%/cover;
+}
+.quote {
+  margin: 0 var(--pad) 48px; padding: 36px 0 0; border-top: 1px solid var(--line);
+  font-family: var(--display); font-style: italic; font-size: clamp(28px, 4vw, 48px);
+  max-width: 22ch;
+}
+.care-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  margin: 0 var(--pad) 56px; border: 1px solid var(--line);
+}
+.care { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.care:nth-child(3n) { border-right: 0; }
+.care h3 { margin: 0 0 8px; font-family: var(--display); font-size: 28px; font-weight: 500; }
+.care p { margin: 0; color: var(--muted); line-height: 1.45; }
+.band {
+  margin: 0 var(--pad) 72px; padding: 28px; background: var(--accent2); color: var(--bg);
+  display: flex; justify-content: space-between; gap: 20px; border-radius: var(--radius);
+}
+.band a { color: var(--bg); }
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .hero-mag { grid-template-columns: 1fr; gap: 22px; }
+  .portrait { min-height: 46vh; order: -1; }
+  .care-grid { grid-template-columns: 1fr; }
+  .care { border-right: 0; }
+  .band { flex-direction: column; }
+}
+
+
+#dsgB {
+  --st-bg: #f9f6f1;
+  --st-fg: #201a15;
+  --st-accent: #8b3a3a;
+  --st-second: #3d4f3a;
+  --st-glow: #8b3a3a;
+  --st-line: #d2cec9;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .vb {
+  position: relative; overflow: clip;
+  background:
+    radial-gradient(90% 60% at 12% 0%, color-mix(in srgb, var(--st-glow) 16%, transparent), transparent 60%),
+    radial-gradient(70% 55% at 96% 30%, color-mix(in srgb, var(--st-second) 14%, transparent), transparent 62%),
+    var(--st-bg);
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+#dsgB .vb h1, #dsgB .vb h2, #dsgB .vb h3, #dsgB .vb .vb-brand {
+  font-family: "Gabarito", var(--display); font-weight: 700; letter-spacing: -.02em;
+}
+
+#dsgB .vb-veil { position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--st-bg); }
+#dsgB .vb-veil span {
+  position: absolute; left: 50%; top: 50%; width: 240vmax; height: 240vmax;
+  margin: -120vmax 0 0 -120vmax; border-radius: 50%; background: var(--st-glow);
+  transform: scale(0); opacity: .9;
+}
+
+#dsgB .vb-rail {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; padding: 16px var(--pad);
+  background: color-mix(in srgb, var(--st-bg) 78%, transparent); backdrop-filter: blur(12px);
+}
+#dsgB .vb-brand { font-size: 17px; }
+#dsgB .vb-open {
+  font-size: 12px; color: var(--st-dim);
+  padding: 7px 14px; border-radius: 999px; background: color-mix(in srgb, var(--st-fg) 6%, transparent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 46vw;
+}
+
+#dsgB .vb-hero {
+  position: relative; display: grid; grid-template-columns: minmax(300px, 44%) 1fr;
+  gap: clamp(20px, 4vw, 60px); align-items: center;
+  padding: clamp(30px, 5vw, 70px) var(--pad) clamp(60px, 9vw, 130px);
+}
+#dsgB .vb-hero-fig { position: relative; display: grid; place-items: center; }
+/* The booklet. The accent spine down the left edge is the cover showing
+   through, which is what stops it reading as a generic white card. */
+#dsgB .vb-rec {
+  position: relative; width: min(100%, 460px); border-radius: 20px;
+  padding: 26px 28px 24px 34px; overflow: hidden;
+  background: color-mix(in srgb, var(--st-accent) 3%, var(--st-bg));
+  border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
+  box-shadow: 0 30px 70px -40px color-mix(in srgb, var(--st-fg) 60%, transparent);
+}
+#dsgB .vb-rec:before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+  background: var(--st-accent);
+}
+#dsgB .vb-rec-head { margin-bottom: 20px; }
+#dsgB .vb-rec-kicker {
+  margin: 0 0 10px; font-size: 10px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .vb-pet-name {
+  margin: 0; font-family: "Gabarito", var(--display); font-weight: 700;
+  font-size: clamp(26px, 3vw, 34px); line-height: 1; color: var(--st-fg);
+}
+#dsgB .vb-pet-who { margin: 6px 0 0; font-size: 13px; color: var(--st-dim); }
+#dsgB .vb-rec-list { margin: 0; padding: 0; list-style: none; }
+/* dotted rules, like the ruled lines of the real booklet */
+#dsgB .vb-rec-row {
+  display: grid; grid-template-columns: 1fr auto 46px;
+  align-items: center; gap: 10px; padding: 13px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--st-fg) 16%, transparent);
+}
+#dsgB .vb-rec-what { font-size: 15px; }
+#dsgB .vb-rec-when {
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .vb-rec-stamp { width: 46px; height: 46px; justify-self: end; opacity: 0; }
+#dsgB .vb-rec-paw { fill: color-mix(in srgb, var(--st-accent) 46%, transparent); }
+/* hidden until the stamps are done; __staticB prints it when JS is off */
+#dsgB .vb-rec-next {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin: 20px 0 0; opacity: 0;
+}
+#dsgB .vb-rec-next span {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .vb-rec-next b {
+  font-family: "Gabarito", var(--display); font-weight: 700;
+  font-size: 17px; color: var(--st-accent);
+}
+#dsgB .vb-eyebrow { margin: 0 0 16px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-name {
+  margin: 0; font-size: clamp(38px, 5.6vw, 84px); line-height: .95;
+}
+#dsgB .vb-claim {
+  margin: 20px 0 0; max-width: 18ch; font-family: "Gabarito", var(--display);
+  font-weight: 500; font-size: clamp(19px, 2.3vw, 31px); line-height: 1.2; color: var(--st-second);
+}
+#dsgB .vb-lead { margin: 16px 0 0; max-width: 44ch; font-size: 15px; line-height: 1.75; color: var(--st-dim); }
+#dsgB .vb-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+#dsgB .vb-cta {
+  display: inline-block; text-decoration: none; background: var(--st-accent); color: var(--st-bg);
+  font-weight: 700; font-size: 15px; padding: 17px 30px; border-radius: 999px; will-change: transform;
+}
+#dsgB .vb-ghost {
+  text-decoration: none; color: var(--st-fg); font-size: 15px; padding: 16px 26px;
+  border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--st-fg) 20%, transparent);
+}
+#dsgB .vb-trail { position: absolute; left: 0; right: 0; bottom: 12px; width: 100%; height: 130px; pointer-events: none; }
+#dsgB .vb-paw { fill: color-mix(in srgb, var(--st-second) 40%, transparent); opacity: 0; }
+
+#dsgB .vb-care-sec { padding: clamp(50px, 8vw, 110px) var(--pad); }
+#dsgB .vb-kicker { margin: 0 0 12px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-h2 { margin: 0 0 44px; max-width: 20ch; font-size: clamp(27px, 3.8vw, 52px); line-height: 1.06; }
+#dsgB .vb-care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+#dsgB .vb-care {
+  position: relative; overflow: hidden; padding: 30px 26px 34px; border-radius: 30px;
+  background: color-mix(in srgb, var(--st-fg) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-fg) 8%, transparent);
+}
+#dsgB .vb-care-n { font-size: 12px; letter-spacing: .16em; color: var(--st-accent); }
+#dsgB .vb-care h3 { margin: 12px 0 10px; font-size: 23px; }
+#dsgB .vb-care p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--st-dim); }
+#dsgB .vb-stamp { position: absolute; right: 16px; bottom: 12px; width: 62px; height: 62px; opacity: 0; }
+#dsgB .vb-stamp-p { fill: color-mix(in srgb, var(--st-accent) 42%, transparent); }
+
+#dsgB .vb-deck-sec {
+  display: grid; grid-template-columns: 1fr minmax(300px, 46%); gap: clamp(24px, 4vw, 60px);
+  align-items: center; padding: clamp(40px, 7vw, 100px) var(--pad);
+}
+#dsgB .vb-deck-hint { margin: 26px 0 0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-deck { position: relative; height: clamp(340px, 46vw, 430px); }
+#dsgB .vb-deck-cards { position: absolute; inset: 0; display: grid; place-items: center; }
+#dsgB .vb-card {
+  position: absolute; width: min(94%, 380px); touch-action: none; cursor: grab;
+  user-select: none; will-change: transform;
+}
+#dsgB .vb-card-in {
+  border-radius: 34px; padding: 34px 32px 30px; min-height: 290px;
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--st-bg); border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
+  box-shadow: 0 26px 60px -30px color-mix(in srgb, var(--st-fg) 55%, transparent);
+}
+#dsgB .vb-card-n { font-size: 12px; letter-spacing: .18em; color: var(--st-accent); }
+#dsgB .vb-card h3 { margin: 0; font-size: 29px; }
+#dsgB .vb-card-who { margin: 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-card p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--st-dim); }
+#dsgB .vb-card-tag {
+  margin-top: auto; align-self: flex-start; font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; padding: 8px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--st-accent) 16%, transparent); color: var(--st-accent);
+}
+
+#dsgB .vb-hours {
+  margin: 0 var(--pad) clamp(40px, 6vw, 80px); padding: clamp(34px, 5vw, 62px) clamp(26px, 4vw, 54px);
+  border-radius: 40px; background: color-mix(in srgb, var(--st-second) 12%, transparent);
+  display: grid; gap: 30px; overflow: hidden;
+}
+#dsgB .vb-hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+#dsgB .vb-hours-grid span { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--st-accent); margin-bottom: 8px; }
+#dsgB .vb-hours-grid b { font-size: 16px; line-height: 1.5; font-weight: 500; }
+#dsgB .vb-cta-big { justify-self: start; font-size: 16px; padding: 19px 34px; }
+#dsgB .vb-foot {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 22px var(--pad) 36px; font-size: 12px; color: var(--st-dim);
+}
+
+@media (max-width: 1080px) {
+  #dsgB .vb-hero, #dsgB .vb-deck-sec { grid-template-columns: 1fr; }
+  #dsgB .vb-care-grid { grid-template-columns: repeat(2, 1fr); }
+  #dsgB .vb-trail { display: none; }
+}
+@media (max-width: 640px) {
+  #dsgB .vb-care-grid, #dsgB .vb-hours-grid { grid-template-columns: 1fr; }
+  #dsgB .vb-open { display: none; }
+  #dsgB .vb-brand {
+    font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: calc(100% - 96px);
+  }
+}
+/* Clínica Rustican — linen diorama bay. This lead only. */
+#dsgB .vb-name { perspective: 900px; }
+#dsgB .vb-eyebrow, #dsgB .vb-claim, #dsgB .vb-lead, #dsgB .vb-cta { opacity: 0; }
+
+#dsgB .cr-sheet.cr-map {
+  position: relative;
+  width: min(100%, 540px);
+  justify-self: center;
+  color: #2a221c;
+  padding: 16px 14px 18px;
+  border-radius: 10px;
+  background:
+    radial-gradient(80% 70% at 48% 38%, #efe6d2 0%, #d4c4a4 62%, #b9a57e 100%);
+  box-shadow:
+    0 22px 48px -26px #4a3824,
+    inset 0 1px 0 color-mix(in srgb, #fff 42%, transparent);
+}
+
+#dsgB .cr-kicker {
+  margin: 0 6px 10px;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+
+#dsgB .cr-bay {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(70% 58% at 50% 42%, #e7d8b8 0%, #c4b496 72%, #9e8864 100%);
+}
+
+#dsgB .cr-view {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 320px;
+  height: auto;
+}
+
+#dsgB .vb-trail { display: none; }
+
+#dsgB .cr-pin {
+  position: absolute;
+  z-index: 2;
+  font-family: "Newsreader", var(--display), serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #2a221c;
+  pointer-events: none;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 color-mix(in srgb, #efe6d2 70%, transparent);
+}
+/* left/top are written every frame by placePins(); the transform keeps the
+   label centred on its anchor. */
+#dsgB .cr-pin-home,
+#dsgB .cr-pin-clinic,
+#dsgB .cr-pin-hosp { left: 0; top: 0; transform: translate(-50%, -140%); }
+#dsgB .cr-pin-hosp {
+  font-size: 11px;
+  color: color-mix(in srgb, #2a221c 62%, transparent);
+}
+
+#dsgB .cr-scrub {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin: 14px 6px 0;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, #2a221c 55%, transparent);
+}
+#dsgB .cr-track {
+  position: relative;
+  height: 26px;
+  border: 1px solid color-mix(in srgb, #2a221c 28%, transparent);
+  background: color-mix(in srgb, #2a221c 7%, transparent);
+}
+#dsgB .cr-handle {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 38px;
+  height: 18px;
+  background: var(--st-accent);
+  cursor: grab;
+  touch-action: none;
+  clip-path: polygon(0 30%, 70% 30%, 70% 0, 100% 50%, 70% 100%, 70% 70%, 0 70%);
+}
+#dsgB .cr-hint {
+  margin: 10px 6px 0;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+
+#dsgB .cr-miles { padding: clamp(40px, 7vw, 90px) var(--pad); }
+#dsgB .cr-miles-k {
+  margin: 0 0 18px;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+#dsgB .cr-miles-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+#dsgB .cr-mile { opacity: .28; }
+#dsgB .cr-mile b { display: block; font-size: 10px; letter-spacing: .2em; color: var(--st-accent); }
+#dsgB .cr-mile span {
+  font-family: "Newsreader", var(--display);
+  font-size: 22px;
+}
+#dsgB .cr-mile p { margin: 8px 0 0; color: var(--st-dim); font-size: 14px; line-height: 1.55; }
+
+@media (max-width: 860px) {
+  #dsgB .cr-miles-list { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  #dsgB .cr-miles-list { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body data-motion="animejs" data-layout="split-story" data-mode="linen">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="mark">Clínica Rustican</span>
+  <a class="urg" href="tel:34649844247">+34 649 84 42 47</a>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="hero-mag">
+  <div>
+    <p class="kicker">Pereiro de Aguiar · Carretera Parada s/n</p>
+    <h1>Consulta en la carretera, no en un centro.</h1>
+    <p class="lead">Clínica en Pereiro, en la carretera de Parada. Os conocen, os llaman y no os mandan a Ourense por una vacuna.</p>
+  </div>
+  <figure class="portrait" role="img" aria-label="Consulta veterinaria"></figure>
+</section>
+<p class="quote">Si se puede resolver aquí, no os hacemos ir al hospital.</p>
+<section class="care-grid"><article class="care"><h3>Consulta</h3><p>Tiempo en la mesa. El animal primero, el papelerío después.</p></article><article class="care"><h3>Vacunas</h3><p>Calendario de pueblo. Os avisamos nosotros.</p></article><article class="care"><h3>Chip y pasaporte</h3><p>Alta, lectura y papeles para viajar sin dar otra vuelta.</p></article><article class="care"><h3>Analítica</h3><p>Lo urgente se ve el mismo día. Lo demás, con fecha.</p></article><article class="care"><h3>Desparasitación</h3><p>Perro de finca o gato de piso. El protocolo cambia.</p></article><article class="care"><h3>Derivación</h3><p>Si hay que operar fuera, os decimos a dónde y por qué.</p></article></section>
+<section class="band">
+  <div>
+    <strong>L–V 10:00–13:30 / 17:00–20:00 · S 10:00–13:30</strong>
+    <div>Carretera Parada s/n, Pereiro de Aguiar</div>
+  </div>
+  <a href="https://wa.me/34649844247">+34 649 84 42 47 · WhatsApp</a>
+</section>
+<footer>Clínica Rustican · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="vb">
+  <header class="vb-rail">
+    <span class="vb-brand">Clínica Rustican</span>
+    <span class="vb-open">Pereiro de Aguiar · L–V 10:00–13:30 / 17:00–20:00 · S 10:00–13:30</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="vb-hero">
+    <!-- slot:hero-3d -->
+<div class="cr-sheet cr-map">
+  <p class="cr-kicker">El viaje que no haces</p>
+  <div class="cr-bay">
+    <canvas class="cr-view"></canvas>
+    <div class="cr-pins" aria-hidden="true">
+      <span class="cr-pin cr-pin-home">Pereiro</span>
+      <span class="cr-pin cr-pin-clinic">Rustican</span>
+      <span class="cr-pin cr-pin-hosp">Ourense · hospital</span>
+    </div>
+  </div>
+</div>
+
+<!-- /slot:hero-3d -->
+    <div class="vb-hero-copy">
+      <p class="vb-eyebrow">Carretera Parada s/n · Pereiro de Aguiar</p>
+      <h1 class="vb-name" data-split>Clínica Rustican</h1>
+      <p class="vb-claim">Consulta en la carretera, no en un centro.</p>
+      <p class="vb-lead">Clínica en Pereiro, en la carretera de Parada. Os conocen, os llaman y no os mandan a Ourense por una vacuna.</p>
+      <div class="vb-actions">
+        <a class="vb-cta" href="https://wa.me/34649844247">Urgencias · WhatsApp</a>
+        <a class="vb-ghost" href="tel:34649844247">+34 649 84 42 47</a>
+      </div>
+    </div>
+    <svg class="vb-trail" viewBox="0 0 760 200" aria-hidden="true"><g class="vb-paw" transform="rotate(74 90.0 82.0)"><ellipse cx="90.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="75.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 75.0 71.7)"/><ellipse cx="84.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 84.8 65.3)"/><ellipse cx="95.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 95.2 65.3)"/><ellipse cx="105.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 105.0 71.7)"/></g><g class="vb-paw" transform="rotate(78 240.0 110.0)"><ellipse cx="240.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="225.1" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 225.1 99.7)"/><ellipse cx="234.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 234.8 93.3)"/><ellipse cx="245.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 245.2 93.3)"/><ellipse cx="254.9" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 254.9 99.7)"/></g><g class="vb-paw" transform="rotate(82 390.0 82.0)"><ellipse cx="390.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="375.1" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 375.1 71.7)"/><ellipse cx="384.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 384.8 65.3)"/><ellipse cx="395.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 395.2 65.3)"/><ellipse cx="404.9" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 404.9 71.7)"/></g><g class="vb-paw" transform="rotate(86 540.0 110.0)"><ellipse cx="540.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="525.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 525.0 99.7)"/><ellipse cx="534.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 534.8 93.3)"/><ellipse cx="545.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 545.2 93.3)"/><ellipse cx="555.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 555.0 99.7)"/></g></svg>
+  </section>
+
+  <section class="vb-care-sec">
+    <p class="vb-kicker">Lo que hacemos</p>
+    <h2 class="vb-h2" data-split>Veterinario de Pereiro: consulta, vacunas y un teléfono que coge.</h2>
+    <div class="vb-care-grid"><article class="vb-care"><span class="vb-care-n">01</span><h3>Consulta</h3><p>Tiempo en la mesa. El animal primero, el papelerío después.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">02</span><h3>Vacunas</h3><p>Calendario de pueblo. Os avisamos nosotros.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">03</span><h3>Chip y pasaporte</h3><p>Alta, lectura y papeles para viajar sin dar otra vuelta.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">04</span><h3>Analítica</h3><p>Lo urgente se ve el mismo día. Lo demás, con fecha.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">05</span><h3>Desparasitación</h3><p>Perro de finca o gato de piso. El protocolo cambia.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">06</span><h3>Derivación</h3><p>Si hay que operar fuera, os decimos a dónde y por qué.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article></div>
+  </section>
+
+  <!-- slot:stage-3d -->
+<section class="cr-miles">
+  <p class="cr-miles-k">En la carretera de Parada</p>
+  <ol class="cr-miles-list">
+    <li class="cr-mile"><b>01</b><span>Consulta</span><p>Tiempo en la mesa. El animal primero.</p></li>
+    <li class="cr-mile"><b>02</b><span>Vacunas</span><p>Calendario de pueblo. Os avisamos nosotros.</p></li>
+    <li class="cr-mile"><b>03</b><span>Chip</span><p>Alta, lectura y papeles, sin otra vuelta.</p></li>
+    <li class="cr-mile"><b>04</b><span>Derivación</span><p>Si hay que operar fuera, os decimos a dónde y por qué.</p></li>
+  </ol>
+</section>
+
+<!-- /slot:stage-3d -->
+
+  <section class="vb-hours">
+    <div class="vb-hours-grid">
+      <div><span>Dónde</span><b>Carretera Parada s/n, Pereiro de Aguiar</b></div>
+      <div><span>Horario</span><b>L–V 10:00–13:30 / 17:00–20:00 · S 10:00–13:30</b></div>
+      <div><span>Teléfono</span><b>+34 649 84 42 47</b></div>
+    </div>
+    <a class="vb-cta vb-cta-big" href="https://wa.me/34649844247">Escribir por WhatsApp</a>
+  </section>
+
+  <footer class="vb-foot">
+    <span>Clínica Rustican</span>
+    <span>L–V 10:00–13:30 / 17:00–20:00 · S 10:00–13:30</span>
+  </footer>
+</div>
+
+</div>
+<script>
+
+function boot() {
+  if (typeof anime === "undefined") return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+  if (reduced) return;
+  anime({ targets: "h1", translateY: [22, 0], duration: 1200, easing: "easeOutExpo" });
+  anime({ targets: ".lead, .kicker", delay: 160, duration: 800, easing: "easeOutQuad" });
+  anime({ targets: ".portrait", scale: [1.04, 1], duration: 1400, easing: "easeOutExpo" });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      anime({ targets: e.target.querySelectorAll(".care"), translateY: [14, 0], delay: anime.stagger(70), duration: 650, easing: "easeOutQuad" });
+      io.disconnect();
+    });
+  }, { threshold: 0.15 });
+  const grid = document.querySelector(".care-grid");
+  if (grid) io.observe(grid);
+}
+const s = document.createElement("script");
+s.src = "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js";
+s.onload = boot;
+document.head.appendChild(s);
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+window.__staticB = function (panel) {
+  window.__splitB(panel);
+  panel.querySelectorAll(".vb-c, .vb-eyebrow, .vb-claim, .vb-lead, .vb-cta").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  panel.querySelectorAll(".vb-paw").forEach(function (p) { p.style.opacity = ".7"; });
+  var hosp = panel.querySelector(".cr-pin-hosp");
+  if (hosp) hosp.style.opacity = "0";
+  panel.querySelectorAll(".cr-mile").forEach(function (m) { m.style.opacity = "1"; });
+  var hint = panel.querySelector(".cr-hint");
+  if (hint) hint.remove();
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate;
+  var createTimeline = A.createTimeline;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  window.__splitB(panel);
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelectorAll(".vb-hero .vb-c"), {
+    y: [70, 0], rotateX: [-84, 0], opacity: [0, 1], duration: 900, delay: A.stagger(15)
+  }, 0);
+  intro.add(panel.querySelectorAll(".vb-eyebrow, .vb-claim, .vb-lead, .vb-cta"), {
+    y: [26, 0], opacity: [0, 1], duration: 760, delay: A.stagger(80)
+  }, 180);
+  var paws = panel.querySelectorAll(".vb-paw");
+  if (paws.length) {
+    intro.add(paws, { opacity: [0, 0.7], duration: 900, delay: A.stagger(80) }, 400);
+  }
+
+  var miles = panel.querySelector(".cr-miles");
+  if (miles) {
+    animate(panel.querySelectorAll(".cr-mile"), {
+      opacity: [0.28, 1], y: [18, 0], duration: 700, delay: A.stagger(90), ease: "outExpo",
+      autoplay: A.onScroll({ target: miles, enter: "bottom-=100 top" })
+    });
+  }
+
+  var care = panel.querySelector(".vb-care-sec");
+  if (care) {
+    animate(panel.querySelectorAll(".vb-care"), {
+      y: [24, 0], opacity: [0, 1], duration: 700, delay: A.stagger(70), ease: "outExpo",
+      autoplay: A.onScroll({ target: care, enter: "bottom-=120 top" })
+    });
+  }
+
+  var path = { t: 0 };
+  var pinHosp = panel.querySelector(".cr-pin-hosp");
+  var map = panel.querySelector(".cr-map");
+  if (map) {
+    /* Scrubbing this on scroll gave the trip ~440px of runway, all of it
+       while the hero was leaving the screen, so the drive was never seen.
+       It plays itself instead: the point of the scene is the short road. */
+    animate(path, {
+      t: [0, 1], duration: 5200, delay: 900, ease: "inOutQuad",
+      loop: true, loopDelay: 1600
+    });
+  }
+
+  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
+    var view = panel.querySelector(".cr-view");
+    var host = panel.querySelector(".cr-bay") || panel.querySelector(".cr-map");
+    if (!view || !host) return;
+
+    var tiny = matchMedia("(max-width: 700px)").matches;
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
+    gpu.setClearColor(0x000000, 0);
+
+    var world = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+    camera.position.set(2.75, 3.30, 3.35);
+    camera.lookAt(0, 0.02, 0);
+
+    var data = new Uint8Array([0, 85, 170, 255]);
+    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
+    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
+    ramp.needsUpdate = true;
+
+    function toon(color, extra) {
+      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
+      if (extra) Object.assign(mat, extra);
+      return mat;
+    }
+    var ink = new THREE.MeshBasicMaterial({ color: 0x1a1410, side: THREE.BackSide });
+    function inked(mesh, s) {
+      var shell = new THREE.Mesh(mesh.geometry, ink);
+      shell.scale.setScalar(s || 1.05);
+      mesh.add(shell);
+      return mesh;
+    }
+
+    world.add(new THREE.AmbientLight(0xd8c8a8, 0.62));
+    var key = new THREE.DirectionalLight(0xffe4b0, 2.7);
+    key.position.set(4.2, 3.2, 1.4);
+    world.add(key);
+    var rim = new THREE.DirectionalLight(0x6a88a8, 1.25);
+    rim.position.set(-3.8, 1.8, -2.6);
+    world.add(rim);
+    var fill = new THREE.DirectionalLight(0xe8d2a8, 0.45);
+    fill.position.set(-1.2, 2.6, 3.4);
+    world.add(fill);
+
+    var rig = new THREE.Group();
+    world.add(rig);
+
+    var earth = inked(new THREE.Mesh(new THREE.BoxGeometry(2.86, 0.38, 2.08), toon(0x7a5e3c)), 1.02);
+    earth.position.y = -0.22;
+    rig.add(earth);
+
+    var topGeo = new THREE.PlaneGeometry(2.86, 2.08, 36, 26);
+    var pos = topGeo.attributes.position;
+    var i;
+    for (i = 0; i < pos.count; i++) {
+      pos.setZ(i, Math.sin(pos.getX(i) * 1.55) * 0.034 + Math.cos(pos.getY(i) * 1.9) * 0.024 + Math.sin(pos.getX(i) * 3.1) * 0.009);
+    }
+    topGeo.computeVertexNormals();
+    var linen = inked(new THREE.Mesh(topGeo, toon(0xc4b496)), 1.018);
+    linen.rotation.x = -Math.PI / 2;
+    linen.position.y = -0.01;
+    rig.add(linen);
+
+    var knoll = inked(new THREE.Mesh(new THREE.SphereGeometry(0.42, 22, 16), toon(0xb39a72)), 1.03);
+    knoll.scale.set(1.45, 0.42, 1.05);
+    knoll.position.set(-0.28, -0.02, -0.72);
+    rig.add(knoll);
+    var knoll2 = inked(new THREE.Mesh(new THREE.SphereGeometry(0.32, 18, 14), toon(0xa89068)), 1.03);
+    knoll2.scale.set(1.25, 0.38, 0.95);
+    knoll2.position.set(0.78, -0.01, -0.78);
+    rig.add(knoll2);
+
+    function shadeTex() {
+      var c = document.createElement("canvas");
+      c.width = c.height = 128;
+      var x = c.getContext("2d");
+      var g = x.createRadialGradient(64, 64, 6, 64, 64, 64);
+      g.addColorStop(0, "rgba(42,34,28,.55)");
+      g.addColorStop(1, "rgba(42,34,28,0)");
+      x.fillStyle = g;
+      x.fillRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(c);
+    }
+    var shadow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.35, 36),
+      new THREE.MeshBasicMaterial({ map: shadeTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide })
+    );
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.set(0.05, -0.42, 0.08);
+    shadow.scale.set(1.45, 0.7, 1);
+    rig.add(shadow);
+
+    var homePts = [
+      new THREE.Vector3(-1.08, 0.08, 0.42),
+      new THREE.Vector3(-0.68, 0.074, 0.34),
+      new THREE.Vector3(-0.22, 0.076, 0.28),
+      new THREE.Vector3(0.12, 0.078, 0.36),
+      new THREE.Vector3(0.26, 0.08, 0.26)
+    ];
+    var homeCurve = new THREE.CatmullRomCurve3(homePts);
+    /* Both ribbons share a centreline, so a round verge wider than the road
+       swallowed the asphalt whole. Flatten them: a shoulder lying on the
+       ground with the tarmac sitting on top of it. */
+    var verge = new THREE.Mesh(new THREE.TubeGeometry(homeCurve, 64, 0.135, 12, false), toon(0x6e5a3c));
+    verge.scale.y = 0.13;
+    verge.position.y = -0.004;
+    rig.add(verge);
+    var homeRoad = inked(new THREE.Mesh(new THREE.TubeGeometry(homeCurve, 64, 0.095, 12, false), toon(0x33302a)), 1.02);
+    homeRoad.scale.y = 0.15;
+    homeRoad.position.y = 0.006;
+    rig.add(homeRoad);
+
+    var dashGeo = new THREE.BoxGeometry(0.062, 0.006, 0.013);
+    var dashMat = toon(0xe4d8bc);
+    for (i = 0; i < 16; i++) {
+      var u = (i + 0.5) / 16;
+      var dash = new THREE.Mesh(dashGeo, dashMat);
+      homeCurve.getPointAt(u, dash.position);
+      dash.position.y += 0.017;
+      var tan = homeCurve.getTangentAt(u);
+      dash.lookAt(dash.position.x + tan.x, dash.position.y, dash.position.z + tan.z);
+      rig.add(dash);
+    }
+
+    var hospGroup = new THREE.Group();
+    hospGroup.position.set(0.24, 0.078, -0.07);
+    hospGroup.userData.retract = 1;
+    var hospPts = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0.28, -0.004, -0.22),
+      new THREE.Vector3(0.58, -0.006, -0.46),
+      new THREE.Vector3(0.88, 0, -0.68)
+    ];
+    var hospCurve = new THREE.CatmullRomCurve3(hospPts);
+    var hospRoad = inked(new THREE.Mesh(new THREE.TubeGeometry(hospCurve, 48, 0.072, 10, false), toon(0x4a443c)), 1.02);
+    hospRoad.scale.y = 0.15;
+    hospGroup.add(hospRoad);
+    for (i = 0; i < 8; i++) {
+      var hu = (i + 0.5) / 8;
+      var hd = new THREE.Mesh(dashGeo, dashMat);
+      hospCurve.getPointAt(hu, hd.position);
+      hd.position.y += 0.015;
+      var ht = hospCurve.getTangentAt(hu);
+      hd.lookAt(hd.position.x + ht.x, hd.position.y, hd.position.z + ht.z);
+      hospGroup.add(hd);
+    }
+    var hospital = new THREE.Group();
+    hospital.position.set(0.88, 0.02, -0.68);
+    var wing = inked(new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.28, 0.22), toon(0xe8e4dc)), 1.035);
+    wing.position.y = 0.16;
+    hospital.add(wing);
+    var tower = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.08, 0.38, 16), toon(0xd8d2c8)), 1.04);
+    tower.position.set(0.12, 0.22, 0.02);
+    hospital.add(tower);
+    var crossArm = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.018, 0.018), toon(0xc45c48));
+    crossArm.position.set(0.12, 0.40, 0.08);
+    var crossUp = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.09, 0.018), toon(0xc45c48));
+    crossUp.position.set(0.12, 0.40, 0.08);
+    hospital.add(crossArm);
+    hospital.add(crossUp);
+    hospGroup.add(hospital);
+    rig.add(hospGroup);
+
+    function lodge(w, h, d, wall, tile) {
+      var g = new THREE.Group();
+      var walls = inked(new THREE.Mesh(new THREE.BoxGeometry(w, h, d), toon(wall)), 1.04);
+      walls.position.y = h * 0.5;
+      var rs = new THREE.Shape();
+      rs.moveTo(-w * 0.62, 0);
+      rs.lineTo(0, h * 0.55);
+      rs.lineTo(w * 0.62, 0);
+      rs.closePath();
+      var roof = inked(new THREE.Mesh(new THREE.ExtrudeGeometry(rs, {
+        depth: d * 1.14, bevelEnabled: false
+      }), toon(tile)), 1.04);
+      roof.position.set(0, h, -d * 0.57);
+      g.add(walls);
+      g.add(roof);
+      return g;
+    }
+
+    var pereiro = lodge(0.22, 0.16, 0.2, 0xe8dcc8, 0x8a4030);
+    pereiro.position.set(-1.08, 0, 0.44);
+    rig.add(pereiro);
+
+    var clinic = lodge(0.38, 0.24, 0.3, 0xf0e6d0, 0x6a3a28);
+    clinic.position.set(0.26, 0, -0.05);
+    var porch = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.03, 20), toon(0xd4c4a4)), 1.05);
+    porch.position.set(0, 0.015, 0.18);
+    clinic.add(porch);
+    var win = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.028, 0.014, 16), toon(0x7a9aaa)), 1.08);
+    win.rotation.x = Math.PI / 2;
+    win.position.set(-0.09, 0.15, 0.156);
+    clinic.add(win);
+    var win2 = win.clone();
+    win2.position.x = 0.1;
+    clinic.add(win2);
+    var stack = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.026, 0.12, 12), toon(0x8a5a40)), 1.06);
+    stack.position.set(0.08, 0.38, -0.04);
+    clinic.add(stack);
+    var hinge = new THREE.Group();
+    hinge.position.set(-0.04, 0.07, 0.158);
+    hinge.userData.open = 0;
+    var door = inked(new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.13, 0.016), toon(0x5c3a28)), 1.08);
+    door.position.x = 0.035;
+    hinge.add(door);
+    clinic.add(hinge);
+    rig.add(clinic);
+
+    var car = new THREE.Group();
+    var hull = inked(new THREE.Mesh(new THREE.CapsuleGeometry(0.055, 0.16, 6, 12), toon(0xc45c28)), 1.06);
+    hull.rotation.z = Math.PI / 2;
+    hull.position.y = 0.01;
+    car.add(hull);
+    var cabin = inked(new THREE.Mesh(new THREE.SphereGeometry(0.068, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.55), toon(0xf0e0c4)), 1.07);
+    cabin.position.set(0.02, 0.04, 0);
+    car.add(cabin);
+    var wheels = [];
+    var spots = [[-0.055, 0.07], [0.055, 0.07], [-0.055, -0.07], [0.055, -0.07]];
+    for (i = 0; i < 4; i++) {
+      var wh = inked(new THREE.Mesh(new THREE.TorusGeometry(0.028, 0.011, 8, 14), toon(0x1c1814)), 1.08);
+      wh.rotation.y = Math.PI / 2;
+      wh.position.set(spots[i][0], -0.02, spots[i][1]);
+      car.add(wh);
+      wheels.push(wh);
+    }
+    car.position.copy(homePts[0]);
+    car.position.y += 0.06;
+    rig.add(car);
+
+    function pine(x, z, s) {
+      var g = new THREE.Group();
+      var trunk = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.028 * s, 0.036 * s, 0.18 * s, 10), toon(0x5a4030)), 1.06);
+      trunk.position.y = 0.09 * s;
+      var crownA = inked(new THREE.Mesh(new THREE.ConeGeometry(0.16 * s, 0.28 * s, 10), toon(0x3d4f2e)), 1.04);
+      crownA.position.y = 0.28 * s;
+      var crownB = inked(new THREE.Mesh(new THREE.ConeGeometry(0.12 * s, 0.22 * s, 10), toon(0x4a5e38)), 1.04);
+      crownB.position.y = 0.44 * s;
+      g.add(trunk);
+      g.add(crownA);
+      g.add(crownB);
+      g.position.set(x, 0, z);
+      return g;
+    }
+    var woods = [
+      [-1.05, -0.78, 1.15], [-0.58, -0.86, 0.95], [-0.08, -0.9, 1.28],
+      [0.42, -0.82, 0.92], [0.88, -0.86, 1.18], [1.18, -0.68, 0.82],
+      [-0.82, -0.48, 0.72], [-1.22, -0.22, 0.68], [1.12, 0.22, 0.78],
+      [-0.38, -0.62, 0.55], [0.62, -0.52, 0.7], [-1.18, 0.62, 0.88]
+    ];
+    for (i = 0; i < woods.length; i++) {
+      rig.add(pine(woods[i][0], woods[i][1], woods[i][2]));
+    }
+
+    var _wall = new THREE.Vector3();
+    var _n = new THREE.Vector3();
+    for (i = 0; i < 10; i++) {
+      var wu = (i + 0.35) / 11;
+      homeCurve.getPointAt(wu, _wall);
+      homeCurve.getTangentAt(wu, _n);
+      var nx = -_n.z * 0.16, nz = _n.x * 0.16;
+      var post = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.02, 0.14, 8), toon(0x8a7a62)), 1.06);
+      post.position.set(_wall.x + nx, 0.08, _wall.z + nz);
+      rig.add(post);
+    }
+
+    var _p = new THREE.Vector3();
+    var _tan = new THREE.Vector3();
+    var lastT = 0;
+    var camGoal = new THREE.Vector3();
+    var lookGoal = new THREE.Vector3();
+
+    /* Anchor each label to a point in the scene and project it, so a camera
+       change cannot leave "Ourense · hospital" floating over a pine. */
+    var pinHome = panel.querySelector(".cr-pin-home");
+    var pinClinic = panel.querySelector(".cr-pin-clinic");
+    var anchors = [
+      [pinHome, new THREE.Vector3(-1.08, 0.20, 0.42)],
+      [pinClinic, new THREE.Vector3(0.24, 0.42, 0.16)],
+      [pinHosp, new THREE.Vector3(1.14, 0.40, -0.80)]
+    ];
+    var _proj = new THREE.Vector3();
+    function placePins() {
+      var w = view.clientWidth || host.clientWidth;
+      var h = view.clientHeight || host.clientHeight;
+      for (var a = 0; a < anchors.length; a++) {
+        var el = anchors[a][0];
+        if (!el) continue;
+        _proj.copy(anchors[a][1]).project(camera);
+        el.style.left = ((_proj.x * 0.5 + 0.5) * w).toFixed(1) + "px";
+        el.style.top = ((-_proj.y * 0.5 + 0.5) * h).toFixed(1) + "px";
+      }
+    }
+
+    function poseRide() {
+      var t = Math.max(0, Math.min(1, path.t));
+      var u = Math.max(0.001, Math.min(0.999, t));
+      homeCurve.getPointAt(u, _p);
+      homeCurve.getTangentAt(u, _tan);
+      car.position.copy(_p);
+      car.position.y += 0.06;
+      car.lookAt(_p.x + _tan.x, _p.y + 0.06, _p.z + _tan.z);
+      var spin = (t - lastT) * 22;
+      lastT = t;
+      for (i = 0; i < wheels.length; i++) wheels[i].rotation.x += spin;
+      var open = t > 0.92 ? Math.min(1, (t - 0.92) / 0.08) : 0;
+      hinge.userData.open = open;
+      hinge.rotation.y = -open * 1.45;
+      var retract = t > 0.62 ? Math.max(0, 1 - (t - 0.62) / 0.38) : 1;
+      hospGroup.userData.retract = retract;
+      hospGroup.scale.set(Math.max(0.001, retract), Math.max(0.001, 0.35 + retract * 0.65), Math.max(0.001, retract));
+      hospGroup.visible = retract > 0.02;
+      if (pinHosp) pinHosp.style.opacity = String(0.12 + retract * 0.72);
+      /* Hold the whole board and lean in a little as the car arrives. The
+         comparison only works if both routes stay on screen. */
+      var push = 1 - t * 0.11;
+      camGoal.set(2.75 * push, 3.30 * push, 3.35 * push);
+      lookGoal.set(_p.x * 0.20, 0.02, _p.z * 0.20);
+      camera.position.lerp(camGoal, 0.08);
+      camera.lookAt(lookGoal);
+      camera.updateMatrixWorld();
+      placePins();
+    }
+
+    function fitView() {
+      var w = view.clientWidth || host.clientWidth;
+      var h = view.clientHeight || host.clientHeight;
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+      gpu.setSize(w, h, false);
+    }
+    fitView();
+    window.addEventListener("resize", fitView);
+
+    var onStage = true;
+    if (window.IntersectionObserver) {
+      onStage = false;
+      new IntersectionObserver(function (entries) {
+        onStage = entries[0].isIntersecting;
+      }, { rootMargin: "12% 0px" }).observe(host);
+    }
+
+    function frame() {
+      requestAnimationFrame(frame);
+      if (!onStage) return;
+      poseRide();
+      gpu.render(world, camera);
+    }
+    frame();
+  }).catch(function () { window.__staticB(panel); });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

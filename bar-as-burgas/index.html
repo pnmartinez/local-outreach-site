@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bar As Burgas · Ourense</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2314080c%22%2F%3E%3Cpath%20d%3D%22M11%208h10l-1.6%2016H12.6Z%22%20fill%3D%22none%22%20stroke%3D%22%23ff4d9a%22%20stroke-width%3D%222.2%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M12.4%2018h7.2%22%20stroke%3D%22%23ffd166%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #12080c;
+  --ink: #f7e8d4;
+  --muted: #b89a86;
+  --accent: #ff4d6d;
+  --accent2: #ffd166;
+  --line: #3a1c24;
+  --display: "Bebas Neue", serif;
+  --body: "DM Sans", system-ui, sans-serif;
+  --radius: 0px;
+  --pad: 16px; --gap: 16px; --hero: clamp(40px, 8vw, 84px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+body { overflow-x: hidden; }
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px var(--pad); border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+}
+.logo {
+  font-family: var(--display); font-size: 28px; letter-spacing: .06em;
+  text-transform: uppercase; text-decoration: none;
+}
+.wa {
+  background: var(--accent); color: #11080a; text-decoration: none;
+  padding: 10px 14px; border-radius: var(--radius); font-weight: 700;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+}
+.hero-bar {
+  min-height: calc(100vh - 68px); display: grid;
+  grid-template-columns: .95fr 1.05fr; border-bottom: 1px solid var(--line);
+}
+.hero-copy { padding: 48px var(--pad) 40px; display: flex; flex-direction: column; justify-content: flex-end; }
+.kicker { letter-spacing: .24em; text-transform: uppercase; font-size: 11px; color: var(--accent2); }
+h1 {
+  font-family: var(--display); font-weight: 400; font-size: var(--hero);
+  line-height: .82; margin: 12px 0 18px; text-transform: uppercase;
+}
+h1 b { display: block; }
+.lead { max-width: 36ch; color: var(--muted); line-height: 1.5; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+.btn {
+  text-decoration: none; padding: 14px 18px; border-radius: var(--radius);
+  font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 12px;
+}
+.btn-solid { background: var(--accent); color: #11080a; }
+.btn-line { border: 1px solid var(--line); }
+.hero-media {
+  min-height: 420px;
+  background:
+    linear-gradient(200deg, color-mix(in srgb, var(--accent) 34%, transparent), transparent 50%),
+    url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80") center/cover;
+  filter: saturate(.85) contrast(1.08);
+}
+.neon {
+  padding: 10px var(--pad); letter-spacing: .28em; text-transform: uppercase;
+  font-size: 12px; color: var(--accent); border-bottom: 1px solid var(--line);
+}
+.taps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  border-bottom: 1px solid var(--line);
+}
+.tap { padding: 28px var(--pad); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.tap:nth-child(3n) { border-right: 0; }
+.tap em { color: var(--accent); font-style: normal; font-size: 11px; letter-spacing: .16em; }
+.tap h3 { font-family: var(--display); font-size: 32px; margin: 8px 0; text-transform: uppercase; font-weight: 400; }
+.tap p { margin: 0; color: var(--muted); line-height: 1.45; }
+.cta {
+  padding: 72px var(--pad); display: flex; justify-content: space-between;
+  align-items: flex-end; gap: 24px;
+}
+.cta h2 {
+  font-family: var(--display); font-size: clamp(40px, 8vw, 92px);
+  line-height: .86; text-transform: uppercase; margin: 0; max-width: 12ch;
+}
+footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .hero-bar { grid-template-columns: 1fr; min-height: auto; }
+  .hero-media { min-height: 260px; order: -1; }
+  .taps { grid-template-columns: 1fr; }
+  .tap { border-right: 0; }
+  .cta { flex-direction: column; align-items: flex-start; }
+}
+
+
+#dsgB {
+  --st-bg: #0b0507;
+  --st-fg: #f9efe1;
+  --st-accent: #ff4d6d;
+  --st-second: #ffd166;
+  --st-glow: #ff4d6d;
+  --st-line: #362f2e;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .bb {
+  --pour: 0;
+  background:
+    radial-gradient(90% 70% at 80% 10%,
+      color-mix(in srgb, var(--st-glow) calc(var(--pour) * 28%), transparent), transparent 60%),
+    var(--st-bg);
+  font-family: "DM Sans", sans-serif; overflow-x: clip;
+}
+#dsgB .bb h1, #dsgB .bb h2, #dsgB .bb h3, #dsgB .bb .bb-brand, #dsgB .bb .bb-tel {
+  font-family: "Bebas Neue", var(--display); letter-spacing: .04em;
+}
+#dsgB .bb-rail {
+  display: flex; align-items: center; gap: 16px; padding: 18px 22px;
+  border-bottom: 1px solid var(--st-line); position: sticky; top: 0; z-index: 8;
+  background: color-mix(in srgb, var(--st-bg) 82%, transparent);
+}
+#dsgB .bb-brand { font-size: 28px; }
+#dsgB .bb-open { margin-left: auto; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .bb-hero {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 32px;
+  padding: 36px 22px 48px; align-items: center;
+}
+#dsgB .bb-eyebrow { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--st-second); }
+#dsgB .bb-name { font-size: clamp(56px, 10vw, 120px); line-height: .82; margin: 8px 0 12px; }
+#dsgB .bb-claim { font-size: 22px; max-width: 22ch; }
+#dsgB .bb-lead { color: var(--st-dim); max-width: 38ch; line-height: 1.5; }
+#dsgB .bb-cta, #dsgB .bb-tel {
+  display: inline-block; margin-top: 22px; text-decoration: none;
+  background: var(--st-accent); color: var(--st-bg); padding: 14px 18px; font-size: 22px;
+}
+#dsgB .bb-console { display: grid; justify-items: center; gap: 16px; }
+#dsgB .bb-stage { width: min(280px, 70vw); }
+#dsgB .bb-col, #dsgB .bb-spout, #dsgB .bb-joint, #dsgB .bb-handle rect, #dsgB .bb-handle circle {
+  fill: color-mix(in srgb, var(--st-fg) 55%, var(--st-accent));
+}
+#dsgB .bb-handle { transform-origin: 127px 28px; transform: rotate(calc(var(--pour) * 55deg)); }
+#dsgB .bb-glass-wall { fill: none; stroke: var(--st-fg); stroke-width: 2; }
+#dsgB .bb-rim, #dsgB .bb-base { fill: none; stroke: var(--st-fg); stroke-width: 2; }
+#dsgB .bb-beer {
+  fill: var(--st-second);
+  transform: translateY(calc((1 - var(--pour)) * 130px));
+}
+#dsgB .bb-foam {
+  fill: color-mix(in srgb, var(--st-fg) 88%, var(--st-second));
+  transform: translateY(calc((1 - var(--pour)) * 130px));
+  opacity: var(--pour);
+}
+#dsgB .bb-lever { width: min(240px, 70vw); }
+#dsgB .bb-track {
+  position: relative; height: 14px; border-radius: 999px;
+  background: var(--st-line);
+}
+#dsgB .bb-fill {
+  position: absolute; inset: 0 auto 0 0; width: calc(var(--pour) * 100%);
+  background: var(--st-accent); border-radius: inherit;
+}
+#dsgB .bb-knob {
+  position: absolute; top: 50%; left: 0; width: 28px; height: 28px; margin: -14px 0 0 -6px;
+  border: 0; border-radius: 50%; background: var(--st-accent); cursor: grab;
+}
+#dsgB .bb-hint, #dsgB .bb-read { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .bb-band { overflow: hidden; border-block: 1px solid var(--st-line); background: var(--st-accent); color: var(--st-bg); }
+#dsgB .bb-band-track { display: flex; gap: 28px; width: max-content; padding: 12px 0; font-size: 18px; }
+#dsgB .bb-grid-sec { padding: 56px 22px; }
+#dsgB .bb-kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--st-accent); }
+#dsgB .bb-h2 { font-size: clamp(32px, 5vw, 56px); max-width: 18ch; }
+#dsgB .bb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+#dsgB .bb-tile { border-top: 1px solid var(--st-line); padding-top: 14px; }
+#dsgB .bb-tile em { color: var(--st-accent); font-style: normal; font-size: 11px; }
+#dsgB .bb-tile h3 { font-size: 34px; margin: 6px 0; }
+#dsgB .bb-tile p { margin: 0; color: var(--st-dim); }
+#dsgB .bb-call { padding: 0 22px 28px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+#dsgB .bb-foot { padding: 0 22px 48px; color: var(--st-dim); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  #dsgB .bb-hero { grid-template-columns: 1fr; }
+  #dsgB .bb-grid { grid-template-columns: 1fr; }
+  #dsgB .bb-call { flex-direction: column; }
+}
+/* Bar As Burgas — alcove and a tap you pull. This lead only. */
+#dsgB .bb-name { perspective: 900px; }
+#dsgB .bb-eyebrow, #dsgB .bb-claim, #dsgB .bb-lead, #dsgB .bb-cta { opacity: 0; }
+
+#dsgB .bu-alcove {
+  --pour: 0;
+  position: relative;
+  justify-self: center;
+  width: min(100%, 440px);
+  padding: 14px 14px 12px;
+  background:
+    radial-gradient(70% 48% at 50% 0%, #5a1438 0%, transparent 62%),
+    radial-gradient(42% 38% at 82% 82%, #4a2a08 0%, transparent 55%),
+    #0a0508;
+  box-shadow:
+    0 0 48px #ff2d6a44,
+    inset 0 0 80px #ffd16618,
+    inset 0 1px 0 #ff4d9a55;
+  border: 1px solid #3a1424;
+}
+#dsgB .bu-caption {
+  display: none;
+  margin: 0 0 8px;
+  text-align: center;
+  font-family: "Bebas Neue", var(--display);
+  letter-spacing: .22em;
+  font-size: 22px;
+  color: #ff4d9a;
+  text-shadow:
+    0 0 8px #ff4d9a,
+    0 0 22px #ff2d6a;
+  pointer-events: none;
+}
+#dsgB .bu-view {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 360px;
+  height: auto;
+}
+#dsgB .bu-meter {
+  position: absolute;
+  right: 18px;
+  top: 18%;
+  z-index: 3;
+  pointer-events: none;
+}
+#dsgB .bu-gauge {
+  position: relative;
+  width: 12px;
+  height: 148px;
+  border: 1px solid #ff4d9a;
+  background: color-mix(in srgb, var(--st-fg) 8%, transparent);
+}
+#dsgB .bu-band {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  bottom: 72%;
+  height: 16%;
+  background: #3dff8a;
+  opacity: .8;
+}
+#dsgB .bu-level {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  height: calc(var(--pour) * 100%);
+  max-height: calc(100% - 4px);
+  background: #ffd166;
+  box-shadow: 0 0 10px #ffd16688;
+}
+#dsgB .bu-drag {
+  position: absolute;
+  left: 16px;
+  top: 18%;
+  width: 38px;
+  height: 42%;
+  z-index: 4;
+  border: 1px solid color-mix(in srgb, #ffd166 40%, #3a1424);
+  background: color-mix(in srgb, #0a0508 78%, transparent);
+}
+#dsgB .bu-handle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 28px;
+  height: 46px;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+  background:
+    radial-gradient(circle at 50% 18%, #ffe9a8 0 28%, #ffd166 29% 100%);
+  box-shadow:
+    inset 0 1px 0 #fff3c4,
+    0 0 12px #ffd16666;
+}
+#dsgB .bu-verdict {
+  margin: 12px 4px 0;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #ffd166;
+  border: 1px solid #ff4d9a;
+  background: color-mix(in srgb, #ff4d9a 16%, transparent);
+}
+#dsgB .bu-verdict.is-ok {
+  color: #0a0508;
+  background: #3dff8a;
+  border-color: #3dff8a;
+}
+#dsgB .bu-verdict.is-bad {
+  color: #fff;
+  background: #ff2d6a;
+  border-color: #ff2d6a;
+}
+#dsgB .bu-hint {
+  margin: 10px 4px 0;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--st-fg) 50%, #ff4d9a);
+}
+
+#dsgB .bu-rail { padding: clamp(36px, 6vw, 72px) 22px; overflow: hidden; }
+#dsgB .bu-rail-k {
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--st-accent);
+  margin: 0 0 18px;
+}
+#dsgB .bu-rail-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+#dsgB .bu-slide {
+  border-top: 1px solid var(--st-line);
+  padding-top: 14px;
+  opacity: 0;
+}
+#dsgB .bu-chip {
+  display: block;
+  width: 48px;
+  height: 8px;
+  margin-bottom: 10px;
+}
+#dsgB .bu-chip-vermu {
+  background: #ff4d9a;
+  box-shadow: 0 0 12px #ff4d9a;
+}
+#dsgB .bu-chip-tapeo {
+  background: #ffd166;
+  box-shadow: 0 0 12px #ffd166;
+}
+#dsgB .bu-chip-partido {
+  background: #3dff8a;
+  box-shadow: 0 0 12px #3dff8a;
+}
+#dsgB .bu-slide b {
+  display: block;
+  font-family: "Bebas Neue", var(--display);
+  font-size: 32px;
+  margin: 8px 0 4px;
+}
+#dsgB .bu-slide span { color: var(--st-dim); font-size: 13px; line-height: 1.5; }
+
+@media (max-width: 860px) {
+  #dsgB .bu-rail-row { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body data-motion="gsap" data-layout="tap-rail" data-mode="neon">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <a class="logo" href="#">Bar As Burgas</a>
+  <a class="wa" href="https://wa.me/34988221044">+34 988 22 10 44</a>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="hero-bar">
+  <div class="hero-copy">
+    <p class="kicker">Ourense · Rúa das Burgas</p>
+    <h1><b>La caña</b><b>bien tirada.</b><b>El resto, después.</b></h1>
+    <p class="lead">Barra de barrio junto a las termas. Caña corta, tapeo que se acaba y un teléfono que coge quien está detrás.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="https://wa.me/34988221044">Reservar barra</a>
+      <a class="btn btn-line" href="#carta">Ver la barra</a>
+    </div>
+  </div>
+  <div class="hero-media" role="img" aria-label="Barra"></div>
+</section>
+<div class="neon" aria-hidden="true">Abierto · L–J 12:00–01:00 · V–S 12:00–02:30 · D 12:00–16:00</div>
+<section class="taps" id="carta"><article class="tap"><em>01</em><h3>Caña</h3><p>Corta, con collarín. Si no está bien, se tira otra. Sin discusión.</p></article><article class="tap"><em>02</em><h3>Tapeo</h3><p>Lo que hay hoy, no un menú de 40 tapas congeladas.</p></article><article class="tap"><em>03</em><h3>Vermú</h3><p>El de siempre, con aceituna. Sábados a mediodía.</p></article><article class="tap"><em>04</em><h3>Partido</h3><p>Cuando juega el Ourense, se oye. Cuando no, se habla.</p></article><article class="tap"><em>05</em><h3>Combinados</h3><p>Sin espectáculo. El cubata que pediste, no un cóctel de feria.</p></article><article class="tap"><em>06</em><h3>Cierre</h3><p>Hasta tarde los viernes. La última no se niega si hay gente.</p></article></section>
+<section class="cta">
+  <h2>Una caña y se habla.</h2>
+  <a class="btn btn-solid" href="https://wa.me/34988221044">+34 988 22 10 44</a>
+</section>
+<footer>Bar As Burgas · Ourense · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="bb" style="--pour: 0">
+  <header class="bb-rail">
+    <span class="bb-brand">Bar As Burgas</span>
+    <span class="bb-open">Abierto · Ourense</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="bb-hero">
+    <div class="bb-copy">
+      <p class="bb-eyebrow">Rúa das Burgas · Ourense</p>
+      <h1 class="bb-name" data-split>Bar As Burgas</h1>
+      <p class="bb-claim">La caña bien tirada. El resto, después.</p>
+      <p class="bb-lead">Barra de barrio junto a las termas. Caña corta, tapeo que se acaba y un teléfono que coge quien está detrás.</p>
+      <a class="bb-cta" href="https://wa.me/34988221044">Pedir mesa en barra</a>
+    </div>
+    <!-- slot:hero-3d -->
+<div class="bu-alcove bu-tap">
+  <p class="bu-caption">AS BURGAS</p>
+  <canvas class="bu-view"></canvas>
+  <div class="bu-meter" aria-hidden="true">
+    <div class="bu-gauge">
+      <i class="bu-band"></i>
+      <i class="bu-level"></i>
+    </div>
+  </div>
+  <p class="bu-verdict">Tírala tú</p>
+</div>
+
+<!-- /slot:hero-3d -->
+  </section>
+
+  <div class="bb-band" aria-hidden="true"><div class="bb-band-track"><span>CAÑA</span><i>/</i><span>TAPEO</span><i>/</i><span>VERMÚ</span><i>/</i><span>PARTIDO</span><i>/</i><span>COMBINADOS</span><i>/</i><span>CIERRE</span><i>/</i><span>CAÑA</span><i>/</i><span>TAPEO</span><i>/</i><span>VERMÚ</span><i>/</i><span>PARTIDO</span><i>/</i><span>COMBINADOS</span><i>/</i><span>CIERRE</span><i>/</i></div></div>
+
+  <section class="bb-grid-sec">
+    <p class="bb-kicker">La barra</p>
+    <h2 class="bb-h2" data-split>Cañas, tapeo y partidos sin carta plastificada de centro comercial.</h2>
+    <div class="bb-grid"><article class="bb-tile"><em>01</em><h3>Caña</h3><p>Corta, con collarín. Si no está bien, se tira otra. Sin discusión.</p></article><article class="bb-tile"><em>02</em><h3>Tapeo</h3><p>Lo que hay hoy, no un menú de 40 tapas congeladas.</p></article><article class="bb-tile"><em>03</em><h3>Vermú</h3><p>El de siempre, con aceituna. Sábados a mediodía.</p></article><article class="bb-tile"><em>04</em><h3>Partido</h3><p>Cuando juega el Ourense, se oye. Cuando no, se habla.</p></article><article class="bb-tile"><em>05</em><h3>Combinados</h3><p>Sin espectáculo. El cubata que pediste, no un cóctel de feria.</p></article><article class="bb-tile"><em>06</em><h3>Cierre</h3><p>Hasta tarde los viernes. La última no se niega si hay gente.</p></article></div>
+  </section>
+
+  <!-- slot:stage-3d -->
+<section class="bu-rail">
+  <p class="bu-rail-k">Lo que hay hoy</p>
+  <div class="bu-rail-row">
+    <article class="bu-slide">
+      <i class="bu-chip bu-chip-vermu"></i>
+      <b>Vermú</b>
+      <span>El de siempre, con aceituna. Sábados a mediodía.</span>
+    </article>
+    <article class="bu-slide">
+      <i class="bu-chip bu-chip-tapeo"></i>
+      <b>Tapeo</b>
+      <span>Lo que hay hoy, no un menú de 40 tapas congeladas.</span>
+    </article>
+    <article class="bu-slide">
+      <i class="bu-chip bu-chip-partido"></i>
+      <b>Partido</b>
+      <span>Cuando juega el Ourense, se oye. Cuando no, se habla.</span>
+    </article>
+  </div>
+</section>
+
+<!-- /slot:stage-3d -->
+
+  <section class="bb-call">
+    <a class="bb-tel" href="tel:34988221044">+34 988 22 10 44</a>
+    <span>L–J 12:00–01:00 · V–S 12:00–02:30 · D 12:00–16:00</span>
+  </section>
+  <footer class="bb-foot">Rúa das Burgas, Ourense</footer>
+</div>
+
+</div>
+<script>
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+function load(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = resolve; s.onerror = reject; document.head.appendChild(s);
+  });
+}
+if (!reduced) {
+  load("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js").then(() => {
+    gsap.from("h1 b", { yPercent: 36, duration: 1, stagger: 0.08, ease: "power4.out" });
+    gsap.to(".neon", { opacity: 0.35, repeat: -1, yoyo: true, duration: 0.9, ease: "steps(2)" });
+    gsap.from(".tap", { y: 22, stagger: 0.06, duration: 0.65, ease: "power2.out", delay: 0.2 });
+  }).catch(() => {});
+}
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+window.__staticB = function (panel) {
+  window.__splitB(panel);
+  panel.querySelectorAll(".bb-c, .bb-eyebrow, .bb-claim, .bb-lead, .bb-cta").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  var alcove = panel.querySelector(".bu-alcove");
+  if (alcove) alcove.style.setProperty("--pour", "0.78");
+  var v = panel.querySelector(".bu-verdict");
+  if (v) { v.textContent = "Bien tirada"; v.classList.add("is-ok"); }
+  var hint = panel.querySelector(".bu-hint");
+  if (hint) hint.remove();
+  panel.querySelectorAll(".bu-slide").forEach(function (el) { el.style.opacity = "1"; });
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate;
+  var createTimeline = A.createTimeline;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  var alcove = panel.querySelector(".bu-alcove");
+  var verdict = panel.querySelector(".bu-verdict");
+  var state = { pour: 0 };
+  var handle3d = null;
+
+  window.__splitB(panel);
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelectorAll(".bb-hero .bb-c"), {
+    y: [70, 0], rotateX: [-84, 0], opacity: [0, 1], duration: 900, delay: A.stagger(15)
+  }, 0);
+  intro.add(panel.querySelectorAll(".bb-eyebrow, .bb-claim, .bb-lead, .bb-cta"), {
+    y: [26, 0], opacity: [0, 1], duration: 760, delay: A.stagger(80)
+  }, 180);
+
+  var track = panel.querySelector(".bb-band-track");
+  if (track) {
+    track.innerHTML = track.innerHTML + track.innerHTML;
+    animate(track, {
+      x: [0, -track.scrollWidth / 2],
+      duration: track.scrollWidth * 12,
+      ease: "linear",
+      loop: true
+    });
+  }
+
+  panel.querySelectorAll(".bb-cta").forEach(function (el) {
+    el.addEventListener("mousemove", function (ev) {
+      var r = el.getBoundingClientRect();
+      animate(el, {
+        x: (ev.clientX - r.left - r.width / 2) * 0.3,
+        y: (ev.clientY - r.top - r.height / 2) * 0.3,
+        duration: 220, ease: "outQuad"
+      });
+    });
+    el.addEventListener("mouseleave", function () {
+      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.6)" });
+    });
+  });
+
+  var rail = panel.querySelector(".bu-rail");
+  if (rail) {
+    animate(panel.querySelectorAll(".bu-slide"), {
+      x: [48, 0], opacity: [0, 1], duration: 780, ease: "outExpo", delay: A.stagger(90),
+      autoplay: A.onScroll({ target: rail, enter: "bottom-=120 top" })
+    });
+  }
+
+  function paintPour(v) {
+    v = A.utils.clamp(v, 0, 1);
+    state.pour = v;
+    if (handle3d) handle3d.userData.pour = v;
+    if (alcove) alcove.style.setProperty("--pour", String(v));
+    return v;
+  }
+
+  function buJudge(v) {
+    if (!verdict) return;
+    verdict.classList.remove("is-ok", "is-bad");
+    if (v >= 0.72 && v <= 0.88) {
+      verdict.textContent = "Bien tirada";
+      verdict.classList.add("is-ok");
+    } else if (v > 0.92) {
+      verdict.textContent = "Si no está bien, se tira otra";
+      verdict.classList.add("is-bad");
+    } else {
+      verdict.textContent = "Tírala tú";
+    }
+  }
+
+  if (alcove) {
+    /* It pours itself: fill, let the head settle, hold the good caña, start
+       again. A scroll scrub left the glass empty for anyone who just landed. */
+    A.createTimeline({ loop: true, defaults: { ease: "linear" } })
+      .add(state, {
+        pour: [0, 0.96], duration: 2600, ease: "inOutSine",
+        onUpdate: function () { buJudge(paintPour(state.pour)); }
+      }, 700)
+      .add(state, {
+        pour: 0.80, duration: 1500, ease: "outQuad",
+        onUpdate: function () { buJudge(paintPour(state.pour)); }
+      }, 3400)
+      .add(state, {
+        pour: 0, duration: 520, ease: "inQuad",
+        onUpdate: function () { buJudge(paintPour(state.pour)); }
+      }, 7200);
+  }
+
+  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
+    var view = panel.querySelector(".bu-view");
+    var host = panel.querySelector(".bu-tap");
+    if (!view || !host) return;
+
+    var tiny = matchMedia("(max-width: 700px)").matches;
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
+    gpu.setClearColor(0x000000, 0);
+
+    var world = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+    var camFar = new THREE.Vector3(1.86, 1.52, 3.18);
+    var camNear = new THREE.Vector3(1.70, 1.38, 2.92);
+    camera.position.copy(camFar);
+    camera.lookAt(0.02, 0.50, 0.08);
+
+    var data = new Uint8Array([0, 85, 170, 255]);
+    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
+    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
+    ramp.needsUpdate = true;
+
+    function toon(color, extra) {
+      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
+      if (extra) Object.assign(mat, extra);
+      return mat;
+    }
+    var ink = new THREE.MeshBasicMaterial({ color: 0x0c0a08, side: THREE.BackSide });
+    function inked(mesh, s) {
+      var shell = new THREE.Mesh(mesh.geometry, ink);
+      shell.scale.setScalar(s || 1.04);
+      mesh.add(shell);
+      return mesh;
+    }
+
+    world.add(new THREE.AmbientLight(0x4a2838, 0.92));
+    var key = new THREE.DirectionalLight(0xffd089, 2.35);
+    key.position.set(2.8, 4.2, 3.4);
+    world.add(key);
+    var rim = new THREE.DirectionalLight(0xff4d9a, 1.35);
+    rim.position.set(-3.2, 1.8, -2.2);
+    world.add(rim);
+    var fill = new THREE.DirectionalLight(0xffd166, 0.55);
+    fill.position.set(-1.2, 2.4, 4);
+    world.add(fill);
+    var neonLamp = new THREE.PointLight(0xff2d6a, 0.85, 2.4);
+    neonLamp.position.set(0.08, 1.10, -0.42);
+    world.add(neonLamp);
+
+    var steel = toon(0xcfa65f);
+    var gold = toon(0xffd166);
+    var wood = toon(0x3a2418);
+    var wallMat = toon(0x1a0a12);
+    var amber = toon(0xf0a41c, { transparent: true, opacity: 0.96 });
+    var foamMat = toon(0xf7efe2, { transparent: true, opacity: 0 });
+
+    var rig = new THREE.Group();
+    world.add(rig);
+
+    var wall = inked(new THREE.Mesh(new THREE.BoxGeometry(1.85, 1.45, 0.07), wallMat), 1.02);
+    wall.position.set(0.05, 0.62, -0.68);
+    rig.add(wall);
+
+    function signTex() {
+      var c = document.createElement("canvas");
+      c.width = 1024;
+      c.height = 256;
+      var x = c.getContext("2d");
+      x.clearRect(0, 0, 1024, 256);
+      x.shadowColor = "#ff4d9a";
+      x.shadowBlur = 32;
+      x.fillStyle = "#ff4d9a";
+      x.font = "700 132px Impact, Arial Black, sans-serif";
+      x.textAlign = "center";
+      x.textBaseline = "middle";
+      x.fillText("AS BURGAS", 512, 128);
+      x.shadowBlur = 6;
+      x.fillStyle = "#ffd0e6";
+      x.fillText("AS BURGAS", 512, 128);
+      var tex = new THREE.CanvasTexture(c);
+      tex.needsUpdate = true;
+      return tex;
+    }
+    var neonBody = inked(new THREE.Mesh(new THREE.BoxGeometry(1.18, 0.32, 0.08), toon(0x2a0814)), 1.03);
+    neonBody.position.set(-0.06, 1.08, -0.58);
+    rig.add(neonBody);
+    var glow = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.55, 0.42),
+      new THREE.MeshBasicMaterial({ color: 0xff2d6a, transparent: true, opacity: 0.28 })
+    );
+    glow.position.set(0.08, 1.08, -0.52);
+    rig.add(glow);
+    var sign = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.42, 0.36),
+      new THREE.MeshBasicMaterial({ map: signTex(), transparent: true, depthWrite: false })
+    );
+    sign.position.set(-0.06, 1.08, -0.51);
+    rig.add(sign);
+
+    rig.rotation.y = -0.32;
+
+    var trayPts = [
+      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.62, 0.00),
+      new THREE.Vector2(0.64, 0.03), new THREE.Vector2(0.58, 0.06),
+      new THREE.Vector2(0.00, 0.06)
+    ];
+    var tray = inked(new THREE.Mesh(new THREE.LatheGeometry(trayPts, 40), wood), 1.03);
+    tray.scale.set(1.15, 1, 0.72);
+    tray.position.set(0.04, -0.04, 0.06);
+    rig.add(tray);
+    var g;
+    for (g = 0; g < 5; g++) {
+      var slat = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.02, 10), steel), 1.06);
+      slat.rotation.z = Math.PI / 2;
+      slat.position.set(0.04, 0.028, -0.16 + g * 0.09);
+      rig.add(slat);
+    }
+
+    var colPts = [
+      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.18, 0.00),
+      new THREE.Vector2(0.16, 0.05), new THREE.Vector2(0.11, 0.10),
+      new THREE.Vector2(0.11, 0.96), new THREE.Vector2(0.14, 1.02),
+      new THREE.Vector2(0.17, 1.08), new THREE.Vector2(0.00, 1.08)
+    ];
+    var column = inked(new THREE.Mesh(new THREE.LatheGeometry(colPts, 36), steel), 1.03);
+    column.position.set(-0.38, 0.02, 0);
+    rig.add(column);
+    var collar = inked(new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.028, 10, 28), steel), 1.05);
+    collar.rotation.x = Math.PI / 2;
+    collar.position.set(-0.38, 1.10, 0);
+    rig.add(collar);
+    var badge = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.04, 24), gold), 1.06);
+    badge.rotation.x = Math.PI / 2;
+    badge.position.set(-0.38, 0.62, 0.12);
+    rig.add(badge);
+
+    var tapHead = new THREE.Group();
+    tapHead.position.set(-0.38, 1.18, 0);
+    rig.add(tapHead);
+
+    handle3d = new THREE.Group();
+    handle3d.userData.pour = state.pour;
+    var shaft = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.024, 0.028, 0.36, 16), steel), 1.05);
+    shaft.position.y = 0.18;
+    var knob = inked(new THREE.Mesh(new THREE.SphereGeometry(0.078, 24, 18), gold), 1.05);
+    knob.position.y = 0.38;
+    var knobIn = new THREE.Mesh(new THREE.SphereGeometry(0.03, 14, 12), toon(0x1a0a10));
+    knobIn.position.y = 0.4;
+    handle3d.add(shaft);
+    handle3d.add(knob);
+    handle3d.add(knobIn);
+    tapHead.add(handle3d);
+
+    var spout = new THREE.Group();
+    var armCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.02, 0.00, 0.00),
+      new THREE.Vector3(0.28, 0.02, 0.06),
+      new THREE.Vector3(0.52, 0.00, 0.14),
+      new THREE.Vector3(0.60, -0.08, 0.16)
+    ]);
+    var arm = inked(new THREE.Mesh(new THREE.TubeGeometry(armCurve, 24, 0.032, 12, false), steel), 1.04);
+    var down = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.036, 0.18, 16), steel), 1.04);
+    down.position.set(0.6, -0.16, 0.16);
+    var nozzle = inked(new THREE.Mesh(new THREE.LatheGeometry([
+      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.042, 0.00),
+      new THREE.Vector2(0.038, 0.03), new THREE.Vector2(0.028, 0.05),
+      new THREE.Vector2(0.00, 0.05)
+    ], 20), steel), 1.05);
+    nozzle.position.set(0.6, -0.28, 0.16);
+    spout.add(arm);
+    spout.add(down);
+    spout.add(nozzle);
+    tapHead.add(spout);
+
+    var glassPts = [
+      new THREE.Vector2(0.14, 0.00), new THREE.Vector2(0.14, 0.03),
+      new THREE.Vector2(0.06, 0.05), new THREE.Vector2(0.055, 0.1),
+      new THREE.Vector2(0.11, 0.18), new THREE.Vector2(0.175, 0.34),
+      new THREE.Vector2(0.15, 0.48), new THREE.Vector2(0.17, 0.62),
+      new THREE.Vector2(0.168, 0.62), new THREE.Vector2(0.148, 0.48),
+      new THREE.Vector2(0.172, 0.34), new THREE.Vector2(0.108, 0.18),
+      new THREE.Vector2(0.058, 0.1), new THREE.Vector2(0.062, 0.05),
+      new THREE.Vector2(0.00, 0.05)
+    ];
+    /* Do not ink the glass. The outline shell is an opaque black BackSide
+       mesh, and through a transparent wall you simply see the black: the
+       caña read as an empty tar cup. Glass gets a rim highlight instead. */
+    var glass = new THREE.Mesh(
+      new THREE.LatheGeometry(glassPts, 48),
+      toon(0xf2ece2, { transparent: true, opacity: 0.18, depthWrite: false })
+    );
+    glass.renderOrder = 3;
+    var pint = new THREE.Group();
+    pint.position.set(0.22, 0.02, 0.16);
+    pint.add(glass);
+    var coaster = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.028, 28), wood), 1.05);
+    coaster.position.y = -0.01;
+    pint.add(coaster);
+
+    var beerH = 0.46;
+    /* Unlit, so the beer never falls into the dark band of the toon ramp
+       inside the glass. */
+    var beer = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.125, 0.095, 1, 32),
+      new THREE.MeshBasicMaterial({ color: 0xe8981a })
+    );
+    beer.renderOrder = 1;
+    beer.position.y = 0.12;
+    pint.add(beer);
+    var foam = new THREE.Mesh(new THREE.TorusGeometry(0.118, 0.038, 12, 28), foamMat);
+    foam.renderOrder = 2;
+    foam.rotation.x = Math.PI / 2;
+    pint.add(foam);
+    var foamCap = new THREE.Mesh(new THREE.SphereGeometry(0.13, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.45), foamMat);
+    foamCap.renderOrder = 2;
+    pint.add(foamCap);
+    rig.add(pint);
+
+    var stream = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.016, 0.026, 1, 12),
+      toon(0xd4922a, { transparent: true, opacity: 0.78 })
+    );
+    stream.visible = false;
+    rig.add(stream);
+
+    var bubbles = [];
+    var bi;
+    for (bi = 0; bi < 16; bi++) {
+      var bub = new THREE.Mesh(
+        new THREE.SphereGeometry(0.007 + (bi % 4) * 0.003, 8, 6),
+        toon(0xf7efe2, { transparent: true, opacity: 0.5 })
+      );
+      bub.userData.seed = bi * 0.41;
+      pint.add(bub);
+      bubbles.push(bub);
+    }
+
+    var drip = new THREE.Mesh(
+      new THREE.SphereGeometry(0.022, 12, 10),
+      toon(0xd4922a, { transparent: true, opacity: 0.9 })
+    );
+    drip.visible = false;
+    drip.position.set(0.22, 0.92, 0.16);
+    rig.add(drip);
+
+    function radialTex() {
+      var c = document.createElement("canvas");
+      c.width = c.height = 128;
+      var x = c.getContext("2d");
+      var g = x.createRadialGradient(64, 64, 4, 64, 64, 64);
+      g.addColorStop(0, "rgba(0,0,0,.55)");
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      x.fillStyle = g;
+      x.fillRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(c);
+    }
+    var shadow = new THREE.Mesh(
+      new THREE.CircleGeometry(0.85, 28),
+      new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide })
+    );
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.set(0.02, -0.085, 0.04);
+    shadow.scale.set(1.4, 0.55, 1);
+    rig.add(shadow);
+
+    function fitView() {
+      var w = view.clientWidth, h = view.clientHeight;
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+      gpu.setSize(w, h, false);
+    }
+    fitView();
+    window.addEventListener("resize", fitView);
+
+    var onStage = true;
+    if (window.IntersectionObserver) {
+      onStage = false;
+      new IntersectionObserver(function (entries) {
+        onStage = entries[0].isIntersecting;
+      }, { rootMargin: "12% 0px" }).observe(host);
+    }
+
+    var look = new THREE.Vector3();
+    function frame() {
+      requestAnimationFrame(frame);
+      if (!onStage) return;
+      var p = state.pour;
+      var now = performance.now();
+      if (handle3d) {
+        handle3d.userData.pour = p;
+        handle3d.rotation.x = handle3d.userData.pour * 1.08;
+      }
+      beer.scale.y = Math.max(0.02, p * beerH);
+      beer.position.y = 0.12 + beer.scale.y * 0.5;
+      var foamY = beer.position.y + beer.scale.y * 0.5;
+      foam.position.y = foamY;
+      foamCap.position.y = foamY + 0.01;
+      foam.material.opacity = Math.min(1, p * 1.25) * 0.95;
+      foamCap.material.opacity = foam.material.opacity * 0.85;
+      foam.scale.setScalar(0.72 + p * 0.32);
+      foamCap.scale.setScalar(0.78 + p * 0.22);
+
+      var nozzleY = 0.90;
+      var len = Math.max(0.04, nozzleY - foamY);
+      stream.visible = p > 0.06;
+      stream.position.set(0.22, (nozzleY + foamY) * 0.5, 0.16);
+      stream.scale.set(0.7 + p * 0.5, len, 0.7 + p * 0.5);
+      stream.material.opacity = Math.min(0.85, p * 1.4);
+
+      var i, u, h;
+      h = beer.scale.y;
+      for (i = 0; i < bubbles.length; i++) {
+        u = ((now * 0.00032 + bubbles[i].userData.seed) % 1);
+        bubbles[i].visible = p > 0.18;
+        bubbles[i].position.set(
+          Math.sin(bubbles[i].userData.seed * 9) * 0.07,
+          0.14 + u * h * 0.92,
+          Math.cos(bubbles[i].userData.seed * 7) * 0.07
+        );
+        bubbles[i].material.opacity = (1 - u) * p * 0.55;
+      }
+
+      if (p > 0.28) {
+        drip.visible = true;
+        drip.position.y = 0.92 - ((now * 0.0018) % 0.42);
+        drip.material.opacity = Math.min(1, (p - 0.28) * 2);
+      } else {
+        drip.visible = false;
+      }
+
+      buJudge(p);
+      camera.position.lerpVectors(camFar, camNear, p);
+      look.set(0.08 + p * 0.12, 0.36 + p * 0.1, 0.08);
+      camera.lookAt(look);
+      rig.rotation.y = -0.32 + p * 0.14;
+      neonLamp.intensity = 1.15 + Math.sin(now * 0.006) * 0.25;
+      glow.material.opacity = 0.22 + Math.sin(now * 0.006) * 0.06;
+      gpu.render(world, camera);
+    }
+    frame();
+  }).catch(function () { window.__staticB(panel); });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "category": "optica",
+  "seed": "optiredondela-v1",
+  "motion": "motion",
+  "mode": "atelier",
+  "layout": "lookbook",
+  "display": "Cormorant Garamond",
+  "body": "Syne",
+  "radius": "14px",
+  "density": "compact",
+  "nav": "overlay",
+  "palette": {
+    "bg": "#0e0d0b",
+    "ink": "#f7f1e6",
+    "muted": "#b3aa9a",
+    "accent": "#d4b483",
+    "accent2": "#8a7350",
+    "line": "#2a2620",
+    "photo": "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "optica|motion|atelier|lookbook|Cormorant Garamond|Syne|14px|compact|overlay"
+}

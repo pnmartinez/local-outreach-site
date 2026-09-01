@@ -1,0 +1,22 @@
+{
+  "category": "taller",
+  "seed": "recambios-ochoa-v1",
+  "motion": "gsap",
+  "mode": "precision",
+  "layout": "bento",
+  "display": "Archivo Black",
+  "body": "Source Sans 3",
+  "radius": "4px",
+  "density": "regular",
+  "nav": "overlay",
+  "palette": {
+    "bg": "#f4f1ea",
+    "ink": "#141414",
+    "muted": "#5c5852",
+    "accent": "#0b5fff",
+    "accent2": "#111111",
+    "line": "#d8d3c8",
+    "photo": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "taller|gsap|precision|bento|Archivo Black|Source Sans 3|4px|regular|overlay"
+}

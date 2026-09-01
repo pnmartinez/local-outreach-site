@@ -1,0 +1,22 @@
+{
+  "category": "cafeteria",
+  "seed": "cafe-da-ponte-v1",
+  "motion": "hero:cafe-da-ponte",
+  "mode": "cream",
+  "layout": "hero",
+  "display": "Bitter",
+  "body": "Outfit",
+  "radius": "28px",
+  "density": "air",
+  "nav": "split",
+  "palette": {
+    "bg": "#f4ece2",
+    "ink": "#2a1c14",
+    "muted": "#7a6a5a",
+    "accent": "#6b3a24",
+    "accent2": "#c4a574",
+    "line": "#e0d4c6",
+    "photo": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "cafeteria|hero:cafe-da-ponte|cream|hero|Bitter|Outfit|28px|air|split"
+}

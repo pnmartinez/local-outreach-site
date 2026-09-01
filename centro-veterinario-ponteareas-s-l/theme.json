@@ -1,0 +1,22 @@
+{
+  "category": "veterinario",
+  "seed": "centro-veterinario-ponteareas-s-l-v1",
+  "motion": "animejs",
+  "mode": "lab",
+  "layout": "magazine",
+  "display": "Cormorant Garamond",
+  "body": "Nunito Sans",
+  "radius": "14px",
+  "density": "air",
+  "nav": "top",
+  "palette": {
+    "bg": "#f3f7f5",
+    "ink": "#10231c",
+    "muted": "#5b6e66",
+    "accent": "#0f8f6b",
+    "accent2": "#16332a",
+    "line": "#d5e3dc",
+    "photo": "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "veterinario|animejs|lab|magazine|Cormorant Garamond|Nunito Sans|14px|air|top"
+}

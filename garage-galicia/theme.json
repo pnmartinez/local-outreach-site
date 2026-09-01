@@ -1,0 +1,22 @@
+{
+  "category": "taller",
+  "seed": "garage-galicia-v1",
+  "motion": "gsap",
+  "mode": "forge",
+  "layout": "split",
+  "display": "Oswald",
+  "body": "IBM Plex Sans",
+  "radius": "28px",
+  "density": "air",
+  "nav": "split",
+  "palette": {
+    "bg": "#161311",
+    "ink": "#efe6d9",
+    "muted": "#a3988a",
+    "accent": "#e8c547",
+    "accent2": "#c23b22",
+    "line": "#3a322c",
+    "photo": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "taller|gsap|forge|split|Oswald|IBM Plex Sans|28px|air|split"
+}

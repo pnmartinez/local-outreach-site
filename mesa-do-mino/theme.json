@@ -1,0 +1,22 @@
+{
+  "category": "restaurante",
+  "seed": "mesa-do-mino-v1",
+  "motion": "animejs",
+  "mode": "hearth",
+  "layout": "tasting",
+  "display": "Libre Baskerville",
+  "body": "Karla",
+  "radius": "14px",
+  "density": "regular",
+  "nav": "split",
+  "palette": {
+    "bg": "#f6efe4",
+    "ink": "#1e140e",
+    "muted": "#6e5a4a",
+    "accent": "#b42318",
+    "accent2": "#3d2a1c",
+    "line": "#e0d2c2",
+    "photo": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "restaurante|animejs|hearth|tasting|Libre Baskerville|Karla|14px|regular|split"
+}

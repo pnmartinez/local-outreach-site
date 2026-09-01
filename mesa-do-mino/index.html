@@ -1,0 +1,1408 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Mesa do Miño · Ourense</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231a120c%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%228.4%22%20fill%3D%22none%22%20stroke%3D%22%23c45c28%22%20stroke-width%3D%222.4%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%223.2%22%20fill%3D%22%23c45c28%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #f6efe4;
+  --ink: #1e140e;
+  --muted: #6e5a4a;
+  --accent: #b42318;
+  --accent2: #3d2a1c;
+  --line: #e0d2c2;
+  --display: "Libre Baskerville", serif;
+  --body: "Karla", system-ui, sans-serif;
+  --radius: 14px;
+  --pad: 22px; --gap: 20px; --hero: clamp(48px, 10vw, 104px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 28px var(--pad) 10px; letter-spacing: .14em; text-transform: uppercase; font-size: 12px;
+}
+.mark { font-family: var(--display); letter-spacing: 0; text-transform: none; font-size: 26px; font-style: italic; }
+.book { color: var(--accent); text-decoration: none; }
+.hero-carte {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px;
+  padding: 18px var(--pad) 56px; align-items: end;
+}
+.kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--accent); }
+h1 {
+  font-family: var(--display); font-weight: 400; font-size: clamp(40px, 6vw, 78px);
+  line-height: 1.02; margin: 10px 0 16px; max-width: 16ch;
+}
+.lead { font-size: 18px; line-height: 1.55; max-width: 40ch; color: var(--muted); }
+.plate {
+  min-height: 68vh; border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, transparent 38%, color-mix(in srgb, var(--bg) 40%, transparent)),
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80") center/cover;
+}
+.quote {
+  margin: 0 var(--pad) 40px; padding-top: 28px; border-top: 1px solid var(--line);
+  font-family: var(--display); font-style: italic; font-size: clamp(26px, 4vw, 44px); max-width: 24ch;
+}
+.menu {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  margin: 0 var(--pad) 64px; border: 1px solid var(--line);
+}
+.course { padding: 26px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.course:nth-child(2n) { border-right: 0; }
+.course span { color: var(--accent); font-size: 11px; letter-spacing: .16em; }
+.course h3 { font-family: var(--display); font-size: 28px; margin: 8px 0; font-weight: 400; }
+.course p { margin: 0; color: var(--muted); line-height: 1.45; }
+.band {
+  margin: 0 var(--pad) 72px; padding: 28px; background: var(--accent2); color: var(--bg);
+  display: flex; justify-content: space-between; gap: 20px; border-radius: var(--radius);
+}
+.band a { color: var(--bg); }
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .hero-carte { grid-template-columns: 1fr; }
+  .plate { min-height: 42vh; order: -1; }
+  .menu { grid-template-columns: 1fr; }
+  .course { border-right: 0; }
+  .band { flex-direction: column; }
+}
+
+
+#dsgB {
+  --st-bg: #fcf9f5;
+  --st-fg: #160f0a;
+  --st-accent: #b42318;
+  --st-second: #3d2a1c;
+  --st-glow: #b42318;
+  --st-line: #d3cfcb;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .rb {
+  --lift: 0;
+  background:
+    radial-gradient(80% 50% at 10% 0%, color-mix(in srgb, var(--st-glow) 18%, transparent), transparent 60%),
+    var(--st-bg);
+  font-family: "Karla", sans-serif;
+}
+#dsgB .rb h1, #dsgB .rb h2, #dsgB .rb h3, #dsgB .rb .rb-brand, #dsgB .rb .rb-tel {
+  font-family: "Libre Baskerville", var(--display);
+}
+#dsgB .rb-rail {
+  display: flex; align-items: baseline; gap: 16px; padding: 22px 24px 10px;
+}
+#dsgB .rb-brand { font-size: 24px; font-style: italic; }
+#dsgB .rb-place { margin-left: auto; letter-spacing: .16em; text-transform: uppercase; font-size: 11px; color: var(--st-dim); }
+#dsgB .rb-hero {
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px;
+  padding: 12px 24px 48px; align-items: end;
+}
+#dsgB .rb-eyebrow { letter-spacing: .18em; text-transform: uppercase; font-size: 11px; color: var(--st-accent); }
+#dsgB .rb-name { font-size: clamp(42px, 7vw, 84px); line-height: 1; margin: 8px 0 14px; font-weight: 400; }
+#dsgB .rb-claim { font-size: 22px; font-style: italic; max-width: 20ch; }
+#dsgB .rb-lead { color: var(--st-dim); max-width: 38ch; line-height: 1.55; }
+#dsgB .rb-cta, #dsgB .rb-tel {
+  display: inline-block; margin-top: 20px; color: var(--st-bg); background: var(--st-accent);
+  text-decoration: none; padding: 14px 18px;
+}
+#dsgB .rb-table { display: grid; justify-items: center; gap: 10px; }
+#dsgB .rb-stage { width: min(320px, 78vw); }
+#dsgB .rb-plate { fill: color-mix(in srgb, var(--st-fg) 18%, var(--st-bg)); }
+#dsgB .rb-dish { fill: var(--st-second); }
+#dsgB .rb-cloche {
+  fill: color-mix(in srgb, var(--st-fg) 12%, var(--st-bg));
+  stroke: var(--st-fg); stroke-width: 2;
+  transform: translateY(calc(var(--lift) * -46px));
+  transform-box: fill-box; transform-origin: center bottom;
+}
+#dsgB .rb-course-name { fill: var(--st-fg); font-size: 14px; letter-spacing: .14em; text-transform: uppercase; }
+#dsgB .rb-track {
+  position: relative; width: min(220px, 70vw); height: 14px;
+  background: var(--st-line); border-radius: 999px;
+}
+#dsgB .rb-knob {
+  position: absolute; top: 50%; left: 0; width: 28px; height: 28px; margin: -14px 0 0 -4px;
+  border: 0; border-radius: 50%; background: var(--st-accent); cursor: grab;
+}
+#dsgB .rb-hint { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .rb-courses, #dsgB .rb-menu, #dsgB .rb-book { padding: 20px 24px 48px; }
+#dsgB .rb-kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--st-accent); }
+#dsgB .rb-h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 400; max-width: 18ch; }
+#dsgB .rb-deck { position: relative; min-height: 180px; margin-top: 24px; }
+#dsgB .rb-card {
+  position: absolute; inset: 0 auto auto 0; width: min(420px, 92%);
+  padding: 22px; border: 1px solid var(--st-line); background: var(--st-bg);
+  cursor: grab;
+}
+#dsgB .rb-card em { color: var(--st-accent); font-size: 11px; letter-spacing: .16em; }
+#dsgB .rb-card h3 { font-size: 32px; margin: 6px 0; font-weight: 400; }
+#dsgB .rb-rows { border-top: 1px solid var(--st-line); }
+#dsgB .rb-dish-row { padding: 18px 0; border-bottom: 1px solid var(--st-line); }
+#dsgB .rb-dish-row h3 { margin: 0 0 6px; font-size: 24px; font-weight: 400; }
+#dsgB .rb-dish-row p { margin: 0; color: var(--st-dim); }
+#dsgB .rb-quote { font-family: "Libre Baskerville", serif; font-style: italic; font-size: 28px; max-width: 22ch; }
+#dsgB .rb-foot { padding: 0 24px 48px; color: var(--st-dim); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  #dsgB .rb-hero { grid-template-columns: 1fr; }
+}
+/* A Mesa do Miño — the pass, as one scroll. This lead only.
+
+   FULL-PAGE-REPLAN: one fixed canvas is the page and this markup is the
+   overlay on top of it. The two rules that make it work, and that a
+   brochure breaks:
+     1. NO section paints a background. The ground is one animated colour
+        on the panel, driven from the render loop as the scene goes from
+        the kitchen pass (near-ink) to the dining room (cream).
+     2. NOTHING between #dsgB and .mn-stage may carry transform, filter,
+        perspective, contain or will-change — any of them would trap
+        position:fixed and put the canvas back inside a column. */
+
+#dsgB {
+  background: var(--mn-ground, var(--st-bg));
+  color: var(--mn-fg, var(--st-fg));
+  transition: background-color .2s linear;
+}
+
+#dsgB .mn { position: relative; }
+
+#dsgB .mn-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#dsgB .mn-view { display: block; width: 100%; height: 100%; }
+
+#dsgB .mn-rail {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px clamp(20px, 4vw, 56px);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--mn-fg, var(--st-fg));
+  mix-blend-mode: normal;
+}
+#dsgB .mn-brand { font-weight: 700; }
+#dsgB .mn-place { opacity: .6; margin-right: auto; }
+
+/* The switch has to stay legible while the ground animates from the
+   kitchen pass to the dining room. The family rule paints it with
+   --st-dim, which is near-black — invisible for the whole dark half. */
+#dsgB .mn .dsg-switch {
+  border-color: color-mix(in srgb, var(--mn-fg, var(--st-fg)) 34%, transparent);
+  background: transparent;
+}
+#dsgB .mn .dsg-btn { color: color-mix(in srgb, var(--mn-fg, var(--st-fg)) 66%, transparent); }
+#dsgB .mn .dsg-btn[aria-pressed="true"] {
+  background: var(--st-accent);
+  color: var(--st-bg);
+}
+
+#dsgB .mn-scroll { position: relative; z-index: 2; }
+
+/* Each chapter is scroll length; its inner pins for one viewport while
+   the scene advances underneath. */
+#dsgB .mn-ch { position: relative; }
+#dsgB .mn-ch-0 { height: 130vh; }
+#dsgB .mn-ch-1 { height: 260vh; }
+#dsgB .mn-ch-2 { height: 130vh; }
+#dsgB .mn-ch-3 { height: 120vh; }
+
+#dsgB .mn-in {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: center;
+  padding: 0 clamp(20px, 5vw, 84px);
+  pointer-events: none;
+}
+#dsgB .mn-in > * { pointer-events: auto; }
+#dsgB .mn-in-left { justify-items: start; text-align: left; max-width: 46ch; }
+#dsgB .mn-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 52ch; }
+#dsgB .mn-in-centre { justify-items: center; text-align: center; }
+
+/* Split type. The panel owns its own splitter, so these classes are
+   not the family's. */
+#dsgB .mn-word { display: inline-block; white-space: nowrap; }
+#dsgB .mn-c { display: inline-block; will-change: transform, opacity; }
+
+/* Anything the render loop reveals starts hidden, or it flashes at full
+   opacity for the frames before the first tick. */
+#dsgB .mn-h2 .mn-c,
+#dsgB .mn-service,
+#dsgB .mn-ch-2 .mn-kicker,
+#dsgB .mn-ch-3 .mn-in > * { opacity: 0; }
+
+#dsgB .mn-eyebrow,
+#dsgB .mn-kicker {
+  margin: 0 0 18px;
+  font-size: 11px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+#dsgB .mn-name {
+  margin: 0;
+  font-family: "Libre Baskerville", var(--display);
+  font-weight: 400;
+  font-size: clamp(46px, 8.2vw, 118px);
+  line-height: .96;
+  letter-spacing: -.02em;
+}
+#dsgB .mn-claim {
+  margin: 22px 0 0;
+  font-family: "Libre Baskerville", var(--display);
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 34px);
+  line-height: 1.25;
+  opacity: .82;
+}
+#dsgB .mn-lead {
+  margin: 20px 0 0;
+  max-width: 42ch;
+  font-size: 15px;
+  line-height: 1.75;
+  opacity: .62;
+}
+#dsgB .mn-cue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 46px 0 0;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .5;
+}
+#dsgB .mn-cue i { display: block; width: 44px; height: 1px; background: currentColor; }
+
+/* The four courses stack in place; the scene decides which one is lit. */
+#dsgB .mn-courses { display: grid; }
+#dsgB .mn-course {
+  grid-area: 1 / 1;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .mn-course em {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: .26em;
+  color: var(--st-accent);
+}
+#dsgB .mn-course h2 {
+  margin: 10px 0 12px;
+  font-family: "Libre Baskerville", var(--display);
+  font-weight: 400;
+  font-size: clamp(30px, 4.4vw, 60px);
+  line-height: 1.02;
+}
+#dsgB .mn-course p {
+  margin: 0;
+  max-width: 34ch;
+  margin-left: auto;
+  font-size: 15px;
+  line-height: 1.7;
+  opacity: .62;
+}
+
+/* Chapter 02 carries the most copy of the four. In a 46ch column each
+   service ran to 313px and the block came to ~1850px inside a 100vh
+   sticky pane — a centred grid overflows *upwards* when its content is
+   taller than the box, so the whole chapter sat above the viewport and
+   read as missing. Give it a wide two-column measure instead. */
+/* `width`, not `max-width`, and stretch: with justify-items:start the
+   services grid shrink-wrapped and every line broke after one word. */
+#dsgB .mn-ch-2 .mn-in-left {
+  width: min(92vw, 940px);
+  max-width: none;
+  justify-items: stretch;
+}
+
+#dsgB .mn-h2 {
+  margin: 0 0 32px;
+  font-family: "Libre Baskerville", var(--display);
+  font-weight: 400;
+  font-size: clamp(24px, 2.9vw, 42px);
+  line-height: 1.14;
+  max-width: 26ch;
+}
+#dsgB .mn-services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 44px;
+  width: 100%;
+}
+#dsgB .mn-service {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+#dsgB .mn-service em {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: var(--st-accent);
+}
+#dsgB .mn-service h3 { margin: 0 0 5px; font-size: 16px; font-weight: 600; }
+#dsgB .mn-service p { margin: 0; font-size: 13px; line-height: 1.6; opacity: .62; }
+
+#dsgB .mn-tel {
+  font-family: "Libre Baskerville", var(--display);
+  font-size: clamp(30px, 5.4vw, 74px);
+  text-decoration: none;
+  line-height: 1;
+}
+#dsgB .mn-hours { margin: 20px 0 0; font-size: 13px; opacity: .62; }
+#dsgB .mn-addr {
+  margin: 8px 0 0;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  opacity: .5;
+}
+
+/* The technical caption rides the fixed stage, not the flow. */
+#dsgB .mn-notes {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+#dsgB .mn-lead-line {
+  fill: none;
+  stroke: var(--mn-fg, var(--st-fg));
+  stroke-width: 1px;
+  stroke-opacity: .45;
+  vector-effect: non-scaling-stroke;
+}
+#dsgB .mn-note {
+  fill: var(--mn-fg, var(--st-fg));
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  #dsgB .mn-in { padding: 0 22px; }
+  #dsgB .mn-services { grid-template-columns: 1fr; }
+  #dsgB .mn-in-right { text-align: left; justify-items: start; margin-left: 0; }
+  #dsgB .mn-course p { margin-left: 0; }
+  #dsgB .mn-note { font-size: 9px; letter-spacing: .1em; }
+  #dsgB .mn-ch-1 { height: 300vh; }
+}
+
+</style>
+</head>
+<body data-motion="animejs" data-layout="tasting" data-mode="hearth">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="mark">A Mesa do Miño</span>
+  <a class="book" href="https://wa.me/34988372108">+34 988 37 21 08</a>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="hero-carte">
+  <div>
+    <p class="kicker">Ourense · Rúa Santo Domingo</p>
+    <h1>El río al lado. El plato, en su sitio.</h1>
+    <p class="lead">Cocina de mercado en Santo Domingo. Menú del día entre semana, parrilla el viernes y una reserva que se respeta.</p>
+  </div>
+  <figure class="plate" role="img" aria-label="Mesa"></figure>
+</section>
+<p class="quote">Si el pulpo está, se sirve. Si no, se dice.</p>
+<section class="menu" id="carta"><article class="course"><span>01</span><h3>Menú del día</h3><p>Tres platos que cambian. No es el de ayer con otro nombre.</p></article><article class="course"><span>02</span><h3>Parrilla</h3><p>Carne a la brasa. El punto lo decís vosotros, no la plancha.</p></article><article class="course"><span>03</span><h3>Pulpo y río</h3><p>Pulpo, lamprea cuando toca, y lo que baja del Miño.</p></article><article class="course"><span>04</span><h3>Vinos</h3><p>Ribeiro y Ribeira Sacra. Os decimos qué abre hoy.</p></article><article class="course"><span>05</span><h3>Reserva</h3><p>La mesa es vuestra a la hora. No os sentamos en el pasillo.</p></article><article class="course"><span>06</span><h3>Postre</h3><p>Tarta de Santiago o el flan de la casa. Nada de vitrina industrial.</p></article></section>
+<section class="band">
+  <div>
+    <strong>L–S 13:30–16:00 / 20:30–23:30 · D 13:30–16:30</strong>
+    <div>Rúa Santo Domingo, Ourense</div>
+  </div>
+  <a href="https://wa.me/34988372108">Reservar mesa · WhatsApp</a>
+</section>
+<footer>A Mesa do Miño · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+<div class="mn">
+  <div class="mn-stage" aria-hidden="true">
+    <canvas class="mn-view"></canvas>
+  </div>
+
+  <header class="mn-rail">
+    <span class="mn-brand">A Mesa do Miño</span>
+    <span class="mn-place">Ourense</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <div class="mn-scroll">
+    <section class="mn-ch mn-ch-0">
+      <div class="mn-in mn-in-left">
+        <p class="mn-eyebrow">Rúa Santo Domingo · Ourense</p>
+        <h1 class="mn-name" data-mn-split>A Mesa do Miño</h1>
+        <p class="mn-claim" data-mn-split>El río al lado. El plato, en su sitio.</p>
+        <p class="mn-lead">Cocina de mercado en Santo Domingo. Menú del día entre semana, parrilla el viernes y una reserva que se respeta.</p>
+        <p class="mn-cue"><i></i>Desplázate</p>
+      </div>
+    </section>
+
+    <section class="mn-ch mn-ch-1">
+      <div class="mn-in mn-in-right">
+        <p class="mn-kicker">El pase</p>
+        <div class="mn-courses"><article class="mn-course" data-course="0"><em>01</em><h2>Menú del día</h2><p>Tres platos que cambian. No es el de ayer con otro nombre.</p></article><article class="mn-course" data-course="1"><em>02</em><h2>Parrilla</h2><p>Carne a la brasa. El punto lo decís vosotros, no la plancha.</p></article><article class="mn-course" data-course="2"><em>03</em><h2>Pulpo á feira</h2><p>Si el pulpo está, se sirve. Corona, pimentón y cachelo.</p></article><article class="mn-course" data-course="3"><em>04</em><h2>Tarta de Santiago</h2><p>Almendra, azúcar y cruz. Nada de vitrina industrial.</p></article></div>
+      </div>
+    </section>
+
+    <section class="mn-ch mn-ch-2">
+      <div class="mn-in mn-in-left">
+        <p class="mn-kicker">La casa</p>
+        <h2 class="mn-h2" data-mn-split>Mesa Ourense: mercado, parrilla y un vino que no pide sommelier.</h2>
+        <div class="mn-services"><article class="mn-service"><em>01</em><div><h3>Menú del día</h3><p>Tres platos que cambian. No es el de ayer con otro nombre.</p></div></article><article class="mn-service"><em>02</em><div><h3>Parrilla</h3><p>Carne a la brasa. El punto lo decís vosotros, no la plancha.</p></div></article><article class="mn-service"><em>03</em><div><h3>Pulpo y río</h3><p>Pulpo, lamprea cuando toca, y lo que baja del Miño.</p></div></article><article class="mn-service"><em>04</em><div><h3>Vinos</h3><p>Ribeiro y Ribeira Sacra. Os decimos qué abre hoy.</p></div></article></div>
+      </div>
+    </section>
+
+    <section class="mn-ch mn-ch-3">
+      <div class="mn-in mn-in-centre">
+        <p class="mn-kicker">Reserva</p>
+        <a class="mn-tel" href="tel:34988372108">+34 988 37 21 08</a>
+        <p class="mn-hours">L–S 13:30–16:00 / 20:30–23:30 · D 13:30–16:30</p>
+        <p class="mn-addr">Rúa Santo Domingo · Ourense</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+</div>
+<script>
+
+function boot() {
+  if (typeof anime === "undefined") return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+  if (reduced) return;
+  anime({ targets: "h1", translateY: [18, 0], duration: 1100, easing: "easeOutExpo" });
+  anime({ targets: ".lead, .kicker", delay: 140, duration: 700, easing: "easeOutQuad" });
+  anime({ targets: ".plate", scale: [1.05, 1], duration: 1400, easing: "easeOutExpo" });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      anime({ targets: e.target.querySelectorAll(".course"), translateY: [16, 0], delay: anime.stagger(70), duration: 620, easing: "easeOutQuad" });
+      io.disconnect();
+    });
+  }, { threshold: 0.12 });
+  const menu = document.querySelector(".menu");
+  if (menu) io.observe(menu);
+}
+const s = document.createElement("script");
+s.src = "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js";
+s.onload = boot;
+document.head.appendChild(s);
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+/* A Mesa do Miño — el pase, en un solo scroll. This lead only.
+ *
+ * The page IS the scene. One fixed canvas draws the whole document; the
+ * markup is an overlay of sticky chapters with no background of their own.
+ * A single damped progress p ∈ [0,1] drives everything, and the chapters
+ * are labelled sub-ranges of it — not four independent animations.
+ *
+ *   00 · llegada   the empty plate turns alone in the dark
+ *   01 · el pase   four courses build and dismantle on it, named
+ *   02 · la casa   the camera pulls back, the lights come up, the plate
+ *                  becomes one setting on a long table
+ *   03 · reserva   back down to one plate, in daylight
+ *
+ * Light and dark are a lighting change *inside* the scene, animated on p.
+ * No section paints a background: that seam is what breaks Café da Ponte
+ * in half at its second viewport.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md (the seven laws) and
+ * landings/heroes/FULL-PAGE-REPLAN.md (the layer model).
+ */
+
+window.__staticB = function (panel) {
+  panel.querySelectorAll(".mn-course, .mn-service, .mn-in > *, .mn-h2 .mn-c, .mn-kicker").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  var cue = panel.querySelector(".mn-cue");
+  if (cue) cue.remove();
+  var courses = panel.querySelectorAll(".mn-course");
+  courses.forEach(function (c, i) { c.style.position = "static"; c.style.marginBottom = i < 3 ? "42px" : "0"; });
+  var root = panel.querySelector(".mn-courses");
+  if (root) root.style.display = "block";
+  panel.style.setProperty("--mn-ground", "");
+  panel.style.setProperty("--mn-fg", "");
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, utils = A.utils;
+
+  var stage = panel.querySelector(".mn-stage");
+  var view = panel.querySelector(".mn-view");
+  var scroller = panel.querySelector(".mn-scroll");
+  if (!stage || !view || !scroller) return;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  /* The panel owns its own splitter: the family one keys its class prefix
+     off the family body class, which this panel does not have. */
+  function splitText(el) {
+    if (!el || el.dataset.mnDone) return [];
+    el.dataset.mnDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var word = document.createElement("span");
+      word.className = "mn-word";
+      for (var i = 0; i < w.length; i++) {
+        var c = document.createElement("span");
+        c.className = "mn-c";
+        c.textContent = w[i];
+        word.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(word);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
+  }
+
+  /* --- the master progress -------------------------------------------
+     One scrub over the whole document. `sync` is v4's own smoothing, so
+     the damping is the library's rather than a hand-rolled lerp. */
+  var state = { p: 0, settle: 0, idle: 0 };
+  animate(state, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
+    })
+  });
+  animate(state, { settle: [0, 1], duration: 1600, delay: 260, ease: "outElastic(1, 0.7)" });
+  animate(state, { idle: [0, Math.PI * 2], duration: 14000, ease: "linear", loop: true });
+
+  /* Chapter 0 copy arrives on its own timeline; everything after chapter
+     0 is driven by p, because it has to stay in step with the scene. */
+  var nameChars = splitText(panel.querySelector(".mn-name"));
+  var claimChars = splitText(panel.querySelector(".mn-claim"));
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".mn-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 700 }, 220);
+  intro.add(nameChars, { opacity: [0, 1], y: [64, 0], duration: 1100, delay: stagger(18) }, 320);
+  intro.add(claimChars, { opacity: [0, 1], y: [26, 0], duration: 780, delay: stagger(9) }, 820);
+  intro.add(panel.querySelectorAll(".mn-lead, .mn-cue"), {
+    opacity: [0, 1], y: [18, 0], duration: 760, delay: stagger(110)
+  }, 1080);
+
+  /* Chapters 02 and 03 are revealed from the master progress, not from
+     their own scroll observers. Per-section observers gave every chapter
+     its own clock, which is the defect this page exists to remove — and
+     in practice they never fired, so both chapters stayed at opacity 0
+     while their scene played underneath. One clock, labelled ranges. */
+  splitText(panel.querySelector(".mn-h2"));
+  var h2Chars = panel.querySelectorAll(".mn-h2 .mn-c");
+  var serviceEls = panel.querySelectorAll(".mn-service");
+  var bookEls = panel.querySelectorAll(".mn-ch-3 .mn-in > *");
+  var courseEls = panel.querySelectorAll(".mn-course");
+  var ch0 = panel.querySelector(".mn-ch-0 .mn-in");
+  var kicker2 = panel.querySelector(".mn-ch-2 .mn-kicker");
+
+  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
+    /* --- law 1: the palette is the page's ---------------------------- */
+    var css = getComputedStyle(panel);
+    function tok(name, fallback) {
+      var v = css.getPropertyValue(name).trim();
+      return new THREE.Color(v || fallback);
+    }
+    var GROUND = tok("--st-bg", "#fcf9f5");
+    var INK = tok("--st-fg", "#160f0a");
+    var ACCENT = tok("--st-accent", "#b42318");
+    var SECOND = tok("--st-second", "#3d2a1c");
+
+    function mix(a, b, t) { return a.clone().lerp(b, t); }
+
+    /* A value ladder, not a set of hues. Law 1 binds the palette to the
+       page's tokens; it does not excuse putting every ingredient in the
+       same light band, which is what "everything is one mid-brown" was.
+       Four rungs from near-white to near-ink, all derived, plus the
+       accent as a spot. Ceramic stays lighter than any of them so the
+       plate always reads under the food. */
+    var C_CERAMIC = mix(GROUND, INK, 0.03);
+    var T_PALE = mix(GROUND, SECOND, 0.16);
+    var T_MID = mix(GROUND, SECOND, 0.42);
+    var T_DEEP = mix(GROUND, SECOND, 0.78);
+    var T_CHAR = mix(SECOND, INK, 0.45);
+    var C_ACCENT = ACCENT.clone();
+
+    function matte(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
+    }
+    var M_CERAMIC = matte(C_CERAMIC), M_PALE = matte(T_PALE),
+        M_MID = matte(T_MID), M_DEEP = matte(T_DEEP),
+        M_CHAR = matte(T_CHAR), M_ACCENT = matte(C_ACCENT),
+        M_SUGAR = matte(mix(GROUND, INK, 0.01));
+
+    /* --- law 3: hairline, not outline. Its colour flips with the
+       environment, or the drawing vanishes when the lights come up. */
+    var EDGE = new THREE.LineBasicMaterial({ color: GROUND, transparent: true, opacity: 0.38 });
+    var edges = [];
+    function lined(mesh, threshold) {
+      var seg = new THREE.LineSegments(
+        new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 20 : threshold),
+        EDGE.clone()
+      );
+      seg.material.userData.baseOpacity = 0.38;
+      edges.push(seg.material);
+      mesh.add(seg);
+      return mesh;
+    }
+
+    /* law 7: deterministic. */
+    function rnd(i) {
+      var x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    gpu.setClearColor(0x000000, 0);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
+
+    /* law 4: one key you can name — a service window over the pass. The
+       fill only keeps the shadow side readable. No rim. */
+    var ambient = new THREE.AmbientLight(0xffffff, 0.22);
+    scene.add(ambient);
+    /* 1.45, not 2.5. Lambert clips: at 2.5 every face with N·L over ~0.4
+       saturated to white, so the cachelo, the grelo and the plate were
+       all the same paper tone and the produce stopped reading. */
+    var key = new THREE.DirectionalLight(0xfff2e0, 1.45);
+    key.position.set(-2.4, 3.7, 1.9);
+    scene.add(key);
+    var fill = new THREE.DirectionalLight(0xe8eef5, 0.22);
+    fill.position.set(2.6, 1.4, -1.8);
+    scene.add(fill);
+
+    var rig = new THREE.Group();
+    scene.add(rig);
+
+    /* One continuous wall from the well to the ala. The first profile
+       stepped up in four little terraces and, lit from a low camera, the
+       terraces read as grooves — the plate looked like a vinyl record. */
+    var platePts = [
+      new THREE.Vector2(0.00, 0.026), new THREE.Vector2(0.40, 0.030),
+      new THREE.Vector2(0.56, 0.080), new THREE.Vector2(0.66, 0.130),
+      new THREE.Vector2(0.90, 0.148), new THREE.Vector2(0.96, 0.154),
+      new THREE.Vector2(0.965, 0.140), new THREE.Vector2(0.90, 0.130),
+      new THREE.Vector2(0.62, 0.078), new THREE.Vector2(0.42, 0.026),
+      new THREE.Vector2(0.30, 0.018), new THREE.Vector2(0.285, 0.000),
+      new THREE.Vector2(0.225, 0.000), new THREE.Vector2(0.205, 0.018),
+      new THREE.Vector2(0.00, 0.022)
+    ];
+    var plateGeom = new THREE.LatheGeometry(platePts, 48);
+    var plato = lined(new THREE.Mesh(plateGeom, M_CERAMIC), 30);
+    rig.add(plato);
+
+    /* Contact shadow: a blurred ellipse, barely wider than the foot. It
+       fades in with the daylight — a dark smudge on a dark ground is
+       nothing but mud. */
+    var shadowCv = document.createElement("canvas");
+    shadowCv.width = shadowCv.height = 128;
+    var sctx = shadowCv.getContext("2d");
+    var grad = sctx.createRadialGradient(64, 64, 4, 64, 64, 62);
+    grad.addColorStop(0, "rgba(0,0,0,0.42)");
+    grad.addColorStop(0.55, "rgba(0,0,0,0.16)");
+    grad.addColorStop(1, "rgba(0,0,0,0)");
+    sctx.fillStyle = grad;
+    sctx.fillRect(0, 0, 128, 128);
+    var shadowTex = new THREE.CanvasTexture(shadowCv);
+    function contactShadow(scale) {
+      var s = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.35 * scale, 2.35 * scale),
+        new THREE.MeshBasicMaterial({
+          map: shadowTex, color: INK, transparent: true, depthWrite: false, opacity: 0
+        })
+      );
+      s.rotation.x = -Math.PI / 2;
+      s.position.y = 0.002;
+      s.scale.z = 0.78;
+      return s;
+    }
+    var shadow = contactShadow(1);
+    rig.add(shadow);
+
+    /* --- chapter 02: the same setting, down a long table --------------
+       Repeating one object inside one scene is not the reuse the contract
+       forbids — that is about shipping a scene to a second business. */
+    var table = new THREE.Group();
+    var settings = [];
+    for (var t = 0; t < 5; t++) {
+      var seat = new THREE.Group();
+      var p2 = lined(new THREE.Mesh(plateGeom, M_CERAMIC), 30);
+      seat.add(p2);
+      var sh2 = contactShadow(1);
+      seat.add(sh2);
+      /* The first seat starts at 3.2, not 1.9: the hero plate slides to
+         1.55 in chapter 02 and at 1.9 the two overlapped into one blurred
+         double-plate in the middle of the frame. */
+      seat.position.set(3.2 + t * 1.72, 0, -0.9 - t * 1.05);
+      seat.scale.setScalar(0.92 - t * 0.04);
+      seat.visible = false;
+      seat.userData.shadow = sh2;
+      table.add(seat);
+      settings.push(seat);
+    }
+    scene.add(table);
+
+    function slab(shape, depth, bevel, curveSeg) {
+      var g = new THREE.ExtrudeGeometry(shape, {
+        depth: depth, bevelEnabled: true, bevelThickness: bevel,
+        bevelSize: bevel, bevelSegments: 2, curveSegments: curveSeg || 8
+      });
+      g.rotateX(-Math.PI / 2);
+      return g;
+    }
+    function place(mesh, x, y, z, ry) {
+      mesh.position.set(x, y, z);
+      if (ry) mesh.rotation.y = ry;
+      return mesh;
+    }
+
+    var pase3d = new THREE.Group();
+    pase3d.scale.setScalar(1.52);
+    pase3d.position.y = -0.030;
+    plato.add(pase3d);
+
+    var courses = [[], [], [], []];
+    var lift = new THREE.Vector3();
+    function part(course, mesh, id) {
+      /* Every piece owns its materials. Fading a course by writing
+         `opacity` on a SHARED material zeroes it for whoever else is
+         using it — that is how the only accent on the plate silently
+         disappeared, and it looked like the palette was never read. */
+      mesh.material = mesh.material.clone();
+      mesh.userData.mats = [mesh.material];
+      for (var m = 0; m < mesh.children.length; m++) {
+        var ch = mesh.children[m];
+        if (ch.material) {
+          ch.material = ch.material.clone();
+          mesh.userData.mats.push(ch.material);
+          edges.push(ch.material);
+        }
+      }
+      mesh.userData.mats.forEach(function (mat) {
+        mat.userData.baseOpacity = mat.opacity;
+      });
+      mesh.userData.id = id;
+      mesh.userData.rest = mesh.position.clone();
+      /* In pase3d's local space, which is scaled 1.52. At 0.55–1.0 the
+         garnish flew a whole plate-radius into the air and two courses
+         hung over each other in mid-frame. */
+      mesh.userData.up = 0.16 + rnd(course * 31 + courses[course].length) * 0.10;
+      pase3d.add(mesh);
+      courses[course].push(mesh);
+      return mesh;
+    }
+
+    /* ================= 01 · Menú del día — caldo galego ================ */
+    /* The well wall is at r≈0.51 world at this height, and pase3d scales
+       local by 1.52 — so 0.33 is the widest the broth can be without
+       cutting through the side of the plate. */
+    var caldo = new THREE.Mesh(new THREE.CircleGeometry(0.33, 32), M_DEEP);
+    caldo.rotation.x = -Math.PI / 2;
+    place(caldo, 0, 0.062, 0);
+    part(0, caldo, "caldo");
+
+    function grelo(i) {
+      var s = new THREE.Shape();
+      s.moveTo(0, 0);
+      s.bezierCurveTo(0.10, 0.05, 0.15, 0.16, 0.06, 0.27);
+      s.bezierCurveTo(0.02, 0.20, -0.03, 0.16, -0.09, 0.15);
+      s.bezierCurveTo(-0.10, 0.07, -0.06, 0.02, 0, 0);
+      /* Thin and small. At 0.022 deep with a 0.008 bevel the leaf was a
+         chunky wedge the size of a cachelo and read as a croissant. */
+      var m = lined(new THREE.Mesh(slab(s, 0.013, 0.004, 10), M_DEEP));
+      m.scale.setScalar(0.78);
+      var a = (i / 5) * Math.PI * 2 + 0.6;
+      m.rotation.set(0, a, 0.10);
+      return place(m, Math.cos(a) * 0.30, 0.070, Math.sin(a) * 0.30);
+    }
+    for (var i = 0; i < 5; i++) part(0, grelo(i), "grelo");
+
+    function cachelo(i, y0) {
+      var s = new THREE.Shape();
+      s.moveTo(-0.11, -0.07); s.lineTo(0.10, -0.09);
+      s.lineTo(0.13, 0.06); s.lineTo(-0.02, 0.10); s.lineTo(-0.12, 0.03);
+      s.closePath();
+      var m = lined(new THREE.Mesh(slab(s, 0.062, 0.014, 4), M_PALE));
+      /* A cachelo is a chunk in the broth, not a paving slab: at full
+         size three of them covered the whole well. */
+      m.scale.setScalar(0.66);
+      var a = i * 2.3 + 0.4;
+      m.rotation.y = a;
+      return place(m, Math.cos(a) * 0.19, y0, Math.sin(a) * 0.19);
+    }
+    for (i = 0; i < 3; i++) part(0, cachelo(i, 0.066), "cachelo");
+
+    for (i = 0; i < 2; i++) {
+      var cho = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.062, 0.062, 0.024, 14), M_ACCENT));
+      var ca = 2.0 + i * 2.6;
+      cho.rotation.set(0.28, ca, 0);
+      part(0, place(cho, Math.cos(ca) * 0.26, 0.080, Math.sin(ca) * 0.26), "chorizo");
+    }
+    for (i = 0; i < 4; i++) {
+      var faba = lined(new THREE.Mesh(new THREE.SphereGeometry(0.030, 10, 7), M_SUGAR), 30);
+      faba.scale.set(1.35, 0.8, 1);
+      var fa = i * 1.57 + 0.9;
+      part(0, place(faba, Math.cos(fa) * 0.40, 0.072, Math.sin(fa) * 0.40, fa), "faba");
+    }
+    for (i = 0; i < 2; i++) {
+      var unto = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.054, 0.046, 10), M_MID));
+      var ua = 3.6 + i * 1.9;
+      part(0, place(unto, Math.cos(ua) * 0.34, 0.082, Math.sin(ua) * 0.34, ua), "unto");
+    }
+
+    /* ================= 02 · Parrilla — chuletón ======================== */
+    var steak = new THREE.Shape();
+    steak.moveTo(-0.34, -0.10);
+    steak.bezierCurveTo(-0.20, -0.26, 0.14, -0.28, 0.30, -0.14);
+    steak.bezierCurveTo(0.40, -0.03, 0.36, 0.14, 0.22, 0.22);
+    steak.bezierCurveTo(0.04, 0.31, -0.22, 0.26, -0.32, 0.12);
+    steak.bezierCurveTo(-0.37, 0.05, -0.38, -0.04, -0.34, -0.10);
+    part(1, lined(place(new THREE.Mesh(slab(steak, 0.085, 0.020, 12), matte(mix(T_MID, ACCENT, 0.34))), -0.04, 0.062, 0.02)), "chuletón");
+
+    var boneCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.34, 0.10, -0.10), new THREE.Vector3(-0.44, 0.10, 0.04),
+      new THREE.Vector3(-0.40, 0.10, 0.20), new THREE.Vector3(-0.26, 0.10, 0.26)
+    ]);
+    part(1, lined(new THREE.Mesh(new THREE.TubeGeometry(boneCurve, 18, 0.036, 8, false), M_SUGAR)), "hueso");
+
+    for (i = 0; i < 2; i++) {
+      var veta = lined(new THREE.Mesh(new THREE.BoxGeometry(0.30 - i * 0.09, 0.006, 0.020), M_SUGAR), 40);
+      veta.rotation.y = 0.35 - i * 0.8;
+      part(1, place(veta, -0.02 + i * 0.10, 0.148, 0.02 - i * 0.11), "veta");
+    }
+    for (i = 0; i < 4; i++) {
+      var marca = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.010, 0.026), M_CHAR);
+      marca.rotation.y = 0.55;
+      part(1, place(marca, -0.06 + (i - 1.5) * 0.055, 0.144, 0.02 + (i - 1.5) * 0.088), "marca");
+    }
+    var tallo = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.007, 0.005, 0.30, 6), M_CHAR), 40);
+    tallo.rotation.set(0, 0.9, Math.PI / 2 - 0.12);
+    part(1, place(tallo, 0.34, 0.086, -0.26), "romero");
+    for (i = 0; i < 4; i++) {
+      var hoja = new THREE.Mesh(new THREE.BoxGeometry(0.062, 0.004, 0.012), M_DEEP);
+      hoja.rotation.set(0, 0.9 + (i % 2 ? 0.5 : -0.5), 0);
+      part(1, place(hoja, 0.26 + i * 0.048, 0.092, -0.20 - i * 0.038), "romero");
+    }
+    for (i = 0; i < 6; i++) {
+      var sal = new THREE.Mesh(new THREE.BoxGeometry(0.017, 0.014, 0.017), M_SUGAR);
+      sal.rotation.set(rnd(i) * 1.2, rnd(i + 9) * 1.4, rnd(i + 5) * 1.1);
+      part(1, place(sal, -0.10 + (rnd(i + 2) - 0.5) * 0.50, 0.152, 0.02 + (rnd(i + 7) - 0.5) * 0.44), "sal");
+    }
+
+    /* ================= 03 · Pulpo á feira ============================== */
+    var boardShape = new THREE.Shape();
+    boardShape.moveTo(-0.62, -0.42);
+    boardShape.lineTo(0.62, -0.42);
+    boardShape.lineTo(0.62, 0.40);
+    boardShape.lineTo(-0.62, 0.40);
+    boardShape.closePath();
+    part(2, lined(place(new THREE.Mesh(slab(boardShape, 0.045, 0.012, 2), M_CHAR), 0, 0.062, 0)), "tabla");
+    part(2, place(new THREE.Mesh(new THREE.BoxGeometry(1.20, 0.003, 0.010), matte(mix(T_CHAR, GROUND, 0.30))), 0, 0.108, -0.12), "veta");
+
+    for (i = 0; i < 3; i++) {
+      var cach = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.135, 0.128, 0.048, 16), M_PALE));
+      part(2, place(cach, -0.34 + i * 0.34, 0.130, 0.14 - (i % 2) * 0.12), "cachelo");
+    }
+    for (i = 0; i < 5; i++) {
+      var pulpoPts = [
+        new THREE.Vector2(0.030, 0.000), new THREE.Vector2(0.030, 0.020),
+        new THREE.Vector2(0.052, 0.030), new THREE.Vector2(0.082, 0.028),
+        new THREE.Vector2(0.092, 0.014), new THREE.Vector2(0.086, 0.000)
+      ];
+      var pul = lined(new THREE.Mesh(new THREE.LatheGeometry(pulpoPts, 14), M_ACCENT), 28);
+      var pa = i * 1.32 + 0.3;
+      part(2, place(pul, Math.cos(pa) * 0.32, 0.156, Math.sin(pa) * 0.22 - 0.02, pa), "pulpo");
+    }
+    for (i = 0; i < 6; i++) {
+      var vent = new THREE.Mesh(new THREE.TorusGeometry(0.018, 0.006, 6, 10), matte(mix(C_ACCENT, GROUND, 0.28)));
+      vent.rotation.x = -Math.PI / 2;
+      var va = i * 1.04 + 0.7;
+      part(2, place(vent, Math.cos(va) * 0.30, 0.176, Math.sin(va) * 0.20 - 0.02), "ventosa");
+    }
+    for (i = 0; i < 10; i++) {
+      var pim = new THREE.Mesh(new THREE.CircleGeometry(0.012 + rnd(i) * 0.010, 6), M_ACCENT);
+      pim.rotation.x = -Math.PI / 2;
+      part(2, place(pim, (rnd(i + 3) - 0.5) * 0.96, 0.110, (rnd(i + 11) - 0.5) * 0.66), "pimentón");
+    }
+    var oilCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.44, 0.112, 0.24), new THREE.Vector3(-0.10, 0.112, 0.30),
+      new THREE.Vector3(0.24, 0.112, 0.20), new THREE.Vector3(0.46, 0.112, 0.28)
+    ]);
+    part(2, new THREE.Mesh(new THREE.TubeGeometry(oilCurve, 24, 0.010, 6, false), M_MID), "aceite");
+    for (i = 0; i < 4; i++) {
+      var sg = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.015, 0.018), M_SUGAR);
+      sg.rotation.set(rnd(i + 4) * 1.3, rnd(i) * 1.5, 0);
+      part(2, place(sg, -0.30 + i * 0.22, 0.116, -0.26 + rnd(i + 6) * 0.16), "sal");
+    }
+
+    /* ================= 04 · Tarta de Santiago ========================== */
+    var tartaPts = [
+      new THREE.Vector2(0.00, 0.000), new THREE.Vector2(0.50, 0.000),
+      new THREE.Vector2(0.52, 0.030), new THREE.Vector2(0.505, 0.086),
+      new THREE.Vector2(0.44, 0.104), new THREE.Vector2(0.00, 0.108)
+    ];
+    part(3, lined(place(new THREE.Mesh(new THREE.LatheGeometry(tartaPts, 26), M_MID), 0, 0.062, 0), 24), "tarta");
+
+    var wedge = new THREE.Shape();
+    wedge.moveTo(0, 0);
+    wedge.lineTo(0.50, 0.10);
+    wedge.absarc(0, 0, 0.51, 0.197, -0.197, true);
+    wedge.lineTo(0, 0);
+    var porcion = lined(new THREE.Mesh(slab(wedge, 0.104, 0.010, 10), M_MID));
+    porcion.rotation.y = -0.62;
+    part(3, place(porcion, 0.52, 0.062, 0.40), "porción");
+
+    /* The cross of Santiago: a lily-tipped sword, laid proud in icing
+       sugar. It is what a customer recognises from two metres. */
+    var cross = new THREE.Shape();
+    cross.moveTo(-0.030, -0.30); cross.lineTo(0.030, -0.30);
+    cross.lineTo(0.030, 0.04); cross.lineTo(0.090, 0.04);
+    cross.lineTo(0.110, 0.075); cross.lineTo(0.155, 0.055);
+    cross.lineTo(0.130, 0.105); cross.lineTo(0.170, 0.140);
+    cross.lineTo(0.110, 0.140); cross.lineTo(0.090, 0.180);
+    cross.lineTo(0.062, 0.135); cross.lineTo(0.030, 0.150);
+    cross.lineTo(0.030, 0.30); cross.lineTo(-0.030, 0.30);
+    cross.lineTo(-0.030, 0.150); cross.lineTo(-0.062, 0.135);
+    cross.lineTo(-0.090, 0.180); cross.lineTo(-0.110, 0.140);
+    cross.lineTo(-0.170, 0.140); cross.lineTo(-0.130, 0.105);
+    cross.lineTo(-0.155, 0.055); cross.lineTo(-0.110, 0.075);
+    cross.lineTo(-0.090, 0.04); cross.lineTo(-0.030, 0.04);
+    cross.closePath();
+    var cruz = lined(new THREE.Mesh(slab(cross, 0.008, 0.003, 2), M_SUGAR), 30);
+    cruz.scale.setScalar(1.15);
+    part(3, place(cruz, 0, 0.170, 0), "cruz");
+
+    for (i = 0; i < 12; i++) {
+      var az = new THREE.Mesh(new THREE.CircleGeometry(0.010 + rnd(i + 21) * 0.008, 6), M_SUGAR);
+      az.rotation.x = -Math.PI / 2;
+      var aa = (i / 12) * Math.PI * 2;
+      part(3, place(az, Math.cos(aa) * (0.30 + rnd(i) * 0.14), 0.172, Math.sin(aa) * (0.30 + rnd(i + 3) * 0.14)), "azúcar");
+    }
+    for (i = 0; i < 4; i++) {
+      var alm = lined(new THREE.Mesh(new THREE.SphereGeometry(0.042, 10, 6), M_PALE), 30);
+      alm.scale.set(1, 0.42, 0.66);
+      var ma = i * 1.57 + 0.5;
+      part(3, place(alm, Math.cos(ma) * 0.66, 0.070, Math.sin(ma) * 0.52, ma), "almendra");
+    }
+
+    /* --- law 6: the technical caption, on the fixed overlay ----------- */
+    var NS = "http://www.w3.org/2000/svg";
+    var LABELS = [
+      /* Top and bottom margins only. The chapter copy owns the middle
+         band of the viewport, and a label at mid-height lands on it. */
+      { c: 0, id: "grelo", text: "grelo del país", y: 0.17 },
+      { c: 0, id: "chorizo", text: "chorizo de A Gudiña", y: 0.87 },
+      { c: 1, id: "chuletón", text: "chuletón madurado", y: 0.17 },
+      { c: 1, id: "marca", text: "marca de parrilla", y: 0.87 },
+      { c: 2, id: "pulpo", text: "pulpo á feira", y: 0.17 },
+      { c: 2, id: "pimentón", text: "pimentón dulce", y: 0.87 },
+      { c: 3, id: "cruz", text: "cruz de Santiago", y: 0.17 },
+      { c: 3, id: "almendra", text: "almendra marcona", y: 0.87 }
+    ];
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "mn-notes");
+    svg.setAttribute("aria-hidden", "true");
+    /* Above the stage, below the copy. Inside .mn-stage it would be
+       trapped in that element's stacking context and the leaders would
+       run under the chapter text. */
+    (panel.querySelector(".mn") || stage).appendChild(svg);
+    var notes = LABELS.map(function (spec) {
+      var target = null;
+      for (var k = 0; k < courses[spec.c].length; k++) {
+        if (courses[spec.c][k].userData.id === spec.id) { target = courses[spec.c][k]; break; }
+      }
+      var lead = document.createElementNS(NS, "polyline");
+      lead.setAttribute("class", "mn-lead-line");
+      var text = document.createElementNS(NS, "text");
+      text.setAttribute("class", "mn-note");
+      text.textContent = spec.text;
+      svg.appendChild(lead);
+      svg.appendChild(text);
+      return { spec: spec, target: target, lead: lead, text: text };
+    });
+
+    var box = { w: 1, h: 1 };
+    var portraitK = 1;
+    function fitView() {
+      box.w = stage.clientWidth;
+      box.h = stage.clientHeight;
+      camera.aspect = box.w / Math.max(box.h, 1);
+      portraitK = camera.aspect < 0.8 ? 1.42 : camera.aspect < 1.1 ? 1.18 : 1;
+      camera.updateProjectionMatrix();
+      gpu.setSize(box.w, box.h, false);
+      svg.setAttribute("viewBox", "0 0 " + box.w + " " + box.h);
+    }
+    fitView();
+    window.addEventListener("resize", fitView);
+
+    /* --- the camera path: four stations, lerped along p --------------- */
+    var STATIONS = [
+      /* Far enough that the rim closes inside the frame. Closer than this
+         and the plate crops on both sides and reads as a disc, not as a
+         plate waiting for service. */
+      { at: new THREE.Vector3(0.00, 1.18, 3.55), to: new THREE.Vector3(0, 0.14, 0) },
+      { at: new THREE.Vector3(0.26, 2.48, 3.82), to: new THREE.Vector3(0, 0.09, 0) },
+      { at: new THREE.Vector3(2.05, 3.70, 5.70), to: new THREE.Vector3(1.30, 0.04, -0.70) },
+      /* Far enough that the plate closes inside the frame and the booking
+         copy has clean ground under it. At 2.28 the rim ran off both
+         edges and the opening hours sat on the well ring. */
+      { at: new THREE.Vector3(0.00, 1.62, 3.42), to: new THREE.Vector3(0, 0.12, 0) }
+    ];
+    var MARKS = [0.00, 0.30, 0.74, 1.00];
+
+    function seg(x, a, b) { return utils.clamp((x - a) / (b - a), 0, 1); }
+    function smooth(t) { return t * t * (3 - 2 * t); }
+
+    /* A stagger expressed as a function of progress instead of time, so
+       it scrubs both ways with the scroll. */
+    function reveal(els, t, spread, rise) {
+      var n = els.length || 1;
+      var span = 1 - spread * (n - 1);
+      for (var i = 0; i < n; i++) {
+        var e = smooth(utils.clamp((t - i * spread) / Math.max(span, 0.05), 0, 1));
+        els[i].style.opacity = String(e);
+        els[i].style.transform = "translateY(" + ((1 - e) * (rise || 26)) + "px)";
+      }
+    }
+
+    var camAt = new THREE.Vector3(), camTo = new THREE.Vector3();
+    var groundCol = new THREE.Color(), fgCol = new THREE.Color();
+    var proj = new THREE.Vector3(), at = [0, 0];
+    var lastGround = "";
+
+    function screenOf(obj, out) {
+      obj.getWorldPosition(proj);
+      proj.project(camera);
+      out[0] = (proj.x * 0.5 + 0.5) * box.w;
+      out[1] = (-proj.y * 0.5 + 0.5) * box.h;
+    }
+
+    function frame() {
+      requestAnimationFrame(frame);
+      var p = state.p;
+
+      /* camera: which pair of stations are we between */
+      var s = 0;
+      while (s < MARKS.length - 2 && p > MARKS[s + 1]) s++;
+      var k = smooth(seg(p, MARKS[s], MARKS[s + 1]));
+      camAt.lerpVectors(STATIONS[s].at, STATIONS[s + 1].at, k);
+      camTo.lerpVectors(STATIONS[s].to, STATIONS[s + 1].to, k);
+      camera.position.copy(camAt);
+      camera.position.y += Math.sin(state.idle) * 0.03;
+      /* Portrait is a 3D problem, not a CSS one: the same station that
+         frames the plate on a 16:10 desktop crops it on both sides at
+         390px. Dolly out along the look axis instead of reflowing. */
+      if (portraitK !== 1) {
+        camera.position.sub(camTo).multiplyScalar(portraitK).add(camTo);
+      }
+      camera.lookAt(camTo);
+
+      /* the environment: kitchen pass -> dining room, as light, not as a
+         section background */
+      var envT = smooth(seg(p, 0.58, 0.86));
+      ambient.intensity = 0.22 + envT * 0.16;
+      key.intensity = 1.45 - envT * 0.25;
+      groundCol.copy(INK).lerp(GROUND, envT);
+      fgCol.copy(GROUND).lerp(INK, envT);
+      var hex = "#" + groundCol.getHexString();
+      if (hex !== lastGround) {
+        lastGround = hex;
+        panel.style.setProperty("--mn-ground", hex);
+        panel.style.setProperty("--mn-fg", "#" + fgCol.getHexString());
+      }
+      for (var e = 0; e < edges.length; e++) edges[e].color.copy(fgCol);
+      shadow.material.opacity = 0.12 + envT * 0.5;
+
+      /* Chapter 00's copy is 100vh tall inside a 130vh chapter, so its
+         last 100px are still on screen well into the pass and the scroll
+         cue collides with the fixed rail. Fade it on p, not on sticky. */
+      if (ch0) ch0.style.opacity = String(1 - smooth(seg(p, 0.06, 0.14)));
+
+      /* the plate itself */
+      rig.scale.setScalar(0.80 + state.settle * 0.20);
+      /* In chapter 02 it joins the row instead of sitting at the origin,
+         where it lands under the left copy column. It comes back for the
+         booking. */
+      rig.position.x = smooth(seg(p, 0.62, 0.80)) * 1.55 * (1 - smooth(seg(p, 0.86, 0.96)));
+      plato.rotation.y = -0.5 + p * 2.4 + Math.sin(state.idle) * 0.04;
+
+      /* the pass: four courses across chapter 01 */
+      var cp = seg(p, 0.16, 0.60) * 3;
+      for (var c = 0; c < 4; c++) {
+        /* A tight window, so the plate is genuinely empty between two
+           courses instead of showing both through each other. That gap
+           IS the pass: one dish leaves, the next arrives. */
+        var d = Math.abs(cp - c);
+        var vis = utils.clamp(1.34 - d * 2.4, 0, 1);
+        /* nothing is on the plate before the pass starts or after it ends */
+        if (p < 0.13 || p > 0.66) vis = 0;
+        var list = courses[c];
+        for (var j = 0; j < list.length; j++) {
+          var it = list[j], u = it.userData;
+          lift.copy(u.rest);
+          lift.y += (1 - vis) * u.up;
+          it.position.copy(lift);
+          it.visible = vis > 0.015;
+          for (var q = 0; q < u.mats.length; q++) {
+            var mat = u.mats[q];
+            var base = mat.userData.baseOpacity == null ? 1 : mat.userData.baseOpacity;
+            /* Only transparent while it is actually fading. Left on, the
+               food is see-through at rest and the plate shows through the
+               chuletón. */
+            mat.transparent = vis < 0.995 || base < 1;
+            mat.opacity = base * vis;
+          }
+        }
+        var el = courseEls[c];
+        if (el) {
+          el.style.opacity = String(vis);
+          el.style.transform = "translateY(" + ((1 - vis) * 26) + "px)";
+        }
+      }
+
+      /* chapters 02 and 03, on the same clock as the scene they sit on */
+      var t2 = seg(p, 0.63, 0.80);
+      if (kicker2) {
+        kicker2.style.opacity = String(smooth(seg(p, 0.63, 0.68)));
+      }
+      reveal(h2Chars, t2, 0.006, 30);
+      reveal(serviceEls, seg(p, 0.68, 0.84), 0.09, 24);
+      reveal(bookEls, seg(p, 0.87, 0.97), 0.08, 26);
+
+      /* the house: the rest of the table arrives with the daylight */
+      /* Gone by 0.94, not lingering to 0.98: at the booking a leftover
+         setting sat on the right edge of the frame, still fully opaque
+         because only its shadow was being faded. */
+      var houseT = smooth(seg(p, 0.62, 0.82)) * (1 - smooth(seg(p, 0.85, 0.94)));
+      for (var g = 0; g < settings.length; g++) {
+        var seat = settings[g];
+        var gt = utils.clamp(houseT * 1.4 - g * 0.12, 0, 1);
+        seat.visible = gt > 0.06;
+        seat.position.y = (1 - gt) * -0.9;
+        seat.userData.shadow.material.opacity = gt * (0.12 + envT * 0.5);
+      }
+
+      /* leaders, only while the pass is being served */
+      for (var n = 0; n < notes.length; n++) {
+        var note = notes[n];
+        var nd = Math.abs(cp - note.spec.c);
+        var nv = (p < 0.13 || p > 0.66) ? 0 : utils.clamp(1.34 - nd * 2.4, 0, 1);
+        if (!note.target || nv < 0.12) {
+          note.lead.style.opacity = "0";
+          note.text.style.opacity = "0";
+          continue;
+        }
+        /* The caption fades on a gentler ramp than the food it names, or
+           it is only legible at the exact centre of a course. */
+        var o = smooth(utils.clamp((nv - 0.12) / 0.38, 0, 1));
+        screenOf(note.target, at);
+        var side = at[0] < box.w * 0.5 ? -1 : 1;
+        var edge = side < 0 ? box.w * 0.06 : box.w * 0.94;
+        var ty = box.h * note.spec.y;
+        var elbow = side < 0 ? edge + box.w * 0.06 : edge - box.w * 0.06;
+        note.lead.setAttribute("points",
+          at[0] + "," + at[1] + " " + elbow + "," + ty + " " + edge + "," + ty);
+        note.text.setAttribute("x", edge);
+        note.text.setAttribute("y", ty + 4);
+        note.text.setAttribute("text-anchor", side < 0 ? "start" : "end");
+        note.lead.style.opacity = String(o * 0.5);
+        note.text.style.opacity = String(o);
+      }
+
+      gpu.render(scene, camera);
+    }
+    frame();
+  }).catch(function (err) {
+    console.error("mesa-do-mino scene failed", err);
+    window.__staticB(panel);
+  });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

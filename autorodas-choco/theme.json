@@ -1,0 +1,22 @@
+{
+  "category": "taller",
+  "seed": "autorodas-choco-v1",
+  "motion": "gsap",
+  "mode": "nightshift",
+  "layout": "marquee",
+  "display": "Anton",
+  "body": "Manrope",
+  "radius": "28px",
+  "density": "regular",
+  "nav": "overlay",
+  "palette": {
+    "bg": "#0b0b0c",
+    "ink": "#f3eee6",
+    "muted": "#9a9388",
+    "accent": "#ff6a00",
+    "accent2": "#ffd39a",
+    "line": "#2a2724",
+    "photo": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "taller|gsap|nightshift|marquee|Anton|Manrope|28px|regular|overlay"
+}

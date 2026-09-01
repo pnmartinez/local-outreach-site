@@ -1,0 +1,22 @@
+{
+  "category": "veterinario",
+  "seed": "rustican-v1",
+  "motion": "animejs",
+  "mode": "linen",
+  "layout": "split-story",
+  "display": "Newsreader",
+  "body": "Figtree",
+  "radius": "4px",
+  "density": "compact",
+  "nav": "top",
+  "palette": {
+    "bg": "#efe7da",
+    "ink": "#2a221c",
+    "muted": "#7a6e62",
+    "accent": "#8b3a3a",
+    "accent2": "#3d4f3a",
+    "line": "#d8cdb8",
+    "photo": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "veterinario|animejs|linen|split-story|Newsreader|Figtree|4px|compact|top"
+}

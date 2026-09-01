@@ -1,0 +1,22 @@
+{
+  "category": "veterinario",
+  "seed": "da-costa-v1",
+  "motion": "animejs",
+  "mode": "den",
+  "layout": "cascade",
+  "display": "Cormorant Garamond",
+  "body": "Nunito Sans",
+  "radius": "14px",
+  "density": "compact",
+  "nav": "overlay",
+  "palette": {
+    "bg": "#1a1714",
+    "ink": "#f0e6d6",
+    "muted": "#a39482",
+    "accent": "#d9a15a",
+    "accent2": "#7d4a2b",
+    "line": "#322c26",
+    "photo": "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "veterinario|animejs|den|cascade|Cormorant Garamond|Nunito Sans|14px|compact|overlay"
+}

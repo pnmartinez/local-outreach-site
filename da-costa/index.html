@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Da Costa · Allariz</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231c2418%22%2F%3E%3Cellipse%20cx%3D%2216%22%20cy%3D%2219%22%20rx%3D%227%22%20ry%3D%225.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%228.5%22%20cy%3D%2211.5%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%2213%22%20cy%3D%228.6%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%228.6%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3Ccircle%20cx%3D%2223.5%22%20cy%3D%2211.5%22%20r%3D%222.4%22%20fill%3D%22%23d9a15a%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #1a1714;
+  --ink: #f0e6d6;
+  --muted: #a39482;
+  --accent: #d9a15a;
+  --accent2: #7d4a2b;
+  --line: #322c26;
+  --display: "Cormorant Garamond", serif;
+  --body: "Nunito Sans", system-ui, sans-serif;
+  --radius: 14px;
+  --pad: 16px; --gap: 16px; --hero: clamp(40px, 8vw, 84px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 28px var(--pad) 12px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+}
+.mark { font-family: var(--display); font-style: italic; letter-spacing: 0; text-transform: none; font-size: 22px; }
+.urg { color: var(--accent); text-decoration: none; }
+.hero-mag {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px;
+  padding: 12px var(--pad) 56px; align-items: end;
+}
+.kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--accent2); }
+h1 {
+  font-family: var(--display); font-weight: 500; font-size: clamp(42px, 6.4vw, 88px);
+  line-height: .95; margin: 10px 0 18px; max-width: 14ch;
+}
+.lead { font-size: 18px; line-height: 1.55; max-width: 38ch; color: var(--muted); }
+.portrait {
+  min-height: 72vh; border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--bg) 35%, transparent)),
+    url("https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1600&q=80") center 30%/cover;
+}
+.quote {
+  margin: 0 var(--pad) 48px; padding: 36px 0 0; border-top: 1px solid var(--line);
+  font-family: var(--display); font-style: italic; font-size: clamp(28px, 4vw, 48px);
+  max-width: 22ch;
+}
+.care-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  margin: 0 var(--pad) 56px; border: 1px solid var(--line);
+}
+.care { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.care:nth-child(3n) { border-right: 0; }
+.care h3 { margin: 0 0 8px; font-family: var(--display); font-size: 28px; font-weight: 500; }
+.care p { margin: 0; color: var(--muted); line-height: 1.45; }
+.band {
+  margin: 0 var(--pad) 72px; padding: 28px; background: var(--accent2); color: var(--bg);
+  display: flex; justify-content: space-between; gap: 20px; border-radius: var(--radius);
+}
+.band a { color: var(--bg); }
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .hero-mag { grid-template-columns: 1fr; gap: 22px; }
+  .portrait { min-height: 46vh; order: -1; }
+  .care-grid { grid-template-columns: 1fr; }
+  .care { border-right: 0; }
+  .band { flex-direction: column; }
+}
+
+
+#dsgB {
+  --st-bg: #f9f6ef;
+  --st-fg: #14110f;
+  --st-accent: #8a673c;
+  --st-second: #7d4a2b;
+  --st-glow: #d9a15a;
+  --st-line: #d0cdc7;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .vb {
+  position: relative; overflow: clip;
+  background:
+    radial-gradient(90% 60% at 12% 0%, color-mix(in srgb, var(--st-glow) 16%, transparent), transparent 60%),
+    radial-gradient(70% 55% at 96% 30%, color-mix(in srgb, var(--st-second) 14%, transparent), transparent 62%),
+    var(--st-bg);
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+#dsgB .vb h1, #dsgB .vb h2, #dsgB .vb h3, #dsgB .vb .vb-brand {
+  font-family: "Gabarito", var(--display); font-weight: 700; letter-spacing: -.02em;
+}
+
+#dsgB .vb-veil { position: fixed; inset: 0; z-index: 80; pointer-events: none; background: var(--st-bg); }
+#dsgB .vb-veil span {
+  position: absolute; left: 50%; top: 50%; width: 240vmax; height: 240vmax;
+  margin: -120vmax 0 0 -120vmax; border-radius: 50%; background: var(--st-glow);
+  transform: scale(0); opacity: .9;
+}
+
+#dsgB .vb-rail {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; padding: 16px var(--pad);
+  background: color-mix(in srgb, var(--st-bg) 78%, transparent); backdrop-filter: blur(12px);
+}
+#dsgB .vb-brand { font-size: 17px; }
+#dsgB .vb-open {
+  font-size: 12px; color: var(--st-dim);
+  padding: 7px 14px; border-radius: 999px; background: color-mix(in srgb, var(--st-fg) 6%, transparent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 46vw;
+}
+
+#dsgB .vb-hero {
+  position: relative; display: grid; grid-template-columns: minmax(300px, 44%) 1fr;
+  gap: clamp(20px, 4vw, 60px); align-items: center;
+  padding: clamp(30px, 5vw, 70px) var(--pad) clamp(60px, 9vw, 130px);
+}
+#dsgB .vb-hero-fig { position: relative; display: grid; place-items: center; }
+/* The booklet. The accent spine down the left edge is the cover showing
+   through, which is what stops it reading as a generic white card. */
+#dsgB .vb-rec {
+  position: relative; width: min(100%, 460px); border-radius: 20px;
+  padding: 26px 28px 24px 34px; overflow: hidden;
+  background: color-mix(in srgb, var(--st-accent) 3%, var(--st-bg));
+  border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
+  box-shadow: 0 30px 70px -40px color-mix(in srgb, var(--st-fg) 60%, transparent);
+}
+#dsgB .vb-rec:before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+  background: var(--st-accent);
+}
+#dsgB .vb-rec-head { margin-bottom: 20px; }
+#dsgB .vb-rec-kicker {
+  margin: 0 0 10px; font-size: 10px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .vb-pet-name {
+  margin: 0; font-family: "Gabarito", var(--display); font-weight: 700;
+  font-size: clamp(26px, 3vw, 34px); line-height: 1; color: var(--st-fg);
+}
+#dsgB .vb-pet-who { margin: 6px 0 0; font-size: 13px; color: var(--st-dim); }
+#dsgB .vb-rec-list { margin: 0; padding: 0; list-style: none; }
+/* dotted rules, like the ruled lines of the real booklet */
+#dsgB .vb-rec-row {
+  display: grid; grid-template-columns: 1fr auto 46px;
+  align-items: center; gap: 10px; padding: 13px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--st-fg) 16%, transparent);
+}
+#dsgB .vb-rec-what { font-size: 15px; }
+#dsgB .vb-rec-when {
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .vb-rec-stamp { width: 46px; height: 46px; justify-self: end; opacity: 0; }
+#dsgB .vb-rec-paw { fill: color-mix(in srgb, var(--st-accent) 46%, transparent); }
+/* hidden until the stamps are done; __staticB prints it when JS is off */
+#dsgB .vb-rec-next {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin: 20px 0 0; opacity: 0;
+}
+#dsgB .vb-rec-next span {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .vb-rec-next b {
+  font-family: "Gabarito", var(--display); font-weight: 700;
+  font-size: 17px; color: var(--st-accent);
+}
+#dsgB .vb-eyebrow { margin: 0 0 16px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-name {
+  margin: 0; font-size: clamp(38px, 5.6vw, 84px); line-height: .95;
+}
+#dsgB .vb-claim {
+  margin: 20px 0 0; max-width: 18ch; font-family: "Gabarito", var(--display);
+  font-weight: 500; font-size: clamp(19px, 2.3vw, 31px); line-height: 1.2; color: var(--st-second);
+}
+#dsgB .vb-lead { margin: 16px 0 0; max-width: 44ch; font-size: 15px; line-height: 1.75; color: var(--st-dim); }
+#dsgB .vb-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+#dsgB .vb-cta {
+  display: inline-block; text-decoration: none; background: var(--st-accent); color: var(--st-bg);
+  font-weight: 700; font-size: 15px; padding: 17px 30px; border-radius: 999px; will-change: transform;
+}
+#dsgB .vb-ghost {
+  text-decoration: none; color: var(--st-fg); font-size: 15px; padding: 16px 26px;
+  border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--st-fg) 20%, transparent);
+}
+#dsgB .vb-trail { position: absolute; left: 0; right: 0; bottom: 12px; width: 100%; height: 130px; pointer-events: none; }
+#dsgB .vb-paw { fill: color-mix(in srgb, var(--st-second) 40%, transparent); opacity: 0; }
+
+#dsgB .vb-care-sec { padding: clamp(50px, 8vw, 110px) var(--pad); }
+#dsgB .vb-kicker { margin: 0 0 12px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-h2 { margin: 0 0 44px; max-width: 20ch; font-size: clamp(27px, 3.8vw, 52px); line-height: 1.06; }
+#dsgB .vb-care-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+#dsgB .vb-care {
+  position: relative; overflow: hidden; padding: 30px 26px 34px; border-radius: 30px;
+  background: color-mix(in srgb, var(--st-fg) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--st-fg) 8%, transparent);
+}
+#dsgB .vb-care-n { font-size: 12px; letter-spacing: .16em; color: var(--st-accent); }
+#dsgB .vb-care h3 { margin: 12px 0 10px; font-size: 23px; }
+#dsgB .vb-care p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--st-dim); }
+#dsgB .vb-stamp { position: absolute; right: 16px; bottom: 12px; width: 62px; height: 62px; opacity: 0; }
+#dsgB .vb-stamp-p { fill: color-mix(in srgb, var(--st-accent) 42%, transparent); }
+
+#dsgB .vb-deck-sec {
+  display: grid; grid-template-columns: 1fr minmax(300px, 46%); gap: clamp(24px, 4vw, 60px);
+  align-items: center; padding: clamp(40px, 7vw, 100px) var(--pad);
+}
+#dsgB .vb-deck-hint { margin: 26px 0 0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-deck { position: relative; height: clamp(340px, 46vw, 430px); }
+#dsgB .vb-deck-cards { position: absolute; inset: 0; display: grid; place-items: center; }
+#dsgB .vb-card {
+  position: absolute; width: min(94%, 380px); touch-action: none; cursor: grab;
+  user-select: none; will-change: transform;
+}
+#dsgB .vb-card-in {
+  border-radius: 34px; padding: 34px 32px 30px; min-height: 290px;
+  display: flex; flex-direction: column; gap: 12px;
+  background: var(--st-bg); border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
+  box-shadow: 0 26px 60px -30px color-mix(in srgb, var(--st-fg) 55%, transparent);
+}
+#dsgB .vb-card-n { font-size: 12px; letter-spacing: .18em; color: var(--st-accent); }
+#dsgB .vb-card h3 { margin: 0; font-size: 29px; }
+#dsgB .vb-card-who { margin: 0; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .vb-card p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--st-dim); }
+#dsgB .vb-card-tag {
+  margin-top: auto; align-self: flex-start; font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; padding: 8px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--st-accent) 16%, transparent); color: var(--st-accent);
+}
+
+#dsgB .vb-hours {
+  margin: 0 var(--pad) clamp(40px, 6vw, 80px); padding: clamp(34px, 5vw, 62px) clamp(26px, 4vw, 54px);
+  border-radius: 40px; background: color-mix(in srgb, var(--st-second) 12%, transparent);
+  display: grid; gap: 30px; overflow: hidden;
+}
+#dsgB .vb-hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+#dsgB .vb-hours-grid span { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--st-accent); margin-bottom: 8px; }
+#dsgB .vb-hours-grid b { font-size: 16px; line-height: 1.5; font-weight: 500; }
+#dsgB .vb-cta-big { justify-self: start; font-size: 16px; padding: 19px 34px; }
+#dsgB .vb-foot {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 22px var(--pad) 36px; font-size: 12px; color: var(--st-dim);
+}
+
+@media (max-width: 1080px) {
+  #dsgB .vb-hero, #dsgB .vb-deck-sec { grid-template-columns: 1fr; }
+  #dsgB .vb-care-grid { grid-template-columns: repeat(2, 1fr); }
+  #dsgB .vb-trail { display: none; }
+}
+@media (max-width: 640px) {
+  #dsgB .vb-care-grid, #dsgB .vb-hours-grid { grid-template-columns: 1fr; }
+  #dsgB .vb-open { display: none; }
+  #dsgB .vb-brand {
+    font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: calc(100% - 96px);
+  }
+}
+/* Da Costa — dark den, copper vignette. This lead only. */
+#dsgB .vb-trail,
+#dsgB .vb-stamp { display: none; }
+#dsgB .vb-name { perspective: 900px; }
+#dsgB .vb-eyebrow, #dsgB .vb-claim, #dsgB .vb-lead, #dsgB .vb-cta { opacity: 0; }
+
+/* No frame. The den is a pool of light that dissolves into the page, so
+   the animals sit in the layout instead of inside a sticker. */
+#dsgB .dc-field {
+  position: relative;
+  width: min(100%, 560px);
+  aspect-ratio: 16 / 11;
+  margin-bottom: 38px;
+  justify-self: center;
+  background:
+    radial-gradient(44% 32% at 50% 56%, #2b221ad9 0%, #221b1580 42%, #1d171300 74%);
+}
+#dsgB .dc-field:after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(34% 24% at 50% 58%, #c07a3a33, transparent 72%);
+}
+#dsgB .dc-view {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#dsgB .dc-ficha {
+  position: absolute;
+  left: 8px;
+  bottom: 26px;
+  z-index: 2;
+  padding: 10px 14px;
+  background: color-mix(in srgb, #1a1714 82%, #d9a15a);
+  color: #f0e6d6;
+  border: 1px solid #d9a15a;
+  min-width: 140px;
+}
+#dsgB .dc-ficha[hidden] { display: none; }
+#dsgB .dc-name {
+  display: block;
+  font-family: "Cormorant Garamond", var(--display);
+  font-size: 22px;
+}
+#dsgB .dc-who {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #d9a15a;
+}
+#dsgB .dc-token {
+  position: absolute;
+  right: 18px;
+  bottom: 44px;
+  z-index: 2;
+  border: 1px solid #d9a15a;
+  background: #d9a15a;
+  color: #1a1714;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: grab;
+  touch-action: none;
+}
+#dsgB .dc-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -22px;
+  z-index: 3;
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #c98f4e;
+}
+
+#dsgB .dc-net { padding: clamp(40px, 7vw, 90px) var(--pad); }
+#dsgB .dc-net-k {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+#dsgB .dc-net-lead {
+  max-width: 36ch;
+  color: var(--st-dim);
+  margin: 0 0 28px;
+}
+#dsgB .dc-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+#dsgB .dc-chip {
+  opacity: 0;
+  padding: 18px 16px;
+  border-top: 1px solid var(--st-line);
+}
+#dsgB .dc-chip b { display: block; font-size: 10px; letter-spacing: .2em; color: var(--st-accent); }
+#dsgB .dc-chip span {
+  font-family: "Cormorant Garamond", var(--display);
+  font-size: 26px;
+}
+
+@media (max-width: 640px) {
+  #dsgB .dc-chips { grid-template-columns: 1fr; }
+  #dsgB .dc-field { aspect-ratio: 1 / 1; }
+}
+
+</style>
+</head>
+<body data-motion="animejs" data-layout="cascade" data-mode="den">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="mark">Da Costa</span>
+  <a class="urg" href="tel:34631669355">+34 631 669 355</a>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="hero-mag">
+  <div>
+    <p class="kicker">Allariz · Rúa Santo Estevo</p>
+    <h1>El vet de Allariz. Cerca de casa.</h1>
+    <p class="lead">Consulta en Santo Estevo. Perro de aldea o gato del casco: os atienden sin mandaros a Ourense por un control.</p>
+  </div>
+  <figure class="portrait" role="img" aria-label="Consulta veterinaria"></figure>
+</section>
+<p class="quote">Allariz es pequeño. Os recordamos.</p>
+<section class="care-grid"><article class="care"><h3>Consulta</h3><p>Mesa, tiempo y que el dueño se quede dentro.</p></article><article class="care"><h3>Vacunas</h3><p>El calendario, sin cita perdida en otra villa.</p></article><article class="care"><h3>Chip</h3><p>Alta y lectura. El papel se queda hecho.</p></article><article class="care"><h3>Revisión</h3><p>Oídos, piel y peso. Lo de siempre, bien hecho.</p></article><article class="care"><h3>Urgencia local</h3><p>Si se puede ver hoy, se ve hoy. Si no, os decimos dónde.</p></article><article class="care"><h3>Consejo</h3><p>Pienso, celo y viajes. Preguntad, que contestamos.</p></article></section>
+<section class="band">
+  <div>
+    <strong>L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</strong>
+    <div>Rúa Santo Estevo, Allariz</div>
+  </div>
+  <a href="https://wa.me/34631669355">+34 631 669 355 · WhatsApp</a>
+</section>
+<footer>Da Costa · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="vb">
+  <header class="vb-rail">
+    <span class="vb-brand">Da Costa</span>
+    <span class="vb-open">Allariz · L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="vb-hero">
+    <!-- slot:hero-3d -->
+<div class="dc-field">
+  <canvas class="dc-view"></canvas>
+  <div class="dc-ficha" hidden>
+    <b class="dc-name"></b>
+    <span class="dc-who"></span>
+  </div>
+  <p class="dc-hint">Allariz es pequeño. Os recordamos.</p>
+</div>
+
+<!-- /slot:hero-3d -->
+    <div class="vb-hero-copy">
+      <p class="vb-eyebrow">Rúa Santo Estevo · Allariz</p>
+      <h1 class="vb-name" data-split>Da Costa</h1>
+      <p class="vb-claim">El vet de Allariz. Cerca de casa.</p>
+      <p class="vb-lead">Consulta en Santo Estevo. Perro de aldea o gato del casco: os atienden sin mandaros a Ourense por un control.</p>
+      <div class="vb-actions">
+        <a class="vb-cta" href="https://wa.me/34631669355">Urgencias · WhatsApp</a>
+        <a class="vb-ghost" href="tel:34631669355">+34 631 669 355</a>
+      </div>
+    </div>
+    <svg class="vb-trail" viewBox="0 0 760 200" aria-hidden="true"><g class="vb-paw" transform="rotate(74 90.0 82.0)"><ellipse cx="90.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="75.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 75.0 71.7)"/><ellipse cx="84.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 84.8 65.3)"/><ellipse cx="95.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 95.2 65.3)"/><ellipse cx="105.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 105.0 71.7)"/></g><g class="vb-paw" transform="rotate(78 240.0 110.0)"><ellipse cx="240.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="225.1" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 225.1 99.7)"/><ellipse cx="234.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 234.8 93.3)"/><ellipse cx="245.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 245.2 93.3)"/><ellipse cx="254.9" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 254.9 99.7)"/></g><g class="vb-paw" transform="rotate(82 390.0 82.0)"><ellipse cx="390.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="375.1" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 375.1 71.7)"/><ellipse cx="384.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 384.8 65.3)"/><ellipse cx="395.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 395.2 65.3)"/><ellipse cx="404.9" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 404.9 71.7)"/></g><g class="vb-paw" transform="rotate(86 540.0 110.0)"><ellipse cx="540.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="525.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 525.0 99.7)"/><ellipse cx="534.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 534.8 93.3)"/><ellipse cx="545.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 545.2 93.3)"/><ellipse cx="555.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 555.0 99.7)"/></g></svg>
+  </section>
+
+  <section class="vb-care-sec">
+    <p class="vb-kicker">Lo que hacemos</p>
+    <h2 class="vb-h2" data-split>Veterinario en Allariz: consulta, vacunas y un móvil que responde.</h2>
+    <div class="vb-care-grid"><article class="vb-care"><span class="vb-care-n">01</span><h3>Consulta</h3><p>Mesa, tiempo y que el dueño se quede dentro.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">02</span><h3>Vacunas</h3><p>El calendario, sin cita perdida en otra villa.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">03</span><h3>Chip</h3><p>Alta y lectura. El papel se queda hecho.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">04</span><h3>Revisión</h3><p>Oídos, piel y peso. Lo de siempre, bien hecho.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">05</span><h3>Urgencia local</h3><p>Si se puede ver hoy, se ve hoy. Si no, os decimos dónde.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">06</span><h3>Consejo</h3><p>Pienso, celo y viajes. Preguntad, que contestamos.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article></div>
+  </section>
+
+  <!-- slot:stage-3d -->
+<section class="dc-net">
+  <p class="dc-net-k">La consulta que os conoce</p>
+  <p class="dc-net-lead">Cuando el campo se cierra, quedan tres gestos. Los de siempre.</p>
+  <div class="dc-chips">
+    <article class="dc-chip"><b>01</b><span>Consulta</span></article>
+    <article class="dc-chip"><b>02</b><span>Vacunas</span></article>
+    <article class="dc-chip"><b>03</b><span>Chip</span></article>
+  </div>
+</section>
+
+<!-- /slot:stage-3d -->
+
+  <section class="vb-hours">
+    <div class="vb-hours-grid">
+      <div><span>Dónde</span><b>Rúa Santo Estevo, Allariz</b></div>
+      <div><span>Horario</span><b>L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</b></div>
+      <div><span>Teléfono</span><b>+34 631 669 355</b></div>
+    </div>
+    <a class="vb-cta vb-cta-big" href="https://wa.me/34631669355">Escribir por WhatsApp</a>
+  </section>
+
+  <footer class="vb-foot">
+    <span>Da Costa</span>
+    <span>L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</span>
+  </footer>
+</div>
+
+</div>
+<script>
+
+function boot() {
+  if (typeof anime === "undefined") return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+  if (reduced) return;
+  anime({ targets: "h1", translateY: [22, 0], duration: 1200, easing: "easeOutExpo" });
+  anime({ targets: ".lead, .kicker", delay: 160, duration: 800, easing: "easeOutQuad" });
+  anime({ targets: ".portrait", scale: [1.04, 1], duration: 1400, easing: "easeOutExpo" });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      anime({ targets: e.target.querySelectorAll(".care"), translateY: [14, 0], delay: anime.stagger(70), duration: 650, easing: "easeOutQuad" });
+      io.disconnect();
+    });
+  }, { threshold: 0.15 });
+  const grid = document.querySelector(".care-grid");
+  if (grid) io.observe(grid);
+}
+const s = document.createElement("script");
+s.src = "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js";
+s.onload = boot;
+document.head.appendChild(s);
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+function dcRoster() {
+  return [
+    ["Xoco", "pastor", 7], ["Millo", "cruce", 11], ["Nube", "gato", 2], ["Roco", "galgo", 7],
+    ["Bica", "mestiza", 4], ["Uxía", "gato", 3], ["Branco", "labrador", 9], ["Pita", "gato", 6],
+    ["Lume", "setter", 5], ["Cova", "gato", 8], ["Tinto", "podenco", 10], ["Marela", "gato", 1],
+    ["Paxaro", "cruce", 4], ["Lúa", "gato", 5], ["Ferro", "mastín", 8], ["Sombra", "gato", 12],
+    ["Trigo", "collie", 6], ["Chispa", "gato", 3], ["Vento", "galgo", 4], ["Mel", "gato", 7],
+    ["Pebre", "terrier", 5], ["Neno", "gato", 2], ["Folla", "cruce", 9], ["Grao", "gato", 4],
+    ["Castaña", "labrador", 11], ["Bieito", "gato", 6], ["Ría", "podenco", 3], ["Centeo", "pastor", 8],
+    ["Brétema", "gato", 4], ["Carozo", "cruce", 7], ["Xesta", "gato", 5], ["Touciño", "mastín", 10],
+    ["Areeiro", "gato", 2], ["Muxía", "setter", 6], ["Pemento", "cruce", 5], ["Camiño", "gato", 8]
+  ];
+}
+
+window.__staticB = function (panel) {
+  window.__splitB(panel);
+  panel.querySelectorAll(".vb-c, .vb-eyebrow, .vb-claim, .vb-lead, .vb-cta").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  panel.querySelectorAll(".vb-paw").forEach(function (p) { p.style.opacity = ".7"; });
+  panel.querySelectorAll(".dc-chip").forEach(function (c) { c.style.opacity = "1"; });
+  var hint = panel.querySelector(".dc-hint");
+  if (hint) hint.remove();
+  var ficha = panel.querySelector(".dc-ficha");
+  if (ficha) {
+    ficha.hidden = false;
+    ficha.querySelector(".dc-name").textContent = "Xoco";
+    ficha.querySelector(".dc-who").textContent = "pastor · 7 años";
+  }
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  window.__splitB(panel);
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelectorAll(".vb-hero .vb-c"), {
+    y: [70, 0], rotateX: [-84, 0], opacity: [0, 1], duration: 900, delay: stagger(15)
+  }, 0);
+  intro.add(panel.querySelectorAll(".vb-eyebrow, .vb-claim, .vb-lead, .vb-cta"), {
+    y: [26, 0], opacity: [0, 1], duration: 760, delay: stagger(80)
+  }, 180);
+  intro.add(panel.querySelectorAll(".vb-paw"), {
+    opacity: [0, 0.7], duration: 900, delay: stagger(80)
+  }, 400);
+
+  var pack = { k: 0 };
+  var stage = panel.querySelector(".dc-net");
+  if (stage) {
+    animate(pack, {
+      k: 1, duration: 1400, ease: "inOutCubic",
+      autoplay: onScroll({ target: stage, enter: "top 80%", leave: "bottom 20%", sync: 0.5 })
+    });
+    animate(panel.querySelectorAll(".dc-chip"), {
+      opacity: [0, 1], y: [20, 0], duration: 700, delay: stagger(90), ease: "outExpo",
+      autoplay: onScroll({ target: stage, enter: "bottom-=80 top" })
+    });
+  }
+
+  var field = panel.querySelector(".dc-field");
+  var cv = panel.querySelector(".dc-view");
+  var ficha = panel.querySelector(".dc-ficha");
+  var nameEl = panel.querySelector(".dc-name");
+  var whoEl = panel.querySelector(".dc-who");
+  if (!field || !cv) return;
+
+  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
+    var tiny = matchMedia("(max-width: 700px)").matches;
+    var gpu = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.4 : 2));
+    gpu.setClearColor(0x000000, 0);
+
+    var world = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(36, 1, 0.1, 40);
+    camera.position.set(0, 0.86, tiny ? 4.35 : 3.30);
+    camera.lookAt(0, 0.10, -0.34);
+
+    var data = new Uint8Array([0, 85, 170, 255]);
+    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
+    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
+    ramp.needsUpdate = true;
+
+    function toon(color, extra) {
+      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
+      if (extra) Object.assign(mat, extra);
+      return mat;
+    }
+    var ink = new THREE.MeshBasicMaterial({ color: 0x120e0a, side: THREE.BackSide });
+    function inked(mesh, s) {
+      var shell = new THREE.Mesh(mesh.geometry, ink);
+      shell.scale.setScalar(s || 1.05);
+      mesh.add(shell);
+      return mesh;
+    }
+
+    world.add(new THREE.AmbientLight(0x4a3828, 0.95));
+    var key = new THREE.DirectionalLight(0xffd2a0, 2.2);
+    key.position.set(2.4, 4.2, 3.2);
+    world.add(key);
+    var rim = new THREE.DirectionalLight(0xd9a15a, 1.15);
+    rim.position.set(-3.2, 1.6, -2.2);
+    world.add(rim);
+
+    /* No ground mesh at all. Any plane under a low camera runs to the
+       horizon and fills the bottom of the frame with a slab that the canvas
+       edges then cut. The warm pool is a CSS gradient behind the canvas;
+       what keeps the animals from floating is a contact shadow each. */
+
+    /* One soft blob reused as every contact shadow, so nobody floats. */
+    function shadowTex() {
+      var c = document.createElement("canvas");
+      c.width = c.height = 64;
+      var x = c.getContext("2d");
+      var g = x.createRadialGradient(32, 32, 2, 32, 32, 31);
+      g.addColorStop(0, "rgba(0,0,0,.62)");
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      x.fillStyle = g;
+      x.fillRect(0, 0, 64, 64);
+      return new THREE.CanvasTexture(c);
+    }
+    var shadowMap = shadowTex();
+    var shadowGeo = new THREE.PlaneGeometry(1, 1);
+    function contactShadow(parent, w) {
+      var sh = new THREE.Mesh(shadowGeo, new THREE.MeshBasicMaterial({
+        map: shadowMap, transparent: true, depthWrite: false
+      }));
+      sh.rotation.x = -Math.PI / 2;
+      sh.position.y = -0.072;
+      sh.scale.set(w, w * 0.62, 1);
+      parent.add(sh);
+    }
+
+    var PAL = [0xf0e0c4, 0x8a6a48, 0x3a2f28, 0xd9a15a, 0xb8b0a4, 0x6a5040, 0xfaf2e4, 0x2a2320];
+
+    function makeCat(color) {
+      var g = new THREE.Group();
+      var fur = toon(color);
+      var body = inked(new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 12), fur), 1.05);
+      body.scale.set(1.15, 0.72, 0.9);
+      var head = inked(new THREE.Mesh(new THREE.SphereGeometry(0.1, 14, 12), fur), 1.05);
+      head.position.set(0.13, 0.08, 0);
+      var earL = inked(new THREE.Mesh(new THREE.ConeGeometry(0.042, 0.09, 8), fur), 1.06);
+      earL.position.set(0.1, 0.18, 0.055);
+      var earR = inked(new THREE.Mesh(new THREE.ConeGeometry(0.042, 0.09, 8), fur), 1.06);
+      earR.position.set(0.1, 0.18, -0.055);
+      var tail = inked(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-0.12, 0.02, 0),
+        new THREE.Vector3(-0.2, 0.1, 0.04),
+        new THREE.Vector3(-0.18, 0.2, 0.02)
+      ]), 10, 0.018, 6, false), fur), 1.06);
+      g.add(body);
+      g.add(head);
+      g.add(earL);
+      g.add(earR);
+      g.add(tail);
+      return g;
+    }
+
+    function makeDog(color) {
+      var g = new THREE.Group();
+      var fur = toon(color);
+      var body = inked(new THREE.Mesh(new THREE.CapsuleGeometry(0.09, 0.2, 5, 12), fur), 1.05);
+      body.rotation.z = Math.PI / 2;
+      body.position.y = 0.02;
+      var head = inked(new THREE.Mesh(new THREE.SphereGeometry(0.095, 14, 12), fur), 1.05);
+      head.position.set(0.16, 0.07, 0);
+      var snout = inked(new THREE.Mesh(new THREE.LatheGeometry([
+        new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.045, 0.00),
+        new THREE.Vector2(0.038, 0.07), new THREE.Vector2(0.00, 0.08)
+      ], 12), fur), 1.05);
+      snout.rotation.z = -Math.PI / 2;
+      snout.position.set(0.24, 0.05, 0);
+      var earL = inked(new THREE.Mesh(new THREE.SphereGeometry(0.04, 10, 8), fur), 1.06);
+      earL.scale.set(0.6, 1.1, 0.5);
+      earL.position.set(0.12, 0.14, 0.07);
+      var earR = earL.clone();
+      earR.position.z = -0.07;
+      var tail = inked(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+        new THREE.Vector3(-0.16, 0.02, 0),
+        new THREE.Vector3(-0.22, 0.08, 0),
+        new THREE.Vector3(-0.2, 0.14, 0)
+      ]), 8, 0.016, 6, false), fur), 1.06);
+      g.add(body);
+      g.add(head);
+      g.add(snout);
+      g.add(earL);
+      g.add(earR);
+      g.add(tail);
+      return g;
+    }
+
+    var list = dcRoster();
+    var ROWS = tiny
+      ? [{ z: 0.34, n: 4, s: 1.00 }, { z: -0.62, n: 5, s: 0.84 }]
+      : [{ z: 0.40, n: 5, s: 1.00 }, { z: -0.52, n: 6, s: 0.84 }, { z: -1.46, n: 7, s: 0.70 }];
+    var pets = [];
+    var i, row, mesh, r, k, span, base;
+    var idx = 0;
+    for (r = 0; r < ROWS.length; r++) {
+      span = 1.06 + r * 0.34;
+      for (k = 0; k < ROWS[r].n; k++) {
+        row = list[idx % list.length];
+        mesh = row[1] === "gato" ? makeCat(PAL[idx % PAL.length]) : makeDog(PAL[idx % PAL.length]);
+        base = ROWS[r].n > 1 ? (k / (ROWS[r].n - 1) - 0.5) * 2 * span : 0;
+        mesh.userData.home = new THREE.Vector3(
+          base + ((idx % 3) - 1) * 0.05,
+          0.08,
+          ROWS[r].z + ((k % 2) ? 0.07 : -0.05)
+        );
+        mesh.userData.phase = idx * 0.47;
+        mesh.userData.amp = 0.022 + (idx % 4) * 0.008;
+        mesh.userData.rest = ROWS[r].s * (0.95 + (idx % 3) * 0.04);
+        mesh.userData.name = row[0];
+        mesh.userData.who = row[1] + " · " + row[2] + " años";
+        mesh.position.copy(mesh.userData.home);
+        /* Both meshes run along +X, so yaw 0 is a right-facing profile and
+           pi is a left-facing one. Anything near pi/2 shows only a back. */
+        mesh.userData.left = (idx % 3 === 0);
+        mesh.userData.face = (mesh.userData.left ? Math.PI : 0)
+          + ((idx % 5) - 2) * 0.11;
+        /* Yaw grows towards -Z, so turning to meet the camera is negative
+           for a right-facing animal and positive for a left-facing one. */
+        mesh.userData.turn = mesh.userData.left ? 0.55 : -0.55;
+        mesh.rotation.y = mesh.userData.face;
+        mesh.scale.setScalar(mesh.userData.rest);
+        contactShadow(mesh, 0.52);
+        world.add(mesh);
+        pets.push(mesh);
+        idx++;
+      }
+    }
+    var count = pets.length;
+
+    var pointer = new THREE.Vector2(-9, -9);
+    var ray = new THREE.Raycaster();
+    var hot = -1;
+
+    field.addEventListener("pointermove", function (ev) {
+      var r = cv.getBoundingClientRect();
+      pointer.x = ((ev.clientX - r.left) / Math.max(r.width, 1)) * 2 - 1;
+      pointer.y = -((ev.clientY - r.top) / Math.max(r.height, 1)) * 2 + 1;
+    });
+    field.addEventListener("pointerleave", function () {
+      pointer.x = -9;
+      pointer.y = -9;
+      if (ficha) ficha.hidden = true;
+      hot = -1;
+    });
+
+    function fitView() {
+      var w = field.clientWidth, h = field.clientHeight;
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+      gpu.setSize(w, h, false);
+    }
+    fitView();
+    window.addEventListener("resize", fitView);
+
+    var onStage = true;
+    if (window.IntersectionObserver) {
+      onStage = false;
+      new IntersectionObserver(function (entries) {
+        onStage = entries[0].isIntersecting;
+      }, { rootMargin: "12% 0px" }).observe(field);
+    }
+
+    var hint = panel.querySelector(".dc-hint");
+    if (hint) hint.style.opacity = "1";
+
+    function frame() {
+      requestAnimationFrame(frame);
+      if (!onStage) return;
+      var now = performance.now() * 0.001;
+      var hit = -1;
+      if (pointer.x > -2) {
+        ray.setFromCamera(pointer, camera);
+        var hits = ray.intersectObjects(pets, true);
+        if (hits.length) {
+          var obj = hits[0].object;
+          while (obj && pets.indexOf(obj) < 0) obj = obj.parent;
+          hit = pets.indexOf(obj);
+        }
+      }
+      hot = hit;
+      for (i = 0; i < pets.length; i++) {
+        var p = pets[i];
+        var lift = i === hot ? 1 : 0;
+        p.userData.k = (p.userData.k || 0) + (lift - (p.userData.k || 0)) * 0.14;
+        var breathe = Math.sin(now * 1.1 + p.userData.phase) * p.userData.amp;
+        var wx = p.userData.home.x + Math.sin(now * 0.5 + p.userData.phase) * p.userData.amp;
+        p.position.set(
+          wx * (1 - pack.k),
+          0.08 + breathe * 0.5 + p.userData.k * 0.10,
+          p.userData.home.z * (1 - pack.k)
+        );
+        /* Only the one under the pointer turns, and only to face you. */
+        p.rotation.y = p.userData.face + p.userData.turn * p.userData.k;
+        p.scale.setScalar(p.userData.rest * (1 + p.userData.k * 0.10));
+      }
+      if (hot >= 0 && ficha && nameEl && whoEl) {
+        ficha.hidden = false;
+        nameEl.textContent = pets[hot].userData.name;
+        whoEl.textContent = pets[hot].userData.who;
+        if (hint) hint.style.opacity = "0";
+      } else if (ficha && pointer.x < -2) {
+        ficha.hidden = true;
+      }
+      camera.position.set(
+        Math.sin(now * 0.12) * 0.22,
+        0.86 + pack.k * 0.5,
+        (tiny ? 4.35 : 3.30) - pack.k * 0.6
+      );
+      camera.lookAt(0, 0.10 - pack.k * 0.04, -0.34);
+      gpu.render(world, camera);
+    }
+    frame();
+  }).catch(function () { window.__staticB(panel); });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

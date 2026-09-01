@@ -1,0 +1,1201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OptiRedondela · Redondela</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2314110e%22%2F%3E%3Ccircle%20cx%3D%2210.5%22%20cy%3D%2216%22%20r%3D%225.2%22%20fill%3D%22none%22%20stroke%3D%22%23e8d7b8%22%20stroke-width%3D%222.2%22%2F%3E%3Ccircle%20cx%3D%2221.5%22%20cy%3D%2216%22%20r%3D%225.2%22%20fill%3D%22none%22%20stroke%3D%22%23e8d7b8%22%20stroke-width%3D%222.2%22%2F%3E%3Cpath%20d%3D%22M15.7%2016h.6%22%20stroke%3D%22%23e8d7b8%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #0e0d0b;
+  --ink: #f7f1e6;
+  --muted: #b3aa9a;
+  --accent: #d4b483;
+  --accent2: #8a7350;
+  --line: #2a2620;
+  --display: "Cormorant Garamond", serif;
+  --body: "Syne", system-ui, sans-serif;
+  --radius: 14px;
+  --pad: 16px; --gap: 16px; --hero: clamp(40px, 8vw, 84px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+body { letter-spacing: -0.01em; }
+header {
+  position: absolute; left: 0; right: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px var(--pad); font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+}
+.brand { font-family: var(--display); font-size: 28px; letter-spacing: 0; text-transform: none; }
+nav { display: flex; gap: 22px; color: var(--muted); }
+nav a { text-decoration: none; }
+.look {
+  min-height: 100vh; display: grid; grid-template-columns: 1.15fr .85fr;
+  align-items: center; padding: 90px var(--pad) 40px;
+}
+.lens-wrap { display: grid; place-items: center; min-height: 70vh; }
+.lens {
+  width: min(520px, 78vw); aspect-ratio: 1; border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 42%),
+    url("https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=1600&q=80") center/cover;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.num { font-size: 12px; letter-spacing: .28em; color: var(--accent); }
+h1 {
+  font-family: var(--display); font-weight: 500; font-size: clamp(44px, 6vw, 86px);
+  line-height: .92; margin: 12px 0 18px;
+}
+.lead { color: var(--muted); max-width: 34ch; line-height: 1.55; }
+.cta-line {
+  display: inline-block; margin-top: 28px; text-decoration: none;
+  border-bottom: 1px solid var(--accent); padding-bottom: 4px; letter-spacing: .12em;
+  text-transform: uppercase; font-size: 12px;
+}
+.rail {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.item { padding: 28px var(--pad); border-right: 1px solid var(--line); min-height: 220px; }
+.item:last-child { border-right: 0; }
+.item em { color: var(--accent); font-style: normal; font-size: 11px; letter-spacing: .16em; }
+.item h3 { font-family: var(--display); font-size: 32px; margin: 12px 0 8px; font-weight: 500; }
+.item p { margin: 0; color: var(--muted); }
+.exam {
+  padding: 72px var(--pad); display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+}
+.exam h2 { font-family: var(--display); font-size: clamp(36px, 5vw, 68px); margin: 0; max-width: 16ch; font-weight: 500; }
+.exam a {
+  background: var(--accent); color: #111; text-decoration: none; padding: 16px 20px;
+  border-radius: var(--radius); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 12px;
+}
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  .look { grid-template-columns: 1fr; padding-top: 86px; min-height: auto; }
+  .lens-wrap { min-height: 48vh; }
+  .rail { grid-template-columns: 1fr; }
+  .item { border-right: 0; border-bottom: 1px solid var(--line); min-height: 0; }
+  .exam { flex-direction: column; align-items: flex-start; }
+}
+
+
+#dsgB {
+  --st-bg: #080807;
+  --st-fg: #f9f5ee;
+  --st-accent: #d4b483;
+  --st-second: #907a58;
+  --st-glow: #d4b483;
+  --st-line: #333331;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .ob {
+  --focus: 0;
+  --blur: calc((1 - var(--focus)) * 13px);
+  position: relative; overflow: clip;
+  background:
+    radial-gradient(80% 55% at 50% -10%, color-mix(in srgb, var(--st-glow) 15%, transparent), transparent 65%),
+    var(--st-bg);
+  font-family: "Geist", system-ui, sans-serif; font-weight: 300;
+}
+#dsgB .ob h1, #dsgB .ob h2, #dsgB .ob h3, #dsgB .ob .ob-brand, #dsgB .ob .ob-tel {
+  font-family: "Instrument Serif", var(--display); font-weight: 400; letter-spacing: -.015em;
+}
+
+#dsgB .ob-iris { position: fixed; inset: 0; z-index: 80; pointer-events: none; }
+#dsgB .ob-iris svg { width: 100%; height: 100%; }
+#dsgB .ob-blade { transform-box: view-box; transform-origin: 500px 500px; }
+#dsgB .ob-blade path { fill: var(--st-bg); }
+
+#dsgB .ob-rail {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; padding: 18px var(--pad);
+  border-bottom: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-bg) 76%, transparent); backdrop-filter: blur(12px);
+}
+#dsgB .ob-brand { font-size: 21px; }
+#dsgB .ob-place { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--st-dim); }
+
+#dsgB .ob-hero {
+  min-height: 86vh; display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center; gap: clamp(16px, 4vw, 48px);
+  padding: clamp(50px, 8vw, 110px) var(--pad) clamp(30px, 5vw, 60px);
+}
+#dsgB .ob-ghost {
+  margin: 0; pointer-events: none; user-select: none;
+  font-family: "Instrument Serif", var(--display); font-weight: 400;
+  font-size: clamp(72px, 15vw, 210px); line-height: .8; letter-spacing: -.06em;
+  color: color-mix(in srgb, var(--st-fg) 12%, transparent);
+  filter: blur(calc(var(--blur) * .35));
+}
+#dsgB .ob-hero-copy { min-width: 0; }
+#dsgB .ob-eyebrow { margin: 0 0 22px; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .ob-name {
+  margin: 0; font-size: clamp(46px, 10.5vw, 172px); line-height: .9;
+  filter: blur(var(--blur)); letter-spacing: calc((1 - var(--focus)) * .06em - .015em);
+}
+#dsgB .ob-claim {
+  margin: 30px 0 0; max-width: 22ch; font-family: "Instrument Serif", var(--display);
+  font-style: italic; font-size: clamp(21px, 2.7vw, 38px); line-height: 1.16; color: var(--st-accent);
+  filter: blur(calc(var(--blur) * .55));
+}
+#dsgB .ob-lead {
+  margin: 20px 0 0; max-width: 48ch; font-size: 15px; line-height: 1.8; color: var(--st-dim);
+  filter: blur(calc(var(--blur) * .32));
+}
+
+#dsgB .ob-dial { margin-top: clamp(36px, 6vw, 72px); max-width: 560px; }
+#dsgB .ob-scale { position: relative; }
+#dsgB .ob-stops { display: flex; justify-content: space-between; margin-bottom: 28px; }
+#dsgB .ob-stop { display: grid; justify-items: center; gap: 7px; }
+#dsgB .ob-stop i { display: block; width: 1px; height: 13px; background: color-mix(in srgb, var(--st-fg) 34%, transparent); }
+#dsgB .ob-stop em {
+  font-style: normal; font-size: 11px; letter-spacing: .1em; color: var(--st-dim);
+  font-variant-numeric: tabular-nums;
+}
+#dsgB .ob-stop[data-on="1"] em { color: var(--st-accent); }
+#dsgB .ob-rail-track {
+  position: relative; height: 2px; margin: 0 0 34px;
+  background: color-mix(in srgb, var(--st-fg) 20%, transparent);
+}
+#dsgB .ob-knob {
+  position: absolute; top: 50%; left: 0; width: 44px; height: 44px; margin: -22px 0 0 -22px;
+  border-radius: 50%; border: 1px solid color-mix(in srgb, var(--st-glow) 60%, transparent);
+  background: color-mix(in srgb, var(--st-bg) 70%, transparent); backdrop-filter: blur(6px);
+  cursor: grab; touch-action: none; display: grid; place-items: center;
+}
+#dsgB .ob-knob span {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, var(--st-glow), transparent 68%);
+  border: 1px solid color-mix(in srgb, var(--st-glow) 70%, transparent);
+}
+#dsgB .ob-dial-read { margin: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .ob-dpt { color: var(--st-accent); font-variant-numeric: tabular-nums; }
+
+#dsgB .ob-chart-sec { padding: clamp(60px, 9vw, 130px) var(--pad); border-top: 1px solid var(--st-line); }
+#dsgB .ob-kicker { margin: 0 0 14px; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .ob-h2 { margin: 0 0 56px; max-width: 20ch; font-size: clamp(28px, 4.2vw, 60px); line-height: 1.05; }
+#dsgB .ob-chart { display: grid; gap: 10px; justify-items: center; text-align: center; max-width: 36ch; margin: 0 auto; }
+#dsgB .ob-line {
+  margin: 0; font-family: "Instrument Serif", var(--display); line-height: 1.25;
+  letter-spacing: .02em; color: var(--st-fg);
+  filter: blur(var(--blur)); opacity: calc(0.4 + var(--focus) * 0.6);
+}
+
+/* The bench: sticky stage, steps pulled back over it so they own the
+   scroll length the swap is scrubbed against. --swap is how blind the
+   frame currently is (lens out, none in yet) and it blurs the copy, not
+   the whole page: the diopter dial already owns the page-wide focus and
+   two things fighting over one blur is nobody's idea of a good time. */
+#dsgB .ob-bench { position: relative; }
+#dsgB .ob-bench-fig {
+  position: sticky; top: 0; height: 100vh; display: grid; place-items: center;
+  overflow: hidden;
+}
+#dsgB .ob-specs {
+  width: 100%; height: 100%; overflow: hidden;
+  touch-action: pan-y; cursor: grab; user-select: none;
+}
+#dsgB .ob-specs.is-orbiting { cursor: grabbing; }
+#dsgB .ob-solids {
+  stroke: none; stroke-opacity: 0;
+  stroke-linejoin: round;
+}
+#dsgB .ob-shadow { fill: #000; opacity: .22; }
+#dsgB .ob-caustic { fill: var(--st-glow); opacity: 0; pointer-events: none; }
+#dsgB .ob-spin {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  margin: 0; font-size: 10px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--st-dim); pointer-events: none;
+}
+#dsgB .ob-bench-steps {
+  position: relative; margin-top: -100vh; padding: 32vh var(--pad) 40vh;
+  display: grid; gap: 44vh; width: min(36ch, 44%); pointer-events: none;
+}
+#dsgB .ob-bstep { opacity: .3; }
+#dsgB .ob-bstep em {
+  font-style: normal; font-size: 10px; letter-spacing: .24em; color: var(--st-accent);
+}
+#dsgB .ob-bstep h3 {
+  margin: 10px 0; font-size: clamp(24px, 3vw, 40px); line-height: 1.05;
+  font-family: var(--display);
+}
+#dsgB .ob-bstep p {
+  margin: 0; max-width: 32ch; font-size: 13px; line-height: 1.7; color: var(--st-dim);
+  filter: blur(calc(var(--swap) * 4.5px));
+}
+
+#dsgB .ob-frames-sec { padding: 0 var(--pad) clamp(60px, 9vw, 120px); }
+#dsgB .ob-frames { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--st-line); }
+#dsgB .ob-frame { background: var(--st-bg); padding: 30px 26px 34px; display: flex; flex-direction: column; gap: 10px; }
+#dsgB .ob-frame-fig { margin-bottom: 12px; }
+#dsgB .ob-frame-fig svg { width: 100%; max-width: 190px; height: auto; overflow: visible; }
+#dsgB .ob-rim, #dsgB .ob-bridge, #dsgB .ob-temple {
+  fill: none; stroke: var(--st-accent); stroke-width: 2.4; stroke-linecap: round;
+}
+#dsgB .ob-lens-fill { fill: var(--st-accent); opacity: .38; stroke: none; }
+#dsgB .ob-frame-n { font-size: 11px; letter-spacing: .3em; color: var(--st-accent); }
+#dsgB .ob-frame h3 { margin: 0; font-size: 25px; }
+#dsgB .ob-frame p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--st-dim); }
+
+#dsgB .ob-book { position: relative; padding: 0 var(--pad) clamp(40px, 6vw, 90px); }
+#dsgB .ob-book-in {
+  position: relative; overflow: hidden; border-radius: 36px;
+  padding: clamp(50px, 8vw, 110px) clamp(28px, 5vw, 70px);
+  background: color-mix(in srgb, var(--st-glow) 92%, var(--st-bg)); color: var(--st-bg);
+  clip-path: circle(0% at 50% 50%);
+}
+#dsgB .ob-book-in .ob-kicker { color: color-mix(in srgb, var(--st-bg) 78%, transparent); }
+#dsgB .ob-tel {
+  display: inline-block; text-decoration: none; color: inherit;
+  font-size: clamp(34px, 7.6vw, 108px); line-height: 1;
+}
+#dsgB .ob-book-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 34px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+#dsgB .ob-cta {
+  text-decoration: none; background: var(--st-bg); color: var(--st-glow);
+  padding: 17px 30px; border-radius: 999px; font-weight: 500; letter-spacing: .16em;
+  will-change: transform;
+}
+#dsgB .ob-foot {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 20px var(--pad) 40px; border-top: 1px solid var(--st-line);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--st-dim);
+}
+
+@media (max-width: 1080px) {
+  #dsgB .ob-frames { grid-template-columns: repeat(2, 1fr); }
+  #dsgB .ob-hero { grid-template-columns: 1fr; }
+  #dsgB .ob-ghost { display: none; }
+}
+@media (max-width: 900px) {
+  /* a thumb finds the drag without being told, and the hint would land
+     on top of the step copy */
+  #dsgB .ob-spin { display: none; }
+  #dsgB .ob-bench-fig { height: 62vh; top: 15vh; }
+  #dsgB .ob-bench-steps {
+    margin-top: -62vh; width: min(34ch, 78%); gap: 34vh; padding: 20vh var(--pad) 26vh;
+  }
+}
+@media (max-width: 640px) {
+  #dsgB .ob-frames { grid-template-columns: 1fr; }
+  #dsgB .ob-line { letter-spacing: 0; }
+  #dsgB .ob-place { display: none; }
+}
+
+</style>
+</head>
+<body data-motion="motion" data-layout="lookbook" data-mode="atelier">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="brand">OptiRedondela</span>
+  <nav>
+    <a href="#coleccion">Colección</a>
+    <a href="#graduacion">Graduación</a>
+    <a href="https://wa.me/34886165583">Cita</a>
+  </nav>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="look">
+  <div class="lens-wrap"><div class="lens" id="coleccion"></div></div>
+  <div>
+    <p class="num">Redondela · Rúa Casto San Pedro</p>
+    <h1>Ver con precisión.<br>Llevarlo con estilo.</h1>
+    <p class="lead">Graduación completa y montura que no parece de catálogo de centro comercial. Taller de montaje en la propia calle.</p>
+    <a class="cta-line" href="https://wa.me/34886165583">+34886165583</a>
+  </div>
+</section>
+<section class="rail"><article class="item"><em>01</em><h3>Graduación</h3><p>45 minutos. Retina, presión y graduación. Sin prisa de pasillo.</p></article><article class="item"><em>02</em><h3>Montura</h3><p>Selección corta, bien hecha. Os decimos qué no os queda.</p></article><article class="item"><em>03</em><h3>Lentillas</h3><p>Prueba en cabina y seguimiento a la semana.</p></article><article class="item"><em>04</em><h3>Infantil</h3><p>Primera graduación sin drama. Los padres se quedan dentro.</p></article><article class="item"><em>05</em><h3>Sol</h3><p>Filtro real, no disfraz. Polarizado cuando hace falta.</p></article><article class="item"><em>06</em><h3>Taller</h3><p>Montaje y ajuste aquí. Si aprieta, se limpia y se deja hoy.</p></article></section>
+<section class="exam" id="graduacion">
+  <h2>Una graduación de 45 minutos. Sin pasillo ni prisas.</h2>
+  <a href="https://wa.me/34886165583">L–S 10:00–14:00 / 16:30–20:30</a>
+</section>
+<footer>OptiRedondela · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="ob" style="--focus: 0">
+  <div class="ob-iris" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"><g class="ob-blade" data-blade="0" transform="rotate(0 500 500)"><path d="M 500 500 L 500 -260 L 1160 120 Z"/></g><g class="ob-blade" data-blade="1" transform="rotate(60 500 500)"><path d="M 500 500 L 500 -260 L 1160 120 Z"/></g><g class="ob-blade" data-blade="2" transform="rotate(120 500 500)"><path d="M 500 500 L 500 -260 L 1160 120 Z"/></g><g class="ob-blade" data-blade="3" transform="rotate(180 500 500)"><path d="M 500 500 L 500 -260 L 1160 120 Z"/></g><g class="ob-blade" data-blade="4" transform="rotate(240 500 500)"><path d="M 500 500 L 500 -260 L 1160 120 Z"/></g><g class="ob-blade" data-blade="5" transform="rotate(300 500 500)"><path d="M 500 500 L 500 -260 L 1160 120 Z"/></g></svg>
+  </div>
+
+  <header class="ob-rail">
+    <span class="ob-brand">OptiRedondela</span>
+    <span class="ob-place">Redondela</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="ob-hero">
+    <div class="ob-hero-copy">
+      <p class="ob-eyebrow">Rúa Casto San Pedro · Redondela</p>
+      <h1 class="ob-name" data-split>OptiRedondela</h1>
+      <p class="ob-claim">Ver con precisión. Llevarlo con estilo.</p>
+      <p class="ob-lead">Graduación completa y montura que no parece de catálogo de centro comercial. Taller de montaje en la propia calle.</p>
+
+      <!-- slot:hero-3d -->
+<div class="ob-dial">
+        <div class="ob-scale">
+          <div class="ob-stops"><span class="ob-stop"><i></i><em>-3</em></span><span class="ob-stop"><i></i><em>-2</em></span><span class="ob-stop"><i></i><em>-1</em></span><span class="ob-stop"><i></i><em>+0</em></span><span class="ob-stop"><i></i><em>+1</em></span><span class="ob-stop"><i></i><em>+2</em></span></div>
+          <div class="ob-rail-track">
+            <button class="ob-knob" type="button" aria-label="Ajustar la graduación"><span></span></button>
+          </div>
+        </div>
+        <p class="ob-dial-read">Graduación <b class="ob-dpt">-3,00</b> · <span class="ob-dial-hint">arrastra hasta ver nítido</span></p>
+      </div>
+<!-- /slot:hero-3d -->
+    </div>
+    <p class="ob-ghost" aria-hidden="true"><b class="ob-dpt-ghost">-3,00</b></p>
+  </section>
+
+  <section class="ob-chart-sec">
+    <p class="ob-kicker">Gabinete</p>
+    <h2 class="ob-h2">Óptica de autor en Redondela: graduación, montura y ajuste fino.</h2>
+    <div class="ob-chart"><p class="ob-line" data-line="0" style="font-size:40px">Esta es la cartilla de cerca.</p><p class="ob-line" data-line="1" style="font-size:34px">Las frases del móvil y del trabajo.</p><p class="ob-line" data-line="2" style="font-size:28px">El prospecto, el ticket, la receta.</p><p class="ob-line" data-line="3" style="font-size:22px">Arrastra la graduación hasta verlo nítido.</p></div>
+  </section>
+
+  <!-- slot:stage-3d -->
+<section class="ob-bench" style="--swap: 0">
+    <div class="ob-bench-fig">
+      <svg class="ob-specs" viewBox="0 0 1120 640" aria-hidden="true"><defs><filter id="obShadow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16"/></filter><filter id="obCaustic" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="14"/></filter></defs><ellipse class="ob-shadow" filter="url(#obShadow)" rx="0" ry="0"/><ellipse class="ob-caustic" filter="url(#obCaustic)" rx="0" ry="0"/><g class="ob-solids"></g></svg>
+      <p class="ob-spin">Arrastra para abrir</p>
+    </div>
+    <div class="ob-bench-steps">
+      <p class="ob-kicker">Taller de montaje</p>
+      <div class="ob-bstep" data-step="0"><em>01</em><h3>Tu montura</h3><p>La que ya llevas puesta. Cambiar de gafas no siempre hace falta: casi siempre basta con el cristal.</p></div><div class="ob-bstep" data-step="1"><em>02</em><h3>Fuera el cristal</h3><p>Lo desmontamos, medimos tu graduación y marcamos el centro óptico sobre la montura.</p></div><div class="ob-bstep" data-step="2"><em>03</em><h3>Cristal nuevo</h3><p>Antirreflejante y filtro de luz azul. Montado, centrado y ajustado antes de que te lo lleves.</p></div>
+    </div>
+    <script type="application/json" class="ob-mesh">{"parts":[{"id":"aro-i","v":[[201.5,0.0,6.4],[200.9,27.3,6.4],[198.7,39.3,6.4],[194.9,48.6,6.4],[189.2,56.1,6.4],[181.7,61.9,6.4],[172.5,66.0,6.4],[161.3,68.7,6.4],[146.6,70.3,6.4],[111.6,70.8,6.4],[76.6,70.3,6.4],[61.9,68.7,6.4],[50.7,66.0,6.4],[41.5,61.9,6.4],[34.0,56.1,6.4],[28.3,48.6,6.4],[24.5,39.3,6.4],[22.3,27.3,6.4],[21.7,0.0,6.4],[22.3,-27.3,6.4],[24.5,-39.3,6.4],[28.3,-48.6,6.4],[34.0,-56.1,6.4],[41.5,-61.9,6.4],[50.7,-66.0,6.4],[61.9,-68.7,6.4],[76.6,-70.3,6.4],[111.6,-70.8,6.4],[146.6,-70.3,6.4],[161.3,-68.7,6.4],[172.5,-66.0,6.4],[181.7,-61.9,6.4],[189.2,-56.1,6.4],[194.9,-48.6,6.4],[198.7,-39.3,6.4],[200.9,-27.3,6.4],[201.5,0.0,-6.4],[200.9,27.3,-6.4],[198.7,39.3,-6.4],[194.9,48.6,-6.4],[189.2,56.1,-6.4],[181.7,61.9,-6.4],[172.5,66.0,-6.4],[161.3,68.7,-6.4],[146.6,70.3,-6.4],[111.6,70.8,-6.4],[76.6,70.3,-6.4],[61.9,68.7,-6.4],[50.7,66.0,-6.4],[41.5,61.9,-6.4],[34.0,56.1,-6.4],[28.3,48.6,-6.4],[24.5,39.3,-6.4],[22.3,27.3,-6.4],[21.7,0.0,-6.4],[22.3,-27.3,-6.4],[24.5,-39.3,-6.4],[28.3,-48.6,-6.4],[34.0,-56.1,-6.4],[41.5,-61.9,-6.4],[50.7,-66.0,-6.4],[61.9,-68.7,-6.4],[76.6,-70.3,-6.4],[111.6,-70.8,-6.4],[146.6,-70.3,-6.4],[161.3,-68.7,-6.4],[172.5,-66.0,-6.4],[181.7,-61.9,-6.4],[189.2,-56.1,-6.4],[194.9,-48.6,-6.4],[198.7,-39.3,-6.4],[200.9,-27.3,-6.4],[194.5,0.0,-6.4],[193.9,26.6,-6.4],[192.0,37.3,-6.4],[188.7,45.1,-6.4],[184.2,51.1,-6.4],[178.1,55.8,-6.4],[170.2,59.3,-6.4],[160.1,61.8,-6.4],[146.1,63.3,-6.4],[111.6,63.8,-6.4],[77.0,63.3,-6.4],[63.1,61.8,-6.4],[53.0,59.3,-6.4],[45.1,55.8,-6.4],[39.0,51.1,-6.4],[34.4,45.1,-6.4],[31.2,37.3,-6.4],[29.3,26.6,-6.4],[28.7,0.0,-6.4],[29.3,-26.6,-6.4],[31.2,-37.3,-6.4],[34.4,-45.1,-6.4],[39.0,-51.1,-6.4],[45.1,-55.8,-6.4],[53.0,-59.3,-6.4],[63.1,-61.8,-6.4],[77.0,-63.3,-6.4],[111.6,-63.8,-6.4],[146.1,-63.3,-6.4],[160.1,-61.8,-6.4],[170.2,-59.3,-6.4],[178.1,-55.8,-6.4],[184.2,-51.1,-6.4],[188.7,-45.1,-6.4],[192.0,-37.3,-6.4],[193.9,-26.6,-6.4],[194.5,0.0,6.4],[193.9,26.6,6.4],[192.0,37.3,6.4],[188.7,45.1,6.4],[184.2,51.1,6.4],[178.1,55.8,6.4],[170.2,59.3,6.4],[160.1,61.8,6.4],[146.1,63.3,6.4],[111.6,63.8,6.4],[77.0,63.3,6.4],[63.1,61.8,6.4],[53.0,59.3,6.4],[45.1,55.8,6.4],[39.0,51.1,6.4],[34.4,45.1,6.4],[31.2,37.3,6.4],[29.3,26.6,6.4],[28.7,0.0,6.4],[29.3,-26.6,6.4],[31.2,-37.3,6.4],[34.4,-45.1,6.4],[39.0,-51.1,6.4],[45.1,-55.8,6.4],[53.0,-59.3,6.4],[63.1,-61.8,6.4],[77.0,-63.3,6.4],[111.6,-63.8,6.4],[146.1,-63.3,6.4],[160.1,-61.8,6.4],[170.2,-59.3,6.4],[178.1,-55.8,6.4],[184.2,-51.1,6.4],[188.7,-45.1,6.4],[192.0,-37.3,6.4],[193.9,-26.6,6.4]],"f":[[0,1,109,108],[36,72,73,37],[0,36,37,1],[108,109,73,72],[1,2,110,109],[37,73,74,38],[1,37,38,2],[109,110,74,73],[2,3,111,110],[38,74,75,39],[2,38,39,3],[110,111,75,74],[3,4,112,111],[39,75,76,40],[3,39,40,4],[111,112,76,75],[4,5,113,112],[40,76,77,41],[4,40,41,5],[112,113,77,76],[5,6,114,113],[41,77,78,42],[5,41,42,6],[113,114,78,77],[6,7,115,114],[42,78,79,43],[6,42,43,7],[114,115,79,78],[7,8,116,115],[43,79,80,44],[7,43,44,8],[115,116,80,79],[8,9,117,116],[44,80,81,45],[8,44,45,9],[116,117,81,80],[9,10,118,117],[45,81,82,46],[9,45,46,10],[117,118,82,81],[10,11,119,118],[46,82,83,47],[10,46,47,11],[118,119,83,82],[11,12,120,119],[47,83,84,48],[11,47,48,12],[119,120,84,83],[12,13,121,120],[48,84,85,49],[12,48,49,13],[120,121,85,84],[13,14,122,121],[49,85,86,50],[13,49,50,14],[121,122,86,85],[14,15,123,122],[50,86,87,51],[14,50,51,15],[122,123,87,86],[15,16,124,123],[51,87,88,52],[15,51,52,16],[123,124,88,87],[16,17,125,124],[52,88,89,53],[16,52,53,17],[124,125,89,88],[17,18,126,125],[53,89,90,54],[17,53,54,18],[125,126,90,89],[18,19,127,126],[54,90,91,55],[18,54,55,19],[126,127,91,90],[19,20,128,127],[55,91,92,56],[19,55,56,20],[127,128,92,91],[20,21,129,128],[56,92,93,57],[20,56,57,21],[128,129,93,92],[21,22,130,129],[57,93,94,58],[21,57,58,22],[129,130,94,93],[22,23,131,130],[58,94,95,59],[22,58,59,23],[130,131,95,94],[23,24,132,131],[59,95,96,60],[23,59,60,24],[131,132,96,95],[24,25,133,132],[60,96,97,61],[24,60,61,25],[132,133,97,96],[25,26,134,133],[61,97,98,62],[25,61,62,26],[133,134,98,97],[26,27,135,134],[62,98,99,63],[26,62,63,27],[134,135,99,98],[27,28,136,135],[63,99,100,64],[27,63,64,28],[135,136,100,99],[28,29,137,136],[64,100,101,65],[28,64,65,29],[136,137,101,100],[29,30,138,137],[65,101,102,66],[29,65,66,30],[137,138,102,101],[30,31,139,138],[66,102,103,67],[30,66,67,31],[138,139,103,102],[31,32,140,139],[67,103,104,68],[31,67,68,32],[139,140,104,103],[32,33,141,140],[68,104,105,69],[32,68,69,33],[140,141,105,104],[33,34,142,141],[69,105,106,70],[33,69,70,34],[141,142,106,105],[34,35,143,142],[70,106,107,71],[34,70,71,35],[142,143,107,106],[35,0,108,143],[71,107,72,36],[35,71,36,0],[143,108,72,107]],"m":9},{"id":"lente-i","v":[[192.6,0.0,5.7],[190.9,33.3,4.9],[186.0,45.7,4.6],[177.5,53.8,5.0],[164.4,59.0,6.0],[142.6,61.5,7.4],[80.6,61.5,7.4],[58.8,59.0,6.0],[45.7,53.8,5.0],[37.2,45.7,4.6],[32.3,33.3,4.9],[30.6,0.0,5.7],[32.3,-33.3,4.9],[37.2,-45.7,4.6],[45.7,-53.8,5.0],[58.8,-59.0,6.0],[80.6,-61.5,7.4],[142.6,-61.5,7.4],[164.4,-59.0,6.0],[177.5,-53.8,5.0],[186.0,-45.7,4.6],[190.9,-33.3,4.9],[194.0,0.0,4.1],[192.3,33.6,3.2],[187.2,46.5,3.0],[178.3,55.0,3.4],[164.7,60.3,4.4],[142.7,62.9,5.9],[80.5,62.9,5.9],[58.5,60.3,4.4],[44.9,55.0,3.4],[36.0,46.5,3.0],[30.9,33.6,3.2],[29.2,0.0,4.1],[30.9,-33.6,3.2],[36.0,-46.5,3.0],[44.9,-55.0,3.4],[58.5,-60.3,4.4],[80.5,-62.9,5.9],[142.7,-62.9,5.9],[164.7,-60.3,4.4],[178.3,-55.0,3.4],[187.2,-46.5,3.0],[192.3,-33.6,3.2],[194.0,0.0,-2.9],[192.3,33.6,-3.0],[187.2,46.5,-3.0],[178.3,55.0,-3.0],[164.7,60.3,-2.8],[142.7,62.9,-2.7],[80.5,62.9,-2.7],[58.5,60.3,-2.8],[44.9,55.0,-3.0],[36.0,46.5,-3.0],[30.9,33.6,-3.0],[29.2,0.0,-2.9],[30.9,-33.6,-3.0],[36.0,-46.5,-3.0],[44.9,-55.0,-3.0],[58.5,-60.3,-2.8],[80.5,-62.9,-2.7],[142.7,-62.9,-2.7],[164.7,-60.3,-2.8],[178.3,-55.0,-3.0],[187.2,-46.5,-3.0],[192.3,-33.6,-3.0],[192.6,0.0,-4.2],[190.9,33.3,-4.3],[186.0,45.7,-4.4],[177.5,53.8,-4.3],[164.4,59.0,-4.2],[142.6,61.5,-4.0],[80.6,61.5,-4.0],[58.8,59.0,-4.2],[45.7,53.8,-4.3],[37.2,45.7,-4.4],[32.3,33.3,-4.3],[30.6,0.0,-4.2],[32.3,-33.3,-4.3],[37.2,-45.7,-4.4],[45.7,-53.8,-4.3],[58.8,-59.0,-4.2],[80.6,-61.5,-4.0],[142.6,-61.5,-4.0],[164.4,-59.0,-4.2],[177.5,-53.8,-4.3],[186.0,-45.7,-4.4],[190.9,-33.3,-4.3]],"f":[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],[87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66],[0,22,23,1],[1,23,24,2],[2,24,25,3],[3,25,26,4],[4,26,27,5],[5,27,28,6],[6,28,29,7],[7,29,30,8],[8,30,31,9],[9,31,32,10],[10,32,33,11],[11,33,34,12],[12,34,35,13],[13,35,36,14],[14,36,37,15],[15,37,38,16],[16,38,39,17],[17,39,40,18],[18,40,41,19],[19,41,42,20],[20,42,43,21],[21,43,22,0],[22,44,45,23],[23,45,46,24],[24,46,47,25],[25,47,48,26],[26,48,49,27],[27,49,50,28],[28,50,51,29],[29,51,52,30],[30,52,53,31],[31,53,54,32],[32,54,55,33],[33,55,56,34],[34,56,57,35],[35,57,58,36],[36,58,59,37],[37,59,60,38],[38,60,61,39],[39,61,62,40],[40,62,63,41],[41,63,64,42],[42,64,65,43],[43,65,44,22],[44,66,67,45],[45,67,68,46],[46,68,69,47],[47,69,70,48],[48,70,71,49],[49,71,72,50],[50,72,73,51],[51,73,74,52],[52,74,75,53],[53,75,76,54],[54,76,77,55],[55,77,78,56],[56,78,79,57],[57,79,80,58],[58,80,81,59],[59,81,82,60],[60,82,83,61],[61,83,84,62],[62,84,85,63],[63,85,86,64],[64,86,87,65],[65,87,66,44]],"m":1,"e":[72,-140,36]},{"id":"nueva-i","v":[[592.6,-42.0,13.7],[590.9,-8.7,12.9],[586.0,3.7,12.6],[577.5,11.8,13.0],[564.4,17.0,14.0],[542.6,19.5,15.4],[480.6,19.5,15.4],[458.8,17.0,14.0],[445.7,11.8,13.0],[437.2,3.7,12.6],[432.3,-8.7,12.9],[430.6,-42.0,13.7],[432.3,-75.3,12.9],[437.2,-87.7,12.6],[445.7,-95.8,13.0],[458.8,-101.0,14.0],[480.6,-103.5,15.4],[542.6,-103.5,15.4],[564.4,-101.0,14.0],[577.5,-95.8,13.0],[586.0,-87.7,12.6],[590.9,-75.3,12.9],[594.0,-42.0,12.1],[592.3,-8.4,11.2],[587.2,4.5,11.0],[578.3,13.0,11.4],[564.7,18.3,12.4],[542.7,20.9,13.9],[480.5,20.9,13.9],[458.5,18.3,12.4],[444.9,13.0,11.4],[436.0,4.5,11.0],[430.9,-8.4,11.2],[429.2,-42.0,12.1],[430.9,-75.6,11.2],[436.0,-88.5,11.0],[444.9,-97.0,11.4],[458.5,-102.3,12.4],[480.5,-104.9,13.9],[542.7,-104.9,13.9],[564.7,-102.3,12.4],[578.3,-97.0,11.4],[587.2,-88.5,11.0],[592.3,-75.6,11.2],[594.0,-42.0,5.1],[592.3,-8.4,5.0],[587.2,4.5,5.0],[578.3,13.0,5.0],[564.7,18.3,5.2],[542.7,20.9,5.3],[480.5,20.9,5.3],[458.5,18.3,5.2],[444.9,13.0,5.0],[436.0,4.5,5.0],[430.9,-8.4,5.0],[429.2,-42.0,5.1],[430.9,-75.6,5.0],[436.0,-88.5,5.0],[444.9,-97.0,5.0],[458.5,-102.3,5.2],[480.5,-104.9,5.3],[542.7,-104.9,5.3],[564.7,-102.3,5.2],[578.3,-97.0,5.0],[587.2,-88.5,5.0],[592.3,-75.6,5.0],[592.6,-42.0,3.8],[590.9,-8.7,3.7],[586.0,3.7,3.6],[577.5,11.8,3.7],[564.4,17.0,3.8],[542.6,19.5,4.0],[480.6,19.5,4.0],[458.8,17.0,3.8],[445.7,11.8,3.7],[437.2,3.7,3.6],[432.3,-8.7,3.7],[430.6,-42.0,3.8],[432.3,-75.3,3.7],[437.2,-87.7,3.6],[445.7,-95.8,3.7],[458.8,-101.0,3.8],[480.6,-103.5,4.0],[542.6,-103.5,4.0],[564.4,-101.0,3.8],[577.5,-95.8,3.7],[586.0,-87.7,3.6],[590.9,-75.3,3.7]],"f":[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],[87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66],[0,22,23,1],[1,23,24,2],[2,24,25,3],[3,25,26,4],[4,26,27,5],[5,27,28,6],[6,28,29,7],[7,29,30,8],[8,30,31,9],[9,31,32,10],[10,32,33,11],[11,33,34,12],[12,34,35,13],[13,35,36,14],[14,36,37,15],[15,37,38,16],[16,38,39,17],[17,39,40,18],[18,40,41,19],[19,41,42,20],[20,42,43,21],[21,43,22,0],[22,44,45,23],[23,45,46,24],[24,46,47,25],[25,47,48,26],[26,48,49,27],[27,49,50,28],[28,50,51,29],[29,51,52,30],[30,52,53,31],[31,53,54,32],[32,54,55,33],[33,55,56,34],[34,56,57,35],[35,57,58,36],[36,58,59,37],[37,59,60,38],[38,60,61,39],[39,61,62,40],[40,62,63,41],[41,63,64,42],[42,64,65,43],[43,65,44,22],[44,66,67,45],[45,67,68,46],[46,68,69,47],[47,69,70,48],[48,70,71,49],[49,71,72,50],[50,72,73,51],[51,73,74,52],[52,74,75,53],[53,75,76,54],[54,76,77,55],[55,77,78,56],[56,78,79,57],[57,79,80,58],[58,80,81,59],[59,81,82,60],[60,82,83,61],[61,83,84,62],[62,84,85,63],[63,85,86,64],[64,86,87,65],[65,87,66,44]],"m":8,"e":[-400,42,-8],"b":2,"q":1,"k":[511.6,-42.0,8.6]},{"id":"bisagra-i","v":[[196.5,-7,4.8768115942028984],[204.0,-7,4.8768115942028984],[204.0,7,4.8768115942028984],[196.5,7,4.8768115942028984],[196.5,-7,-4.8768115942028984],[204.0,-7,-4.8768115942028984],[204.0,7,-4.8768115942028984],[196.5,7,-4.8768115942028984]],"f":[[0,1,2,3],[7,6,5,4],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]],"m":4,"d":1},{"id":"varilla-i","v":[[200.3,-1.2,-9.4],[202.1,-1.2,-9.4],[202.1,1.2,-9.4],[200.3,1.2,-9.4],[199.3,-2.2,-10.4],[203.1,-2.2,-10.4],[203.1,2.2,-10.4],[199.3,2.2,-10.4],[199.3,-2.2,-142.6],[203.1,-2.2,-142.6],[203.1,2.2,-142.6],[199.3,2.2,-142.6],[200.3,-1.2,-143.6],[202.1,-1.2,-143.6],[202.1,1.2,-143.6],[200.3,1.2,-143.6]],"f":[[0,1,2,3],[15,14,13,12],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,8,9,5],[5,9,10,6],[6,10,11,7],[7,11,8,4],[8,12,13,9],[9,13,14,10],[10,14,15,11],[11,15,12,8]],"m":9,"g":1,"h":[201.5,0.0,0.0],"u":1},{"id":"patilla-i","v":[[198.7,-1.5,-143.7],[203.9,-1.5,-143.7],[204.8,-6.9,-143.7],[197.8,-6.9,-143.7],[199.5,-2.4,-144.6],[203.1,-2.4,-144.6],[203.7,-6.0,-144.6],[198.9,-6.0,-144.6],[199.5,-2.4,-158.0],[203.1,-2.4,-158.0],[203.7,-6.0,-158.0],[198.9,-6.0,-158.0],[198.7,-1.5,-158.9],[203.9,-1.5,-158.9],[204.8,-6.9,-158.9],[197.8,-6.9,-158.9]],"f":[[0,1,2,3],[15,14,13,12],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,8,9,5],[5,9,10,6],[6,10,11,7],[7,11,8,4],[8,12,13,9],[9,13,14,10],[10,14,15,11],[11,15,12,8]],"m":9,"g":1,"h":[201.5,0.0,0.0],"u":1},{"id":"aro-d","v":[[-21.7,0.0,6.4],[-22.3,27.3,6.4],[-24.5,39.3,6.4],[-28.3,48.6,6.4],[-34.0,56.1,6.4],[-41.5,61.9,6.4],[-50.7,66.0,6.4],[-61.9,68.7,6.4],[-76.6,70.3,6.4],[-111.6,70.8,6.4],[-146.6,70.3,6.4],[-161.3,68.7,6.4],[-172.5,66.0,6.4],[-181.7,61.9,6.4],[-189.2,56.1,6.4],[-194.9,48.6,6.4],[-198.7,39.3,6.4],[-200.9,27.3,6.4],[-201.5,0.0,6.4],[-200.9,-27.3,6.4],[-198.7,-39.3,6.4],[-194.9,-48.6,6.4],[-189.2,-56.1,6.4],[-181.7,-61.9,6.4],[-172.5,-66.0,6.4],[-161.3,-68.7,6.4],[-146.6,-70.3,6.4],[-111.6,-70.8,6.4],[-76.6,-70.3,6.4],[-61.9,-68.7,6.4],[-50.7,-66.0,6.4],[-41.5,-61.9,6.4],[-34.0,-56.1,6.4],[-28.3,-48.6,6.4],[-24.5,-39.3,6.4],[-22.3,-27.3,6.4],[-21.7,0.0,-6.4],[-22.3,27.3,-6.4],[-24.5,39.3,-6.4],[-28.3,48.6,-6.4],[-34.0,56.1,-6.4],[-41.5,61.9,-6.4],[-50.7,66.0,-6.4],[-61.9,68.7,-6.4],[-76.6,70.3,-6.4],[-111.6,70.8,-6.4],[-146.6,70.3,-6.4],[-161.3,68.7,-6.4],[-172.5,66.0,-6.4],[-181.7,61.9,-6.4],[-189.2,56.1,-6.4],[-194.9,48.6,-6.4],[-198.7,39.3,-6.4],[-200.9,27.3,-6.4],[-201.5,0.0,-6.4],[-200.9,-27.3,-6.4],[-198.7,-39.3,-6.4],[-194.9,-48.6,-6.4],[-189.2,-56.1,-6.4],[-181.7,-61.9,-6.4],[-172.5,-66.0,-6.4],[-161.3,-68.7,-6.4],[-146.6,-70.3,-6.4],[-111.6,-70.8,-6.4],[-76.6,-70.3,-6.4],[-61.9,-68.7,-6.4],[-50.7,-66.0,-6.4],[-41.5,-61.9,-6.4],[-34.0,-56.1,-6.4],[-28.3,-48.6,-6.4],[-24.5,-39.3,-6.4],[-22.3,-27.3,-6.4],[-28.7,0.0,-6.4],[-29.3,26.6,-6.4],[-31.2,37.3,-6.4],[-34.4,45.1,-6.4],[-39.0,51.1,-6.4],[-45.1,55.8,-6.4],[-53.0,59.3,-6.4],[-63.1,61.8,-6.4],[-77.0,63.3,-6.4],[-111.6,63.8,-6.4],[-146.1,63.3,-6.4],[-160.1,61.8,-6.4],[-170.2,59.3,-6.4],[-178.1,55.8,-6.4],[-184.2,51.1,-6.4],[-188.7,45.1,-6.4],[-192.0,37.3,-6.4],[-193.9,26.6,-6.4],[-194.5,0.0,-6.4],[-193.9,-26.6,-6.4],[-192.0,-37.3,-6.4],[-188.7,-45.1,-6.4],[-184.2,-51.1,-6.4],[-178.1,-55.8,-6.4],[-170.2,-59.3,-6.4],[-160.1,-61.8,-6.4],[-146.1,-63.3,-6.4],[-111.6,-63.8,-6.4],[-77.0,-63.3,-6.4],[-63.1,-61.8,-6.4],[-53.0,-59.3,-6.4],[-45.1,-55.8,-6.4],[-39.0,-51.1,-6.4],[-34.4,-45.1,-6.4],[-31.2,-37.3,-6.4],[-29.3,-26.6,-6.4],[-28.7,0.0,6.4],[-29.3,26.6,6.4],[-31.2,37.3,6.4],[-34.4,45.1,6.4],[-39.0,51.1,6.4],[-45.1,55.8,6.4],[-53.0,59.3,6.4],[-63.1,61.8,6.4],[-77.0,63.3,6.4],[-111.6,63.8,6.4],[-146.1,63.3,6.4],[-160.1,61.8,6.4],[-170.2,59.3,6.4],[-178.1,55.8,6.4],[-184.2,51.1,6.4],[-188.7,45.1,6.4],[-192.0,37.3,6.4],[-193.9,26.6,6.4],[-194.5,0.0,6.4],[-193.9,-26.6,6.4],[-192.0,-37.3,6.4],[-188.7,-45.1,6.4],[-184.2,-51.1,6.4],[-178.1,-55.8,6.4],[-170.2,-59.3,6.4],[-160.1,-61.8,6.4],[-146.1,-63.3,6.4],[-111.6,-63.8,6.4],[-77.0,-63.3,6.4],[-63.1,-61.8,6.4],[-53.0,-59.3,6.4],[-45.1,-55.8,6.4],[-39.0,-51.1,6.4],[-34.4,-45.1,6.4],[-31.2,-37.3,6.4],[-29.3,-26.6,6.4]],"f":[[0,1,109,108],[36,72,73,37],[0,36,37,1],[108,109,73,72],[1,2,110,109],[37,73,74,38],[1,37,38,2],[109,110,74,73],[2,3,111,110],[38,74,75,39],[2,38,39,3],[110,111,75,74],[3,4,112,111],[39,75,76,40],[3,39,40,4],[111,112,76,75],[4,5,113,112],[40,76,77,41],[4,40,41,5],[112,113,77,76],[5,6,114,113],[41,77,78,42],[5,41,42,6],[113,114,78,77],[6,7,115,114],[42,78,79,43],[6,42,43,7],[114,115,79,78],[7,8,116,115],[43,79,80,44],[7,43,44,8],[115,116,80,79],[8,9,117,116],[44,80,81,45],[8,44,45,9],[116,117,81,80],[9,10,118,117],[45,81,82,46],[9,45,46,10],[117,118,82,81],[10,11,119,118],[46,82,83,47],[10,46,47,11],[118,119,83,82],[11,12,120,119],[47,83,84,48],[11,47,48,12],[119,120,84,83],[12,13,121,120],[48,84,85,49],[12,48,49,13],[120,121,85,84],[13,14,122,121],[49,85,86,50],[13,49,50,14],[121,122,86,85],[14,15,123,122],[50,86,87,51],[14,50,51,15],[122,123,87,86],[15,16,124,123],[51,87,88,52],[15,51,52,16],[123,124,88,87],[16,17,125,124],[52,88,89,53],[16,52,53,17],[124,125,89,88],[17,18,126,125],[53,89,90,54],[17,53,54,18],[125,126,90,89],[18,19,127,126],[54,90,91,55],[18,54,55,19],[126,127,91,90],[19,20,128,127],[55,91,92,56],[19,55,56,20],[127,128,92,91],[20,21,129,128],[56,92,93,57],[20,56,57,21],[128,129,93,92],[21,22,130,129],[57,93,94,58],[21,57,58,22],[129,130,94,93],[22,23,131,130],[58,94,95,59],[22,58,59,23],[130,131,95,94],[23,24,132,131],[59,95,96,60],[23,59,60,24],[131,132,96,95],[24,25,133,132],[60,96,97,61],[24,60,61,25],[132,133,97,96],[25,26,134,133],[61,97,98,62],[25,61,62,26],[133,134,98,97],[26,27,135,134],[62,98,99,63],[26,62,63,27],[134,135,99,98],[27,28,136,135],[63,99,100,64],[27,63,64,28],[135,136,100,99],[28,29,137,136],[64,100,101,65],[28,64,65,29],[136,137,101,100],[29,30,138,137],[65,101,102,66],[29,65,66,30],[137,138,102,101],[30,31,139,138],[66,102,103,67],[30,66,67,31],[138,139,103,102],[31,32,140,139],[67,103,104,68],[31,67,68,32],[139,140,104,103],[32,33,141,140],[68,104,105,69],[32,68,69,33],[140,141,105,104],[33,34,142,141],[69,105,106,70],[33,69,70,34],[141,142,106,105],[34,35,143,142],[70,106,107,71],[34,70,71,35],[142,143,107,106],[35,0,108,143],[71,107,72,36],[35,71,36,0],[143,108,72,107]],"m":9},{"id":"lente-d","v":[[-30.6,0.0,5.7],[-32.3,33.3,4.9],[-37.2,45.7,4.6],[-45.7,53.8,5.0],[-58.8,59.0,6.0],[-80.6,61.5,7.4],[-142.6,61.5,7.4],[-164.4,59.0,6.0],[-177.5,53.8,5.0],[-186.0,45.7,4.6],[-190.9,33.3,4.9],[-192.6,0.0,5.7],[-190.9,-33.3,4.9],[-186.0,-45.7,4.6],[-177.5,-53.8,5.0],[-164.4,-59.0,6.0],[-142.6,-61.5,7.4],[-80.6,-61.5,7.4],[-58.8,-59.0,6.0],[-45.7,-53.8,5.0],[-37.2,-45.7,4.6],[-32.3,-33.3,4.9],[-29.2,0.0,4.1],[-30.9,33.6,3.2],[-36.0,46.5,3.0],[-44.9,55.0,3.4],[-58.5,60.3,4.4],[-80.5,62.9,5.9],[-142.7,62.9,5.9],[-164.7,60.3,4.4],[-178.3,55.0,3.4],[-187.2,46.5,3.0],[-192.3,33.6,3.2],[-194.0,0.0,4.1],[-192.3,-33.6,3.2],[-187.2,-46.5,3.0],[-178.3,-55.0,3.4],[-164.7,-60.3,4.4],[-142.7,-62.9,5.9],[-80.5,-62.9,5.9],[-58.5,-60.3,4.4],[-44.9,-55.0,3.4],[-36.0,-46.5,3.0],[-30.9,-33.6,3.2],[-29.2,0.0,-2.9],[-30.9,33.6,-3.0],[-36.0,46.5,-3.0],[-44.9,55.0,-3.0],[-58.5,60.3,-2.8],[-80.5,62.9,-2.7],[-142.7,62.9,-2.7],[-164.7,60.3,-2.8],[-178.3,55.0,-3.0],[-187.2,46.5,-3.0],[-192.3,33.6,-3.0],[-194.0,0.0,-2.9],[-192.3,-33.6,-3.0],[-187.2,-46.5,-3.0],[-178.3,-55.0,-3.0],[-164.7,-60.3,-2.8],[-142.7,-62.9,-2.7],[-80.5,-62.9,-2.7],[-58.5,-60.3,-2.8],[-44.9,-55.0,-3.0],[-36.0,-46.5,-3.0],[-30.9,-33.6,-3.0],[-30.6,0.0,-4.2],[-32.3,33.3,-4.3],[-37.2,45.7,-4.4],[-45.7,53.8,-4.3],[-58.8,59.0,-4.2],[-80.6,61.5,-4.0],[-142.6,61.5,-4.0],[-164.4,59.0,-4.2],[-177.5,53.8,-4.3],[-186.0,45.7,-4.4],[-190.9,33.3,-4.3],[-192.6,0.0,-4.2],[-190.9,-33.3,-4.3],[-186.0,-45.7,-4.4],[-177.5,-53.8,-4.3],[-164.4,-59.0,-4.2],[-142.6,-61.5,-4.0],[-80.6,-61.5,-4.0],[-58.8,-59.0,-4.2],[-45.7,-53.8,-4.3],[-37.2,-45.7,-4.4],[-32.3,-33.3,-4.3]],"f":[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],[87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66],[0,22,23,1],[1,23,24,2],[2,24,25,3],[3,25,26,4],[4,26,27,5],[5,27,28,6],[6,28,29,7],[7,29,30,8],[8,30,31,9],[9,31,32,10],[10,32,33,11],[11,33,34,12],[12,34,35,13],[13,35,36,14],[14,36,37,15],[15,37,38,16],[16,38,39,17],[17,39,40,18],[18,40,41,19],[19,41,42,20],[20,42,43,21],[21,43,22,0],[22,44,45,23],[23,45,46,24],[24,46,47,25],[25,47,48,26],[26,48,49,27],[27,49,50,28],[28,50,51,29],[29,51,52,30],[30,52,53,31],[31,53,54,32],[32,54,55,33],[33,55,56,34],[34,56,57,35],[35,57,58,36],[36,58,59,37],[37,59,60,38],[38,60,61,39],[39,61,62,40],[40,62,63,41],[41,63,64,42],[42,64,65,43],[43,65,44,22],[44,66,67,45],[45,67,68,46],[46,68,69,47],[47,69,70,48],[48,70,71,49],[49,71,72,50],[50,72,73,51],[51,73,74,52],[52,74,75,53],[53,75,76,54],[54,76,77,55],[55,77,78,56],[56,78,79,57],[57,79,80,58],[58,80,81,59],[59,81,82,60],[60,82,83,61],[61,83,84,62],[62,84,85,63],[63,85,86,64],[64,86,87,65],[65,87,66,44]],"m":1,"e":[-72,-140,36],"w":0.18},{"id":"nueva-d","v":[[-430.6,-42.0,13.7],[-432.3,-8.7,12.9],[-437.2,3.7,12.6],[-445.7,11.8,13.0],[-458.8,17.0,14.0],[-480.6,19.5,15.4],[-542.6,19.5,15.4],[-564.4,17.0,14.0],[-577.5,11.8,13.0],[-586.0,3.7,12.6],[-590.9,-8.7,12.9],[-592.6,-42.0,13.7],[-590.9,-75.3,12.9],[-586.0,-87.7,12.6],[-577.5,-95.8,13.0],[-564.4,-101.0,14.0],[-542.6,-103.5,15.4],[-480.6,-103.5,15.4],[-458.8,-101.0,14.0],[-445.7,-95.8,13.0],[-437.2,-87.7,12.6],[-432.3,-75.3,12.9],[-429.2,-42.0,12.1],[-430.9,-8.4,11.2],[-436.0,4.5,11.0],[-444.9,13.0,11.4],[-458.5,18.3,12.4],[-480.5,20.9,13.9],[-542.7,20.9,13.9],[-564.7,18.3,12.4],[-578.3,13.0,11.4],[-587.2,4.5,11.0],[-592.3,-8.4,11.2],[-594.0,-42.0,12.1],[-592.3,-75.6,11.2],[-587.2,-88.5,11.0],[-578.3,-97.0,11.4],[-564.7,-102.3,12.4],[-542.7,-104.9,13.9],[-480.5,-104.9,13.9],[-458.5,-102.3,12.4],[-444.9,-97.0,11.4],[-436.0,-88.5,11.0],[-430.9,-75.6,11.2],[-429.2,-42.0,5.1],[-430.9,-8.4,5.0],[-436.0,4.5,5.0],[-444.9,13.0,5.0],[-458.5,18.3,5.2],[-480.5,20.9,5.3],[-542.7,20.9,5.3],[-564.7,18.3,5.2],[-578.3,13.0,5.0],[-587.2,4.5,5.0],[-592.3,-8.4,5.0],[-594.0,-42.0,5.1],[-592.3,-75.6,5.0],[-587.2,-88.5,5.0],[-578.3,-97.0,5.0],[-564.7,-102.3,5.2],[-542.7,-104.9,5.3],[-480.5,-104.9,5.3],[-458.5,-102.3,5.2],[-444.9,-97.0,5.0],[-436.0,-88.5,5.0],[-430.9,-75.6,5.0],[-430.6,-42.0,3.8],[-432.3,-8.7,3.7],[-437.2,3.7,3.6],[-445.7,11.8,3.7],[-458.8,17.0,3.8],[-480.6,19.5,4.0],[-542.6,19.5,4.0],[-564.4,17.0,3.8],[-577.5,11.8,3.7],[-586.0,3.7,3.6],[-590.9,-8.7,3.7],[-592.6,-42.0,3.8],[-590.9,-75.3,3.7],[-586.0,-87.7,3.6],[-577.5,-95.8,3.7],[-564.4,-101.0,3.8],[-542.6,-103.5,4.0],[-480.6,-103.5,4.0],[-458.8,-101.0,3.8],[-445.7,-95.8,3.7],[-437.2,-87.7,3.6],[-432.3,-75.3,3.7]],"f":[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],[87,86,85,84,83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66],[0,22,23,1],[1,23,24,2],[2,24,25,3],[3,25,26,4],[4,26,27,5],[5,27,28,6],[6,28,29,7],[7,29,30,8],[8,30,31,9],[9,31,32,10],[10,32,33,11],[11,33,34,12],[12,34,35,13],[13,35,36,14],[14,36,37,15],[15,37,38,16],[16,38,39,17],[17,39,40,18],[18,40,41,19],[19,41,42,20],[20,42,43,21],[21,43,22,0],[22,44,45,23],[23,45,46,24],[24,46,47,25],[25,47,48,26],[26,48,49,27],[27,49,50,28],[28,50,51,29],[29,51,52,30],[30,52,53,31],[31,53,54,32],[32,54,55,33],[33,55,56,34],[34,56,57,35],[35,57,58,36],[36,58,59,37],[37,59,60,38],[38,60,61,39],[39,61,62,40],[40,62,63,41],[41,63,64,42],[42,64,65,43],[43,65,44,22],[44,66,67,45],[45,67,68,46],[46,68,69,47],[47,69,70,48],[48,70,71,49],[49,71,72,50],[50,72,73,51],[51,73,74,52],[52,74,75,53],[53,75,76,54],[54,76,77,55],[55,77,78,56],[56,78,79,57],[57,79,80,58],[58,80,81,59],[59,81,82,60],[60,82,83,61],[61,83,84,62],[62,84,85,63],[63,85,86,64],[64,86,87,65],[65,87,66,44]],"m":8,"e":[400,42,-8],"b":2,"w":0.18,"q":1,"k":[-511.6,-42.0,8.6]},{"id":"bisagra-d","v":[[-196.5,-7,4.8768115942028984],[-204.0,-7,4.8768115942028984],[-204.0,7,4.8768115942028984],[-196.5,7,4.8768115942028984],[-196.5,-7,-4.8768115942028984],[-204.0,-7,-4.8768115942028984],[-204.0,7,-4.8768115942028984],[-196.5,7,-4.8768115942028984]],"f":[[0,1,2,3],[7,6,5,4],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]],"m":4,"d":1},{"id":"varilla-d","v":[[-198.3,-3.2,-9.4],[-204.1,-3.2,-9.4],[-204.1,3.2,-9.4],[-198.3,3.2,-9.4],[-199.3,-2.2,-10.4],[-203.1,-2.2,-10.4],[-203.1,2.2,-10.4],[-199.3,2.2,-10.4],[-199.3,-2.2,-142.6],[-203.1,-2.2,-142.6],[-203.1,2.2,-142.6],[-199.3,2.2,-142.6],[-198.3,-3.2,-143.6],[-204.1,-3.2,-143.6],[-204.1,3.2,-143.6],[-198.3,3.2,-143.6]],"f":[[0,1,2,3],[15,14,13,12],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,8,9,5],[5,9,10,6],[6,10,11,7],[7,11,8,4],[8,12,13,9],[9,13,14,10],[10,14,15,11],[11,15,12,8]],"m":9,"g":1,"h":[-201.5,0.0,0.0],"u":-1},{"id":"patilla-d","v":[[-200.3,-3.3,-143.7],[-202.3,-3.3,-143.7],[-202.6,-5.1,-143.7],[-200.0,-5.1,-143.7],[-199.5,-2.4,-144.6],[-203.1,-2.4,-144.6],[-203.7,-6.0,-144.6],[-198.9,-6.0,-144.6],[-199.5,-2.4,-158.0],[-203.1,-2.4,-158.0],[-203.7,-6.0,-158.0],[-198.9,-6.0,-158.0],[-200.3,-3.3,-158.9],[-202.3,-3.3,-158.9],[-202.6,-5.1,-158.9],[-200.0,-5.1,-158.9]],"f":[[0,1,2,3],[15,14,13,12],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,8,9,5],[5,9,10,6],[6,10,11,7],[7,11,8,4],[8,12,13,9],[9,13,14,10],[10,14,15,11],[11,15,12,8]],"m":9,"g":1,"h":[-201.5,0.0,0.0],"u":-1},{"id":"puente","v":[[-30.3,22.8,4.4],[30.3,22.8,4.4],[30.3,41.0,4.4],[-30.3,41.0,4.4],[-32.7,20.4,2.0],[32.7,20.4,2.0],[32.7,43.4,2.0],[-32.7,43.4,2.0],[-32.7,20.4,-2.0],[32.7,20.4,-2.0],[32.7,43.4,-2.0],[-32.7,43.4,-2.0],[-30.3,22.8,-4.4],[30.3,22.8,-4.4],[30.3,41.0,-4.4],[-30.3,41.0,-4.4]],"f":[[0,1,2,3],[15,14,13,12],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,8,9,5],[5,9,10,6],[6,10,11,7],[7,11,8,4],[8,12,13,9],[9,13,14,10],[10,14,15,11],[11,15,12,8]],"m":9}]}</script>
+  </section>
+<!-- /slot:stage-3d -->
+
+  <section class="ob-frames-sec">
+    <p class="ob-kicker">Lo que hacemos</p>
+    <div class="ob-frames"><article class="ob-frame"><div class="ob-frame-fig"><svg viewBox="0 0 200 104" aria-hidden="true"><ellipse class="ob-rim" cx="100" cy="52" rx="50" ry="28"/><circle class="ob-rim" cx="100" cy="52" r="16"/><circle class="ob-lens-fill" cx="100" cy="52" r="7"/></svg></div><span class="ob-frame-n">01</span><h3>Graduación</h3><p>45 minutos. Retina, presión y graduación. Sin prisa de pasillo.</p></article><article class="ob-frame"><div class="ob-frame-fig"><svg viewBox="0 0 200 104" aria-hidden="true"><rect class="ob-rim" x="26" y="30" width="62" height="44" rx="9"/><rect class="ob-rim" x="112" y="30" width="62" height="44" rx="9"/><path class="ob-bridge" d="M 88 44 L 112 44"/><path class="ob-temple" d="M 26 40 L 4 32"/><path class="ob-temple" d="M 174 40 L 196 32"/></svg></div><span class="ob-frame-n">02</span><h3>Montura</h3><p>Selección corta, bien hecha. Os decimos qué no os queda.</p></article><article class="ob-frame"><div class="ob-frame-fig"><svg viewBox="0 0 200 104" aria-hidden="true"><circle class="ob-rim" cx="70" cy="52" r="22"/><circle class="ob-rim" cx="70" cy="52" r="8"/><path class="ob-bridge" d="M 56 42 A 16 16 0 0 1 80 40"/><circle class="ob-rim" cx="130" cy="52" r="22"/><circle class="ob-rim" cx="130" cy="52" r="8"/><path class="ob-bridge" d="M 116 42 A 16 16 0 0 1 140 40"/></svg></div><span class="ob-frame-n">03</span><h3>Lentillas</h3><p>Prueba en cabina y seguimiento a la semana.</p></article><article class="ob-frame"><div class="ob-frame-fig"><svg viewBox="0 0 200 104" aria-hidden="true"><circle class="ob-rim" cx="70" cy="52" r="24"/><circle class="ob-rim" cx="130" cy="52" r="24"/><path class="ob-bridge" d="M 94 48 C 100 42 106 42 112 48"/></svg></div><span class="ob-frame-n">04</span><h3>Infantil</h3><p>Primera graduación sin drama. Los padres se quedan dentro.</p></article><article class="ob-frame"><div class="ob-frame-fig"><svg viewBox="0 0 200 104" aria-hidden="true"><rect class="ob-rim" x="26" y="30" width="62" height="44" rx="9"/><rect class="ob-lens-fill" x="30" y="34" width="54" height="36" rx="7"/><rect class="ob-rim" x="112" y="30" width="62" height="44" rx="9"/><rect class="ob-lens-fill" x="116" y="34" width="54" height="36" rx="7"/><path class="ob-bridge" d="M 88 44 L 112 44"/><path class="ob-temple" d="M 26 40 L 4 32"/><path class="ob-temple" d="M 174 40 L 196 32"/></svg></div><span class="ob-frame-n">05</span><h3>Sol</h3><p>Filtro real, no disfraz. Polarizado cuando hace falta.</p></article><article class="ob-frame"><div class="ob-frame-fig"><svg viewBox="0 0 200 104" aria-hidden="true"><path class="ob-rim" d="M 40 72 L 160 28"/><path class="ob-bridge" d="M 52 64 L 70 78 L 62 86 L 44 72"/><circle class="ob-rim" cx="160" cy="28" r="10"/></svg></div><span class="ob-frame-n">06</span><h3>Taller</h3><p>Montaje y ajuste aquí. Si aprieta, se limpia y se deja hoy.</p></article></div>
+  </section>
+
+  <section class="ob-book">
+    <div class="ob-book-in">
+      <p class="ob-kicker">Cita</p>
+      <a class="ob-tel" href="tel:34886165583">+34886165583</a>
+      <div class="ob-book-row">
+        <a class="ob-cta" href="https://wa.me/34886165583">Reservar graduación</a>
+        <span>L–S 10:00–14:00 / 16:30–20:30</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ob-foot">
+    <span>Rúa Casto San Pedro, Redondela</span>
+    <span>OptiRedondela</span>
+  </footer>
+</div>
+
+</div>
+<script type="module">
+
+import { animate, inView, stagger } from "https://esm.sh/motion@11.15.0";
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+if (!reduced) {
+  animate(".lens", { scale: [0.92, 1] }, { duration: 1.05, easing: [0.16, 1, 0.3, 1] });
+  animate("h1, .lead, .num, .cta-line", { y: [18, 0] }, { delay: stagger(0.07), duration: 0.7, easing: [0.16, 1, 0.3, 1] });
+  inView(".rail", () => {
+    animate(".item", { y: [16, 0] }, { delay: stagger(0.06), duration: 0.5 });
+  });
+}
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+
+/* --- a mesh, not a drawing ----------------------------------------------
+   A few hundred faces projected here every frame. Painter's algorithm
+   rather than a depth buffer, Newell normals so concave caps (the wheel
+   arches, the lens squircles) still face the right way, and one pool of
+   <polygon> nodes rewritten in sorted order — SVG has no z-index, and
+   reshuffling those nodes every frame is the part that would actually
+   cost a phone something.
+
+   Shared by the taller ramp and the optica bench: same camera, same
+   shader, same lessons. It runs for the reduced-motion still too, so
+   there is one source of truth for the pose. */
+
+var TB_NS = "http://www.w3.org/2000/svg";
+/* Long lens on a far camera. A short one puts the near wheel half again
+   the size of the far one and the car reads as a fairground mirror. */
+var TB_FOCAL = 1900, TB_CAMZ = 1600;
+/* Near-overhead key light. The warmth on animejs.com's engine is lambert
+   off the top bevels, not a rim term — a rim wide enough to paint a roof
+   paints every side panel with it too, and the car turns into a pumpkin.
+   Do not quantize this into cel bands on the body; landings/cel-shading.md
+   is the 2026-08-25 attempt that read as clay. */
+var TB_LX = -0.26, TB_LY = 0.93, TB_LZ = 0.26;
+
+function tbRGB(raw) {
+  var v = (raw || "").trim();
+  if (v.charAt(0) === "#") {
+    if (v.length === 4) v = "#" + v[1] + v[1] + v[2] + v[2] + v[3] + v[3];
+    return [
+      parseInt(v.substr(1, 2), 16),
+      parseInt(v.substr(3, 2), 16),
+      parseInt(v.substr(5, 2), 16)
+    ];
+  }
+  var m = v.match(/[\d.]+/g);
+  return m && m.length > 2 ? [+m[0], +m[1], +m[2]] : [128, 128, 128];
+}
+
+function tbMix(a, b, t) {
+  return [
+    a[0] + (b[0] - a[0]) * t,
+    a[1] + (b[1] - a[1]) * t,
+    a[2] + (b[2] - a[2]) * t
+  ];
+}
+
+function tbDepth(a, b) { return a.z - b.z; }
+
+function tbMount3D(panel, cfg) {
+  var svg = panel.querySelector(cfg.svg);
+  var src = panel.querySelector(cfg.mesh);
+  if (!svg || !src) return null;
+
+  var PIVOT = cfg.pivot || 0;
+  var DOLLY = cfg.dolly || 0;
+  var mesh = JSON.parse(src.textContent);
+  var css = getComputedStyle(panel.querySelector(cfg.root));
+  var BG = tbRGB(css.getPropertyValue("--st-bg"));
+  var FG = tbRGB(css.getPropertyValue("--st-fg"));
+  var AC = tbRGB(css.getPropertyValue("--st-accent"));
+  var GLOW = tbRGB(css.getPropertyValue("--st-glow"));
+  var SHADE = tbMix(BG, FG, 0.16);  /* flanks readable; 0.07 vanished into the grid */
+  var WARM = tbMix(AC, FG, 0.55);
+
+  var box = svg.viewBox.baseVal;
+  var OX = box.x + box.width / 2;
+  var OY = box.y + box.height * (cfg.oyf == null ? 0.60 : cfg.oyf);
+
+  /* A phone gets the shape, not the brake discs nobody can see at that
+     size. The wide frame is gutters for labels that are hidden there —
+     crop to them and the object stops being a stamp in a tall box.
+     Projection centre is read above, so the crop does not move camera. */
+  var lite = matchMedia("(max-width: 900px)").matches;
+  if (lite && cfg.liteVB) svg.setAttribute("viewBox", cfg.liteVB);
+  var parts = mesh.parts.filter(function (p) { return !(lite && p.d); });
+
+  var byId = {}, faces = [];
+  parts.forEach(function (p) {
+    byId[p.id] = p;
+    p.n = p.v.length;
+    p.tx = new Float64Array(p.n);
+    p.ty = new Float64Array(p.n);
+    p.tz = new Float64Array(p.n);
+    p.px = new Float64Array(p.n);
+    p.py = new Float64Array(p.n);
+    p.f.forEach(function (idx) { faces.push({ p: p, i: idx, z: 0, s: "", c: "" }); });
+  });
+
+  var solids = svg.querySelector(cfg.solids);
+  var pool = faces.map(function () {
+    return solids.appendChild(document.createElementNS(TB_NS, "polygon"));
+  });
+  var order = [], shown = 0;
+
+  var floor = cfg.floor ? svg.querySelector(cfg.floor) : null;
+  var shadow = cfg.shadow ? svg.querySelector(cfg.shadow) : null;
+  var caustic = cfg.caustic ? svg.querySelector(cfg.caustic) : null;
+  var shadowR = cfg.shadowR || [210, 48];
+  var groundY = cfg.groundY || 0;
+
+  var gridLines = [];
+  if (floor) {
+    for (var g = -5; g <= 5; g++) {
+      gridLines.push([g * 96, -520, g * 96, 520], [-520, g * 96, 520, g * 96]);
+    }
+  }
+
+  var leads = [];
+  var leadG = cfg.leads ? svg.querySelector(cfg.leads) : null;
+  var labelG = cfg.labels ? svg.querySelector(cfg.labels) : null;
+  if (leadG) {
+    svg.querySelectorAll(cfg.lead).forEach(function (el) {
+      var id = el.getAttribute("data-part");
+      var text = svg.querySelector(cfg.label + '[data-part="' + id + '"]');
+      var part = byId[id];
+      if (!part || part.p == null || !text) { el.remove(); if (text) text.remove(); return; }
+      el.style.opacity = "0";
+      text.style.opacity = "0";
+      leads.push({
+        el: el, text: text, p: part,
+        lx: +el.getAttribute("data-lx"),
+        ly: +el.getAttribute("data-ly"),
+        dir: +el.getAttribute("data-dir")
+      });
+    });
+    /* Groups go live; each label stays at 0 until the drawing explodes. */
+    leadG.style.opacity = "1";
+    labelG.style.opacity = "1";
+  }
+
+  var pose = {
+    yaw: -34, pitch: 10, lift: 0, boom: 0, boom2: 0, spin: 0,
+    blue: 0, drive: 0, drift: 0, rev: 0, fold: 0, zoom: 0, seat: 0, slide: 0
+  };
+  var orbit = { yaw: 0, pitch: 0, fold: 0 };
+
+  var cy = 1, sy = 0, cp = 1, sp = 0, camz = TB_CAMZ;
+  var pt = [0, 0, 0];
+
+  function project(x, y, z, out) {
+    y -= PIVOT;
+    var X = x * cy + z * sy;
+    var Z = z * cy - x * sy;
+    var Y2 = y * cp - Z * sp;
+    var Z2 = y * sp + Z * cp;
+    var s = TB_FOCAL / (camz - Z2);
+    out[0] = OX + X * s;
+    out[1] = OY - Y2 * s;
+    out[2] = s;
+  }
+
+  var wasBlue = 0;
+
+  function render() {
+    var yaw = (pose.yaw + orbit.yaw + (cfg.atelier ? 0 : Math.sin(pose.drift) * 2.2)) * Math.PI / 180;
+    var pitch = (pose.pitch + orbit.pitch + (cfg.atelier ? 0 : Math.cos(pose.drift * 0.7) * 1.1)) * Math.PI / 180;
+    cy = Math.cos(yaw); sy = Math.sin(yaw);
+    cp = Math.cos(pitch); sp = Math.sin(pitch);
+
+    var boom = pose.boom, blue = pose.blue;
+    var empty = boom * (1 - (pose.boom2 || 0));
+    /* Dolly back as the drawing opens up, or the parts leave the frame. */
+    camz = TB_CAMZ + boom * DOLLY - (pose.zoom || 0);
+    var liftY = pose.lift * (mesh.travel || 0);
+    var spin = pose.spin * Math.PI / 180;
+    var cs = Math.cos(spin), ss = Math.sin(spin);
+    var i, j;
+
+    for (var pi = 0; pi < parts.length; pi++) {
+      var p = parts[pi], e = p.e;
+      /* Parts flagged b:2 ride a second scalar, so the optica bench can
+         take the old lens out before the new one goes in instead of
+         crossfading both through each other on one channel. */
+      var b = p.b === 2 ? pose.boom2 : boom;
+      if (p.w) {
+        b = (b - p.w) / (1 - p.w);
+        if (b < 0) b = 0;
+        if (b > 1) b = 1;
+      }
+      var ox = (e ? e[0] * b : 0) + (p.c ? pose.drive : 0) - (pose.slide || 0);
+      var oy = (e ? e[1] * b : 0) + (p.l ? liftY : 0);
+      var oz = e ? e[2] * b : 0;
+      /* the engine never sits still on the ramp either */
+      if (p.c && cfg.shake) oy += Math.sin(pose.drift * 9 + pi) * pose.rev * 1.8;
+
+      var fold = pose.fold + (orbit.fold || 0);
+      if (fold < 0) fold = 0;
+      if (fold > 1) fold = 1;
+      var fang = p.g ? (1 - fold) * (-p.u) * Math.PI / 2 : 0;
+      var fca = Math.cos(fang), fsa = Math.sin(fang);
+      var seatK = pose.seat || 0;
+      var seatS = p.q ? 1 + 0.32 * seatK * (1 - seatK) : 1;
+
+      for (i = 0; i < p.n; i++) {
+        var v = p.v[i];
+        var x = v[0], y = v[1], z = v[2];
+        if (p.s) {
+          var dx = x - p.k[0], dy = y - p.k[1];
+          x = p.k[0] + dx * cs - dy * ss;
+          y = p.k[1] + dx * ss + dy * cs;
+        }
+        if (p.g) {
+          var fx = x - p.h[0], fz = z - p.h[2];
+          x = p.h[0] + fx * fca - fz * fsa;
+          z = p.h[2] + fx * fsa + fz * fca;
+        }
+        x += ox; y += oy - PIVOT; z += oz;
+        if (p.q && seatS !== 1) {
+          var sx0 = p.k[0] + ox, sy0 = p.k[1] + oy - PIVOT, sz0 = p.k[2] + oz;
+          x = sx0 + (x - sx0) * seatS;
+          y = sy0 + (y - sy0) * seatS;
+          z = sz0 + (z - sz0) * seatS;
+        }
+        var X = x * cy + z * sy;
+        var Z = z * cy - x * sy;
+        var Y2 = y * cp - Z * sp;
+        var Z2 = y * sp + Z * cp;
+        p.tx[i] = X; p.ty[i] = Y2; p.tz[i] = Z2;
+        var s = TB_FOCAL / (camz - Z2);
+        p.px[i] = OX + X * s;
+        p.py[i] = OY - Y2 * s;
+      }
+    }
+
+    var n = 0;
+    for (var fi = 0; fi < faces.length; fi++) {
+      var rec = faces[fi], q = rec.p, idx = rec.i, k = idx.length;
+      var nx = 0, ny = 0, nz = 0, mx = 0, my = 0, mz = 0;
+      for (j = 0; j < k; j++) {
+        var a = idx[j], b = idx[(j + 1) % k];
+        nx += (q.ty[a] - q.ty[b]) * (q.tz[a] + q.tz[b]);
+        ny += (q.tz[a] - q.tz[b]) * (q.tx[a] + q.tx[b]);
+        nz += (q.tx[a] - q.tx[b]) * (q.ty[a] + q.ty[b]);
+        mx += q.tx[a]; my += q.ty[a]; mz += q.tz[a];
+      }
+      var nl = Math.sqrt(nx * nx + ny * ny + nz * nz) || 1;
+      nx /= nl; ny /= nl; nz /= nl;
+      mx /= k; my /= k; mz /= k;
+
+      var wx = -mx, wy = -my, wz = camz - mz;
+      var wl = Math.sqrt(wx * wx + wy * wy + wz * wz) || 1;
+      var facing = (nx * wx + ny * wy + nz * wz) / wl;
+      if (facing <= 0.004) continue;
+
+      var col, alpha = 1;
+      if (cfg.atelier) {
+        /* Product rig, not the workshop key. Lindberg / Mykita shoot
+           acetate under a large softbox (upper-front) and a cool bounce;
+           the Anime.js Three adapter uses the same idea: dim ambient +
+           a directional from (3, 2, 3). The X of the lighting normal is
+           damped so neighbouring rim facets share a colour — that is
+           what stops the frame reading as a carved mesh. */
+        var snx = nx * 0.32, sny = ny, snz = nz;
+        var sl = Math.sqrt(snx * snx + sny * sny + snz * snz) || 1;
+        snx /= sl; sny /= sl; snz /= sl;
+        var key = snx * 0.28 + sny * 0.86 + snz * 0.42;
+        if (key < 0) key = 0;
+        var fillL = snx * -0.22 + sny * 0.06 + snz * 0.97;
+        if (fillL < 0) fillL = 0;
+        var wrap = 0.08 + key * 0.52 + fillL * 0.10;
+        var hx = 0.28 + wx / wl, hy = 0.86 + wy / wl, hz = 0.42 + wz / wl;
+        var hl = Math.sqrt(hx * hx + hy * hy + hz * hz) || 1;
+        var spec = nx * hx / hl + ny * hy / hl + nz * hz / hl;
+        if (spec < 0) spec = 0;
+        spec = spec * spec;
+        spec = spec * spec;
+        var fres = 1 - facing;
+        fres = fres * fres;
+        var band = ny - 0.18;
+        band = Math.exp(-band * band * 14);
+        /* Tight highlight only. A wide sheen paints the front ivory
+           and the frame reads as cheap white plastic. */
+        var sheen = spec;
+        if (q.m === 1 || q.m === 8) {
+          /* One front surface: stacked bevel faces would milk the glass. */
+          if (facing < 0.22) continue;
+          var flash = q.m === 8
+            ? tbMix([56, 176, 168], [198, 104, 168], facing)
+            : tbMix([210, 216, 222], [244, 246, 248], facing);
+          col = tbMix(flash, [255, 255, 255], spec * 0.40 + fres * 0.28 + band * 0.55);
+          alpha = 0.18 + fres * 0.26 + spec * 0.10 + band * 0.28 + (q.m === 8 ? 0.10 : 0);
+        } else if (q.m === 9) {
+          /* Near-black acetate, ivory only on the top bevel — the
+             product-shot language, not a mid-grey plastic brick. An
+             empty groove picks up a rim light the lens was hiding. */
+          col = tbMix([10, 9, 8], [24, 20, 17], wrap);
+          col = tbMix(col, [242, 232, 210], sheen * (1 - empty * 0.55));
+          if (empty) col = tbMix(col, [255, 255, 255], fres * empty * 0.14);
+          else col = tbMix(col, AC, fres * 0.10);
+        } else if (q.m === 4) {
+          col = tbMix([40, 40, 42], [232, 232, 234], wrap * 0.4 + spec * 0.9);
+        } else {
+          col = tbMix(SHADE, FG, wrap * 0.4);
+        }
+      } else {
+        var lam = nx * TB_LX + ny * TB_LY + nz * TB_LZ;
+        if (lam < 0) lam = 0;
+        lam *= lam;
+        var rim = 1 - facing;
+        rim = rim * rim * rim * rim * rim;
+
+        col = tbMix(SHADE, WARM, lam);
+        /* Side glass has to stay darker than the metal around it, or the
+           C-pillar disappears into the DLO and the cabin reads as a cap. */
+        if (q.m === 1) col = tbMix(tbMix(BG, FG, 0.16), WARM, lam * 0.22);
+        else if (q.m === 2) col = tbMix(col, BG, 0.55);
+        else if (q.m === 3) col = tbMix(col, BG, 0.30);
+        else if (q.m === 4) col = tbMix(col, FG, 0.45);  /* alloy, not orange */
+        /* lamps ignore the key light: they are the ones emitting */
+        else if (q.m === 5) col = tbMix(FG, AC, 0.18);
+        else if (q.m === 6) col = tbMix(AC, FG, 0.10);
+        else if (q.m === 7) col = tbMix(col, BG, 0.72);
+        /* a coated lens: the AR flash is what tells you it is the new one */
+        else if (q.m === 8) col = tbMix(tbMix(BG, GLOW, 0.42), FG, lam * 0.5 + 0.12);
+        col = tbMix(col, AC, 0.22 * rim);
+        if (blue) col = tbMix(col, BG, blue * 0.96);
+      }
+
+      var str = "";
+      for (j = 0; j < k; j++) {
+        var t = idx[j];
+        str += (j ? " " : "") +
+          (Math.round(q.px[t] * 10) / 10) + "," + (Math.round(q.py[t] * 10) / 10);
+      }
+      rec.s = str;
+      rec.c = alpha < 0.999
+        ? "rgba(" + (col[0] | 0) + "," + (col[1] | 0) + "," + (col[2] | 0) + "," +
+          (Math.round(alpha * 100) / 100) + ")"
+        : "rgb(" + (col[0] | 0) + "," + (col[1] | 0) + "," + (col[2] | 0) + ")";
+      rec.z = mz;
+      order[n++] = rec;
+    }
+
+    order.length = n;
+    order.sort(tbDepth);
+    for (i = 0; i < n; i++) {
+      pool[i].setAttribute("points", order[i].s);
+      pool[i].setAttribute("fill", order[i].c);
+    }
+    for (; i < shown; i++) pool[i].setAttribute("points", "");
+    shown = n;
+    /* The wire on every face is the workshop look. Acetate is a
+       continuous polish; the stroke would carve it back into a mesh. */
+    solids.style.strokeOpacity = cfg.atelier ? 0 : 0.10 + blue * 0.80;
+
+    if (floor) {
+      var d = "";
+      for (var gi = 0; gi < gridLines.length; gi++) {
+        var ln = gridLines[gi];
+        project(ln[0], 0, ln[1], pt);
+        d += "M" + (pt[0] | 0) + " " + (pt[1] | 0);
+        project(ln[2], 0, ln[3], pt);
+        d += "L" + (pt[0] | 0) + " " + (pt[1] | 0);
+      }
+      floor.setAttribute("d", d);
+    }
+
+    if (shadow) {
+      /* Sit the puddle under the cabin, not the nose — a blob that
+         reaches the splitter reads as the bumper grinding the floor. */
+      project(pose.drive + (cfg.shadowX || 0), groundY + 1, 0, pt);
+      shadow.setAttribute("cx", pt[0] | 0);
+      shadow.setAttribute("cy", pt[1] | 0);
+      shadow.setAttribute("rx", (shadowR[0] * pt[2] * (1 + pose.lift * 0.30)) | 0);
+      shadow.setAttribute("ry", (shadowR[1] * pt[2] * (1 + pose.lift * 0.42)) | 0);
+      shadow.style.opacity = (0.46 - pose.lift * 0.22) * (1 - blue);
+    }
+
+    if (caustic) {
+      var on = (1 - boom) * 0.18 + (pose.boom2 || 0) * 0.34;
+      on *= 1 - empty * 0.6;
+      project((pose.yaw + orbit.yaw) * 1.3, cfg.causticY == null ? -28 : cfg.causticY, 34, pt);
+      caustic.setAttribute("cx", pt[0] | 0);
+      caustic.setAttribute("cy", pt[1] | 0);
+      caustic.setAttribute("rx", (88 * pt[2] * (0.85 + (pose.boom2 || 0) * 0.2)) | 0);
+      caustic.setAttribute("ry", (26 * pt[2]) | 0);
+      caustic.style.opacity = on;
+    }
+
+    if (leads.length && (blue > 0.001 || wasBlue > 0.001)) {
+      for (var li = 0; li < leads.length; li++) {
+        var ld = leads[li], hub = ld.p;
+        var hx = hub.px[hub.p], hy = hub.py[hub.p];
+        ld.el.setAttribute(
+          "d",
+          "M" + (hx | 0) + " " + (hy | 0) +
+          "L" + ((hx + ld.dir * 76) | 0) + " " + ld.ly +
+          "L" + ld.lx + " " + ld.ly
+        );
+        var o = (blue - li * 0.07) / 0.42;
+        o = o < 0 ? 0 : o > 1 ? 1 : o;
+        ld.el.style.opacity = o;
+        if (ld.text) ld.text.style.opacity = o;
+      }
+    }
+    wasBlue = blue;
+  }
+
+  return { pose: pose, orbit: orbit, render: render, svg: svg, parts: byId };
+}
+
+var OB_SPECS = {
+  root: ".ob", svg: ".ob-specs", mesh: ".ob-mesh", solids: ".ob-solids",
+  shadow: ".ob-shadow", caustic: ".ob-caustic",
+  pivot: 0, oyf: 0.52, dolly: 0,
+  shadowR: [150, 20], groundY: -150, causticY: -28, liteVB: "230 60 660 560",
+  atelier: 1
+};
+
+window.__staticB = function (panel) {
+  var iris = panel.querySelector(".ob-iris");
+  if (iris) iris.remove();
+  var ob = panel.querySelector(".ob");
+  if (ob) ob.style.setProperty("--focus", "1");
+  panel.querySelectorAll(".ob-line").forEach(function (l) { l.style.filter = "none"; l.style.opacity = "1"; });
+  panel.querySelectorAll(".ob-bstep").forEach(function (s) { s.style.opacity = "1"; });
+  var book = panel.querySelector(".ob-book-in");
+  if (book) book.style.clipPath = "circle(150% at 50% 50%)";
+  /* one pose through the same projector, so the still is the real object */
+  var specs = tbMount3D(panel, OB_SPECS);
+  if (specs) {
+    /* boom and boom2 both 0: the fitted pair is in, the replacement is
+       still off-frame. Setting only boom2 would seat two lenses in the
+       same aperture. */
+    specs.pose.yaw = -6;
+    specs.pose.pitch = 7;
+    specs.pose.fold = 1;
+    specs.pose.zoom = 80;
+    specs.render();
+    var hint = panel.querySelector(".ob-spin");
+    if (hint) hint.remove();
+    specs.svg.style.cursor = "default";
+  }
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, svg = A.svg, utils = A.utils, createTimer = A.createTimer,
+      createDraggable = A.createDraggable, spring = A.spring;
+
+  var ob = panel.querySelector(".ob");
+  window.__splitB(panel);
+
+  function setFocus(v) { ob.style.setProperty("--focus", utils.round(utils.clamp(v, 0, 1), 3)); }
+
+  /* --- intro: an aperture opens, the name lands still out of focus --- */
+  var iris = panel.querySelector(".ob-iris");
+  var intro = createTimeline({ defaults: { ease: "inOutQuart" } });
+  intro.add(panel.querySelectorAll(".ob-blade"), {
+    rotate: function (el) { return [Number(el.dataset.blade) * 60, Number(el.dataset.blade) * 60 + 74]; },
+    scale: [1, 1.5], opacity: [1, 0], duration: 1100, delay: stagger(45)
+  }, 0);
+  intro.add(iris, { opacity: [1, 0], duration: 300, onComplete: function () { iris.remove(); } }, 1000);
+  intro.add(panel.querySelectorAll(".ob-name .ob-c"), {
+    y: [90, 0], opacity: [0, 1], duration: 1100, ease: "outExpo", delay: stagger(26)
+  }, 480);
+  intro.add(panel.querySelectorAll(".ob-eyebrow, .ob-claim, .ob-lead, .ob-dial, .ob-ghost"), {
+    y: [30, 0], opacity: [0, 1], duration: 900, ease: "outExpo", delay: stagger(110)
+  }, 760);
+
+  /* --- the diopter scale: the page is only sharp where the optician puts it --- */
+  var knob = panel.querySelector(".ob-knob");
+  var track = panel.querySelector(".ob-rail-track");
+  var dptEl = panel.querySelector(".ob-dpt");
+  var dptGhost = panel.querySelector(".ob-dpt-ghost");
+  var stops = panel.querySelectorAll(".ob-stop");
+
+  function grid() {
+    return Math.max(track.getBoundingClientRect().width / 5, 1);
+  }
+
+  function readDiopter(p) {
+    var d = -3 + p * 5;
+    var nearest = Math.round(utils.clamp(p * 5, 0, 5));
+    var label = (d >= 0 ? "+" : "\u2212") + Math.abs(d).toFixed(2).replace(".", ",");
+    dptEl.textContent = label;
+    if (dptGhost) dptGhost.textContent = label;
+    stops.forEach(function (s, n) { s.dataset.on = n === nearest ? "1" : "0"; });
+    setFocus(1 - Math.abs(d) / 3);
+  }
+
+  var dial = createDraggable(knob, {
+    container: track,
+    containerPadding: [0, -22, 0, -22],
+    y: false,
+    snap: grid(),
+    cursor: { onHover: "grab", onGrab: "grabbing" },
+    onDrag: function (self) { readDiopter(self.progressX); },
+    onSnap: function (self) { readDiopter(self.progressX); },
+    onRelease: function (self) { readDiopter(self.progressX); },
+    onResize: function (self) { self.snapX = grid(); }
+  });
+  readDiopter(0);
+  animate(dial, {
+    progressX: [0, 0.6], duration: 1800, delay: 1500, ease: spring({ stiffness: 42, damping: 13 }),
+    onUpdate: function () { readDiopter(dial.progressX); }
+  });
+  animate(panel.querySelector(".ob-dial-hint"), {
+    opacity: [1, 0.35, 1], duration: 2200, delay: 3600, ease: "inOutSine", loop: 3
+  });
+
+  animate(panel.querySelectorAll(".ob-chart-sec .ob-kicker, .ob-h2"), {
+    y: [34, 0], opacity: [0, 1], duration: 850, ease: "outExpo", delay: stagger(90),
+    autoplay: onScroll({ target: panel.querySelector(".ob-chart-sec"), enter: "bottom-=140 top" })
+  });
+
+  /* --- the bench: an optician, not a blueprint ----------------------
+     Temples unfold first. Old lenses leave the groove onto the bench,
+     one eye and then the other. New ones slide in from the tray and
+     seat with a pulse. `--swap` is the empty window and blurs the copy. */
+  var bench = panel.querySelector(".ob-bench");
+  var specs = tbMount3D(panel, OB_SPECS);
+  if (specs) {
+    var spose = specs.pose, sorbit = specs.orbit;
+    spose.yaw = 8; spose.pitch = 12; spose.fold = 0;
+    var fit = createTimeline({
+      defaults: { duration: 1000, ease: "inOutQuad" },
+      autoplay: onScroll({ target: bench, enter: "top top", leave: "bottom bottom", sync: 0.4 })
+    });
+    fit.label("montura");
+    fit.add(spose, { fold: [0, 1], yaw: [8, 0], pitch: [12, 6] }, 0);
+    fit.label("fuera");
+    fit.add(spose, {
+      boom: [0, 1], pitch: [6, -10], yaw: [0, -12], zoom: [0, 140]
+    }, 1100);
+    fit.label("dentro");
+    fit.add(spose, {
+      boom2: [0, 1], yaw: [-12, 22], pitch: [-10, 5], zoom: [140, 360],
+      slide: [0, 118]
+    }, 2300);
+    fit.add(spose, { seat: [0, 1], yaw: [22, 10], pitch: [5, 6], zoom: [360, 300] }, 3300);
+
+    var onBench = true;
+    if (window.IntersectionObserver) {
+      onBench = false;
+      new IntersectionObserver(function (entries) {
+        onBench = entries[0].isIntersecting;
+      }, { rootMargin: "12% 0px" }).observe(bench);
+    }
+    createTimer({
+      onUpdate: function () {
+        if (!onBench) return;
+        bench.style.setProperty(
+          "--swap", utils.round(spose.boom * (1 - spose.boom2), 3)
+        );
+        specs.render();
+      }
+    });
+
+    var spin = panel.querySelector(".ob-spin");
+    var grabbed = false, sx = 0, sy = 0, settle = null;
+    specs.svg.addEventListener("pointerdown", function (ev) {
+      grabbed = true; sx = ev.clientX; sy = ev.clientY;
+      specs.svg.classList.add("is-orbiting");
+      specs.svg.setPointerCapture(ev.pointerId);
+      if (settle) settle.pause();
+      if (spin) { animate(spin, { opacity: [1, 0], duration: 300 }); spin = null; }
+    });
+    specs.svg.addEventListener("pointermove", function (ev) {
+      if (!grabbed) return;
+      /* Temples, not a turntable. Horizontal drag opens or closes the
+         arms; yaw/pitch stay on the fitting timeline. */
+      sorbit.fold = utils.clamp(sorbit.fold + (ev.clientX - sx) * 0.012, -1, 1);
+      sx = ev.clientX; sy = ev.clientY;
+    });
+    function drop() {
+      if (!grabbed) return;
+      grabbed = false;
+      specs.svg.classList.remove("is-orbiting");
+      settle = animate(sorbit, {
+        yaw: 0, pitch: 0, fold: 0, duration: 1400,
+        ease: spring({ stiffness: 38, damping: 13 })
+      });
+    }
+    specs.svg.addEventListener("pointerup", drop);
+    specs.svg.addEventListener("pointercancel", drop);
+  }
+
+  panel.querySelectorAll(".ob-bstep").forEach(function (step, i) {
+    animate(step, {
+      opacity: [0.3, 1], x: [16, 0], duration: 600, ease: "outQuad",
+      autoplay: onScroll({
+        target: step,
+        enter: "bottom-=45% top",
+        leave: i === 2 ? "top+=90% bottom" : "top+=45% bottom"
+      })
+    });
+  });
+
+  /* --- frames draw themselves as they enter, then lift on hover --- */
+  panel.querySelectorAll(".ob-frame").forEach(function (card) {
+    var fig = card.querySelector(".ob-frame-fig svg");
+    animate(svg.createDrawable(card.querySelectorAll(".ob-rim, .ob-bridge, .ob-temple")), {
+      draw: ["0 0", "0 1"], duration: 900, ease: "inOutCubic", delay: stagger(50),
+      autoplay: onScroll({ target: card, enter: "bottom-=100 top" })
+    });
+    animate(card, {
+      y: [30, 0], opacity: [0, 1], duration: 800, ease: "outExpo",
+      autoplay: onScroll({ target: card, enter: "bottom-=100 top" })
+    });
+    card.addEventListener("mouseenter", function () {
+      animate(fig, { scale: 1.08, rotate: -3, duration: 620, ease: spring({ stiffness: 90, damping: 11 }) });
+    });
+    card.addEventListener("mouseleave", function () {
+      animate(fig, { scale: 1, rotate: 0, duration: 520, ease: "outQuad" });
+    });
+  });
+
+  /* --- the CTA arrives as an aperture opening on the page --- */
+  var book = panel.querySelector(".ob-book-in");
+  var clip = { r: 0 };
+  animate(clip, {
+    r: 150, duration: 1200, ease: "outExpo",
+    onUpdate: function () { book.style.clipPath = "circle(" + utils.round(clip.r, 1) + "% at 50% 50%)"; },
+    autoplay: onScroll({ target: panel.querySelector(".ob-book"), enter: "bottom-=120 top" })
+  });
+  animate(panel.querySelectorAll(".ob-tel, .ob-book-row"), {
+    y: [36, 0], opacity: [0, 1], duration: 900, ease: "outExpo", delay: stagger(110),
+    autoplay: onScroll({ target: panel.querySelector(".ob-book"), enter: "bottom-=120 top" })
+  });
+  panel.querySelectorAll(".ob-cta").forEach(function (el) {
+    el.addEventListener("mousemove", function (ev) {
+      var r = el.getBoundingClientRect();
+      animate(el, {
+        x: (ev.clientX - r.left - r.width / 2) * 0.3,
+        y: (ev.clientY - r.top - r.height / 2) * 0.3,
+        duration: 240, ease: "outQuad"
+      });
+    });
+    el.addEventListener("mouseleave", function () {
+      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.65)" });
+    });
+  });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

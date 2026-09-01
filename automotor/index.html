@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoMotor · Sanguiñeda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #161311;
+  --ink: #efe6d9;
+  --muted: #a3988a;
+  --accent: #e8c547;
+  --accent2: #c23b22;
+  --line: #3a322c;
+  --display: "Oswald", serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 4px;
+  --pad: 28px; --gap: 28px; --hero: clamp(56px, 12vw, 128px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+body { overflow-x: hidden; }
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px var(--pad); border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  z-index: 20;
+}
+.logo { font-family: var(--display); font-size: 22px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; }
+nav { display: flex; gap: 18px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+nav a { text-decoration: none; }
+.wa { background: var(--accent); color: #111; text-decoration: none; padding: 10px 14px; border-radius: var(--radius); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.hero {
+  min-height: calc(100vh - 70px); display: grid; grid-template-columns: 1.1fr .9fr;
+  gap: 0; border-bottom: 1px solid var(--line);
+}
+.hero-copy { padding: 48px var(--pad) 40px; display: flex; flex-direction: column; justify-content: flex-end; }
+.eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 11px; color: var(--accent); margin: 0 0 18px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: var(--hero); line-height: .82; margin: 0; text-transform: uppercase; }
+h1 span { display: block; }
+.lead { max-width: 34ch; color: var(--muted); font-size: 16px; line-height: 1.5; margin: 22px 0 28px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { text-decoration: none; padding: 14px 18px; border-radius: var(--radius); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: 12px; }
+.btn-solid { background: var(--ink); color: var(--bg); }
+.btn-line { border: 1px solid var(--line); }
+.hero-media {
+  min-height: 420px;
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--accent) 28%, transparent), transparent 45%),
+    var(--photo) center/cover;
+  filter: saturate(.7) contrast(1.05);
+}
+.marquee { overflow: hidden; border-bottom: 1px solid var(--line); background: var(--accent); color: #111; }
+.marquee-track { display: flex; width: max-content; gap: 40px; padding: 14px 0; font-family: var(--display); letter-spacing: .08em; font-size: 20px; }
+.services { padding: 56px var(--pad); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+.svc { border-top: 1px solid var(--line); padding-top: 18px; }
+.svc span { color: var(--accent); font-size: 12px; letter-spacing: .16em; }
+.svc h3 { margin: 8px 0 8px; font-size: 22px; }
+.svc p { margin: 0; color: var(--muted); line-height: 1.45; }
+.proof { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); }
+.proof div { padding: 32px var(--pad); border-right: 1px solid var(--line); }
+.proof div:last-child { border-right: 0; }
+.proof strong { display: block; font-family: var(--display); font-size: 28px; letter-spacing: .04em; }
+.proof span { color: var(--muted); font-size: 14px; }
+.cta { padding: 72px var(--pad); display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+.cta h2 { font-family: var(--display); font-size: clamp(40px, 7vw, 84px); line-height: .9; text-transform: uppercase; margin: 0; max-width: 14ch; }
+footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; border-top: 1px solid var(--line); }
+@media (max-width: 860px) {
+  nav { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-media { min-height: 280px; order: -1; }
+  .services, .proof { grid-template-columns: 1fr; }
+  .proof div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .cta { flex-direction: column; align-items: flex-start; }
+}
+.hero-media { --photo: url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1600&q=80'); }
+
+
+#dsgB {
+  --st-bg: #0d0b0a;
+  --st-fg: #f4eee4;
+  --st-accent: #e8c547;
+  --st-second: #ca563f;
+  --st-glow: #e8c547;
+  --st-line: #373431;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .tb {
+  --rev: 0;
+  background:
+    radial-gradient(120% 80% at 78% 12%,
+      color-mix(in srgb, var(--st-glow) calc(var(--rev) * 26%), transparent), transparent 62%),
+    linear-gradient(var(--st-line) 1px, transparent 1px) 0 0 / 100% 88px,
+    linear-gradient(90deg, var(--st-line) 1px, transparent 1px) 0 0 / 88px 100%,
+    var(--st-bg);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  overflow-x: clip;
+}
+#dsgB .tb h1, #dsgB .tb h2, #dsgB .tb h3, #dsgB .tb .tb-brand,
+#dsgB .tb .tb-rpm, #dsgB .tb .tb-tel {
+  font-family: "Archivo", var(--display); font-stretch: 118%;
+  font-weight: 800; letter-spacing: -.02em;
+}
+
+#dsgB .tb-boot {
+  position: fixed; inset: 0; z-index: 80; display: grid; place-content: center;
+  gap: 18px; background: var(--st-bg); pointer-events: none;
+}
+#dsgB .tb-boot-txt { margin: 0; font-size: 11px; letter-spacing: .32em; color: var(--st-accent); }
+#dsgB .tb-boot-bar { width: min(52vw, 380px); height: 3px; background: var(--st-line); overflow: hidden; }
+#dsgB .tb-boot-bar i { display: block; height: 100%; width: 100%; background: var(--st-accent); transform-origin: left; transform: scaleX(0); }
+
+#dsgB .tb-rail {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; padding: 13px var(--pad);
+  border-bottom: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-bg) 82%, transparent); backdrop-filter: blur(10px);
+}
+#dsgB .tb-brand { font-size: 15px; text-transform: uppercase; }
+#dsgB .tb-live {
+  display: flex; align-items: center; gap: 8px; font-size: 10px;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .tb-live b {
+  width: 7px; height: 7px; background: var(--st-accent);
+  box-shadow: 0 0 10px var(--st-accent); animation: tbPulse 1.6s ease-in-out infinite;
+}
+@keyframes tbPulse { 50% { opacity: .28; transform: scale(.7); } }
+
+#dsgB .tb-hero {
+  display: grid; grid-template-columns: 1fr minmax(340px, 42%); gap: clamp(24px, 4vw, 64px);
+  align-items: center; padding: clamp(40px, 7vw, 92px) var(--pad) clamp(28px, 4vw, 56px);
+}
+#dsgB .tb-eyebrow { margin: 0 0 20px; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .tb-name {
+  margin: 0; font-size: clamp(40px, 6.4vw, 104px); line-height: .88;
+  text-transform: uppercase; perspective: 900px;
+}
+#dsgB .tb-claim {
+  margin: 22px 0 0; max-width: 20ch; font-family: "Archivo", var(--display);
+  font-weight: 600; font-size: clamp(18px, 2.1vw, 28px); line-height: 1.15; color: var(--st-fg);
+}
+#dsgB .tb-lead { margin: 16px 0 0; max-width: 46ch; font-size: 13px; line-height: 1.7; color: var(--st-dim); }
+#dsgB .tb-meta { display: flex; flex-wrap: wrap; gap: 28px; margin: 30px 0 0; }
+#dsgB .tb-meta b { display: block; font-size: 34px; line-height: 1; color: var(--st-accent); }
+#dsgB .tb-meta span { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .tb-cta {
+  display: inline-block; margin-top: 30px; padding: 15px 26px; text-decoration: none;
+  background: var(--st-accent); color: var(--st-bg); font-weight: 700; font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase; will-change: transform;
+}
+
+#dsgB .tb-console { display: grid; justify-items: center; gap: 14px; }
+#dsgB .tb-dial { width: min(100%, 440px); height: auto; overflow: visible; }
+#dsgB .tb-ring { fill: none; stroke: var(--st-line); stroke-width: 1.4; }
+#dsgB .tb-ring-in { stroke-dasharray: 3 9; }
+#dsgB .tb-arc { fill: none; stroke: var(--st-line); stroke-width: 10; stroke-linecap: round; }
+#dsgB .tb-red { fill: none; stroke: color-mix(in srgb, var(--st-glow) 70%, #ff2d2d); stroke-width: 10; stroke-linecap: round; opacity: .55; }
+#dsgB .tb-sweep {
+  fill: none; stroke: var(--st-glow); stroke-width: 10; stroke-linecap: round;
+  filter: url(#tbGlow); opacity: calc(.35 + var(--rev) * .65);
+}
+#dsgB .tb-tick { stroke: color-mix(in srgb, var(--st-fg) 40%, transparent); stroke-width: 1.6; }
+#dsgB .tb-tick-hi { stroke: var(--st-fg); stroke-width: 3; }
+#dsgB .tb-num {
+  fill: var(--st-dim); font-family: "JetBrains Mono", monospace; font-size: 17px;
+  text-anchor: middle; font-weight: 700;
+}
+#dsgB .tb-unit { fill: var(--st-dim); font-size: 10px; letter-spacing: .22em; text-anchor: middle; text-transform: uppercase; }
+#dsgB .tb-needle { transform-box: view-box; transform-origin: 210px 210px; }
+#dsgB .tb-needle-p { fill: var(--st-glow); filter: url(#tbGlow); }
+#dsgB .tb-hub { fill: var(--st-bg); stroke: var(--st-fg); stroke-width: 2; }
+#dsgB .tb-hub-in { fill: var(--st-accent); }
+
+#dsgB .tb-readout { display: flex; align-items: baseline; gap: 9px; }
+#dsgB .tb-rpm {
+  font-size: clamp(34px, 4.6vw, 60px); line-height: 1; font-variant-numeric: tabular-nums;
+  color: var(--st-fg); text-shadow: 0 0 calc(var(--rev) * 26px) var(--st-glow);
+}
+#dsgB .tb-readout span { font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--st-dim); }
+
+#dsgB .tb-bars { display: flex; align-items: flex-end; gap: 4px; height: 44px; width: min(100%, 380px); }
+#dsgB .tb-bars i {
+  flex: 1; height: 100%; background: var(--st-accent); transform-origin: bottom;
+  transform: scaleY(.06); opacity: .8;
+}
+
+#dsgB .tb-throttle { width: min(100%, 380px); }
+#dsgB .tb-track {
+  position: relative; height: 46px; border: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-fg) 5%, transparent);
+}
+#dsgB .tb-fill {
+  position: absolute; inset: 3px auto 3px 3px; width: 0;
+  background: color-mix(in srgb, var(--st-glow) 28%, transparent);
+}
+#dsgB .tb-knob {
+  position: absolute; top: 3px; left: 3px; width: 62px; height: 38px; border: 0;
+  background: var(--st-accent); cursor: grab; touch-action: none;
+  background-image: repeating-linear-gradient(90deg, transparent 0 5px, color-mix(in srgb, var(--st-bg) 45%, transparent) 5px 7px);
+}
+#dsgB .tb-hint { margin: 10px 0 0; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--st-dim); }
+
+#dsgB .tb-band {
+  overflow: hidden; border-block: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-accent) 12%, transparent);
+}
+#dsgB .tb-band-track { display: flex; width: max-content; align-items: center; gap: 26px; padding: 12px 13px; }
+#dsgB .tb-band-track span { font-family: "Archivo", var(--display); font-weight: 800; font-stretch: 118%; font-size: 20px; text-transform: uppercase; white-space: nowrap; }
+#dsgB .tb-band-track i { color: var(--st-accent); font-style: normal; }
+
+#dsgB .tb-bay { padding: clamp(56px, 8vw, 120px) var(--pad); }
+#dsgB .tb-kicker { margin: 0 0 14px; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .tb-h2 {
+  margin: 0 0 44px; max-width: 22ch; font-size: clamp(26px, 3.6vw, 50px);
+  line-height: 1.02; text-transform: uppercase;
+}
+#dsgB .tb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--st-line); }
+#dsgB .tb-tile {
+  position: relative; overflow: hidden; background: var(--st-bg);
+  padding: 26px 22px 32px; display: flex; flex-direction: column; gap: 10px;
+}
+#dsgB .tb-code { font-size: 10px; letter-spacing: .22em; color: var(--st-accent); }
+#dsgB .tb-tile h3 { margin: 0; font-size: 21px; text-transform: uppercase; }
+#dsgB .tb-tile p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--st-dim); }
+#dsgB .tb-tile-line { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--st-accent); transform-origin: left; transform: scaleX(0); }
+
+#dsgB .tb-lift { padding: 0 var(--pad); }
+#dsgB .tb-lift-in { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 72px); align-items: start; }
+#dsgB .tb-lift-fig { position: sticky; top: 92px; height: min(78vh, 560px); display: grid; place-items: center; overflow: visible; }
+#dsgB .tb-car { width: 100%; height: auto; overflow: visible; }
+#dsgB .tb-post, #dsgB .tb-carriage { fill: color-mix(in srgb, var(--st-fg) 12%, transparent); stroke: var(--st-fg); stroke-width: 1.6; }
+#dsgB .tb-post { transform-box: fill-box; transform-origin: center bottom; }
+#dsgB .tb-floor, #dsgB .tb-arm { stroke: var(--st-fg); stroke-width: 2.4; stroke-linecap: round; }
+#dsgB .tb-floor { stroke: var(--st-line); stroke-width: 3; }
+#dsgB .tb-body { fill: none; stroke: var(--st-fg); stroke-width: 2.6; stroke-linejoin: round; }
+#dsgB .tb-glass { fill: color-mix(in srgb, var(--st-glow) 20%, transparent); stroke: var(--st-accent); stroke-width: 1.6; }
+#dsgB .tb-lamp { fill: var(--st-glow); }
+#dsgB .tb-tyre, #dsgB .tb-rim { fill: none; stroke: var(--st-fg); stroke-width: 2.4; }
+#dsgB .tb-spoke { stroke: var(--st-fg); stroke-width: 1.6; }
+#dsgB .tb-lug { fill: var(--st-accent); }
+#dsgB .tb-wheel { transform-box: fill-box; transform-origin: center; }
+#dsgB .tb-wheel-spare { opacity: 0; }
+#dsgB .tb-lift-steps { padding: 18vh 0 22vh; display: grid; gap: 34vh; }
+#dsgB .tb-step { opacity: .28; }
+#dsgB .tb-step em { font-style: normal; font-size: 10px; letter-spacing: .24em; color: var(--st-accent); }
+#dsgB .tb-step h3 { margin: 10px 0 10px; font-size: clamp(24px, 3vw, 42px); text-transform: uppercase; }
+#dsgB .tb-step p { margin: 0; max-width: 34ch; font-size: 13px; line-height: 1.7; color: var(--st-dim); }
+
+#dsgB .tb-call { padding: clamp(56px, 9vw, 130px) var(--pad); border-top: 1px solid var(--st-line); }
+#dsgB .tb-tel {
+  display: inline-block; text-decoration: none; color: var(--st-fg);
+  font-size: clamp(32px, 6.4vw, 92px); line-height: 1; text-transform: uppercase;
+}
+#dsgB .tb-call-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .tb-wa {
+  text-decoration: none; background: var(--st-accent); color: var(--st-bg); font-weight: 700;
+  padding: 15px 24px; letter-spacing: .16em; will-change: transform;
+}
+#dsgB .tb-foot {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 20px var(--pad); border-top: 1px solid var(--st-line);
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--st-dim);
+}
+
+@media (max-width: 1080px) {
+  #dsgB .tb-hero { grid-template-columns: 1fr; }
+  #dsgB .tb-console { order: -1; }
+  #dsgB .tb-grid { grid-template-columns: repeat(2, 1fr); }
+  #dsgB .tb-lift-in { grid-template-columns: 1fr; }
+  #dsgB .tb-lift-fig { height: 46vh; top: 68px; }
+  #dsgB .tb-lift-steps { gap: 26vh; padding-top: 6vh; }
+}
+@media (max-width: 640px) {
+  #dsgB .tb-grid { grid-template-columns: 1fr; }
+  #dsgB .tb-meta { gap: 18px; }
+  #dsgB .tb-live { display: none; }
+  #dsgB .tb-brand { font-size: 13px; }
+}
+
+</style>
+</head>
+<body data-motion="gsap" data-layout="split" data-mode="forge">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <a class="logo" href="#">AutoMotor</a>
+  <nav>
+    <a href="#servicios">Servicios</a>
+    <a href="#taller">Taller</a>
+    <a href="#cita">Cita</a>
+  </nav>
+  <a class="wa" href="https://wa.me/34692847452">+34692847452</a>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Sanguiñeda · Rúa Areas</p>
+    <h1><span>Tu coche</span><span>en manos</span><span>que saben.</span></h1>
+    <p class="lead">Diagnóstico, mecánica y cita el mismo día. Taller de barrio, no mostrador de recambios.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="https://wa.me/34692847452" id="cita">Pedir cita</a>
+      <a class="btn btn-line" href="#servicios">Ver el taller</a>
+    </div>
+  </div>
+  <div class="hero-media" role="img" aria-label="Taller"></div>
+</section>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track"><span>DIAGNOSIS · FRENOS Y DIRECCIÓN · DISTRIBUCIÓN · ITV Y PRE-ITV · CLIMATIZACIÓN · CHAPA LIGERA · DIAGNOSIS · FRENOS Y DIRECCIÓN · DISTRIBUCIÓN · ITV Y PRE-ITV · CLIMATIZACIÓN · CHAPA LIGERA</span><span>DIAGNOSIS · FRENOS Y DIRECCIÓN · DISTRIBUCIÓN · ITV Y PRE-ITV · CLIMATIZACIÓN · CHAPA LIGERA · DIAGNOSIS · FRENOS Y DIRECCIÓN · DISTRIBUCIÓN · ITV Y PRE-ITV · CLIMATIZACIÓN · CHAPA LIGERA</span></div>
+</div>
+<section class="services" id="servicios"><article class="svc"><span>01</span><h3>Diagnosis</h3><p>Leemos la centralita y te decimos qué hay que tocar. Sin piezas de más.</p></article><article class="svc"><span>02</span><h3>Frenos y dirección</h3><p>Pastillas, discos, líquido y alineado. El coche tiene que parar de verdad.</p></article><article class="svc"><span>03</span><h3>Distribución</h3><p>Correas y kits con recambio de marca. Programamos el trabajo.</p></article><article class="svc"><span>04</span><h3>ITV y pre-ITV</h3><p>Revisión previa y cita. Si algo va a fallar, lo ves aquí.</p></article><article class="svc"><span>05</span><h3>Climatización</h3><p>Carga, fugas y filtros. Verano en la ría sin el aire a medias.</p></article><article class="svc"><span>06</span><h3>Chapa ligera</h3><p>Golpes de parking y plásticos. Dejamos el coche presentable.</p></article></section>
+<section class="proof" id="taller">
+  <div><strong>Mismo día</strong><span>Si entra por la mañana, sale por la tarde cuando se puede.</span></div>
+  <div><strong>L–V 8:30–19:00</strong><span>L–V 8:30–19:00 · S 9:00–14:00</span></div>
+  <div><strong>Redondela</strong><span>Rúa Areas. A 12 minutos de Vigo, sin cita perdida en polígono.</span></div>
+</section>
+<section class="cta">
+  <h2>El coche no espera. Nosotros tampoco.</h2>
+  <a class="btn btn-solid" href="https://wa.me/34692847452">+34692847452</a>
+</section>
+<footer>AutoMotor · Sanguiñeda · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="tb" data-rev="0">
+  <div class="tb-boot" aria-hidden="true">
+    <p class="tb-boot-txt">BANCO DE PRUEBAS · <b>0</b>%</p>
+    <div class="tb-boot-bar"><i></i></div>
+  </div>
+
+  <header class="tb-rail">
+    <span class="tb-brand">AutoMotor</span>
+    <span class="tb-live"><b></b>Sanguiñeda · en taller</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="tb-hero">
+    <div class="tb-copy">
+      <p class="tb-eyebrow">Rúa Areas · Sanguiñeda</p>
+      <h1 class="tb-name" data-split>AutoMotor</h1>
+      <p class="tb-claim">Tu coche en manos que saben.</p>
+      <p class="tb-lead">Diagnóstico, mecánica y cita el mismo día. Taller de barrio, no mostrador de recambios.</p>
+      <div class="tb-meta">
+        <div><b class="tb-count" data-to="6">0</b><span>bancos de trabajo</span></div>
+        <div><b class="tb-count" data-to="24">0</b><span>h hasta diagnóstico</span></div>
+        <div><b class="tb-count" data-to="100">0</b><span>% presupuesto cerrado</span></div>
+      </div>
+      <a class="tb-cta" href="https://wa.me/34692847452">Pedir cita</a>
+    </div>
+
+    <div class="tb-console">
+      <svg class="tb-dial" viewBox="0 0 420 420" aria-hidden="true"><defs><filter id="tbGlow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><circle class="tb-ring" cx="210" cy="210" r="198"/><circle class="tb-ring tb-ring-in" cx="210" cy="210" r="104"/><path class="tb-arc" d="M 99.44 341.76 A 172 172 0 1 1 320.56 341.76"/><path class="tb-red" d="M 381.84 202.50 A 172 172 0 0 1 320.56 341.76"/><line class="tb-tick tb-tick-hi" x1="109.7" y1="329.5" x2="94.3" y2="347.9"/><text class="tb-num" x="127.7" y="315.1">0</text><line class="tb-tick" x1="85.2" y1="319.5" x2="74.7" y2="328.7"/><line class="tb-tick" x1="70.0" y1="299.2" x2="58.2" y2="306.7"/><line class="tb-tick" x1="58.1" y1="276.9" x2="45.2" y2="282.5"/><line class="tb-tick tb-tick-hi" x1="59.3" y1="250.4" x2="36.1" y2="256.6"/><text class="tb-num" x="86.4" y="250.1">1</text><line class="tb-tick" x1="45.0" y1="228.1" x2="31.1" y2="229.6"/><line class="tb-tick" x1="44.2" y1="202.8" x2="30.2" y2="202.1"/><line class="tb-tick" x1="47.2" y1="177.6" x2="33.5" y2="174.9"/><line class="tb-tick tb-tick-hi" x1="63.4" y1="156.6" x2="40.9" y2="148.4"/><text class="tb-num" x="89.7" y="173.2">2</text><line class="tb-tick" x1="64.5" y1="130.2" x2="52.2" y2="123.4"/><line class="tb-tick" x1="78.3" y1="108.9" x2="67.2" y2="100.4"/><line class="tb-tick" x1="95.2" y1="90.1" x2="85.5" y2="80.0"/><line class="tb-tick tb-tick-hi" x1="120.5" y1="82.2" x2="106.8" y2="62.6"/><text class="tb-num" x="136.6" y="112.1">3</text><line class="tb-tick" x1="136.6" y1="61.1" x2="130.4" y2="48.6"/><line class="tb-tick" x1="160.1" y1="51.7" x2="155.9" y2="38.3"/><line class="tb-tick" x1="184.7" y1="45.9" x2="182.6" y2="32.1"/><line class="tb-tick tb-tick-hi" x1="210.0" y1="54.0" x2="210.0" y2="30.0"/><text class="tb-num" x="210.0" y="89.0">4</text><line class="tb-tick" x1="235.3" y1="45.9" x2="237.4" y2="32.1"/><line class="tb-tick" x1="259.9" y1="51.7" x2="264.1" y2="38.3"/><line class="tb-tick" x1="283.4" y1="61.1" x2="289.6" y2="48.6"/><line class="tb-tick tb-tick-hi" x1="299.5" y1="82.2" x2="313.2" y2="62.6"/><text class="tb-num" x="283.4" y="112.1">5</text><line class="tb-tick" x1="324.8" y1="90.1" x2="334.5" y2="80.0"/><line class="tb-tick" x1="341.7" y1="108.9" x2="352.8" y2="100.4"/><line class="tb-tick" x1="355.5" y1="130.2" x2="367.8" y2="123.4"/><line class="tb-tick tb-tick-hi" x1="356.6" y1="156.6" x2="379.1" y2="148.4"/><text class="tb-num" x="330.3" y="173.2">6</text><line class="tb-tick" x1="372.8" y1="177.6" x2="386.5" y2="174.9"/><line class="tb-tick" x1="375.8" y1="202.8" x2="389.8" y2="202.1"/><line class="tb-tick" x1="375.0" y1="228.1" x2="388.9" y2="229.6"/><line class="tb-tick tb-tick-hi" x1="360.7" y1="250.4" x2="383.9" y2="256.6"/><text class="tb-num" x="333.6" y="250.1">7</text><line class="tb-tick" x1="361.9" y1="276.9" x2="374.8" y2="282.5"/><line class="tb-tick" x1="350.0" y1="299.2" x2="361.8" y2="306.7"/><line class="tb-tick" x1="334.8" y1="319.5" x2="345.3" y2="328.7"/><line class="tb-tick tb-tick-hi" x1="310.3" y1="329.5" x2="325.7" y2="347.9"/><text class="tb-num" x="292.3" y="315.1">8</text><path class="tb-sweep" d="M 99.44 341.76 A 172 172 0 1 1 320.56 341.76"/><g class="tb-needle"><path class="tb-needle-p" d="M 210 44 L 217 232 L 203 232 Z"/></g><circle class="tb-hub" cx="210" cy="210" r="19"/><circle class="tb-hub-in" cx="210" cy="210" r="7"/><text class="tb-unit" x="210" y="272">x1000 rpm</text></svg>
+      <div class="tb-readout">
+        <b class="tb-rpm">0</b><span>rpm</span>
+      </div>
+      <div class="tb-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="tb-throttle">
+        <div class="tb-track">
+          <span class="tb-fill"></span>
+          <button class="tb-knob" type="button" aria-label="Acelerar el banco de pruebas"></button>
+        </div>
+        <p class="tb-hint">Arrastra el acelerador</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="tb-band" aria-hidden="true"><div class="tb-band-track"><span>DIAGNOSIS</span><i>/</i><span>FRENOS Y DIRECCIÓN</span><i>/</i><span>DISTRIBUCIÓN</span><i>/</i><span>ITV Y PRE-ITV</span><i>/</i><span>CLIMATIZACIÓN</span><i>/</i><span>CHAPA LIGERA</span><i>/</i></div></div>
+
+  <section class="tb-bay">
+    <p class="tb-kicker">Servicios</p>
+    <h2 class="tb-h2" data-split>Mecánica, diagnosis e ITV sin dar vueltas.</h2>
+    <div class="tb-grid"><article class="tb-tile"><span class="tb-code">P01</span><h3>Diagnosis</h3><p>Leemos la centralita y te decimos qué hay que tocar. Sin piezas de más.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P02</span><h3>Frenos y dirección</h3><p>Pastillas, discos, líquido y alineado. El coche tiene que parar de verdad.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P03</span><h3>Distribución</h3><p>Correas y kits con recambio de marca. Programamos el trabajo.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P04</span><h3>ITV y pre-ITV</h3><p>Revisión previa y cita. Si algo va a fallar, lo ves aquí.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P05</span><h3>Climatización</h3><p>Carga, fugas y filtros. Verano en la ría sin el aire a medias.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P06</span><h3>Chapa ligera</h3><p>Golpes de parking y plásticos. Dejamos el coche presentable.</p><span class="tb-tile-line"></span></article></div>
+  </section>
+
+  <section class="tb-lift">
+    <div class="tb-lift-in">
+      <div class="tb-lift-fig">
+        <svg class="tb-car" viewBox="0 0 560 340" aria-hidden="true"><rect class="tb-post" x="62" y="88" width="20" height="212" rx="5"/><rect class="tb-post" x="478" y="88" width="20" height="212" rx="5"/><line class="tb-floor" x1="16" y1="300" x2="544" y2="300"/><g class="tb-rise"><rect class="tb-carriage" x="56" y="262" width="32" height="28" rx="5"/><rect class="tb-carriage" x="472" y="262" width="32" height="28" rx="5"/><line class="tb-arm" x1="84" y1="276" x2="212" y2="276"/><line class="tb-arm" x1="476" y1="276" x2="372" y2="276"/><g class="tb-carg"><path class="tb-body" d="M 92 266 L 96 216 L 136 172 L 216 152 L 332 154 L 402 192 L 488 202 L 510 218 L 516 246 L 512 266 Z"/><path class="tb-glass" d="M 148 178 L 216 160 L 220 200 L 142 204 Z"/><path class="tb-glass" d="M 234 160 L 328 162 L 388 198 L 234 200 Z"/><line class="tb-body" x1="228" y1="158" x2="228" y2="266"/><ellipse class="tb-lamp" cx="502" cy="230" rx="11" ry="7"/><g class="tb-wheel tb-wheel-rear"><g transform="translate(170 262)"><circle class="tb-tyre" r="34"/><circle class="tb-rim" r="21"/><line class="tb-spoke" x1="0" y1="0" x2="0.0" y2="-21.1"/><line class="tb-spoke" x1="0" y1="0" x2="20.0" y2="-6.5"/><line class="tb-spoke" x1="0" y1="0" x2="12.4" y2="17.1"/><line class="tb-spoke" x1="0" y1="0" x2="-12.4" y2="17.1"/><line class="tb-spoke" x1="0" y1="0" x2="-20.0" y2="-6.5"/><circle class="tb-lug" r="5"/></g></g><g class="tb-wheel tb-wheel-front"><g transform="translate(436 262)"><circle class="tb-tyre" r="34"/><circle class="tb-rim" r="21"/><line class="tb-spoke" x1="0" y1="0" x2="0.0" y2="-21.1"/><line class="tb-spoke" x1="0" y1="0" x2="20.0" y2="-6.5"/><line class="tb-spoke" x1="0" y1="0" x2="12.4" y2="17.1"/><line class="tb-spoke" x1="0" y1="0" x2="-12.4" y2="17.1"/><line class="tb-spoke" x1="0" y1="0" x2="-20.0" y2="-6.5"/><circle class="tb-lug" r="5"/></g></g><g class="tb-wheel tb-wheel-spare"><g transform="translate(436 262)"><circle class="tb-tyre" r="34"/><circle class="tb-rim" r="21"/><line class="tb-spoke" x1="0" y1="0" x2="0.0" y2="-21.1"/><line class="tb-spoke" x1="0" y1="0" x2="20.0" y2="-6.5"/><line class="tb-spoke" x1="0" y1="0" x2="12.4" y2="17.1"/><line class="tb-spoke" x1="0" y1="0" x2="-12.4" y2="17.1"/><line class="tb-spoke" x1="0" y1="0" x2="-20.0" y2="-6.5"/><circle class="tb-lug" r="5"/></g></g></g></g></svg>
+      </div>
+      <div class="tb-lift-steps">
+        <p class="tb-kicker">El taller</p>
+        <div class="tb-step" data-step="0"><em>01</em><h3>Entra</h3><p>El coche sube al banco con la hoja de recepción hecha, no con un post-it.</p></div><div class="tb-step" data-step="1"><em>02</em><h3>Sube</h3><p>Elevador de dos columnas. Se ve el bajo entero antes de tocar nada.</p></div><div class="tb-step" data-step="2"><em>03</em><h3>Diagnóstico</h3><p>Leemos centralita y desmontamos solo lo que hay que mirar.</p></div><div class="tb-step" data-step="3"><em>04</em><h3>Sale</h3><p>Presupuesto cerrado antes de la factura. Sin piezas de sorpresa.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tb-call">
+    <p class="tb-kicker">Contacto directo</p>
+    <a class="tb-tel" href="tel:34692847452">+34692847452</a>
+    <div class="tb-call-row">
+      <a class="tb-wa" href="https://wa.me/34692847452">Pedir cita por WhatsApp</a>
+      <span>L–V 8:30–19:00 · S 9:00–14:00</span>
+    </div>
+  </section>
+
+  <footer class="tb-foot">
+    <span>Rúa Areas, Sanguiñeda</span>
+    <span>L–V 8:30–19:00 · S 9:00–14:00</span>
+  </footer>
+</div>
+
+</div>
+<script>
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+const gsapUrl = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js";
+const stUrl = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js";
+function load(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = resolve; s.onerror = reject; document.head.appendChild(s);
+  });
+}
+if (!reduced) {
+  load(gsapUrl).then(() => load(stUrl)).then(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from("h1 span", { yPercent: 28, duration: 1.05, stagger: 0.07, ease: "power4.out" });
+    gsap.to(".marquee-track", { xPercent: -50, repeat: -1, duration: 18, ease: "none" });
+    gsap.from(".svc", {
+      scrollTrigger: { trigger: ".services", start: "top 82%" },
+      y: 24, stagger: 0.08, duration: 0.7, ease: "power2.out"
+    });
+  }).catch(() => {});
+}
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb" : panel.querySelector(".vb") ? "vb" : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+
+window.__staticB = function (panel) {
+  var boot = panel.querySelector(".tb-boot");
+  if (boot) boot.remove();
+  panel.querySelectorAll(".tb-step").forEach(function (s) { s.style.opacity = "1"; });
+  panel.querySelectorAll(".tb-tile-line").forEach(function (s) { s.style.transform = "scaleX(1)"; });
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, svg = A.svg, utils = A.utils, createTimer = A.createTimer,
+      createDraggable = A.createDraggable, spring = A.spring;
+
+  var root = panel.querySelector(".tb");
+  var chars = window.__splitB(panel);
+
+  /* --- intro: the bench boots, then the needle sweeps like a real cluster --- */
+  var boot = panel.querySelector(".tb-boot");
+  var pct = { v: 0 };
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".tb-boot-bar i"), { scaleX: [0, 1], duration: 900, ease: "inOutQuad" }, 0);
+  intro.add(pct, {
+    v: 100, duration: 900, ease: "inOutQuad",
+    onUpdate: function () {
+      var b = panel.querySelector(".tb-boot-txt b");
+      if (b) b.textContent = utils.round(pct.v, 0);
+    }
+  }, 0);
+  intro.add(boot, {
+    opacity: [1, 0], duration: 420,
+    onComplete: function () { if (boot) boot.remove(); }
+  }, 940);
+  intro.add(panel.querySelectorAll('.tb-hero .tb-c'), {
+    y: [70, 0], rotateX: [-84, 0], opacity: [0, 1],
+    duration: 900, delay: stagger(15)
+  }, 1160);
+  intro.add(panel.querySelectorAll(".tb-eyebrow, .tb-claim, .tb-lead, .tb-meta, .tb-cta"), {
+    y: [26, 0], opacity: [0, 1], duration: 760, delay: stagger(80)
+  }, 1280);
+  intro.add(svg.createDrawable(panel.querySelectorAll(".tb-tick, .tb-arc, .tb-red, .tb-ring")), {
+    draw: ["0 0", "0 1"], duration: 1100, ease: "inOutCubic", delay: stagger(9)
+  }, 900);
+
+  /* --- the rev value every other piece of the page reads --- */
+  var dial = panel.querySelector(".tb-dial");
+  var needle = panel.querySelector(".tb-needle");
+  var sweep = panel.querySelector(".tb-sweep");
+  var rpmEl = panel.querySelector(".tb-rpm");
+  var fill = panel.querySelector(".tb-fill");
+  var bars = panel.querySelectorAll(".tb-bars i");
+  var sweepLen = sweep.getTotalLength();
+  sweep.style.strokeDasharray = sweepLen;
+  sweep.style.strokeDashoffset = sweepLen;
+
+  var MIN = -140, MAX = 140;
+  var rev = 0;
+
+  function paint(v, jitter) {
+    rev = utils.clamp(v, 0, 1);
+    var shown = utils.clamp(rev + (jitter || 0), 0, 1);
+    utils.set(needle, { rotate: utils.mapRange(shown, 0, 1, MIN, MAX) });
+    sweep.style.strokeDashoffset = sweepLen * (1 - shown);
+    root.style.setProperty("--rev", utils.round(rev, 3));
+    rpmEl.textContent = utils.round(shown * 8000, 0);
+    fill.style.width = (rev * 100) + "%";
+    if (band) band.speed = 1 + rev * 5;
+  }
+
+  /* --- infinite band, duplicated once so the wrap is seamless --- */
+  var track = panel.querySelector(".tb-band-track");
+  track.innerHTML = track.innerHTML + track.innerHTML;
+  var band = animate(track, {
+    x: [0, -track.scrollWidth / 2],
+    duration: track.scrollWidth * 11,
+    ease: "linear",
+    loop: true
+  });
+
+  /* --- idle: the engine never sits perfectly still --- */
+  var t = 0;
+  createTimer({
+    onUpdate: function () {
+      t += 0.06;
+      var idle = (Math.sin(t) + Math.sin(t * 2.7)) * 0.006 * (1 + rev * 6);
+      paint(rev, idle);
+      for (var i = 0; i < bars.length; i++) {
+        var n = 0.06 + rev * (0.55 + 0.45 * Math.abs(Math.sin(t * 1.6 + i * 0.7)));
+        utils.set(bars[i], { scaleY: n, opacity: 0.35 + n * 0.65 });
+      }
+    }
+  });
+
+  /* --- throttle: drag to rev, release and it falls back to idle --- */
+  var knob = panel.querySelector(".tb-knob");
+  var throttle = createDraggable(knob, {
+    container: panel.querySelector(".tb-track"),
+    containerPadding: 3,
+    y: false,
+    velocityMultiplier: 0,
+    cursor: { onHover: "grab", onGrab: "grabbing" },
+    onGrab: function () { animate(panel.querySelector(".tb-hint"), { opacity: [1, 0.25], duration: 300 }); },
+    onDrag: function (self) { paint(self.progressX); },
+    onRelease: function (self) {
+      animate(self, {
+        progressX: 0, duration: 1100, ease: spring({ stiffness: 60, damping: 16 }),
+        onUpdate: function () { paint(self.progressX); }
+      });
+    }
+  });
+  animate(throttle, {
+    progressX: [0, 0.82, 0.06], duration: 2400, delay: 1100, ease: "inOutQuad",
+    onUpdate: function () { paint(throttle.progressX); },
+    onComplete: function () {
+      animate(throttle, {
+        progressX: 0, duration: 900, ease: "outQuad",
+        onUpdate: function () { paint(throttle.progressX); }
+      });
+    }
+  });
+
+  /* --- magnetic CTAs --- */
+  panel.querySelectorAll(".tb-cta, .tb-wa").forEach(function (el) {
+    el.addEventListener("mousemove", function (ev) {
+      var r = el.getBoundingClientRect();
+      animate(el, {
+        x: (ev.clientX - r.left - r.width / 2) * 0.34,
+        y: (ev.clientY - r.top - r.height / 2) * 0.34,
+        duration: 220, ease: "outQuad"
+      });
+    });
+    el.addEventListener("mouseleave", function () {
+      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.6)" });
+    });
+  });
+
+  /* --- bay: heading chars, then a grid-aware burst --- */
+  var bay = panel.querySelector(".tb-bay");
+  animate(panel.querySelectorAll(".tb-h2 .tb-c"), {
+    y: [40, 0], opacity: [0, 1], duration: 800, ease: "outExpo", delay: stagger(14),
+    autoplay: onScroll({ target: bay, enter: "bottom-=140 top" })
+  });
+  animate(panel.querySelectorAll(".tb-tile"), {
+    y: [34, 0], opacity: [0, 1], duration: 760, ease: "outExpo",
+    delay: stagger(70, { grid: "auto", from: "first" }),
+    autoplay: onScroll({ target: bay, enter: "bottom-=140 top" })
+  });
+  panel.querySelectorAll(".tb-tile").forEach(function (tile) {
+    var line = tile.querySelector(".tb-tile-line");
+    tile.addEventListener("mouseenter", function () {
+      animate(line, { scaleX: [0, 1], duration: 420, ease: "outExpo" });
+    });
+    tile.addEventListener("mouseleave", function () {
+      animate(line, { scaleX: 0, duration: 300, ease: "outQuad" });
+    });
+  });
+
+  /* --- lift: the whole repair, scrubbed by scroll --- */
+  var lift = panel.querySelector(".tb-lift");
+  var carg = panel.querySelector(".tb-carg");
+  var wheels = panel.querySelectorAll(".tb-wheel-rear, .tb-wheel-front");
+  var shop = createTimeline({
+    defaults: { duration: 1000, ease: "inOutQuad" },
+    autoplay: onScroll({ target: lift, enter: "bottom top", leave: "bottom bottom", sync: 0.35 })
+  });
+  shop.label("drive");
+  shop.add(carg, { x: [-160, 0] }, 0);
+  shop.add(wheels, { rotate: [0, 760] }, 0);
+  shop.label("raise");
+  shop.add(panel.querySelector(".tb-rise"), { y: [0, -104] }, 1000);
+  shop.label("strip");
+  shop.add(panel.querySelector(".tb-wheel-front"), {
+    x: [0, 96], y: [0, 46], rotate: [760, 560], opacity: [1, 0]
+  }, 2000);
+  shop.add(panel.querySelector(".tb-wheel-spare"), {
+    opacity: [0, 1], x: [120, 0], y: [-70, 0], rotate: [-160, 0]
+  }, 2300);
+  shop.label("drop");
+  shop.add(panel.querySelector(".tb-rise"), { y: [-104, 0] }, 3100);
+  shop.add(panel.querySelectorAll(".tb-glass"), { opacity: [1, 0.45, 1] }, 3100);
+
+  var steps = panel.querySelectorAll(".tb-step");
+  steps.forEach(function (step, i) {
+    animate(step, {
+      opacity: [0.28, 1], x: [18, 0], duration: 600, ease: "outQuad",
+      autoplay: onScroll({
+        target: step,
+        enter: "bottom-=45% top",
+        leave: i === steps.length - 1 ? "top+=90% bottom" : "top+=45% bottom"
+      })
+    });
+  });
+
+  /* --- counters --- */
+  panel.querySelectorAll(".tb-count").forEach(function (el) {
+    var o = { v: 0 }, to = Number(el.dataset.to);
+    animate(o, {
+      v: to, duration: 1500, delay: 1400, ease: "outExpo",
+      onUpdate: function () { el.textContent = utils.round(o.v, 0); }
+    });
+  });
+
+  animate(panel.querySelectorAll(".tb-call .tb-kicker, .tb-tel, .tb-call-row"), {
+    y: [30, 0], opacity: [0, 1], duration: 780, ease: "outExpo", delay: stagger(90),
+    autoplay: onScroll({ target: panel.querySelector(".tb-call"), enter: "bottom-=120 top" })
+  });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    import(SRC).then(function (A) { window.__initB(A, panelB); })
+      .catch(function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

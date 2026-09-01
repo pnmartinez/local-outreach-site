@@ -1,0 +1,22 @@
+{
+  "category": "veterinario",
+  "seed": "bouzas-v1",
+  "motion": "animejs",
+  "mode": "apothecary",
+  "layout": "magazine",
+  "display": "Fraunces",
+  "body": "Sora",
+  "radius": "28px",
+  "density": "compact",
+  "nav": "split",
+  "palette": {
+    "bg": "#f6f0e6",
+    "ink": "#1c2a22",
+    "muted": "#6b6256",
+    "accent": "#c45c26",
+    "accent2": "#2f4a3a",
+    "line": "#ddd2c0",
+    "photo": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "veterinario|animejs|apothecary|magazine|Fraunces|Sora|28px|compact|split"
+}

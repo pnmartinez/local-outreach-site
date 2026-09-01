@@ -1,0 +1,22 @@
+{
+  "category": "bar",
+  "seed": "bar-as-burgas-v1",
+  "motion": "gsap",
+  "mode": "neon",
+  "layout": "tap-rail",
+  "display": "Bebas Neue",
+  "body": "DM Sans",
+  "radius": "0px",
+  "density": "compact",
+  "nav": "overlay",
+  "palette": {
+    "bg": "#12080c",
+    "ink": "#f7e8d4",
+    "muted": "#b89a86",
+    "accent": "#ff4d6d",
+    "accent2": "#ffd166",
+    "line": "#3a1c24",
+    "photo": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "bar|gsap|neon|tap-rail|Bebas Neue|DM Sans|0px|compact|overlay"
+}

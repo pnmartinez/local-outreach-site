@@ -1,0 +1,1304 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garage Galicia · Ourense</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2316181b%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%228.2%22%20fill%3D%22none%22%20stroke%3D%22%23e6c200%22%20stroke-width%3D%222.6%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%222.3%22%20fill%3D%22%23e6c200%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #161311;
+  --ink: #efe6d9;
+  --muted: #a3988a;
+  --accent: #e8c547;
+  --accent2: #c23b22;
+  --line: #3a322c;
+  --display: "Oswald", serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --radius: 28px;
+  --pad: 28px; --gap: 28px; --hero: clamp(56px, 12vw, 128px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+body { overflow-x: hidden; }
+.layout-split { display: grid; grid-template-columns: 84px 1fr; min-height: 100vh; }
+.side-nav {
+  position: sticky; top: 0; height: 100vh; border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; justify-content: space-between;
+  align-items: center; padding: 18px 0; z-index: 30;
+}
+.side-nav .logo {
+  writing-mode: vertical-rl; text-orientation: mixed; text-decoration: none;
+  font-family: var(--display); font-size: 16px; letter-spacing: .1em; text-transform: uppercase;
+}
+.side-nav .side-links { display: flex; flex-direction: column; gap: 22px; }
+.side-nav .side-links a {
+  writing-mode: vertical-rl; text-decoration: none; color: var(--muted);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+}
+.side-nav .wa {
+  writing-mode: vertical-rl; text-orientation: mixed; text-decoration: none;
+  background: var(--accent); color: #111; padding: 14px 8px; border-radius: var(--radius);
+  font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+}
+.hero-full {
+  position: relative; min-height: 100vh; display: flex; align-items: flex-end;
+  background:
+    linear-gradient(0deg, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 10%, transparent) 60%),
+    url("https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1600&q=80") center/cover;
+}
+.hero-full-copy { padding: 0 var(--pad) 64px; max-width: 60ch; }
+.eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 11px; color: var(--accent); margin: 0 0 18px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: var(--hero); line-height: .84; margin: 0; text-transform: uppercase; }
+h1 span { display: block; }
+.lead { max-width: 46ch; color: var(--muted); font-size: 16px; line-height: 1.5; margin: 22px 0 28px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { text-decoration: none; padding: 14px 18px; border-radius: var(--radius); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: 12px; }
+.btn-solid { background: var(--ink); color: var(--bg); }
+.btn-line { border: 1px solid var(--line); }
+.rail-wrap { padding: 56px var(--pad) 0; }
+.rail-wrap h2 { font-family: var(--display); text-transform: uppercase; font-size: 24px; margin: 0 0 20px; }
+.rail-snap {
+  display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 32px; -webkit-overflow-scrolling: touch;
+}
+.rail-card {
+  scroll-snap-align: start; flex: 0 0 min(320px, 82vw); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 22px;
+}
+.rail-card .rn { color: var(--accent); font-size: 12px; letter-spacing: .16em; }
+.rail-card h3 { margin: 10px 0 8px; font-size: 22px; }
+.rail-card p { margin: 0; color: var(--muted); line-height: 1.45; }
+.proof-list { list-style: none; margin: 0; padding: 48px var(--pad); border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 0; }
+.proof-list li {
+  display: grid; grid-template-columns: 64px 1fr 2fr; align-items: baseline; gap: 20px;
+  padding: 22px 0; border-bottom: 1px solid var(--line);
+}
+.proof-list .pn { font-family: var(--display); font-size: 36px; color: var(--accent); line-height: 1; }
+.proof-list strong { font-family: var(--display); font-size: 20px; text-transform: uppercase; }
+.proof-list .pd { color: var(--muted); font-size: 14px; }
+.side-cta {
+  position: sticky; bottom: 0; margin-top: 24px; padding: 28px var(--pad);
+  border-top: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 90%, transparent);
+  display: flex; justify-content: space-between; align-items: center; gap: 20px; z-index: 25;
+}
+.side-cta h2 { font-family: var(--display); font-size: clamp(26px, 4vw, 44px); line-height: .95; text-transform: uppercase; margin: 0; max-width: 16ch; }
+footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; border-top: 1px solid var(--line); }
+@media (max-width: 860px) {
+  .layout-split { grid-template-columns: 1fr; }
+  .side-nav { position: static; height: auto; flex-direction: row; justify-content: space-between; padding: 14px var(--pad); }
+  .side-nav .logo, .side-nav .side-links a, .side-nav .wa { writing-mode: horizontal-tb; }
+  .side-nav .side-links { flex-direction: row; gap: 14px; display: none; }
+  .proof-list li { grid-template-columns: 40px 1fr; }
+  .proof-list .pd { grid-column: 1 / -1; }
+  .side-cta { flex-direction: column; align-items: flex-start; position: static; }
+}
+
+
+#dsgB {
+  --st-bg: #0d0b0a;
+  --st-fg: #f4eee4;
+  --st-accent: #e8c547;
+  --st-second: #ca563f;
+  --st-glow: #e8c547;
+  --st-line: #373431;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .tb {
+  --rev: 0;
+  background:
+    radial-gradient(120% 80% at 78% 12%,
+      color-mix(in srgb, var(--st-glow) calc(var(--rev) * 26%), transparent), transparent 62%),
+    linear-gradient(var(--st-line) 1px, transparent 1px) 0 0 / 100% 88px,
+    linear-gradient(90deg, var(--st-line) 1px, transparent 1px) 0 0 / 88px 100%,
+    var(--st-bg);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  overflow-x: clip;
+}
+#dsgB .tb h1, #dsgB .tb h2, #dsgB .tb h3, #dsgB .tb .tb-brand,
+#dsgB .tb .tb-rpm, #dsgB .tb .tb-tel {
+  font-family: "Archivo", var(--display); font-stretch: 118%;
+  font-weight: 800; letter-spacing: -.02em;
+}
+
+#dsgB .tb-boot {
+  position: fixed; inset: 0; z-index: 80; display: grid; place-content: center;
+  gap: 18px; background: var(--st-bg); pointer-events: none;
+}
+#dsgB .tb-boot-txt { margin: 0; font-size: 11px; letter-spacing: .32em; color: var(--st-accent); }
+#dsgB .tb-boot-bar { width: min(52vw, 380px); height: 3px; background: var(--st-line); overflow: hidden; }
+#dsgB .tb-boot-bar i { display: block; height: 100%; width: 100%; background: var(--st-accent); transform-origin: left; transform: scaleX(0); }
+
+#dsgB .tb-rail {
+  position: sticky; top: 0; z-index: 40; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; padding: 13px var(--pad);
+  border-bottom: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-bg) 82%, transparent); backdrop-filter: blur(10px);
+}
+#dsgB .tb-brand { font-size: 15px; text-transform: uppercase; }
+#dsgB .tb-live {
+  display: flex; align-items: center; gap: 8px; font-size: 10px;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--st-dim);
+}
+#dsgB .tb-live b {
+  width: 7px; height: 7px; background: var(--st-accent);
+  box-shadow: 0 0 10px var(--st-accent); animation: tbPulse 1.6s ease-in-out infinite;
+}
+@keyframes tbPulse { 50% { opacity: .28; transform: scale(.7); } }
+
+#dsgB .tb-hero {
+  display: grid; grid-template-columns: 1fr minmax(340px, 42%); gap: clamp(24px, 4vw, 64px);
+  align-items: center; padding: clamp(40px, 7vw, 92px) var(--pad) clamp(28px, 4vw, 56px);
+}
+#dsgB .tb-eyebrow { margin: 0 0 20px; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .tb-name {
+  margin: 0; font-size: clamp(40px, 6.4vw, 104px); line-height: .88;
+  text-transform: uppercase; perspective: 900px;
+}
+#dsgB .tb-claim {
+  margin: 22px 0 0; max-width: 20ch; font-family: "Archivo", var(--display);
+  font-weight: 600; font-size: clamp(18px, 2.1vw, 28px); line-height: 1.15; color: var(--st-fg);
+}
+#dsgB .tb-lead { margin: 16px 0 0; max-width: 46ch; font-size: 13px; line-height: 1.7; color: var(--st-dim); }
+#dsgB .tb-meta { display: flex; flex-wrap: wrap; gap: 28px; margin: 30px 0 0; }
+#dsgB .tb-meta b { display: block; font-size: 34px; line-height: 1; color: var(--st-accent); }
+#dsgB .tb-meta span { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .tb-cta {
+  display: inline-block; margin-top: 30px; padding: 15px 26px; text-decoration: none;
+  background: var(--st-accent); color: var(--st-bg); font-weight: 700; font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase; will-change: transform;
+}
+
+#dsgB .tb-console { display: grid; justify-items: center; gap: 14px; }
+#dsgB .tb-dial { width: min(100%, 440px); height: auto; overflow: visible; }
+#dsgB .tb-ring { fill: none; stroke: var(--st-line); stroke-width: 1.4; }
+#dsgB .tb-ring-in { stroke-dasharray: 3 9; }
+#dsgB .tb-arc { fill: none; stroke: var(--st-line); stroke-width: 10; stroke-linecap: round; }
+#dsgB .tb-red { fill: none; stroke: color-mix(in srgb, var(--st-glow) 70%, #ff2d2d); stroke-width: 10; stroke-linecap: round; opacity: .55; }
+#dsgB .tb-sweep {
+  fill: none; stroke: var(--st-glow); stroke-width: 10; stroke-linecap: round;
+  filter: url(#tbGlow); opacity: calc(.35 + var(--rev) * .65);
+}
+#dsgB .tb-tick { stroke: color-mix(in srgb, var(--st-fg) 40%, transparent); stroke-width: 1.6; }
+#dsgB .tb-tick-hi { stroke: var(--st-fg); stroke-width: 3; }
+#dsgB .tb-num {
+  fill: var(--st-dim); font-family: "JetBrains Mono", monospace; font-size: 17px;
+  text-anchor: middle; font-weight: 700;
+}
+#dsgB .tb-unit { fill: var(--st-dim); font-size: 10px; letter-spacing: .22em; text-anchor: middle; text-transform: uppercase; }
+#dsgB .tb-needle { transform-box: view-box; transform-origin: 210px 210px; }
+#dsgB .tb-needle-p { fill: var(--st-glow); filter: url(#tbGlow); }
+#dsgB .tb-hub { fill: var(--st-bg); stroke: var(--st-fg); stroke-width: 2; }
+#dsgB .tb-hub-in { fill: var(--st-accent); }
+
+#dsgB .tb-readout { display: flex; align-items: baseline; gap: 9px; }
+#dsgB .tb-rpm {
+  font-size: clamp(34px, 4.6vw, 60px); line-height: 1; font-variant-numeric: tabular-nums;
+  color: var(--st-fg); text-shadow: 0 0 calc(var(--rev) * 26px) var(--st-glow);
+}
+#dsgB .tb-readout span { font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--st-dim); }
+
+#dsgB .tb-bars { display: flex; align-items: flex-end; gap: 4px; height: 44px; width: min(100%, 380px); }
+#dsgB .tb-bars i {
+  flex: 1; height: 100%; background: var(--st-accent); transform-origin: bottom;
+  transform: scaleY(.06); opacity: .8;
+}
+
+#dsgB .tb-throttle { width: min(100%, 380px); }
+#dsgB .tb-track {
+  position: relative; height: 46px; border: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-fg) 5%, transparent);
+}
+#dsgB .tb-fill {
+  position: absolute; inset: 3px auto 3px 3px; width: 0;
+  background: color-mix(in srgb, var(--st-glow) 28%, transparent);
+}
+#dsgB .tb-knob {
+  position: absolute; top: 3px; left: 3px; width: 62px; height: 38px; border: 0;
+  background: var(--st-accent); cursor: grab; touch-action: none;
+  background-image: repeating-linear-gradient(90deg, transparent 0 5px, color-mix(in srgb, var(--st-bg) 45%, transparent) 5px 7px);
+}
+#dsgB .tb-hint { margin: 10px 0 0; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--st-dim); }
+
+#dsgB .tb-band {
+  overflow: hidden; border-block: 1px solid var(--st-line);
+  background: color-mix(in srgb, var(--st-accent) 12%, transparent);
+}
+#dsgB .tb-band-track { display: flex; width: max-content; align-items: center; gap: 26px; padding: 12px 13px; }
+#dsgB .tb-band-track span { font-family: "Archivo", var(--display); font-weight: 800; font-stretch: 118%; font-size: 20px; text-transform: uppercase; white-space: nowrap; }
+#dsgB .tb-band-track i { color: var(--st-accent); font-style: normal; }
+
+#dsgB .tb-bay { padding: clamp(56px, 8vw, 120px) var(--pad); }
+#dsgB .tb-kicker { margin: 0 0 14px; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--st-accent); }
+#dsgB .tb-h2 {
+  margin: 0 0 44px; max-width: 22ch; font-size: clamp(26px, 3.6vw, 50px);
+  line-height: 1.02; text-transform: uppercase;
+}
+#dsgB .tb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--st-line); }
+#dsgB .tb-tile {
+  position: relative; overflow: hidden; background: var(--st-bg);
+  padding: 26px 22px 32px; display: flex; flex-direction: column; gap: 10px;
+}
+#dsgB .tb-code { font-size: 10px; letter-spacing: .22em; color: var(--st-accent); }
+#dsgB .tb-tile h3 { margin: 0; font-size: 21px; text-transform: uppercase; }
+#dsgB .tb-tile p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--st-dim); }
+#dsgB .tb-tile-line { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--st-accent); transform-origin: left; transform: scaleX(0); }
+
+/* Scrollytelling: the stage sticks for the whole section and the steps are
+   pulled back over it, so they own the scroll length the timeline scrubs.
+   isolation + a negative fig z-index keep the mesh (and its ground blob)
+   behind the copy — otherwise SALE reads as shaded by the shadow ellipse. */
+#dsgB .tb-lift { position: relative; isolation: isolate; }
+#dsgB .tb-lift-fig {
+  position: sticky; top: 0; height: 100vh; display: grid; place-items: center;
+  overflow: hidden; z-index: -1;
+}
+#dsgB .tb-car {
+  width: 100%; height: 100%; overflow: visible;
+  touch-action: pan-y; cursor: grab; user-select: none;
+}
+#dsgB .tb-car.is-orbiting { cursor: grabbing; }
+#dsgB .tb-solids {
+  stroke: var(--st-fg); stroke-width: 1px; stroke-opacity: .16;
+  stroke-linejoin: round; vector-effect: non-scaling-stroke;
+}
+#dsgB .tb-floor { fill: none; stroke: var(--st-line); stroke-width: 1px; stroke-opacity: .6; vector-effect: non-scaling-stroke; }
+#dsgB .tb-shadow { fill: #000; opacity: .5; }
+#dsgB .tb-leads, #dsgB .tb-labels { opacity: 0; }
+#dsgB .tb-lead { fill: none; stroke: var(--st-fg); stroke-width: 1px; stroke-opacity: .5; vector-effect: non-scaling-stroke; }
+#dsgB .tb-label {
+  fill: var(--st-fg); font-family: "JetBrains Mono", monospace; font-size: 15px;
+}
+#dsgB .tb-orbit {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  margin: 0; font-size: 10px; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--st-dim); pointer-events: none;
+}
+#dsgB .tb-lift-steps {
+  position: relative; z-index: 1; margin-top: -100vh; padding: 30vh var(--pad) 56vh;
+  display: grid; gap: 46vh; width: min(38ch, 46%); pointer-events: none;
+}
+#dsgB .tb-step { opacity: .28; }
+#dsgB .tb-step em { font-style: normal; font-size: 10px; letter-spacing: .24em; color: var(--st-accent); }
+#dsgB .tb-step h3 {
+  margin: 10px 0 10px; font-size: clamp(24px, 3vw, 42px); text-transform: uppercase;
+  color: var(--st-fg);
+}
+#dsgB .tb-step p { margin: 0; max-width: 34ch; font-size: 13px; line-height: 1.7; color: var(--st-dim); }
+
+#dsgB .tb-call { padding: clamp(56px, 9vw, 130px) var(--pad); border-top: 1px solid var(--st-line); }
+#dsgB .tb-tel {
+  display: inline-block; text-decoration: none; color: var(--st-fg);
+  font-size: clamp(32px, 6.4vw, 92px); line-height: 1; text-transform: uppercase;
+}
+#dsgB .tb-call-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--st-dim); }
+#dsgB .tb-wa {
+  text-decoration: none; background: var(--st-accent); color: var(--st-bg); font-weight: 700;
+  padding: 15px 24px; letter-spacing: .16em; will-change: transform;
+}
+#dsgB .tb-foot {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 20px var(--pad); border-top: 1px solid var(--st-line);
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--st-dim);
+}
+
+@media (max-width: 1080px) {
+  #dsgB .tb-hero { grid-template-columns: 1fr; }
+  #dsgB .tb-console { order: -1; }
+  #dsgB .tb-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  /* No room for leader lines at this width, and the phone should not pay
+     for the parts they point at either — tbMountCar drops those too. */
+  /* the hint would land on top of the step copy, and a thumb finds the
+     drag without being told */
+  #dsgB .tb-leads, #dsgB .tb-labels, #dsgB .tb-orbit { display: none; }
+  #dsgB .tb-lift-fig { height: 52vh; top: 8vh; }
+  #dsgB .tb-lift-steps {
+    margin-top: -52vh; width: min(34ch, 86%); gap: 42vh; padding: 56vh var(--pad) 48vh;
+  }
+}
+@media (max-width: 640px) {
+  #dsgB .tb-grid { grid-template-columns: 1fr; }
+  #dsgB .tb-meta { gap: 18px; }
+  #dsgB .tb-live { display: none; }
+  #dsgB .tb-brand { font-size: 13px; }
+}
+/* Garage Galicia — forge bay. This lead only. */
+#dsgB .tb-hero .tb-name {
+  font-size: clamp(32px, 5vw, 76px);
+  max-width: 9ch;
+  overflow: visible;
+}
+#dsgB .gg-bay {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 340px;
+  max-height: 540px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #3e4248 0%, #1a1c1f 72%);
+  border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent),
+    inset 0 -60px 90px -60px #000,
+    0 18px 40px -22px #000;
+}
+#dsgB .gg-stripes {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 22%;
+  pointer-events: none;
+  opacity: .30;
+  background: repeating-linear-gradient(
+    -38deg,
+    #101010 0 13px,
+    #e6c200 13px 26px
+  );
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 62%);
+  mask-image: linear-gradient(180deg, transparent, #000 62%);
+}
+#dsgB .gg-view {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#dsgB .gg-read {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px 9px;
+  background: #0c0d0e;
+  border: 1px solid color-mix(in srgb, #7dff9a 35%, transparent);
+  color: #8cffb0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: 10px;
+  box-shadow: 0 0 18px color-mix(in srgb, #3f6 28%, transparent);
+}
+#dsgB .gg-g {
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 0 14px #3f6;
+  color: #b8ffd0;
+}
+#dsgB .gg-unit { font-size: 11px; color: #7dff9a; }
+#dsgB .gg-state {
+  font-style: normal;
+  margin-left: 6px;
+  color: color-mix(in srgb, #8cffb0 70%, transparent);
+}
+#dsgB .gg-drag {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 44px;
+  height: 46px;
+  z-index: 4;
+  border: 1px solid color-mix(in srgb, var(--st-fg) 28%, transparent);
+  background: color-mix(in srgb, #0b0c0d 78%, transparent);
+}
+#dsgB .gg-handle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 58px;
+  height: 38px;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+  background:
+    repeating-linear-gradient(90deg, #d8c56a 0 5px, #8a7a32 5px 7px);
+  box-shadow: inset 0 1px 0 #f3e7a4;
+}
+#dsgB .gg-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  z-index: 4;
+  margin: 0;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--st-fg) 72%, transparent);
+  pointer-events: none;
+}
+#dsgB .gg-split {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: clamp(20px, 4vw, 56px);
+  align-items: start;
+  padding: clamp(40px, 7vw, 96px) var(--pad) clamp(56px, 9vw, 130px);
+  border-top: 1px solid var(--st-line);
+}
+#dsgB .gg-explode {
+  position: sticky;
+  top: 72px;
+  width: 100%;
+  aspect-ratio: 720 / 440;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #2c3036 0%, #141618 78%);
+  border: 1px solid color-mix(in srgb, var(--st-fg) 18%, transparent);
+}
+#dsgB .gg-explode-view {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#dsgB .gg-tag {
+  position: absolute;
+  z-index: 2;
+  color: var(--st-fg);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+/* placeExTags() writes left/top every frame from the part's own position. */
+#dsgB .gg-tag-tire,
+#dsgB .gg-tag-disc,
+#dsgB .gg-tag-pad { left: 0; top: 0; transform: translate(-50%, -320%); }
+#dsgB .gg-steps {
+  list-style: none;
+  margin: 0;
+  padding: 8vh 0 12vh;
+  display: grid;
+  gap: 18vh;
+}
+#dsgB .gg-step { opacity: .28; }
+#dsgB .gg-step em {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .24em;
+  color: var(--st-accent);
+}
+#dsgB .gg-step h3 {
+  margin: 8px 0 10px;
+  font-size: clamp(24px, 3vw, 40px);
+  text-transform: uppercase;
+}
+#dsgB .gg-step p {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--st-dim);
+}
+@media (max-width: 1080px) {
+  #dsgB .gg-bay { width: 100%; }
+  #dsgB .gg-split { grid-template-columns: 1fr; }
+  #dsgB .gg-explode { position: relative; top: 0; }
+  #dsgB .gg-steps { gap: 8vh; padding: 4vh 0; }
+}
+@media (max-width: 720px) {
+  #dsgB .gg-bay {
+    width: 100%;
+    max-height: none;
+  }
+}
+
+</style>
+</head>
+<body data-motion="gsap" data-layout="split" data-mode="forge">
+<div class="grain"></div>
+<div id="dsgA">
+
+<div class="layout-split">
+  <aside class="side-nav">
+    <a class="logo" href="#">Garage Galicia</a>
+    <nav class="side-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#taller">Taller</a>
+    </nav>
+    <a class="wa" href="https://wa.me/34988224784">+34 988 22 47 84</a>
+  </aside>
+  <div>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+    <section class="hero-full">
+      <div class="hero-full-copy">
+        <p class="eyebrow">Ourense · Avenida de Zamora 96</p>
+        <h1><span>Lavado,</span><span>engrase</span><span>y a la calle.</span></h1>
+        <p class="lead">Garaje de Avenida de Zamora. Mano, neumático y pre-ITV sin mandarte al polígono.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="https://wa.me/34988224784">Pedir cita</a>
+          <a class="btn btn-line" href="#servicios">Ver el taller</a>
+        </div>
+      </div>
+    </section>
+    <section class="rail-wrap" id="servicios">
+      <h2>Servicios</h2>
+      <div class="rail-snap"><article class="rail-card"><span class="rn">01</span><h3>Lavado a mano</h3><p>Por fuera y por los pasos de rueda. No es un túnel de dos minutos.</p></article><article class="rail-card"><span class="rn">02</span><h3>Engrase</h3><p>Puntos de engrase y revisión de niveles. El coche deja de quejarse.</p></article><article class="rail-card"><span class="rn">03</span><h3>Neumáticos</h3><p>Montaje, equilibrado y el dibujo que pide la ITV, no el más barato.</p></article><article class="rail-card"><span class="rn">04</span><h3>Pre-ITV</h3><p>Luces, frenos y humos. Si va a fallar, lo ves aquí.</p></article><article class="rail-card"><span class="rn">05</span><h3>Frenos</h3><p>Pastillas y líquido. Que pare en Zamora, no a medias.</p></article><article class="rail-card"><span class="rn">06</span><h3>Cita</h3><p>Entras por la mañana, sales a la tarde cuando se puede.</p></article></div>
+    </section>
+    <ul class="proof-list" id="taller"><li><span class="pn">01</span><strong>Mismo día</strong><span class="pd">Si entra por la mañana, sale por la tarde cuando se puede.</span></li><li><span class="pn">02</span><strong>L–V 9:00–13:30 / 16:00–20:00</strong><span class="pd">L–V 9:00–13:30 / 16:00–20:00</span></li><li><span class="pn">03</span><strong>Ourense</strong><span class="pd">Avenida de Zamora 96.</span></li></ul>
+    <section class="side-cta">
+      <h2>El coche no espera. Nosotros tampoco.</h2>
+      <a class="btn btn-solid" href="https://wa.me/34988224784">+34 988 22 47 84</a>
+    </section>
+    <footer>Garage Galicia · Ourense · propuesta de sitio</footer>
+  </div>
+</div>
+
+</div>
+<div id="dsgB" hidden>
+
+<div class="tb" data-rev="0">
+  <header class="tb-rail">
+    <span class="tb-brand">Garage Galicia</span>
+    <span class="tb-live"><b></b>Ourense · en taller</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <section class="tb-hero">
+    <div class="tb-copy">
+      <p class="tb-eyebrow">Avenida de Zamora 96 · Ourense</p>
+      <h1 class="tb-name" data-split>Garage Galicia</h1>
+      <p class="tb-claim">Lavado, engrase y a la calle.</p>
+      <p class="tb-lead">Garaje de Avenida de Zamora. Mano, neumático y pre-ITV sin mandarte al polígono.</p>
+      <div class="tb-meta">
+        <div><b class="tb-count" data-to="6">0</b><span>bancos de trabajo</span></div>
+        <div><b class="tb-count" data-to="24">0</b><span>h hasta diagnóstico</span></div>
+        <div><b class="tb-count" data-to="100">0</b><span>% presupuesto cerrado</span></div>
+      </div>
+      <a class="tb-cta" href="https://wa.me/34988224784">Pedir cita</a>
+    </div>
+
+    <!-- slot:hero-3d -->
+<div class="gg-bay">
+  <div class="gg-stripes" aria-hidden="true"></div>
+  <canvas class="gg-view"></canvas>
+  <div class="gg-read"><span>Desequilibrio</span><b class="gg-g">32</b><span class="gg-unit">g</span><em class="gg-state">en eje</em></div>
+</div>
+
+<!-- /slot:hero-3d -->
+  </section>
+
+  <div class="tb-band" aria-hidden="true"><div class="tb-band-track"><span>LAVADO A MANO</span><i>/</i><span>ENGRASE</span><i>/</i><span>NEUMÁTICOS</span><i>/</i><span>PRE-ITV</span><i>/</i><span>FRENOS</span><i>/</i><span>CITA</span><i>/</i></div></div>
+
+  <section class="tb-bay">
+    <p class="tb-kicker">Servicios</p>
+    <h2 class="tb-h2" data-split>Lavado a mano, engrase y mecánica de barrio en Zamora 96.</h2>
+    <div class="tb-grid"><article class="tb-tile"><span class="tb-code">P01</span><h3>Lavado a mano</h3><p>Por fuera y por los pasos de rueda. No es un túnel de dos minutos.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P02</span><h3>Engrase</h3><p>Puntos de engrase y revisión de niveles. El coche deja de quejarse.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P03</span><h3>Neumáticos</h3><p>Montaje, equilibrado y el dibujo que pide la ITV, no el más barato.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P04</span><h3>Pre-ITV</h3><p>Luces, frenos y humos. Si va a fallar, lo ves aquí.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P05</span><h3>Frenos</h3><p>Pastillas y líquido. Que pare en Zamora, no a medias.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P06</span><h3>Cita</h3><p>Entras por la mañana, sales a la tarde cuando se puede.</p><span class="tb-tile-line"></span></article></div>
+  </section>
+
+  <!-- slot:stage-3d -->
+<section class="gg-split">
+  <div class="gg-explode">
+    <canvas class="gg-explode-view"></canvas>
+    <span class="gg-tag gg-tag-tire">Cubierta</span>
+    <span class="gg-tag gg-tag-disc">Disco</span>
+    <span class="gg-tag gg-tag-pad">Pastillas</span>
+  </div>
+  <ol class="gg-steps">
+    <li class="gg-step">
+      <em>01</em>
+      <h3>Neumáticos</h3>
+      <p>Montaje, equilibrado y el dibujo que pide la ITV. La rueda baja al eje y los tapones entran.</p>
+    </li>
+    <li class="gg-step">
+      <em>02</em>
+      <h3>Frenos</h3>
+      <p>Disco, pastilla y líquido. Si canta al frenar, se mira aquí, no en el polígono.</p>
+    </li>
+    <li class="gg-step">
+      <em>03</em>
+      <h3>Pre-ITV</h3>
+      <p>Luces, gases y lo que falla en la primera pasada. Sales con papeles, no con una cita a 40 km.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- /slot:stage-3d -->
+
+  <section class="tb-call">
+    <p class="tb-kicker">Contacto directo</p>
+    <a class="tb-tel" href="tel:34988224784">+34 988 22 47 84</a>
+    <div class="tb-call-row">
+      <a class="tb-wa" href="https://wa.me/34988224784">Pedir cita por WhatsApp</a>
+      <span>L–V 9:00–13:30 / 16:00–20:00</span>
+    </div>
+  </section>
+
+  <footer class="tb-foot">
+    <span>Avenida de Zamora 96, Ourense</span>
+    <span>L–V 9:00–13:30 / 16:00–20:00</span>
+  </footer>
+</div>
+
+</div>
+<script>
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+const gsapUrl = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js";
+const stUrl = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js";
+function load(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = resolve; s.onerror = reject; document.head.appendChild(s);
+  });
+}
+if (!reduced) {
+  load(gsapUrl).then(() => load(stUrl)).then(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from("h1 span", { xPercent: -12, opacity: 0, duration: 1.05, stagger: 0.07, ease: "power4.out" });
+    gsap.from(".rail-card", {
+      scrollTrigger: { trigger: ".rail-snap", start: "top 85%" },
+      x: 30, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power2.out"
+    });
+    gsap.from(".proof-list li", {
+      scrollTrigger: { trigger: ".proof-list", start: "top 85%" },
+      y: 18, opacity: 0, stagger: 0.1, duration: 0.6, ease: "power2.out"
+    });
+  }).catch(() => {});
+}
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+window.__staticB = function (panel) {
+  var hint = panel.querySelector(".gg-hint");
+  if (hint) hint.remove();
+  var grams = panel.querySelector(".gg-g");
+  if (grams) grams.textContent = "0";
+  var pose = panel.querySelector(".gg-state");
+  if (pose) pose.textContent = "equilibrada";
+  panel.querySelectorAll(".gg-step").forEach(function (s) { s.style.opacity = "1"; });
+  panel.querySelectorAll(".tb-tile-line").forEach(function (s) { s.style.transform = "scaleX(1)"; });
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, utils = A.utils;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  var chars = window.__splitB(panel);
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelectorAll(".tb-hero .tb-c"), {
+    y: [48, 0], opacity: [0, 1],
+    duration: 900, delay: stagger(15)
+  }, 0);
+  intro.add(panel.querySelectorAll(".tb-eyebrow, .tb-claim, .tb-lead, .tb-meta, .tb-cta"), {
+    y: [26, 0], opacity: [0, 1], duration: 760, delay: stagger(80)
+  }, 120);
+
+  var track = panel.querySelector(".tb-band-track");
+  if (track) {
+    track.innerHTML = track.innerHTML + track.innerHTML;
+    animate(track, {
+      x: [0, -track.scrollWidth / 2],
+      duration: track.scrollWidth * 11,
+      ease: "linear",
+      loop: true
+    });
+  }
+
+  panel.querySelectorAll(".tb-count").forEach(function (el) {
+    var o = { v: 0 }, to = Number(el.dataset.to);
+    animate(o, {
+      v: to, duration: 1500, delay: 1400, ease: "outExpo",
+      onUpdate: function () { el.textContent = utils.round(o.v, 0); }
+    });
+  });
+
+  var bay = panel.querySelector(".tb-bay");
+  if (bay) {
+    animate(panel.querySelectorAll(".tb-h2 .tb-c"), {
+      y: [40, 0], opacity: [0, 1], duration: 800, ease: "outExpo", delay: stagger(14),
+      autoplay: onScroll({ target: bay, enter: "bottom-=140 top" })
+    });
+    animate(panel.querySelectorAll(".tb-tile"), {
+      y: [34, 0], opacity: [0, 1], duration: 760, ease: "outExpo",
+      delay: stagger(70, { grid: "auto", from: "first" }),
+      autoplay: onScroll({ target: bay, enter: "bottom-=140 top" })
+    });
+    panel.querySelectorAll(".tb-tile").forEach(function (tile) {
+      var line = tile.querySelector(".tb-tile-line");
+      tile.addEventListener("mouseenter", function () {
+        animate(line, { scaleX: [0, 1], duration: 420, ease: "outExpo" });
+      });
+      tile.addEventListener("mouseleave", function () {
+        animate(line, { scaleX: 0, duration: 300, ease: "outQuad" });
+      });
+    });
+  }
+
+  panel.querySelectorAll(".tb-cta, .tb-wa").forEach(function (el) {
+    el.addEventListener("mousemove", function (ev) {
+      var r = el.getBoundingClientRect();
+      animate(el, {
+        x: (ev.clientX - r.left - r.width / 2) * 0.34,
+        y: (ev.clientY - r.top - r.height / 2) * 0.34,
+        duration: 220, ease: "outQuad"
+      });
+    });
+    el.addEventListener("mouseleave", function () {
+      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.6)" });
+    });
+  });
+
+  animate(panel.querySelectorAll(".tb-call .tb-kicker, .tb-tel, .tb-call-row"), {
+    y: [30, 0], opacity: [0, 1], duration: 780, ease: "outExpo", delay: stagger(90),
+    autoplay: onScroll({ target: panel.querySelector(".tb-call"), enter: "bottom-=120 top" })
+  });
+
+  var split = panel.querySelector(".gg-split");
+  var explode = { t: 0 };
+  if (split) {
+    animate(explode, {
+      t: [0, 1], duration: 1000, ease: "linear",
+      autoplay: onScroll({ target: split, enter: "top top", leave: "bottom bottom", sync: 0.18 })
+    });
+  }
+  panel.querySelectorAll(".gg-step").forEach(function (step, i) {
+    animate(step, {
+      opacity: [0.28, 1], x: [18, 0], duration: 600, ease: "outQuad",
+      autoplay: onScroll({
+        target: step,
+        enter: "bottom-=45% top",
+        leave: i === 2 ? "top+=90% bottom" : "top+=45% bottom"
+      })
+    });
+  });
+
+  var gEl = panel.querySelector(".gg-g");
+  var stateEl = panel.querySelector(".gg-state");
+  var grams = { n: 0 };
+  animate(grams, {
+    n: 32, duration: 900, delay: 400, ease: "outExpo",
+    onUpdate: function () { if (gEl) gEl.textContent = String(utils.round(grams.n, 0)); }
+  });
+
+  var state = { rpm: 1, drop: 1 };
+  var bay3d = panel.querySelector(".gg-bay");
+  if (bay3d) {
+    animate(state, {
+      rpm: [1, 0], duration: 4200, delay: 1100, ease: "outQuart",
+      loop: true, loopDelay: 2200,
+      onUpdate: function () {
+        grams.n = 32 * state.rpm;
+        if (gEl) gEl.textContent = String(utils.round(grams.n, 0));
+        if (stateEl) stateEl.textContent = state.rpm < 0.12 ? "equilibrada" : "en eje";
+      }
+    });
+  }
+
+  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
+    var view = panel.querySelector(".gg-view");
+    var host = panel.querySelector(".gg-bay");
+    if (!view || !host) return;
+
+    var tiny = matchMedia("(max-width: 700px)").matches;
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
+    gpu.setClearColor(0x000000, 0);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+    var camFar = new THREE.Vector3(3.95, 1.85, 3.15);
+    var camNear = new THREE.Vector3(3.45, 1.55, 2.75);
+    camera.position.copy(camFar);
+    camera.lookAt(-0.12, 0.02, -0.30);
+
+    var data = new Uint8Array([0, 85, 170, 255]);
+    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
+    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
+    ramp.needsUpdate = true;
+
+    function toon(color, extra) {
+      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
+      if (extra) Object.assign(mat, extra);
+      return mat;
+    }
+    var ink = new THREE.MeshBasicMaterial({ color: 0x0c0a08, side: THREE.BackSide });
+    function inked(mesh, s) {
+      var shell = new THREE.Mesh(mesh.geometry, ink);
+      shell.scale.setScalar(s || 1.05);
+      mesh.add(shell);
+      return mesh;
+    }
+
+    scene.add(new THREE.AmbientLight(0x4a4538, 0.95));
+    var key = new THREE.DirectionalLight(0xffd089, 2.4);
+    key.position.set(3.2, 4.4, 3.6);
+    scene.add(key);
+    var rim = new THREE.DirectionalLight(0x7aa0c8, 1.1);
+    rim.position.set(-4, 1.6, -2.4);
+    scene.add(rim);
+
+    var rig = new THREE.Group();
+    scene.add(rig);
+
+    var rubber = toon(0x1c1c1e);
+    var steel = toon(0xb8b4ac);
+    var gold = toon(0xc4a056);
+    var housingMat = toon(0x4a4e56);
+
+    var tire = inked(new THREE.Mesh(new THREE.TorusGeometry(0.78, 0.22, 18, 56), rubber), 1.04);
+    var rimPts = [
+      new THREE.Vector2(0.40, -0.12), new THREE.Vector2(0.50, -0.12),
+      new THREE.Vector2(0.54, -0.08), new THREE.Vector2(0.56, 0.00),
+      new THREE.Vector2(0.55, 0.08), new THREE.Vector2(0.50, 0.12),
+      new THREE.Vector2(0.44, 0.12), new THREE.Vector2(0.40, 0.06),
+      new THREE.Vector2(0.38, 0.00), new THREE.Vector2(0.40, -0.08)
+    ];
+    var rimMesh = inked(new THREE.Mesh(new THREE.LatheGeometry(rimPts, 48), gold), 1.035);
+    rimMesh.rotation.x = Math.PI / 2;
+
+    var hub = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.1, 24), steel), 1.05);
+    hub.rotation.x = Math.PI / 2;
+
+    var wheel = new THREE.Group();
+    wheel.add(tire);
+    wheel.add(rimMesh);
+    wheel.add(hub);
+
+    var nuts = [];
+    var n;
+    for (n = 0; n < 5; n++) {
+      var nut = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.045, 0.07, 8), steel), 1.08);
+      nut.rotation.x = Math.PI / 2;
+      var ang = (n / 5) * Math.PI * 2;
+      nut.userData.homeX = Math.cos(ang) * 0.22;
+      nut.userData.homeY = Math.sin(ang) * 0.22;
+      nut.userData.t = 0;
+      wheel.add(nut);
+      nuts.push(nut);
+    }
+
+    var streaks = [];
+    for (n = 0; n < 3; n++) {
+      var ghost = new THREE.Mesh(
+        new THREE.TorusGeometry(0.78, 0.22, 12, 40),
+        new THREE.MeshBasicMaterial({ color: 0xe8c84a, transparent: true, opacity: 0, side: THREE.DoubleSide })
+      );
+      ghost.scale.setScalar(1.02 + n * 0.03);
+      wheel.add(ghost);
+      streaks.push(ghost);
+    }
+
+    var spokes = [];
+    for (n = 0; n < 8; n++) {
+      var spoke = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.020, 0.80, 10), steel), 1.06);
+      spoke.rotation.z = (n / 8) * Math.PI * 2;
+      wheel.add(spoke);
+      spokes.push(spoke);
+    }
+
+    var shaft = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 1.85, 16), steel), 1.04);
+    shaft.rotation.x = Math.PI / 2;
+    shaft.position.z = -0.35;
+
+    var housePts = [
+      new THREE.Vector2(0.12, 0.00), new THREE.Vector2(0.62, 0.00),
+      new THREE.Vector2(0.66, 0.14), new THREE.Vector2(0.48, 0.26),
+      new THREE.Vector2(0.44, 0.62), new THREE.Vector2(0.52, 0.78),
+      new THREE.Vector2(0.22, 0.86), new THREE.Vector2(0.00, 0.86)
+    ];
+    var housing = inked(new THREE.Mesh(new THREE.LatheGeometry(housePts, 40), housingMat), 1.03);
+    housing.rotation.x = Math.PI / 2;
+    housing.position.set(0, -0.22, -1.05);
+
+    var colPts = [
+      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.16, 0.00),
+      new THREE.Vector2(0.14, 0.06), new THREE.Vector2(0.11, 0.10),
+      new THREE.Vector2(0.11, 1.00), new THREE.Vector2(0.14, 1.06),
+      new THREE.Vector2(0.00, 1.06)
+    ];
+    var column = inked(new THREE.Mesh(new THREE.LatheGeometry(colPts, 24), housingMat), 1.03);
+    column.position.set(-0.85, -0.88, -0.7);
+    var footPts = [
+      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.85, 0.00),
+      new THREE.Vector2(0.82, 0.06), new THREE.Vector2(0.00, 0.06)
+    ];
+    var foot = inked(new THREE.Mesh(new THREE.LatheGeometry(footPts, 36), housingMat), 1.03);
+    foot.scale.set(1.15, 1, 0.55);
+    foot.position.set(-0.2, -0.95, -0.55);
+
+    function radialTex() {
+      var c = document.createElement("canvas");
+      c.width = c.height = 128;
+      var x = c.getContext("2d");
+      var g = x.createRadialGradient(64, 64, 4, 64, 64, 64);
+      g.addColorStop(0, "rgba(0,0,0,.55)");
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      x.fillStyle = g;
+      x.fillRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(c);
+    }
+    var shadow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.15, 32),
+      new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide })
+    );
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.y = -0.95;
+    shadow.scale.set(1.6, 0.55, 1);
+
+    rig.add(housing);
+    rig.add(column);
+    rig.add(foot);
+    rig.add(shaft);
+    rig.add(wheel);
+    rig.add(shadow);
+
+    animate(state, { drop: 0, duration: 1400, delay: 280, ease: "outElastic(1.1, 0.6)" });
+    animate(nuts.map(function (el) { return el.userData; }), {
+      t: 1, duration: 720, delay: stagger(90, { start: 520 }), ease: "outBack"
+    });
+
+    function fitView() {
+      var w = host.clientWidth, h = host.clientHeight;
+      camera.aspect = w / Math.max(h, 1);
+      camera.updateProjectionMatrix();
+      gpu.setSize(w, h, false);
+    }
+    fitView();
+    window.addEventListener("resize", fitView);
+
+    var onStage = true;
+    if (window.IntersectionObserver) {
+      onStage = false;
+      new IntersectionObserver(function (entries) {
+        onStage = entries[0].isIntersecting;
+      }, { rootMargin: "12% 0px" }).observe(host);
+    }
+
+    function frame() {
+      requestAnimationFrame(frame);
+      if (!onStage) return;
+      var k;
+      for (k = 0; k < nuts.length; k++) {
+        nuts[k].position.set(
+          nuts[k].userData.homeX,
+          nuts[k].userData.homeY,
+          0.06 + (1 - nuts[k].userData.t) * 0.34
+        );
+        nuts[k].rotation.z = (1 - nuts[k].userData.t) * 4.2;
+      }
+      wheel.position.y = state.drop * 1.45;
+      wheel.rotation.z += state.rpm * 0.5;
+      for (k = 0; k < streaks.length; k++) {
+        streaks[k].material.opacity = state.rpm * (0.18 - k * 0.04);
+        streaks[k].rotation.z = wheel.rotation.z - (k + 1) * 0.08 * state.rpm;
+      }
+      camera.position.lerpVectors(camFar, camNear, 1 - state.rpm);
+      camera.lookAt(-0.12, 0.02, -0.30);
+      shadow.material.opacity = 0.85 - state.drop * 0.45;
+      gpu.render(scene, camera);
+    }
+    frame();
+
+    var exView = panel.querySelector(".gg-explode-view");
+    var exHost = panel.querySelector(".gg-explode");
+    if (exView && exHost) {
+      var exGpu = new THREE.WebGLRenderer({ canvas: exView, alpha: true, antialias: true });
+      exGpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
+      exGpu.setClearColor(0x000000, 0);
+      var exWorld = new THREE.Scene();
+      var exCam = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+      exCam.position.set(3.30, 1.85, 4.60);
+      exCam.lookAt(0.05, 0.02, 0);
+      exWorld.add(new THREE.AmbientLight(0x4a4538, 0.95));
+      var exKey = new THREE.DirectionalLight(0xffd089, 2.3);
+      exKey.position.set(3, 4, 3.2);
+      exWorld.add(exKey);
+      var exRim = new THREE.DirectionalLight(0x7aa0c8, 1.1);
+      exRim.position.set(-3.4, 1.4, -2);
+      exWorld.add(exRim);
+
+      var rubber = toon(0x1c1c1e);
+      var steel = toon(0xb8b4ac);
+      var gold = toon(0xc4a056);
+      var graph = toon(0x2c2c2e);
+
+      var tireG = new THREE.Group();
+      tireG.add(inked(new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.18, 16, 48), rubber), 1.04));
+      var rimPts = [
+        new THREE.Vector2(0.32, -0.1), new THREE.Vector2(0.42, -0.1),
+        new THREE.Vector2(0.46, 0.0), new THREE.Vector2(0.42, 0.1),
+        new THREE.Vector2(0.32, 0.1), new THREE.Vector2(0.28, 0.0)
+      ];
+      var rimM = inked(new THREE.Mesh(new THREE.LatheGeometry(rimPts, 40), gold), 1.035);
+      rimM.rotation.x = Math.PI / 2;
+      tireG.add(rimM);
+      tireG.rotation.set(0.18, -0.62, 0.05);
+      tireG.position.set(-1.05, 0.12, 0);
+      exWorld.add(tireG);
+
+      var discG = new THREE.Group();
+      var discPts = [
+        new THREE.Vector2(0.08, -0.06), new THREE.Vector2(0.18, -0.06),
+        new THREE.Vector2(0.48, -0.03), new THREE.Vector2(0.48, 0.03),
+        new THREE.Vector2(0.18, 0.06), new THREE.Vector2(0.08, 0.06)
+      ];
+      var discM = inked(new THREE.Mesh(new THREE.LatheGeometry(discPts, 48), toon(0x6a5a48)), 1.04);
+      discM.rotation.x = Math.PI / 2;
+      discG.add(discM);
+      discG.add(inked(new THREE.Mesh(new THREE.TorusGeometry(0.36, 0.012, 8, 40), toon(0x3a3228)), 1.06));
+      var hat = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.19, 0.09, 24), toon(0x8a7a62)), 1.05);
+      hat.rotation.x = Math.PI / 2;
+      discG.add(hat);
+      var holeGeo = new THREE.CylinderGeometry(0.026, 0.026, 0.09, 10);
+      var holeMat = toon(0x241f1a);
+      for (var dh = 0; dh < 10; dh++) {
+        var ang2 = (dh / 10) * Math.PI * 2;
+        var hole = new THREE.Mesh(holeGeo, holeMat);
+        hole.rotation.x = Math.PI / 2;
+        hole.position.set(Math.cos(ang2) * 0.33, Math.sin(ang2) * 0.33, 0);
+        discG.add(hole);
+      }
+      discG.rotation.set(0.16, -0.55, -0.06);
+      discG.position.set(0.85, 0.55, 0.1);
+      exWorld.add(discG);
+
+      var padShape = new THREE.Shape();
+      padShape.absellipse(0, 0, 0.17, 0.26, 0, Math.PI * 2, false, 0);
+      var padGeo = new THREE.ExtrudeGeometry(padShape, {
+        depth: 0.06, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01,
+        bevelSegments: 2, curveSegments: 18
+      });
+      var padG = new THREE.Group();
+      var padA = inked(new THREE.Mesh(padGeo, graph), 1.05);
+      var padB = inked(new THREE.Mesh(padGeo, graph), 1.05);
+      padA.position.z = 0.04;
+      padB.position.z = -0.05;
+      padG.add(padA);
+      padG.add(padB);
+      padG.rotation.set(0.14, -0.58, 0.10);
+      padG.position.set(0.95, -0.62, 0.15);
+      exWorld.add(padG);
+
+      var exTags = [
+        [panel.querySelector(".gg-tag-tire"), tireG],
+        [panel.querySelector(".gg-tag-disc"), discG],
+        [panel.querySelector(".gg-tag-pad"), padG]
+      ];
+      var _exProj = new THREE.Vector3();
+      function placeExTags() {
+        var w = exHost.clientWidth, h = Math.max(exHost.clientHeight, 1);
+        for (var a = 0; a < exTags.length; a++) {
+          var el = exTags[a][0];
+          if (!el) continue;
+          _exProj.copy(exTags[a][1].position).project(exCam);
+          el.style.left = ((_exProj.x * 0.5 + 0.5) * w).toFixed(1) + "px";
+          el.style.top = ((-_exProj.y * 0.5 + 0.5) * h).toFixed(1) + "px";
+        }
+      }
+
+      var tireHome = tireG.position.clone();
+      var discHome = discG.position.clone();
+      var padHome = padG.position.clone();
+      var tireAway = new THREE.Vector3(-1.55, 0.22, -0.35);
+      var discAway = new THREE.Vector3(1.35, 0.85, 0.45);
+      var padAway = new THREE.Vector3(1.45, -0.85, 0.55);
+
+      function fitEx() {
+        var w = exHost.clientWidth, h = Math.max(exHost.clientHeight, 1);
+        exCam.aspect = w / h;
+        exCam.updateProjectionMatrix();
+        exGpu.setSize(w, h, false);
+      }
+      fitEx();
+      window.addEventListener("resize", fitEx);
+
+      var exOn = true;
+      if (window.IntersectionObserver) {
+        exOn = false;
+        new IntersectionObserver(function (entries) {
+          exOn = entries[0].isIntersecting;
+        }, { rootMargin: "12% 0px" }).observe(exHost);
+      }
+
+      function exFrame() {
+        requestAnimationFrame(exFrame);
+        if (!exOn) return;
+        var t = explode.t;
+        tireG.position.lerpVectors(tireAway, tireHome, t);
+        discG.position.lerpVectors(discAway, discHome, t);
+        padG.position.lerpVectors(padAway, padHome, t);
+        tireG.rotation.y = (1 - t) * 0.6;
+        discG.rotation.z += 0.01 + t * 0.02;
+        padG.rotation.y = (1 - t) * -0.4;
+        exCam.position.set(3.30 - t * 0.42, 1.85 - t * 0.16, 4.60 - t * 0.55);
+        exCam.lookAt(0.05, 0.02, 0);
+        exCam.updateMatrixWorld();
+        placeExTags();
+        exGpu.render(exWorld, exCam);
+      }
+      exFrame();
+    }
+  }).catch(function () { window.__staticB(panel); });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

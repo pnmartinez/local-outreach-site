@@ -1,0 +1,22 @@
+{
+  "category": "industria",
+  "seed": "blue-atlantiq-v1",
+  "motion": "gsap",
+  "mode": "atlantiq",
+  "layout": "console",
+  "display": "Montserrat",
+  "body": "Montserrat",
+  "radius": "28px",
+  "density": "air",
+  "nav": "split",
+  "palette": {
+    "bg": "#030712",
+    "ink": "#e8f0ff",
+    "muted": "#8aa3c0",
+    "accent": "#0366FF",
+    "accent2": "#001CF5",
+    "line": "#18385F",
+    "photo": ""
+  },
+  "signature": "industria|gsap|atlantiq|console|Montserrat|Montserrat|28px|air|split"
+}
