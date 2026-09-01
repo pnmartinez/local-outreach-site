@@ -359,132 +359,298 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   #dsgB .tb-live { display: none; }
   #dsgB .tb-brand { font-size: 13px; }
 }
-/* Recambios Ochoa — steel bay, exploded brake. This lead only. */
-#dsgB .tb-eyebrow, #dsgB .tb-claim, #dsgB .tb-lead, #dsgB .tb-cta, #dsgB .tb-meta { opacity: 0; }
+/* Recambios Ochoa — the counter, as one scroll. This lead only.
 
-#dsgB .ro-desk {
-  position: relative;
-  width: 100%;
-  justify-self: center;
-}
-#dsgB .ro-plate {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  min-height: 340px;
-  max-height: 540px;
-  overflow: hidden;
+   The page is the scene: one fixed canvas, an overlay of sticky chapters
+   and nothing else. No section paints a ground. The only background is
+   the taller drafting grid on #dsgB itself, and its colour is animated
+   from the render loop (--ro-ground / --ro-fg / --ro-line) as the light
+   in the scene comes up.
+
+   Nothing between #dsgB and .ro-stage may carry transform, filter,
+   perspective, contain or will-change — any of them would trap
+   position:fixed and put the canvas back inside a column. */
+
+#dsgB {
   background:
-    linear-gradient(180deg, #3e4248 0%, #1a1c1f 72%);
-  border: 1px solid color-mix(in srgb, var(--st-fg) 22%, transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #fff 12%, transparent),
-    0 18px 40px -22px #000;
+    linear-gradient(var(--ro-line, var(--st-line)) 1px, transparent 1px) 0 0 / 100% 88px,
+    linear-gradient(90deg, var(--ro-line, var(--st-line)) 1px, transparent 1px) 0 0 / 88px 100%,
+    var(--ro-ground, var(--st-bg));
+  /* The grid belongs to the room, not to the document: it stays put under
+     the fixed scene instead of sliding past it. */
+  background-attachment: fixed, fixed, fixed;
+  color: var(--ro-fg, var(--st-fg));
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  overflow-x: clip;
 }
-#dsgB .ro-view {
-  position: absolute;
+
+#dsgB .ro { position: relative; }
+
+#dsgB .ro-stage {
+  position: fixed;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
-#dsgB .ro-hud {
-  position: absolute;
-  top: 14px;
-  left: 14px;
+#dsgB .ro-view { display: block; width: 100%; height: 100%; }
+
+#dsgB .ro-rail {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px clamp(18px, 3.4vw, 52px);
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--ro-fg, var(--st-fg));
+}
+#dsgB .ro-brand { font-family: "Archivo", var(--display); font-stretch: 118%; font-weight: 800; font-size: 13px; }
+#dsgB .ro-place { opacity: .55; margin-right: auto; }
+#dsgB .ro-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--ro-fg, var(--st-fg)) 26%, transparent);
+  color: var(--st-accent);
+}
+#dsgB .ro-ref i { font-style: normal; opacity: .5; color: var(--ro-fg, var(--st-fg)); }
+
+#dsgB .ro .dsg-switch {
+  border-color: color-mix(in srgb, var(--ro-fg, var(--st-fg)) 30%, transparent);
+  background: transparent;
+}
+#dsgB .ro .dsg-btn { color: color-mix(in srgb, var(--ro-fg, var(--st-fg)) 64%, transparent); }
+#dsgB .ro .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+/* The drawing-sheet counter. It is chrome on the fixed layer, like the
+   leaders: it names the chapter the way a plate names its sheet. */
+#dsgB .ro-sheet {
+  position: fixed;
+  left: clamp(18px, 3.4vw, 52px);
+  bottom: 22px;
   z-index: 3;
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  padding: 8px 12px 9px;
-  background: #0c0d0e;
-  border: 1px solid color-mix(in srgb, var(--st-accent) 42%, transparent);
-  color: var(--st-accent);
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  font-size: 11px;
-  opacity: .32;
-  pointer-events: none;
-  transition: opacity .28s ease;
-}
-#dsgB .ro-hud.is-lit { opacity: 1; }
-#dsgB .ro-hud-k { color: color-mix(in srgb, var(--st-fg) 55%, transparent); }
-#dsgB .ro-ref { font-weight: 700; }
-#dsgB .ro-scrub {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  bottom: 44px;
-  z-index: 4;
-}
-#dsgB .ro-track {
-  position: relative;
-  height: 46px;
-  border: 1px solid color-mix(in srgb, var(--st-fg) 28%, transparent);
-  background: color-mix(in srgb, #0b0c0d 78%, transparent);
-}
-#dsgB .ro-handle {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 58px;
-  height: 38px;
-  display: block;
-  cursor: grab;
-  touch-action: none;
-  background:
-    repeating-linear-gradient(90deg, #d8c56a 0 5px, #8a7a32 5px 7px);
-  box-shadow: inset 0 1px 0 #f3e7a4;
-}
-#dsgB .ro-hint {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  z-index: 4;
-  margin: 0;
-  text-align: center;
+  gap: 10px;
   font-size: 10px;
-  letter-spacing: .2em;
+  letter-spacing: .24em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--st-fg) 72%, transparent);
+  color: var(--ro-fg, var(--st-fg));
+  opacity: .58;
   pointer-events: none;
 }
+#dsgB .ro-sheet-n { color: var(--st-accent); font-weight: 700; }
+#dsgB .ro-sheet-s { opacity: .5; }
 
-#dsgB .ro-book {
-  padding: clamp(40px, 7vw, 96px) var(--pad);
-  border-top: 1px solid var(--st-line);
-}
-#dsgB .ro-caps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+#dsgB .ro-scroll { position: relative; z-index: 2; }
+
+#dsgB .ro-ch { position: relative; }
+#dsgB .ro-ch-0 { height: 130vh; }
+#dsgB .ro-ch-1 { height: 420vh; }
+#dsgB .ro-ch-2 { height: 160vh; }
+#dsgB .ro-ch-3 { height: 130vh; }
+
+#dsgB .ro-in {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 4vw, 48px);
+  align-content: center;
+  padding: 0 clamp(20px, 5vw, 88px);
+  pointer-events: none;
 }
-#dsgB .ro-cap { opacity: .28; }
-#dsgB .ro-cap b {
-  display: block;
+#dsgB .ro-in > * { pointer-events: auto; }
+#dsgB .ro-in-left { justify-items: start; text-align: left; max-width: 48ch; }
+#dsgB .ro-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
+
+#dsgB .ro-word { display: inline-block; white-space: nowrap; }
+#dsgB .ro-c { display: inline-block; will-change: transform, opacity; }
+
+#dsgB .ro-h2 .ro-c,
+#dsgB .ro-service,
+#dsgB .ro-ch-2 .ro-kicker,
+#dsgB .ro-ch-3 .ro-in > * { opacity: 0; }
+
+#dsgB .ro-eyebrow,
+#dsgB .ro-kicker {
+  margin: 0 0 20px;
   font-size: 10px;
-  letter-spacing: .22em;
+  letter-spacing: .3em;
+  text-transform: uppercase;
   color: var(--st-accent);
 }
-#dsgB .ro-cap span {
+#dsgB .ro-name {
+  margin: 0;
   font-family: "Archivo", var(--display);
+  font-stretch: 118%;
   font-weight: 800;
-  font-size: 22px;
+  font-size: clamp(44px, 8vw, 116px);
+  line-height: .86;
+  letter-spacing: -.02em;
   text-transform: uppercase;
 }
-#dsgB .ro-cap p { margin: 6px 0 0; font-size: 13px; line-height: 1.6; color: var(--st-dim); }
-
-@media (max-width: 860px) {
-  #dsgB .ro-caps { grid-template-columns: 1fr; }
+#dsgB .ro-claim {
+  margin: 26px 0 0;
+  font-family: "Archivo", var(--display);
+  font-weight: 600;
+  font-size: clamp(19px, 2.3vw, 30px);
+  line-height: 1.16;
+  max-width: 20ch;
+  opacity: .88;
 }
-@media (max-width: 720px) {
-  #dsgB .ro-plate { max-height: none; }
+#dsgB .ro-lead {
+  margin: 20px 0 0;
+  max-width: 44ch;
+  font-size: 13px;
+  line-height: 1.8;
+  opacity: .58;
+}
+#dsgB .ro-cue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 44px 0 0;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .5;
+}
+#dsgB .ro-cue i { display: block; width: 44px; height: 1px; background: currentColor; }
+
+/* The four steps share one cell: they are states of the same explosion,
+   not four stacked cards. */
+#dsgB .ro-steps { display: grid; }
+#dsgB .ro-step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .ro-step em {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .28em;
+  color: var(--st-accent);
+}
+#dsgB .ro-step h2 {
+  margin: 12px 0 14px;
+  font-family: "Archivo", var(--display);
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: clamp(28px, 4.2vw, 58px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+#dsgB .ro-step p {
+  margin: 0 0 0 auto;
+  max-width: 32ch;
+  font-size: 13px;
+  line-height: 1.75;
+  opacity: .6;
+}
+
+#dsgB .ro-ch-2 .ro-in-left {
+  width: min(92vw, 960px);
+  max-width: none;
+  justify-items: stretch;
+}
+#dsgB .ro-h2 {
+  margin: 0 0 34px;
+  font-family: "Archivo", var(--display);
+  font-weight: 600;
+  font-size: clamp(22px, 2.7vw, 38px);
+  line-height: 1.14;
+  max-width: 24ch;
+}
+#dsgB .ro-services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 40px;
+  width: 100%;
+}
+#dsgB .ro-service {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding-top: 15px;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+#dsgB .ro-service em {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: var(--st-accent);
+}
+#dsgB .ro-service h3 {
+  margin: 0 0 5px;
+  font-family: "Archivo", var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+#dsgB .ro-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .58; }
+
+#dsgB .ro-tel {
+  font-family: "Archivo", var(--display);
+  font-stretch: 118%;
+  font-weight: 800;
+  font-size: clamp(28px, 4.8vw, 66px);
+  text-decoration: none;
+  line-height: 1;
+  letter-spacing: -.01em;
+}
+#dsgB .ro-say { margin: 22px 0 0; max-width: 34ch; font-size: 13px; line-height: 1.7; opacity: .6; }
+#dsgB .ro-hours { margin: 18px 0 0; font-size: 12px; opacity: .6; }
+#dsgB .ro-addr {
+  margin: 8px 0 0;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  opacity: .48;
+}
+
+/* law 6: the leaders live on the fixed layer, above the canvas and under
+   the copy, so a caption never runs beneath a chapter. */
+#dsgB .ro-notes {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+#dsgB .ro-lead-line {
+  fill: none;
+  stroke: var(--ro-fg, var(--st-fg));
+  stroke-width: 1px;
+  stroke-opacity: .5;
+  vector-effect: non-scaling-stroke;
+}
+#dsgB .ro-note-dot { fill: var(--st-accent); }
+#dsgB .ro-note {
+  fill: var(--ro-fg, var(--st-fg));
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  #dsgB { background-attachment: scroll, scroll, scroll; }
+  #dsgB .ro-in { padding: 0 20px 11vh; align-content: end; }
+  #dsgB .ro-ch-0 .ro-in { align-content: center; }
+  #dsgB .ro-in-right { text-align: left; justify-items: start; margin-left: 0; }
+  #dsgB .ro-step p { margin-left: 0; }
+  #dsgB .ro-services { grid-template-columns: 1fr; gap: 14px; }
+  #dsgB .ro-ref { display: none; }
+  #dsgB .ro-note { font-size: 9px; letter-spacing: .1em; }
+  #dsgB .ro-sheet { font-size: 9px; bottom: 14px; }
+  #dsgB .ro-ch-1 { height: 470vh; }
 }
 
 </style>
@@ -524,77 +690,63 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 
 </div>
 <div id="dsgB" hidden>
+<div class="ro">
+  <div class="ro-stage" aria-hidden="true">
+    <canvas class="ro-view"></canvas>
+  </div>
 
-<div class="tb" data-rev="0">
-  <header class="tb-rail">
-    <span class="tb-brand">Recambios Ochoa</span>
-    <span class="tb-live"><b></b>Ourense · en taller</span>
+  <header class="ro-rail">
+    <span class="ro-brand">Recambios Ochoa</span>
+    <span class="ro-place">Ourense</span>
+    <span class="ro-ref"><i>REF</i>BP-440</span>
     <div class="dsg-switch" role="group" aria-label="Elegir diseño">
     <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
     <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
   </div>
   </header>
 
-  <section class="tb-hero">
-    <div class="tb-copy">
-      <p class="tb-eyebrow">Rúa da Ponte Sevilla 17 · Ourense</p>
-      <h1 class="tb-name" data-split>Recambios Ochoa</h1>
-      <p class="tb-claim">La pieza hoy. El coche, ya.</p>
-      <p class="tb-lead">Mostrador de recambios en Ponte Sevilla. Aceite, batería y la referencia que pide el taller, no la que sobra en almacén.</p>
-      <div class="tb-meta">
-        <div><b class="tb-count" data-to="6">0</b><span>bancos de trabajo</span></div>
-        <div><b class="tb-count" data-to="24">0</b><span>h hasta diagnóstico</span></div>
-        <div><b class="tb-count" data-to="100">0</b><span>% presupuesto cerrado</span></div>
-      </div>
-      <a class="tb-cta" href="https://wa.me/34988393242">Pedir cita</a>
-    </div>
-
-    <!-- slot:hero-3d -->
-<div class="ro-desk">
-  <div class="ro-plate">
-    <canvas class="ro-view"></canvas>
-    <div class="ro-hud">
-      <span class="ro-hud-k">REF ·</span>
-      <span class="ro-ref">BP-440</span>
-    </div>
+  <div class="ro-sheet" aria-hidden="true">
+    <b class="ro-sheet-n">00</b>
+    <span class="ro-sheet-t">Llegada</span>
+    <span class="ro-sheet-s">Ø280 × 22 · ventilado</span>
   </div>
-</div>
 
-<!-- /slot:hero-3d -->
-  </section>
+  <div class="ro-scroll">
+    <section class="ro-ch ro-ch-0">
+      <div class="ro-in ro-in-left">
+        <p class="ro-eyebrow">Rúa da Ponte Sevilla 17 · Ourense</p>
+        <h1 class="ro-name" data-ro-split>Recambios Ochoa</h1>
+        <p class="ro-claim" data-ro-split>La pieza hoy. El coche, ya.</p>
+        <p class="ro-lead">Mostrador de recambios en Ponte Sevilla. Aceite, batería y la referencia que pide el taller, no la que sobra en almacén.</p>
+        <p class="ro-cue"><i></i>Desplázate</p>
+      </div>
+    </section>
 
-  <div class="tb-band" aria-hidden="true"><div class="tb-band-track"><span>MOSTRADOR</span><i>/</i><span>ACEITE Y FILTROS</span><i>/</i><span>BATERÍAS</span><i>/</i><span>FRENOS</span><i>/</i><span>CARROCERÍA</span><i>/</i><span>MISMO DÍA</span><i>/</i></div></div>
+    <section class="ro-ch ro-ch-1">
+      <div class="ro-in ro-in-right">
+        <p class="ro-kicker">El despiece</p>
+        <div class="ro-steps"><article class="ro-step" data-step="0"><em>01</em><h2>Disco ventilado</h2><p>Dos platos y veinticuatro aletas en el hueco. El que enfría entre frenada y frenada, no el que sobra en almacén.</p></article><article class="ro-step" data-step="1"><em>02</em><h2>Pastillas</h2><p>De marca, con muelle antichirridos y testigo de desgaste. Para el taller de al lado o para el tuyo.</p></article><article class="ro-step" data-step="2"><em>03</em><h2>Pinza y pistón</h2><p>Guías, fuelles y purgador. Si falta una arandela no sales del taller, y eso lo sabemos aquí.</p></article><article class="ro-step" data-step="3"><em>04</em><h2>Latiguillo y tornillería</h2><p>Banjo, cobre y los cinco tornillos de rueda. Todo en la misma bolsa, hoy.</p></article></div>
+      </div>
+    </section>
 
-  <section class="tb-bay">
-    <p class="tb-kicker">Servicios</p>
-    <h2 class="tb-h2" data-split>Recambios Ourense: mostrador, misma tarde y sin pedirlo a Vigo.</h2>
-    <div class="tb-grid"><article class="tb-tile"><span class="tb-code">P01</span><h3>Mostrador</h3><p>Dices la matrícula o la referencia. Te dicen si está.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P02</span><h3>Aceite y filtros</h3><p>Lo que pide el motor, no el bidón más vistoso.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P03</span><h3>Baterías</h3><p>Prueba y cambio. Sales con el coche arrancando.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P04</span><h3>Frenos</h3><p>Pastillas y discos de marca. Para el taller de al lado o el tuyo.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P05</span><h3>Carrocería</h3><p>Faros, plásticos y lo que se rompe en el parking.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P06</span><h3>Mismo día</h3><p>Si está en Ourense, no esperas al camión de mañana.</p><span class="tb-tile-line"></span></article></div>
-  </section>
+    <section class="ro-ch ro-ch-2">
+      <div class="ro-in ro-in-left">
+        <p class="ro-kicker">El almacén</p>
+        <h2 class="ro-h2" data-ro-split>Recambios Ourense: mostrador, misma tarde y sin pedirlo a Vigo.</h2>
+        <div class="ro-services"><article class="ro-service"><em>01</em><div><h3>Mostrador</h3><p>Dices la matrícula o la referencia. Te dicen si está.</p></div></article><article class="ro-service"><em>02</em><div><h3>Aceite y filtros</h3><p>Lo que pide el motor, no el bidón más vistoso.</p></div></article><article class="ro-service"><em>03</em><div><h3>Baterías</h3><p>Prueba y cambio. Sales con el coche arrancando.</p></div></article><article class="ro-service"><em>04</em><div><h3>Frenos</h3><p>Pastillas y discos de marca. Para el taller de al lado o el tuyo.</p></div></article></div>
+      </div>
+    </section>
 
-  <!-- slot:stage-3d -->
-<section class="ro-book">
-  <ol class="ro-caps">
-    <li class="ro-cap"><b>01</b><span>Mostrador</span><p>Dices la matrícula o la referencia. Te dicen si está.</p></li>
-    <li class="ro-cap"><b>02</b><span>Frenos</span><p>Pastillas y discos de marca. Para el taller de al lado o el tuyo.</p></li>
-    <li class="ro-cap"><b>03</b><span>Mismo día</span><p>Si está en Ourense, no esperas al camión de mañana.</p></li>
-  </ol>
-</section>
-
-<!-- /slot:stage-3d -->
-
-  <section class="tb-call">
-    <p class="tb-kicker">Contacto directo</p>
-    <a class="tb-tel" href="tel:34988393242">+34 988 39 32 42</a>
-    <div class="tb-call-row">
-      <a class="tb-wa" href="https://wa.me/34988393242">Pedir cita por WhatsApp</a>
-      <span>L–V 8:00–19:30</span>
-    </div>
-  </section>
-
-  <footer class="tb-foot">
-    <span>Rúa da Ponte Sevilla 17, Ourense</span>
-    <span>L–V 8:00–19:30</span>
-  </footer>
+    <section class="ro-ch ro-ch-3">
+      <div class="ro-in ro-in-right">
+        <p class="ro-kicker">El mostrador</p>
+        <a class="ro-tel" href="tel:34988393242">+34 988 39 32 42</a>
+        <p class="ro-say">Dinos la matrícula o la referencia. Te decimos si está.</p>
+        <p class="ro-hours">L–V 8:00–19:30</p>
+        <p class="ro-addr">Rúa da Ponte Sevilla 17 · Ourense</p>
+      </div>
+    </section>
+  </div>
 </div>
 
 </div>
@@ -658,403 +810,821 @@ window.__splitB = function (panel) {
   });
   return out;
 };
+/* Recambios Ochoa — el mostrador, en un solo scroll. This lead only.
+ *
+ * The page IS the scene. One fixed canvas draws the whole document; the
+ * markup is an overlay of sticky chapters with no ground of their own.
+ * A single damped progress p ∈ [0,1] drives everything, and the chapters
+ * are labelled sub-ranges of it — not four independent animations.
+ *
+ *   00 · la referencia  the BP-440 turns alone in a dark bay
+ *   01 · el despiece    it comes apart along its own axes, group by
+ *                       group, and every group names its parts
+ *   02 · el almacén     it goes back together as the camera pulls back:
+ *                       one unit in a row of stock, strip lights up
+ *   03 · el mostrador   back down to one assembly, turning, at the counter
+ *
+ * The room going from the bay to the counter is a lighting change *inside*
+ * the scene, animated on p. No section paints a background; the only
+ * ground is #dsgB itself and the render loop writes its colour.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md (the seven laws) and
+ * landings/heroes/FULL-PAGE-REPLAN.md (the layer model).
+ */
+
 window.__staticB = function (panel) {
-  panel.querySelectorAll(".tb-c, .tb-eyebrow, .tb-claim, .tb-lead, .tb-cta, .tb-meta").forEach(function (el) {
+  panel.querySelectorAll(".ro-step, .ro-service, .ro-in > *, .ro-h2 .ro-c, .ro-kicker").forEach(function (el) {
     el.style.opacity = "1";
     el.style.transform = "none";
   });
-  panel.querySelectorAll(".ro-cap").forEach(function (el) { el.style.opacity = "1"; });
-  panel.querySelectorAll(".tb-tile-line").forEach(function (s) { s.style.transform = "scaleX(1)"; });
-  var hint = panel.querySelector(".ro-hint");
-  if (hint) hint.remove();
-  var hud = panel.querySelector(".ro-hud");
-  if (hud) hud.classList.add("is-lit");
+  var cue = panel.querySelector(".ro-cue");
+  if (cue) cue.remove();
+  panel.querySelectorAll(".ro-step").forEach(function (el, i) {
+    el.style.position = "static";
+    el.style.marginBottom = i < 3 ? "40px" : "0";
+  });
+  var steps = panel.querySelector(".ro-steps");
+  if (steps) steps.style.display = "block";
+  var sheet = panel.querySelector(".ro-sheet");
+  if (sheet) sheet.remove();
+  panel.style.setProperty("--ro-ground", "");
+  panel.style.setProperty("--ro-fg", "");
 };
 
 window.__initB = function (A, panel) {
-  var animate = A.animate, createTimeline = A.createTimeline;
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, utils = A.utils;
+
+  var stage = panel.querySelector(".ro-stage");
+  var view = panel.querySelector(".ro-view");
+  var scroller = panel.querySelector(".ro-scroll");
+  if (!stage || !view || !scroller) return;
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.__staticB(panel);
     return;
   }
 
-  window.__splitB(panel);
+  /* The panel owns its splitter: the family one keys its class prefix off
+     the family body class, which this panel does not have. */
+  function splitText(el) {
+    if (!el || el.dataset.roDone) return [];
+    el.dataset.roDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var word = document.createElement("span");
+      word.className = "ro-word";
+      for (var i = 0; i < w.length; i++) {
+        var c = document.createElement("span");
+        c.className = "ro-c";
+        c.textContent = w[i];
+        word.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(word);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
+  }
+
+  /* --- the master progress ---------------------------------------------
+     One scrub over the whole document. `sync` is v4's own smoothing, so the
+     damping is the library's rather than a hand-rolled lerp. */
+  var state = { p: 0, settle: 0, idle: 0 };
+  animate(state, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
+    })
+  });
+  animate(state, { settle: [0, 1], duration: 1500, delay: 240, ease: "outElastic(1, 0.7)" });
+  animate(state, { idle: [0, Math.PI * 2], duration: 16000, ease: "linear", loop: true });
+
+  /* Chapter 00's copy arrives on its own timeline; everything after it is
+     driven by p, because it has to stay in step with the scene. */
+  var nameChars = splitText(panel.querySelector(".ro-name"));
+  var claimChars = splitText(panel.querySelector(".ro-claim"));
   var intro = createTimeline({ defaults: { ease: "outExpo" } });
-  intro.add(panel.querySelectorAll(".tb-hero .tb-c"), {
-    y: [48, 0], opacity: [0, 1],
-    duration: 900, delay: A.stagger(15)
-  }, 0);
-  intro.add(panel.querySelectorAll(".tb-eyebrow, .tb-claim, .tb-lead, .tb-cta, .tb-meta"), {
-    y: [26, 0], opacity: [0, 1], duration: 760, delay: A.stagger(80)
-  }, 120);
+  intro.add(panel.querySelector(".ro-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 700 }, 200);
+  intro.add(nameChars, { opacity: [0, 1], y: [58, 0], duration: 1050, delay: stagger(16) }, 300);
+  intro.add(claimChars, { opacity: [0, 1], y: [24, 0], duration: 760, delay: stagger(8) }, 780);
+  intro.add(panel.querySelectorAll(".ro-lead, .ro-cue"), {
+    opacity: [0, 1], y: [18, 0], duration: 740, delay: stagger(110)
+  }, 1020);
 
-  var track = panel.querySelector(".tb-band-track");
-  if (track) {
-    track.innerHTML = track.innerHTML + track.innerHTML;
-    animate(track, {
-      x: [0, -track.scrollWidth / 2],
-      duration: track.scrollWidth * 11,
-      ease: "linear",
-      loop: true
-    });
-  }
-
-  panel.querySelectorAll(".tb-count").forEach(function (el) {
-    var o = { v: 0 }, to = Number(el.dataset.to);
-    animate(o, {
-      v: to, duration: 1500, delay: 1400, ease: "outExpo",
-      onUpdate: function () { el.textContent = A.utils.round(o.v, 0); }
-    });
-  });
-
-  var bay = panel.querySelector(".tb-bay");
-  if (bay) {
-    animate(panel.querySelectorAll(".tb-h2 .tb-c"), {
-      y: [40, 0], opacity: [0, 1], duration: 800, ease: "outExpo", delay: A.stagger(14),
-      autoplay: A.onScroll({ target: bay, enter: "bottom-=140 top" })
-    });
-    animate(panel.querySelectorAll(".tb-tile"), {
-      y: [34, 0], opacity: [0, 1], duration: 760, ease: "outExpo",
-      delay: A.stagger(70, { grid: "auto", from: "first" }),
-      autoplay: A.onScroll({ target: bay, enter: "bottom-=140 top" })
-    });
-    panel.querySelectorAll(".tb-tile").forEach(function (tile) {
-      var line = tile.querySelector(".tb-tile-line");
-      tile.addEventListener("mouseenter", function () {
-        animate(line, { scaleX: [0, 1], duration: 420, ease: "outExpo" });
-      });
-      tile.addEventListener("mouseleave", function () {
-        animate(line, { scaleX: 0, duration: 300, ease: "outQuad" });
-      });
-    });
-  }
-
-  panel.querySelectorAll(".tb-cta, .tb-wa").forEach(function (el) {
-    el.addEventListener("mousemove", function (ev) {
-      var r = el.getBoundingClientRect();
-      animate(el, {
-        x: (ev.clientX - r.left - r.width / 2) * 0.34,
-        y: (ev.clientY - r.top - r.height / 2) * 0.34,
-        duration: 220, ease: "outQuad"
-      });
-    });
-    el.addEventListener("mouseleave", function () {
-      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.6)" });
-    });
-  });
-
-  var book = panel.querySelector(".ro-book");
-  if (book) {
-    animate(panel.querySelectorAll(".ro-cap"), {
-      y: [18, 0], opacity: [0.28, 1], duration: 700, ease: "outExpo",
-      delay: A.stagger(90),
-      autoplay: A.onScroll({ target: book, enter: "bottom-=140 top" })
-    });
-  }
-
-  var pose = { drop: 1, fit: 0 };
-  var plate = panel.querySelector(".ro-plate");
-  if (plate) {
-    /* The counter's promise is "la pieza hoy": show the parts finding each
-       other. On scroll it only played for people already scrolling past. */
-    A.createTimeline({ loop: true })
-      .add(pose, { fit: [0, 1], duration: 2600, ease: "inOutQuad" }, 800)
-      .add(pose, { fit: 0, duration: 900, ease: "inOutQuad" }, 6200);
-  }
+  splitText(panel.querySelector(".ro-h2"));
+  var h2Chars = panel.querySelectorAll(".ro-h2 .ro-c");
+  var serviceEls = panel.querySelectorAll(".ro-service");
+  var deskEls = panel.querySelectorAll(".ro-ch-3 .ro-in > *");
+  var stepEls = panel.querySelectorAll(".ro-step");
+  var ch0 = panel.querySelector(".ro-ch-0 .ro-in");
+  var kicker2 = panel.querySelector(".ro-ch-2 .ro-kicker");
+  var sheetN = panel.querySelector(".ro-sheet-n");
+  var sheetT = panel.querySelector(".ro-sheet-t");
+  var sheetS = panel.querySelector(".ro-sheet-s");
+  var SHEETS = [
+    ["00", "Llegada", "Ø280 × 22 · ventilado"],
+    ["01", "Despiece", "BP-440 · 33 piezas"],
+    ["02", "Almacén", "Ponte Sevilla · en stock"],
+    ["03", "Mostrador", "Referencia confirmada"]
+  ];
 
   import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
-    var view = panel.querySelector(".ro-view");
-    var host = panel.querySelector(".ro-plate");
-    if (!view || !host) return;
+    /* --- law 1: the palette is the page's ------------------------------ */
+    var css = getComputedStyle(panel);
+    function tok(name, fallback) {
+      var v = css.getPropertyValue(name).trim();
+      return new THREE.Color(v || fallback);
+    }
+    var GROUND = tok("--st-bg", "#0c0c0c");
+    var INK = tok("--st-fg", "#f7f5f0");
+    var ACCENT = tok("--st-accent", "#2e76fd");
+    var SECOND = tok("--st-second", "#848380");
+    var LINE = tok("--st-line", "#363635");
 
-    var tiny = matchMedia("(max-width: 700px)").matches;
+    function mix(a, b, t) { return a.clone().lerp(b, t); }
+
+    /* A value ladder off the page's own two ends, plus exactly one
+       chromatic material. On a near-black taller page everything metal is
+       a rung between the ground and the ink; the accent is the anodised
+       caliper and nothing else, so it stays a spot instead of a field. */
+    var C_CAST = mix(GROUND, INK, 0.38);         // fundición: el disco
+    var C_SWEPT = mix(GROUND, INK, 0.58);        // la banda barrida por la pastilla
+    var C_STEEL = mix(GROUND, INK, 0.66);        // acero mecanizado
+    var C_STEEL_D = mix(GROUND, INK, 0.42);      // chapa: soporte de pastilla
+    var C_FERODO = mix(GROUND, INK, 0.20);       // el ferodo, casi grafito
+    var C_RUBBER = mix(GROUND, INK, 0.12);       // fuelles y latiguillo
+    var C_BORE = mix(GROUND, INK, 0.04);         // el hueco de una perforación
+    var C_ANOD = mix(ACCENT, INK, 0.10);         // pinza anodizada — el único color
+
+    function matte(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
+    }
+    /* Turned parts are turned: a piston and a stud read as machined only
+       if their facets average. Everything pressed or cast keeps flat
+       shading, which is where the drafting look comes from. */
+    function turned(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: false });
+    }
+    var M_CAST = matte(C_CAST), M_SWEPT = matte(C_SWEPT),
+        M_STEEL = turned(C_STEEL), M_PLATE = matte(C_STEEL_D),
+        M_FERODO = matte(C_FERODO), M_RUBBER = turned(C_RUBBER),
+        M_BORE = matte(C_BORE), M_ANOD = matte(C_ANOD);
+
+    /* --- law 3: a hairline, not an outline ----------------------------- */
+    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.24 });
+    function lined(mesh, threshold) {
+      var seg = new THREE.LineSegments(
+        new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 22 : threshold),
+        EDGE
+      );
+      mesh.add(seg);
+      return mesh;
+    }
+
     var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
-    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     gpu.setClearColor(0x000000, 0);
 
-    var world = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 40);
-    var camFar = new THREE.Vector3(2.12, 1.30, 2.38);
-    var camNear = new THREE.Vector3(1.82, 1.10, 2.05);
-    camera.position.copy(camFar);
-    camera.lookAt(0.10, 0.04, 0);
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(33, 1, 0.1, 90);
 
-    var data = new Uint8Array([0, 85, 170, 255]);
-    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
-    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
-    ramp.needsUpdate = true;
+    /* law 4: one key you can name — the strip light over the parts bench,
+       upper front left. The fill only keeps the shadow side readable; the
+       room coming up in chapter 02 is this key widening and the ambient
+       lifting, not a second light switching on. */
+    var ambient = new THREE.AmbientLight(0xfff2e2, 0.20);
+    scene.add(ambient);
+    /* Upper front, on the camera's side: a left-rear key left every
+       visible face of the disc on the fill, and the assembly went mud. */
+    var key = new THREE.DirectionalLight(0xfff4e6, 1.48);
+    key.position.set(1.4, 4.6, 4.8);
+    scene.add(key);
+    var fill = new THREE.DirectionalLight(0xe8eef5, 0.26);
+    fill.position.set(-3.6, 1.1, -1.8);
+    scene.add(fill);
 
-    function toon(color, extra) {
-      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
-      if (extra) Object.assign(mat, extra);
-      return mat;
-    }
-    var ink = new THREE.MeshBasicMaterial({ color: 0x0c0a08, side: THREE.BackSide });
-    function inked(mesh, s) {
-      var shell = new THREE.Mesh(mesh.geometry, ink);
-      shell.scale.setScalar(s || 1.04);
-      mesh.add(shell);
-      return mesh;
-    }
+    /* =====================================================================
+       BP-440 — las piezas. Law 2: parts you could ask for at the counter.
 
-    world.add(new THREE.AmbientLight(0x4a4538, 0.95));
-    var key = new THREE.DirectionalLight(0xffd089, 2.4);
-    key.position.set(3.2, 4.4, 3.6);
-    world.add(key);
-    var rim = new THREE.DirectionalLight(0x7aa0c8, 1.35);
-    rim.position.set(-4, 1.6, -2.4);
-    world.add(rim);
-    var kick = new THREE.DirectionalLight(0xffe2a8, 0.7);
-    kick.position.set(-1.2, 2.2, 4.2);
-    world.add(kick);
+       campana · brida de la campana · pared de la campana · collarín ·
+       brida del buje · alojamiento del rodamiento · morro del buje ·
+       plato exterior · plato interior · banda barrida ×2 ·
+       aleta interior ×24 · perforación ×8 · espárrago ×5 · tuerca ×5 ·
+       soporte de pinza (brazo ×2 + puente) · tornillo de soporte ×2 ·
+       cuerpo de pinza · dedo · puente de pinza · alojamiento del pistón ·
+       pistón · fuelle del pistón · purgador · tapón del purgador ·
+       guía ×2 · fuelle de guía ×2 · latiguillo · banjo · arandela de cobre ·
+       soporte de pastilla ×2 · ferodo ×2 · muelle antichirridos ·
+       testigo de desgaste
+       ===================================================================== */
 
-    var iron = toon(0x6a5a48);
-    var gold = toon(0xc4a056);
-    var graph = toon(0x2c2c2e);
-    var steel = toon(0xb8b4ac);
-    var holeMat = toon(0x121416);
-    var benchMat = toon(0x2a2e32);
-    var vaneMat = toon(0x4a3e32);
-
-    var DISC_R = 0.56;
-    var DISC_T = 0.12;
-    var PCD = 0.165;
-    var CAL_X = DISC_R;
-    var PLATE_H = 0.014;
-    var JAW_Z = DISC_T * 0.5 + 0.034;
+    var R_OUT = 1.00;          // radio exterior del disco (Ø280)
+    var R_WEB = 0.30;          // donde el plato se cierra sobre la campana
+    var T_PLATE = 0.048;       // espesor de cada plato
+    var Z_GAP = 0.031;         // media separación entre platos: el hueco de las aletas
+    var Z_FACE = Z_GAP + T_PLATE;
+    var PCD = 0.245;           // circunferencia de espárragos
 
     var rig = new THREE.Group();
-    rig.rotation.y = -0.42;
-    world.add(rig);
+    scene.add(rig);
+    /* The rotor turns; the caliper side never does. They are the two
+       halves of every brake and the reason the object is legible. */
+    var rotor = new THREE.Group();
+    var brake = new THREE.Group();
+    rig.add(rotor);
+    rig.add(brake);
 
-    var bits = [];
-    function mark(mesh, along, dist) {
+    /* Each exploded item is a top-level part with its own home and away.
+       Groups share a vector but nothing is nested inside another moving
+       part: one writer per position, which is the rule the replan sets. */
+    var parts = [];
+    function part(host, mesh, group, away, id) {
       mesh.userData.home = mesh.position.clone();
-      mesh.userData.away = mesh.position.clone().add(along.clone().setLength(dist));
-      mesh.userData.t = 0;
-      bits.push(mesh);
+      mesh.userData.away = mesh.position.clone().add(away);
+      mesh.userData.group = group;
+      mesh.userData.id = id || "";
+      host.add(mesh);
+      parts.push(mesh);
       return mesh;
     }
 
-    var standPts = [
-      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.34, 0.00),
-      new THREE.Vector2(0.32, 0.05), new THREE.Vector2(0.11, 0.09),
-      new THREE.Vector2(0.10, 0.58), new THREE.Vector2(0.18, 0.64),
-      new THREE.Vector2(0.18, 0.70), new THREE.Vector2(0.00, 0.70)
-    ];
-    var stand = inked(new THREE.Mesh(new THREE.LatheGeometry(standPts, 40), benchMat), 1.03);
-    stand.position.set(0, -0.78, 0);
-    world.add(stand);
-    var spindle = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.048, 0.18, 20), steel), 1.05);
-    spindle.position.set(0, -0.02, 0);
-    world.add(spindle);
+    function lathe(points, seg, mat) {
+      var pts = points.map(function (p) { return new THREE.Vector2(p[0], p[1]); });
+      var m = new THREE.Mesh(new THREE.LatheGeometry(pts, seg || 40), mat);
+      m.rotation.x = Math.PI / 2;   // el eje del torno pasa a ser el eje Z
+      return m;
+    }
 
+    /* --- el buje: lo único que no se mueve ----------------------------- */
+    var hub = lathe([
+      [0.105, -0.50], [0.300, -0.50], [0.300, -0.44], [0.135, -0.44],
+      [0.135, -0.30], [0.105, -0.30], [0.105, -0.50]
+    ], 32, M_STEEL);
+    lined(hub, 26);
+    brake.add(hub);
+    var bearing = new THREE.Mesh(new THREE.TorusGeometry(0.135, 0.030, 8, 26), M_STEEL);
+    bearing.position.z = -0.455;
+    brake.add(bearing);
+
+    /* --- la campana y el disco ----------------------------------------- */
+    var hatGeo = [
+      [0.135, -0.345], [0.380, -0.345], [0.380, -0.300], [0.335, -0.300],
+      [0.335, -0.040], [0.385, -0.040], [0.385, 0.010], [0.300, 0.010],
+      [0.300, -0.300], [0.135, -0.300], [0.135, -0.345]
+    ];
+    var hat = lathe(hatGeo, 36, M_STEEL);
+    lined(hat, 26);
+    part(rotor, hat, 3, new THREE.Vector3(0, 0, 0.30), "campana");
+
+    function plateProfile(sign) {
+      return [
+        [R_WEB, sign * Z_GAP], [0.965, sign * Z_GAP], [R_OUT, sign * (Z_GAP + 0.014)],
+        [R_OUT, sign * (Z_FACE - 0.012)], [0.965, sign * Z_FACE], [R_WEB, sign * Z_FACE],
+        [R_WEB, sign * Z_GAP]
+      ];
+    }
+    var plateOut = lathe(plateProfile(1), 52, M_CAST);
+    lined(plateOut, 30);
+    part(rotor, plateOut, 0, new THREE.Vector3(0, 0, 0.28), "disco");
+    var plateIn = lathe(plateProfile(-1), 52, M_CAST);
+    lined(plateIn, 30);
+    rotor.add(plateIn);
+
+    /* La banda barrida: el anillo que pule la pastilla. Es lo que se mira
+       para saber si un disco está para cambiar, así que se ve. */
+    function swept(z) {
+      var ring = new THREE.Mesh(new THREE.RingGeometry(0.615, 0.958, 52, 1), M_SWEPT);
+      ring.position.z = z;
+      if (z < 0) ring.rotation.y = Math.PI;
+      return ring;
+    }
+    var sweptOut = swept(Z_FACE + 0.001);
+    part(rotor, sweptOut, 0, new THREE.Vector3(0, 0, 0.28), "banda");
+    rotor.add(swept(-Z_FACE - 0.001));
+
+    /* Aletas: 24 tabiques radiales en el hueco. Son las que hacen que un
+       ventilado sea un ventilado, y las que nadie ve hasta que se abre. */
+    var vaneGeo = new THREE.BoxGeometry(0.60, 0.042, Z_GAP * 2);
+    var vanes = [];
     var n, ang;
-    var discG = new THREE.Group();
-    var hatPts = [
-      new THREE.Vector2(0.00, -0.02), new THREE.Vector2(0.10, -0.02),
-      new THREE.Vector2(0.11, 0.01), new THREE.Vector2(0.18, 0.03),
-      new THREE.Vector2(0.20, 0.085), new THREE.Vector2(0.00, 0.085)
-    ];
-    var hat = inked(new THREE.Mesh(new THREE.LatheGeometry(hatPts, 40), steel), 1.04);
-    hat.rotation.x = Math.PI / 2;
-    discG.add(hat);
-
-    var platePts = [
-      new THREE.Vector2(0.20, -PLATE_H), new THREE.Vector2(0.53, -PLATE_H),
-      new THREE.Vector2(DISC_R, -PLATE_H * 0.45), new THREE.Vector2(DISC_R, PLATE_H * 0.45),
-      new THREE.Vector2(0.53, PLATE_H), new THREE.Vector2(0.20, PLATE_H)
-    ];
-    var plateGeo = new THREE.LatheGeometry(platePts, 64);
-    var plateA = inked(new THREE.Mesh(plateGeo, iron), 1.03);
-    var plateB = inked(new THREE.Mesh(plateGeo, iron), 1.03);
-    plateA.rotation.x = Math.PI / 2;
-    plateB.rotation.x = Math.PI / 2;
-    plateA.position.z = DISC_T * 0.5;
-    plateB.position.z = -DISC_T * 0.5;
-    discG.add(plateA);
-    discG.add(plateB);
-
-    var vaneGeo = new THREE.BoxGeometry(0.28, 0.018, DISC_T - 0.028);
-    var vane;
-    for (n = 0; n < 12; n++) {
-      ang = (n / 12) * Math.PI * 2;
-      vane = new THREE.Mesh(vaneGeo, vaneMat);
+    for (n = 0; n < 24; n++) {
+      ang = (n / 24) * Math.PI * 2;
+      var vane = new THREE.Mesh(vaneGeo, M_CAST);
       vane.rotation.z = ang;
-      vane.position.set(Math.cos(ang) * 0.36, Math.sin(ang) * 0.36, 0);
-      discG.add(vane);
+      vane.position.set(Math.cos(ang) * 0.655, Math.sin(ang) * 0.655, 0);
+      part(rotor, vane, 0, new THREE.Vector3(0, 0, 0.10), n === 6 ? "aleta" : "");
+      vanes.push(vane);
     }
 
+    /* Perforaciones: un casquillo oscuro por taladro. A esta escala lee
+       como el agujero que es desde cualquier ángulo, y da la vuelta del
+       disco cuando gira. */
+    var drillGeo = new THREE.CylinderGeometry(0.046, 0.046, Z_FACE * 2 + 0.004, 10, 1, true);
+    for (n = 0; n < 8; n++) {
+      ang = (n / 8) * Math.PI * 2 + 0.20;
+      var drill = new THREE.Mesh(drillGeo, M_BORE);
+      drill.rotation.x = Math.PI / 2;
+      drill.position.set(Math.cos(ang) * 0.795, Math.sin(ang) * 0.795, 0);
+      rotor.add(drill);
+    }
+
+    /* Espárragos y tuercas: cinco. Lo que sujeta la rueda contra todo esto. */
+    var studGeo = new THREE.CylinderGeometry(0.030, 0.030, 0.46, 12);
+    var nutGeo = new THREE.CylinderGeometry(0.056, 0.060, 0.075, 6);
     for (n = 0; n < 5; n++) {
-      ang = (n / 5) * Math.PI * 2 + 0.12;
-      var hole = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.08, 12), holeMat);
-      hole.rotation.x = Math.PI / 2;
-      hole.position.set(Math.cos(ang) * PCD, Math.sin(ang) * PCD, 0.05);
-      discG.add(hole);
-      var lug = new THREE.Group();
-      var lugHead = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.024, 0.026, 0.03, 6), steel), 1.08);
-      var lugShank = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.028, 10), steel), 1.06);
-      lugShank.position.y = -0.026;
-      lug.add(lugHead);
-      lug.add(lugShank);
-      lug.rotation.x = Math.PI / 2;
-      lug.position.set(Math.cos(ang) * PCD, Math.sin(ang) * PCD, 0.10);
-      discG.add(lug);
+      ang = (n / 5) * Math.PI * 2 + 0.30;
+      var stud = new THREE.Mesh(studGeo, M_STEEL);
+      stud.rotation.x = Math.PI / 2;
+      stud.position.set(Math.cos(ang) * PCD, Math.sin(ang) * PCD, -0.09);
+      rotor.add(stud);
+      var nut = lined(new THREE.Mesh(nutGeo, M_STEEL), 40);
+      nut.rotation.x = Math.PI / 2;
+      nut.rotation.y = 0.26;
+      nut.position.set(Math.cos(ang) * PCD, Math.sin(ang) * PCD, 0.095);
+      part(rotor, nut, 3, new THREE.Vector3(0, 0, 0.55), n === 1 ? "tuerca" : "");
     }
 
-    discG.position.set(0, 0.05, 0);
-    rig.add(discG);
-
-    var calG = new THREE.Group();
-    var cOuter = 0.125, cInner = 0.078, cSpan = 1.48;
-    var cShape = new THREE.Shape();
-    var cSeg = 24, cI, cA;
-    cShape.moveTo(Math.cos(-cSpan) * cOuter, Math.sin(-cSpan) * cOuter);
-    for (cI = 1; cI <= cSeg; cI++) {
-      cA = -cSpan + (2 * cSpan) * (cI / cSeg);
-      cShape.lineTo(Math.cos(cA) * cOuter, Math.sin(cA) * cOuter);
+    /* --- rounded slabs: la pinza no es un ladrillo --------------------- */
+    function slab(w, h, d, r) {
+      var s = new THREE.Shape();
+      var hw = w / 2 - r, hh = h / 2 - r;
+      s.moveTo(-hw - r, -hh);
+      s.lineTo(-hw - r, hh);
+      s.quadraticCurveTo(-hw - r, hh + r, -hw, hh + r);
+      s.lineTo(hw, hh + r);
+      s.quadraticCurveTo(hw + r, hh + r, hw + r, hh);
+      s.lineTo(hw + r, -hh);
+      s.quadraticCurveTo(hw + r, -hh - r, hw, -hh - r);
+      s.lineTo(-hw, -hh - r);
+      s.quadraticCurveTo(-hw - r, -hh - r, -hw - r, -hh);
+      var geom = new THREE.ExtrudeGeometry(s, {
+        depth: d, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.012,
+        bevelSegments: 1, curveSegments: 3
+      });
+      geom.translate(0, 0, -d / 2);
+      return geom;
     }
-    for (cI = cSeg; cI >= 0; cI--) {
-      cA = -cSpan + (2 * cSpan) * (cI / cSeg);
-      cShape.lineTo(Math.cos(cA) * cInner, Math.sin(cA) * cInner);
-    }
-    cShape.closePath();
-    var calMesh = inked(new THREE.Mesh(new THREE.ExtrudeGeometry(cShape, {
-      depth: 0.16, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.01,
-      bevelSegments: 2, curveSegments: 20
-    }), gold), 1.035);
-    calMesh.rotation.x = Math.PI / 2;
-    calMesh.position.y = 0.08;
-    calG.add(calMesh);
-    var bore = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, 0.05, 18), gold), 1.05);
-    bore.rotation.x = Math.PI / 2;
-    bore.position.set(-0.01, 0.02, -0.10);
-    calG.add(bore);
-    var hose = inked(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0.12, 0.10, 0.00),
-      new THREE.Vector3(0.22, 0.16, -0.04),
-      new THREE.Vector3(0.18, 0.00, -0.11),
-      new THREE.Vector3(0.07, -0.36, -0.05)
-    ]), 24, 0.014, 8, false), toon(0x2a1c14)), 1.06);
-    calG.add(hose);
-    var banjo = inked(new THREE.Mesh(new THREE.SphereGeometry(0.02, 10, 8), toon(0x2a1c14)), 1.07);
-    banjo.position.set(0.12, 0.10, 0);
-    calG.add(banjo);
-    calG.position.set(CAL_X + 0.02, 0.05, 0);
-    rig.add(calG);
-    mark(calG, new THREE.Vector3(1, 0, 0), 0.20);
 
-    var padShape = new THREE.Shape();
-    padShape.moveTo(-0.04, -0.10);
-    padShape.lineTo(0.05, -0.10);
-    padShape.quadraticCurveTo(0.09, -0.10, 0.09, -0.05);
-    padShape.lineTo(0.09, 0.05);
-    padShape.quadraticCurveTo(0.09, 0.10, 0.05, 0.10);
-    padShape.lineTo(-0.04, 0.10);
-    padShape.quadraticCurveTo(-0.075, 0.10, -0.075, 0.05);
-    padShape.lineTo(-0.075, -0.05);
-    padShape.quadraticCurveTo(-0.075, -0.10, -0.04, -0.10);
-    var padGeo = new THREE.ExtrudeGeometry(padShape, {
-      depth: 0.016, bevelEnabled: true, bevelThickness: 0.003, bevelSize: 0.003,
-      bevelSegments: 2, curveSegments: 20
-    });
-    var padA = inked(new THREE.Mesh(padGeo, graph), 1.04);
-    padA.position.set(CAL_X - 0.10, 0.05, DISC_T * 0.5 + PLATE_H + 0.002);
-    rig.add(padA);
-    mark(padA, new THREE.Vector3(0, 0, 1), 0.18);
-
-    var padB = inked(new THREE.Mesh(padGeo, graph), 1.04);
-    padB.position.set(CAL_X - 0.10, 0.05, -DISC_T * 0.5 - PLATE_H - 0.018);
-    rig.add(padB);
-    mark(padB, new THREE.Vector3(0, 0, -1), 0.18);
-
-    var piston = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.06, 22), steel), 1.05);
-    piston.rotation.x = Math.PI / 2;
-    piston.position.set(CAL_X - 0.08, 0.05, -JAW_Z - 0.05);
-    rig.add(piston);
-    mark(piston, new THREE.Vector3(0, 0, -1), 0.26);
-
-    var pinG = new THREE.Group();
-    var pinSpot = [0.065, -0.065];
+    /* --- el soporte: los dos brazos que abrazan el disco --------------- */
+    var bracket = new THREE.Group();
+    var armGeo = slab(0.34, 0.10, 0.055, 0.02);
+    var armA = new THREE.Mesh(armGeo, M_STEEL);
+    armA.position.set(0.98, 0, Z_FACE + 0.135);
+    bracket.add(lined(armA, 34));
+    var armB = new THREE.Mesh(armGeo, M_STEEL);
+    armB.position.set(0.98, 0, -Z_FACE - 0.135);
+    bracket.add(lined(armB, 34));
+    var spine = new THREE.Mesh(slab(0.11, 0.44, 0.42, 0.025), M_STEEL);
+    spine.position.set(1.13, 0, 0);
+    bracket.add(lined(spine, 34));
+    var boltGeo = new THREE.CylinderGeometry(0.036, 0.036, 0.07, 6);
     for (n = 0; n < 2; n++) {
-      var pin = new THREE.Group();
-      var pinHead = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.022, 0.032, 12), steel), 1.07);
-      var pinShank = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, DISC_T + 0.08, 12), steel), 1.05);
-      pinShank.position.y = -(DISC_T + 0.08) * 0.5;
-      pin.add(pinHead);
-      pin.add(pinShank);
+      var bolt = new THREE.Mesh(boltGeo, M_STEEL);
+      bolt.rotation.z = Math.PI / 2;
+      bolt.position.set(1.21, n ? 0.16 : -0.16, 0);
+      bracket.add(bolt);
+    }
+    part(brake, bracket, 3, new THREE.Vector3(0.72, 0, 0), "soporte");
+
+    /* --- la pinza flotante: a C that straddles the rim, not a brick ---- */
+    var caliper = new THREE.Group();
+    var body = new THREE.Mesh(slab(0.26, 0.40, 0.070, 0.045), M_ANOD);
+    body.position.set(0.90, 0, -Z_FACE - 0.092);
+    caliper.add(lined(body, 34));
+    var finger = new THREE.Mesh(slab(0.22, 0.40, 0.055, 0.045), M_ANOD);
+    finger.position.set(0.88, 0, Z_FACE + 0.074);
+    caliper.add(lined(finger, 34));
+    var bridge = new THREE.Mesh(slab(0.095, 0.34, 0.34, 0.04), M_ANOD);
+    bridge.position.set(1.05, 0, 0);
+    caliper.add(lined(bridge, 34));
+    /* Dark well in the inboard jaw: that hole is what stops the pinza
+       reading as a painted slab. */
+    var bore = new THREE.Mesh(new THREE.CylinderGeometry(0.080, 0.080, 0.072, 18), M_BORE);
+    bore.rotation.x = Math.PI / 2;
+    bore.position.set(0.90, 0, -Z_FACE - 0.092);
+    caliper.add(bore);
+    var boss = new THREE.Mesh(new THREE.CylinderGeometry(0.110, 0.110, 0.032, 18), M_ANOD);
+    boss.rotation.x = Math.PI / 2;
+    boss.position.set(0.90, 0, -Z_FACE - 0.140);
+    caliper.add(boss);
+    /* purgador: el detalle por el que se pregunta cuando no viene en el kit */
+    var nipple = new THREE.Mesh(new THREE.CylinderGeometry(0.020, 0.026, 0.11, 8), M_STEEL);
+    nipple.position.set(0.93, 0.27, -Z_FACE - 0.10);
+    caliper.add(nipple);
+    var nippleCap = new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.026, 0.035, 8), M_RUBBER);
+    nippleCap.position.set(0.93, 0.335, -Z_FACE - 0.10);
+    caliper.add(nippleCap);
+    part(brake, caliper, 2, new THREE.Vector3(0.52, 0.10, 0), "pinza");
+
+    /* El pistón sale del alojamiento y sigue a la pinza: dos escalones del
+       mismo grupo, no dos relojes. */
+    var piston = new THREE.Mesh(new THREE.CylinderGeometry(0.098, 0.098, 0.115, 22), M_STEEL);
+    piston.rotation.x = Math.PI / 2;
+    piston.position.set(0.90, 0, -Z_FACE - 0.075);
+    part(brake, piston, 2, new THREE.Vector3(0.52, 0.10, -0.34), "piston");
+    var pistonBoot = new THREE.Mesh(new THREE.TorusGeometry(0.104, 0.020, 8, 20), M_RUBBER);
+    pistonBoot.position.set(0.90, 0, -Z_FACE - 0.028);
+    part(brake, pistonBoot, 2, new THREE.Vector3(0.52, 0.10, -0.34), "");
+
+    /* Guías y sus fuelles: por lo que la pinza flota. */
+    var pinGeo = new THREE.CylinderGeometry(0.028, 0.028, 0.50, 12);
+    for (n = 0; n < 2; n++) {
+      var pin = new THREE.Mesh(pinGeo, M_STEEL);
       pin.rotation.x = Math.PI / 2;
-      pin.position.set(-0.02, pinSpot[n], JAW_Z + 0.03);
-      pinG.add(pin);
+      pin.position.set(1.02, n ? 0.185 : -0.185, 0);
+      part(brake, pin, 2, new THREE.Vector3(0.30, 0.16, 0.62), "");
+      var pinBoot = new THREE.Mesh(new THREE.TorusGeometry(0.034, 0.014, 6, 16), M_RUBBER);
+      pinBoot.position.set(1.02, n ? 0.185 : -0.185, -0.16);
+      part(brake, pinBoot, 2, new THREE.Vector3(0.30, 0.16, 0.62), "");
     }
-    pinG.position.set(CAL_X, 0.05, 0);
-    rig.add(pinG);
-    mark(pinG, new THREE.Vector3(0, 1, 0), 0.16);
 
-    function radialTex() {
-      var c = document.createElement("canvas");
-      c.width = c.height = 128;
-      var x = c.getContext("2d");
-      var g = x.createRadialGradient(64, 64, 4, 64, 64, 64);
-      g.addColorStop(0, "rgba(0,0,0,.55)");
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      x.fillStyle = g;
-      x.fillRect(0, 0, 128, 128);
-      return new THREE.CanvasTexture(c);
+    /* --- el latiguillo: banjo, cobre y goma ---------------------------- */
+    var hose = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.97, 0.34, -Z_FACE - 0.18),
+      new THREE.Vector3(1.05, 0.62, -0.30),
+      new THREE.Vector3(0.86, 0.92, -0.46),
+      new THREE.Vector3(0.34, 1.14, -0.52)
+    ]), 26, 0.030, 8, false), M_RUBBER);
+    part(brake, hose, 3, new THREE.Vector3(0.42, 0.62, -0.30), "");
+    var banjo = new THREE.Mesh(new THREE.CylinderGeometry(0.058, 0.058, 0.075, 14), M_STEEL);
+    banjo.position.set(0.97, 0.325, -Z_FACE - 0.18);
+    part(brake, banjo, 3, new THREE.Vector3(0.42, 0.62, -0.30), "banjo");
+    var washer = new THREE.Mesh(new THREE.TorusGeometry(0.056, 0.012, 6, 16), M_STEEL);
+    washer.rotation.x = Math.PI / 2;
+    washer.position.set(0.97, 0.275, -Z_FACE - 0.18);
+    part(brake, washer, 3, new THREE.Vector3(0.42, 0.62, -0.30), "");
+
+    /* --- las pastillas: siguen el disco, no son dos tacos ------------- */
+    function padShape(rIn, rOut, halfArc) {
+      var s = new THREE.Shape();
+      s.absarc(0, 0, rOut, -halfArc, halfArc, false);
+      s.absarc(0, 0, rIn, halfArc, -halfArc, true);
+      return s;
     }
-    var shadow = new THREE.Mesh(
-      new THREE.CircleGeometry(1.15, 32),
-      new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide })
-    );
-    shadow.rotation.x = -Math.PI / 2;
-    shadow.position.y = -0.77;
-    shadow.scale.set(1.28, 0.5, 1);
-    world.add(shadow);
+    function padPart(sign) {
+      var group = new THREE.Group();
+      var back = new THREE.Mesh(new THREE.ExtrudeGeometry(padShape(0.60, 0.965, 0.235), {
+        depth: 0.026, bevelEnabled: false, curveSegments: 14
+      }), M_PLATE);
+      back.position.z = sign * (Z_FACE + 0.040) + (sign > 0 ? 0 : -0.026);
+      group.add(lined(back, 34));
+      var ferodo = new THREE.Mesh(new THREE.ExtrudeGeometry(padShape(0.625, 0.945, 0.215), {
+        depth: 0.030, bevelEnabled: false, curveSegments: 14
+      }), M_FERODO);
+      ferodo.position.z = sign > 0 ? Z_FACE + 0.008 : -Z_FACE - 0.038;
+      group.add(ferodo);
+      /* muelle antichirridos: la pletina doblada sobre la oreja */
+      var clip = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.026, 0.012), M_STEEL);
+      clip.position.set(0.80, sign > 0 ? 0.185 : -0.185, sign * (Z_FACE + 0.062));
+      clip.rotation.z = sign > 0 ? 0.24 : -0.24;
+      group.add(clip);
+      return group;
+    }
+    var padOut = padPart(1);
+    part(brake, padOut, 1, new THREE.Vector3(0.34, 0.08, 0.30), "pastilla");
+    var padIn = padPart(-1);
+    part(brake, padIn, 1, new THREE.Vector3(0.34, -0.08, -0.30), "");
 
-    animate(pose, { drop: 0, duration: 1400, delay: 280, ease: "outElastic(1.1, 0.6)" });
-    var hud = panel.querySelector(".ro-hud");
-    if (hud) hud.classList.add("is-lit");
+    /* testigo de desgaste: el cable que avisa antes que el chirrido */
+    var sensor = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.86, -0.20, -Z_FACE - 0.05),
+      new THREE.Vector3(0.70, -0.44, -0.20),
+      new THREE.Vector3(0.30, -0.66, -0.30),
+      new THREE.Vector3(-0.20, -0.72, -0.34)
+    ]), 22, 0.014, 6, false), M_RUBBER);
+    part(brake, sensor, 1, new THREE.Vector3(0.34, -0.08, -0.30), "testigo");
 
+    /* --- law 5: the object lives in the page --------------------------- */
+    /* The bay floor continues the page's 88px drafting grid instead of a
+       backdrop plane: same drawing, one in CSS and one in perspective. */
+    var gridPts = [], gi, gv;
+    for (gi = -14; gi <= 14; gi++) {
+      gv = gi * 0.72;
+      gridPts.push(gv, 0, -10.08, gv, 0, 10.08);
+      gridPts.push(-10.08, 0, gv, 10.08, 0, gv);
+    }
+    var gridGeom = new THREE.BufferGeometry();
+    gridGeom.setAttribute("position", new THREE.Float32BufferAttribute(gridPts, 3));
+    var gridMat = new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.6 });
+    var floor = new THREE.LineSegments(gridGeom, gridMat);
+    floor.renderOrder = 0;
+    scene.add(floor);
+
+    /* Contact shadow: a blurred ellipse on that grid. It is what stops the
+       assembly floating, and it is the only thing that darkens the grid
+       lines under it, which is how it reads on a near-black ground. */
+    var shadowCv = document.createElement("canvas");
+    shadowCv.width = shadowCv.height = 128;
+    var sctx = shadowCv.getContext("2d");
+    var grad = sctx.createRadialGradient(64, 64, 4, 64, 64, 62);
+    grad.addColorStop(0, "rgba(0,0,0,0.55)");
+    grad.addColorStop(0.5, "rgba(0,0,0,0.22)");
+    grad.addColorStop(1, "rgba(0,0,0,0)");
+    sctx.fillStyle = grad;
+    sctx.fillRect(0, 0, 128, 128);
+    var shadowTex = new THREE.CanvasTexture(shadowCv);
+    function contactShadow(scale) {
+      var s = new THREE.Mesh(
+        new THREE.PlaneGeometry(3.1 * scale, 3.1 * scale),
+        new THREE.MeshBasicMaterial({
+          map: shadowTex, color: GROUND, transparent: true, depthWrite: false, opacity: 0.55
+        })
+      );
+      s.rotation.x = -Math.PI / 2;
+      s.scale.z = 0.62;
+      s.renderOrder = 1;
+      return s;
+    }
+    var shadow = contactShadow(1);
+    shadow.position.y = 0.006;
+    scene.add(shadow);
+
+    /* --- chapter 02: la fila de stock ---------------------------------
+       The same rotor down the aisle. Repeating one object inside one scene
+       is not the reuse the contract forbids — that is about shipping a
+       scene to a second business. */
+    var stock = [];
+    for (n = 0; n < 3; n++) {
+      var unit = new THREE.Group();
+      var uOut = lathe(plateProfile(1), 40, M_CAST);
+      var uIn = lathe(plateProfile(-1), 40, M_CAST);
+      var uHat = lathe(hatGeo, 24, M_STEEL);
+      unit.add(lined(uOut, 30));
+      unit.add(uIn);
+      unit.add(uHat);
+      unit.add(swept(Z_FACE + 0.001));
+      unit.rotation.z = 0.4 + n * 0.55;
+      unit.position.set(2.55 + n * 0.36, 1.24, -2.40 - n * 2.30);
+      unit.scale.setScalar(0.94);
+      var uShadow = contactShadow(0.9);
+      uShadow.position.set(unit.position.x, 0.005, unit.position.z);
+      scene.add(unit);
+      scene.add(uShadow);
+      stock.push({ unit: unit, shadow: uShadow, home: unit.position.y });
+    }
+
+    /* --- law 6: the technical caption, on the fixed overlay ------------ */
+    var NS = "http://www.w3.org/2000/svg";
+    var LABELS = [
+      /* Top and bottom margins only: the chapter copy owns the middle band
+         of the viewport, and a label at mid-height lands on it. */
+      { g: 0, id: "disco", text: "disco ventilado ø280", y: 0.16 },
+      { g: 0, id: "aleta", text: "aleta ×24", y: 0.86 },
+      { g: 1, id: "pastilla", text: "pastilla", y: 0.16 },
+      { g: 1, id: "testigo", text: "testigo", y: 0.86 },
+      { g: 2, id: "pinza", text: "pinza flotante", y: 0.16 },
+      { g: 2, id: "piston", text: "pistón ø54", y: 0.86 },
+      { g: 3, id: "tuerca", text: "tornillo ×5", y: 0.16 },
+      { g: 3, id: "banjo", text: "banjo", y: 0.86 }
+    ];
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "ro-notes");
+    svg.setAttribute("aria-hidden", "true");
+    /* Above the stage, below the copy. Inside .ro-stage it would be trapped
+       in that element's stacking context and run under the chapter text. */
+    (panel.querySelector(".ro") || stage).appendChild(svg);
+    var byId = {};
+    parts.forEach(function (p) { if (p.userData.id) byId[p.userData.id] = p; });
+    var notes = LABELS.map(function (spec) {
+      var lead = document.createElementNS(NS, "polyline");
+      lead.setAttribute("class", "ro-lead-line");
+      var dot = document.createElementNS(NS, "circle");
+      dot.setAttribute("class", "ro-note-dot");
+      dot.setAttribute("r", "2.5");
+      var text = document.createElementNS(NS, "text");
+      text.setAttribute("class", "ro-note");
+      text.textContent = spec.text;
+      svg.appendChild(lead);
+      svg.appendChild(dot);
+      svg.appendChild(text);
+      return { spec: spec, target: byId[spec.id] || null, lead: lead, dot: dot, text: text };
+    });
+
+    var box = { w: 1, h: 1 };
+    var portraitK = 1, portraitLift = 0;
     function fitView() {
-      var w = host.clientWidth, h = host.clientHeight;
-      camera.aspect = w / Math.max(h, 1);
+      box.w = stage.clientWidth;
+      box.h = stage.clientHeight;
+      camera.aspect = box.w / Math.max(box.h, 1);
+      portraitK = camera.aspect < 0.8 ? 1.58 : camera.aspect < 1.1 ? 1.24 : 1;
+      /* Portrait is a 3D problem, not a CSS one: the copy is a full-width
+         column there, so a vertically centred object lands under it. Lower
+         the look target and the assembly rides into the top half. */
+      portraitLift = camera.aspect < 0.8 ? 0.46 : camera.aspect < 1.1 ? 0.20 : 0;
       camera.updateProjectionMatrix();
-      gpu.setSize(w, h, false);
+      gpu.setSize(box.w, box.h, false);
+      svg.setAttribute("viewBox", "0 0 " + box.w + " " + box.h);
     }
     fitView();
     window.addEventListener("resize", fitView);
 
-    var onStage = true;
-    if (window.IntersectionObserver) {
-      onStage = false;
-      new IntersectionObserver(function (entries) {
-        onStage = entries[0].isIntersecting;
-      }, { rootMargin: "12% 0px" }).observe(host);
+    /* --- the camera path: four stations, lerped along p ---------------- */
+    var STATIONS = [
+      /* 00 · three-quarter, object in the right third so the name keeps
+         its own half. Look at the assembly, not the world origin. */
+      { at: new THREE.Vector3(2.70, 2.15, 6.35), to: new THREE.Vector3(1.15, 1.28, 0) },
+      /* 01 · stay frontal enough that the disc is still a disc. A hard
+         swing to +X turned the two plates into a cable reel. */
+      { at: new THREE.Vector3(3.15, 2.20, 6.10), to: new THREE.Vector3(-0.20, 1.22, 0) },
+      /* 02 · up and back, down the aisle of stock. */
+      { at: new THREE.Vector3(3.80, 3.40, 7.20), to: new THREE.Vector3(1.70, 1.10, -1.50) },
+      /* 03 · back down to one assembly at counter height. */
+      { at: new THREE.Vector3(2.25, 1.90, 5.55), to: new THREE.Vector3(0.10, 1.24, 0) }
+    ];
+    var MARKS = [0.00, 0.26, 0.80, 1.00];
+    /* The despiece runs to p=0.60 and the reassembly to 0.72; the camera
+       must not start leaving for the aisle while parts are still named. */
+    var GROUPS = [
+      { a: 0.19, b: 0.30 },
+      { a: 0.30, b: 0.41 },
+      { a: 0.41, b: 0.52 },
+      { a: 0.52, b: 0.63 }
+    ];
+
+    function seg(x, a, b) { return utils.clamp((x - a) / (b - a), 0, 1); }
+    function smooth(t) { return t * t * (3 - 2 * t); }
+
+    /* A stagger expressed as a function of progress instead of time, so it
+       scrubs both ways with the scroll. */
+    function reveal(els, t, spread, rise) {
+      var n = els.length || 1;
+      var span = 1 - spread * (n - 1);
+      for (var i = 0; i < n; i++) {
+        var e = smooth(utils.clamp((t - i * spread) / Math.max(span, 0.05), 0, 1));
+        els[i].style.opacity = String(e);
+        els[i].style.transform = "translateY(" + ((1 - e) * (rise || 26)) + "px)";
+      }
     }
 
-    function frame() {
+    var camAt = new THREE.Vector3(), camTo = new THREE.Vector3();
+    var groundCol = new THREE.Color(), fgCol = new THREE.Color(), lineCol = new THREE.Color();
+    var here = new THREE.Vector3(), proj = new THREE.Vector3(), at = [0, 0];
+    var lastGround = "", lastSheet = -1;
+    var spin = 0, tPrev = 0;
+
+    function frame(now) {
       requestAnimationFrame(frame);
-      if (!onStage) return;
-      var k, bit, t, now;
-      now = performance.now();
-      rig.position.y = pose.drop * 1.15;
-      rig.rotation.y = -0.42 + pose.fit * 0.16 + Math.sin(now * 0.0004) * 0.03;
-      for (k = 0; k < bits.length; k++) {
-        bit = bits[k];
-        t = Math.max(0, Math.min(1, (pose.fit - k * 0.1) / 0.52));
-        t = t * t * (3 - 2 * t);
-        bit.userData.t = t;
-        bit.position.lerpVectors(bit.userData.away, bit.userData.home, t);
+      var p = state.p;
+      var dt = tPrev ? Math.min((now - tPrev) / 1000, 0.05) : 0.016;
+      tPrev = now;
+
+      /* camera: which pair of stations are we between */
+      var s = 0;
+      while (s < MARKS.length - 2 && p > MARKS[s + 1]) s++;
+      var k = smooth(seg(p, MARKS[s], MARKS[s + 1]));
+      /* Park on the despiece until it is over, then swing to the aisle —
+         which is also when the stock arrives. A plain lerp across the whole
+         segment pulled the camera away while parts were still separating. */
+      if (s === 1) k = smooth(seg(p, 0.63, 0.80));
+      camAt.lerpVectors(STATIONS[s].at, STATIONS[s + 1].at, k);
+      camTo.lerpVectors(STATIONS[s].to, STATIONS[s + 1].to, k);
+      camera.position.copy(camAt);
+      camera.position.y += Math.sin(state.idle) * 0.035;
+      if (portraitK !== 1) {
+        camera.position.sub(camTo).multiplyScalar(portraitK).add(camTo);
+        camTo.y -= portraitLift;
       }
-      if (pose.fit > 0.86) discG.rotation.z += (pose.fit - 0.86) * 0.06;
-      camera.position.lerpVectors(camFar, camNear, pose.fit);
-      camera.lookAt(0.10, 0.04, 0);
-      shadow.material.opacity = 0.85 - pose.drop * 0.45;
-      gpu.render(world, camera);
+      camera.lookAt(camTo);
+
+      /* the room: the bay lamp becomes the counter, as light — not as a
+         section background */
+      var envT = smooth(seg(p, 0.62, 0.88));
+      ambient.intensity = 0.20 + envT * 0.06;
+      key.intensity = 1.48 - envT * 0.18;
+      groundCol.copy(GROUND).lerp(INK, 0.015 + envT * 0.135);
+      fgCol.copy(INK);
+      lineCol.copy(LINE).lerp(INK, envT * 0.20);
+      var hex = "#" + groundCol.getHexString();
+      if (hex !== lastGround) {
+        lastGround = hex;
+        panel.style.setProperty("--ro-ground", hex);
+        panel.style.setProperty("--ro-fg", "#" + fgCol.getHexString());
+        panel.style.setProperty("--ro-line", "#" + lineCol.getHexString());
+      }
+      gridMat.color.copy(lineCol);
+      gridMat.opacity = 0.42 + envT * 0.26;
+
+      /* Chapter 00's copy is 100vh inside a 130vh chapter, so its last
+         pixels are still on screen well into the despiece. Fade it on p. */
+      if (ch0) ch0.style.opacity = String(1 - smooth(seg(p, 0.07, 0.15)));
+
+      /* the assembly: where it sits in frame, and how much of it is open */
+      rig.scale.setScalar(0.82 + state.settle * 0.18);
+      rig.position.x = 1.85
+        - smooth(seg(p, 0.16, 0.30)) * 2.55
+        + smooth(seg(p, 0.64, 0.82)) * 2.55
+        - smooth(seg(p, 0.86, 0.97)) * 1.90;
+      rig.position.y = 1.28;
+      rig.rotation.y = -0.18 + smooth(seg(p, 0.16, 0.34)) * 0.30 - smooth(seg(p, 0.84, 1.00)) * 0.22;
+
+      /* Chapter 03 spins it up: the counter's whole promise is that this
+         goes back on the car today. The ramp is on p, the turn is on time. */
+      var spinT = smooth(seg(p, 0.88, 1.00));
+      spin += dt * spinT * 2.6;
+      rotor.rotation.z = -0.35 + p * 1.9 + spin + Math.sin(state.idle) * 0.03;
+
+      /* the despiece: four groups, staggered across chapter 01, all of them
+         brought home again by the reassembly */
+      var back = smooth(seg(p, 0.63, 0.76));
+      var gT = [0, 0, 0, 0], g;
+      for (g = 0; g < 4; g++) {
+        gT[g] = smooth(seg(p, GROUPS[g].a, GROUPS[g].b)) * (1 - back);
+      }
+      for (var i = 0; i < parts.length; i++) {
+        var it = parts[i], u = it.userData;
+        it.position.lerpVectors(u.home, u.away, gT[u.group]);
+      }
+
+      /* the copy of chapter 01 rides the same windows as the parts it names */
+      for (g = 0; g < 4; g++) {
+        var el = stepEls[g];
+        if (!el) continue;
+        var vis = smooth(seg(p, GROUPS[g].a - 0.045, GROUPS[g].a + 0.035));
+        if (g < 3) vis *= 1 - smooth(seg(p, GROUPS[g + 1].a - 0.035, GROUPS[g + 1].a + 0.030));
+        else vis *= 1 - smooth(seg(p, 0.63, 0.70));
+        el.style.opacity = String(vis);
+        el.style.transform = "translateY(" + ((1 - vis) * 26) + "px)";
+      }
+
+      /* chapters 02 and 03, on the same clock as the scene under them */
+      if (kicker2) kicker2.style.opacity = String(smooth(seg(p, 0.66, 0.71)));
+      reveal(h2Chars, seg(p, 0.67, 0.80), 0.006, 28);
+      reveal(serviceEls, seg(p, 0.72, 0.86), 0.07, 22);
+      reveal(deskEls, seg(p, 0.88, 0.97), 0.08, 24);
+
+      /* the stock arrives with the room and is gone by the counter */
+      var stockT = smooth(seg(p, 0.66, 0.82)) * (1 - smooth(seg(p, 0.84, 0.92)));
+      for (var q = 0; q < stock.length; q++) {
+        var unit = stock[q];
+        var qt = utils.clamp(stockT * 1.35 - q * 0.14, 0, 1);
+        unit.unit.visible = qt > 0.05;
+        unit.unit.position.y = unit.home - (1 - qt) * 1.5;
+        unit.unit.rotation.z += dt * 0.12 * qt;
+        unit.shadow.material.opacity = qt * (0.20 + envT * 0.40);
+        unit.shadow.visible = qt > 0.05;
+      }
+      shadow.position.x = rig.position.x;
+      shadow.material.opacity = 0.30 + envT * 0.32;
+
+      /* leaders: only the group being separated, and never past the
+         reassembly — a caption must not name a part that is home again */
+      for (var m = 0; m < notes.length; m++) {
+        var note = notes[m];
+        var gi2 = note.spec.g;
+        var nv = smooth(seg(p, GROUPS[gi2].a - 0.02, GROUPS[gi2].a + 0.05));
+        if (gi2 < 3) nv *= 1 - smooth(seg(p, GROUPS[gi2 + 1].a - 0.02, GROUPS[gi2 + 1].a + 0.04));
+        else nv *= 1 - smooth(seg(p, 0.62, 0.68));
+        if (!note.target || nv < 0.06) {
+          note.lead.style.opacity = "0";
+          note.text.style.opacity = "0";
+          note.dot.style.opacity = "0";
+          continue;
+        }
+        note.target.getWorldPosition(here);
+        proj.copy(here).project(camera);
+        at[0] = (proj.x * 0.5 + 0.5) * box.w;
+        at[1] = (-proj.y * 0.5 + 0.5) * box.h;
+        /* Chapter 01's copy owns the right column; leaders stay left. */
+        var side = (p > 0.16 && p < 0.64) ? -1 : (at[0] < box.w * 0.5 ? -1 : 1);
+        var edge = side < 0 ? box.w * 0.08 : box.w * 0.92;
+        /* In portrait the copy owns the bottom third and the object rides
+           high, so both leaders stack above it instead of straddling. */
+        var ty = box.h * (portraitLift > 0
+          ? (note.spec.y < 0.5 ? 0.11 : 0.19)
+          : note.spec.y);
+        var elbow = side < 0 ? edge + box.w * 0.055 : edge - box.w * 0.055;
+        note.lead.setAttribute("points",
+          at[0] + "," + at[1] + " " + elbow + "," + ty + " " + edge + "," + ty);
+        note.dot.setAttribute("cx", at[0]);
+        note.dot.setAttribute("cy", at[1]);
+        note.text.setAttribute("x", edge);
+        note.text.setAttribute("y", ty - 8);
+        note.text.setAttribute("text-anchor", side < 0 ? "start" : "end");
+        note.lead.style.opacity = String(nv * 0.55);
+        note.dot.style.opacity = String(nv * 0.8);
+        note.text.style.opacity = String(nv);
+      }
+
+      /* the drawing sheet names the chapter the reader is standing in */
+      var sheet = p < 0.16 ? 0 : p < 0.64 ? 1 : p < 0.86 ? 2 : 3;
+      if (sheet !== lastSheet) {
+        lastSheet = sheet;
+        if (sheetN) sheetN.textContent = SHEETS[sheet][0];
+        if (sheetT) sheetT.textContent = SHEETS[sheet][1];
+        if (sheetS) sheetS.textContent = SHEETS[sheet][2];
+      }
+
+      gpu.render(scene, camera);
     }
-    frame();
-  }).catch(function () { window.__staticB(panel); });
+    requestAnimationFrame(frame);
+  }).catch(function (err) {
+    console.error("recambios-ochoa scene failed", err);
+    window.__staticB(panel);
+  });
 };
 
 (function () {
