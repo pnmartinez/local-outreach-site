@@ -260,7 +260,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
    the scene advances underneath. */
 #dsgB .mn-ch { position: relative; }
 #dsgB .mn-ch-0 { height: 130vh; }
-#dsgB .mn-ch-1 { height: 260vh; }
+#dsgB .mn-ch-1 { height: 360vh; }
 #dsgB .mn-ch-2 { height: 130vh; }
 #dsgB .mn-ch-3 { height: 120vh; }
 
@@ -451,7 +451,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   #dsgB .mn-in-right { text-align: left; justify-items: start; margin-left: 0; }
   #dsgB .mn-course p { margin-left: 0; }
   #dsgB .mn-note { font-size: 9px; letter-spacing: .1em; }
-  #dsgB .mn-ch-1 { height: 300vh; }
+  #dsgB .mn-ch-1 { height: 420vh; }
 }
 
 </style>
@@ -1047,11 +1047,13 @@ window.__initB = function (A, panel) {
       veta.rotation.y = 0.35 - i * 0.8;
       part(1, place(veta, -0.02 + i * 0.10, STEAK_TOP + 0.002, 0.02 - i * 0.11), "veta");
     }
-    for (i = 0; i < 4; i++) {
-      /* Sunk just enough to bite into the surface and no more. */
-      var marca = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.010, 0.024), M_CHAR);
-      marca.rotation.y = 0.55;
-      part(1, place(marca, -0.06 + (i - 1.5) * 0.055, STEAK_TOP + 0.003, 0.02 + (i - 1.5) * 0.082), "marca");
+    /* Five parallel bars across the face, not a tight cluster that
+       collapsed to two smudges. Recessed so they read as brands. */
+    for (i = 0; i < 5; i++) {
+      var marca = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.016, 0.046), M_CHAR);
+      marca.rotation.y = 0.20;
+      var t = (i - 2) * 0.085;
+      part(1, place(marca, -0.04 + t * 0.28, STEAK_TOP - 0.002, 0.02 + t), "marca");
     }
     /* Same height trap as the grill marks: at 0.086 the sprig sat inside
        the steak, so it never read as garnish. It lies on the far corner. */
@@ -1254,6 +1256,11 @@ window.__initB = function (A, panel) {
 
     function seg(x, a, b) { return utils.clamp((x - a) / (b - a), 0, 1); }
     function smooth(t) { return t * t * (3 - 2 * t); }
+    /* vis=1 across a hold, then a short lift. Same curve for food, copy
+       and leaders, or the caption names a course that has already left. */
+    function courseVis(d) {
+      return d < 0.32 ? 1 : utils.clamp(1 - (d - 0.32) / 0.15, 0, 1);
+    }
 
     /* A stagger expressed as a function of progress instead of time, so
        it scrubs both ways with the scroll. */
@@ -1331,11 +1338,12 @@ window.__initB = function (A, panel) {
       /* the pass: four courses across chapter 01 */
       var cp = seg(p, 0.16, 0.60) * 3;
       for (var c = 0; c < 4; c++) {
-        /* A tight window, so the plate is genuinely empty between two
-           courses instead of showing both through each other. That gap
-           IS the pass: one dish leaves, the next arrives. */
+        /* Hold at vis=1 around each stop, then a short lift-off. The old
+           1.34 − d×2.4 window was ~260px at full opacity — one wheel tick
+           skipped the chuletón, and vis never reached 0.995 so the meat
+           stayed `transparent` and the plate showed through it. */
         var d = Math.abs(cp - c);
-        var vis = utils.clamp(1.34 - d * 2.4, 0, 1);
+        var vis = courseVis(d);
         /* nothing is on the plate before the pass starts or after it ends */
         if (p < 0.13 || p > 0.66) vis = 0;
         var list = courses[c];
@@ -1348,10 +1356,9 @@ window.__initB = function (A, panel) {
           for (var q = 0; q < u.mats.length; q++) {
             var mat = u.mats[q];
             var base = mat.userData.baseOpacity == null ? 1 : mat.userData.baseOpacity;
-            /* Only transparent while it is actually fading. Left on, the
-               food is see-through at rest and the plate shows through the
-               chuletón. */
-            mat.transparent = vis < 0.995 || base < 1;
+            /* Only transparent while it is actually fading. The old 0.995
+               cutoff never tripped if scroll skipped the peak. */
+            mat.transparent = vis < 1 || base < 1;
             mat.opacity = base * vis;
           }
         }
@@ -1388,7 +1395,7 @@ window.__initB = function (A, panel) {
       for (var n = 0; n < notes.length; n++) {
         var note = notes[n];
         var nd = Math.abs(cp - note.spec.c);
-        var nv = (p < 0.13 || p > 0.66) ? 0 : utils.clamp(1.34 - nd * 2.4, 0, 1);
+        var nv = (p < 0.13 || p > 0.66) ? 0 : courseVis(nd);
         if (!note.target || nv < 0.12) {
           note.lead.style.opacity = "0";
           note.text.style.opacity = "0";
