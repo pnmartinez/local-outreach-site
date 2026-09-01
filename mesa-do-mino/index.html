@@ -1284,12 +1284,15 @@ window.__initB = function (A, panel) {
 
     var wedge = new THREE.Shape();
     wedge.moveTo(0, 0);
-    wedge.lineTo(0.37, 0.075);
-    wedge.absarc(0, 0, 0.38, 0.197, -0.197, true);
+    wedge.lineTo(0.21, 0.045);
+    wedge.absarc(0, 0, 0.22, 0.21, -0.21, true);
     wedge.lineTo(0, 0);
     var porcion = lined(new THREE.Mesh(slab(wedge, 0.104, 0.010, 10), M_TARTA));
-    porcion.rotation.y = -0.75;
-    part(3, place(porcion, 0.20, 0.062, 0.33), "porción");
+    /* The well is r≈0.26 local. A 0.38 crust pointed at the ala sat
+       under the rim — slab bevel hangs below the placement, the wall
+       has already risen. A shorter slice, on the well. */
+    porcion.rotation.y = -0.40;
+    part(3, place(porcion, 0.10, 0.086, 0.05), "porción");
 
     /* The cross of Santiago: a lily-tipped sword, laid proud in icing
        sugar. It is what a customer recognises from two metres. */
