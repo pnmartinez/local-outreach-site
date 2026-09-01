@@ -838,7 +838,9 @@ window.__initB = function (A, panel) {
     var M_UNTO = matte(produce(30, T_PALE, 0.34, 0.94));
     var M_CARNE = cooked(produce(9, T_MID, 0.80, 0.82));    // chuletón
     var M_MARCA = branded();                                 // la brasa
-    var M_MADERA = matte(produce(28, T_CHAR, 0.55));       // la tabla del pulpo
+    var M_MADERA = matte(produce(32, T_MID, 0.48, 0.92));  // pino, no pizarra
+    var M_PULPO = matte(produce(22, T_PALE, 0.18, 1.12));  // la carne, el corte
+    var M_PIEL = matte(produce(348, T_DEEP, 0.58, 0.70));  // la piel, vino
     var M_ACEITE = matte(produce(48, T_MID, 0.85, 1.15));
     var M_TARTA = matte(produce(36, T_MID, 0.60, 1.05));
     var M_ALMENDRA = matte(produce(38, T_PALE, 0.50, 0.95));
@@ -1185,67 +1187,87 @@ window.__initB = function (A, panel) {
     }
 
     /* ================= 03 · Pulpo á feira ==============================
-       The board has to fit ON the plate: local coordinates are scaled by
-       pase3d (1.52) and the plate radius is 0.96 world, i.e. 0.63 local.
-       At ±0.62 x ±0.42 the corners landed at 0.75 local — 1.14 world —
-       and the board hung over the rim like a tray balanced on a saucer. */
-    var BOARD_Y = 0.062, BOARD_TOP = BOARD_Y + 0.045 + 0.012;
-    var boardShape = new THREE.Shape();
-    boardShape.moveTo(-0.44, -0.30);
-    boardShape.lineTo(0.44, -0.30);
-    boardShape.lineTo(0.44, 0.30);
-    boardShape.lineTo(-0.44, 0.30);
-    boardShape.closePath();
-    part(2, lined(place(new THREE.Mesh(slab(boardShape, 0.045, 0.012, 2), M_MADERA), 0, BOARD_Y, 0)), "tabla");
-    part(2, place(new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.003, 0.010), matte(mix(produce(26, T_CHAR, 0.65), GROUND, 0.30))), 0, BOARD_TOP + 0.001, -0.13), "veta");
+       The wooden plate is the icon: round, a shallow well, a lip. A
+       rectangle read as slate. Local r≤0.50 so it stays inside the
+       ceramic (0.63 after pase3d's 1.52).
 
-    /* One layout for the three cachelos, reused by the pulpo that sits on
-       them. Before, the slices were placed on their own polar ring and
-       most of them hovered over bare board with nothing underneath. */
-    var CACH = [[-0.28, 0.10], [0.02, -0.06], [0.30, 0.12]];
-    var CACH_H = 0.048, CACH_Y = BOARD_TOP + CACH_H / 2;
+       A rodaja is two named parts, as in the cut: pale meat, wine skin
+       around the side. The old lathe was one accent puck and looked
+       like a biscuit. Ventosas sit on the face of a few slices.
+       Cachelos are chunks at the front, not a noodle of oil. */
+    var BOARD_Y = 0.062;
+    var woodPts = [
+      new THREE.Vector2(0.00, 0.016), new THREE.Vector2(0.34, 0.018),
+      new THREE.Vector2(0.40, 0.044), new THREE.Vector2(0.455, 0.050),
+      new THREE.Vector2(0.462, 0.034), new THREE.Vector2(0.40, 0.008),
+      new THREE.Vector2(0.30, 0.000), new THREE.Vector2(0.00, 0.002)
+    ];
+    part(2, lined(place(new THREE.Mesh(new THREE.LatheGeometry(woodPts, 32), M_MADERA), 0, BOARD_Y, 0), 42), "tabla");
+    var WELL = BOARD_Y + 0.018;
+
+    /* Two cachelos at the front of the well — boiled chunks, cut face
+       up. The ribbon of oil used to stand in for them. */
+    var CACH_H = 0.042;
+    var CACH = [[-0.16, 0.18], [0.14, 0.20]];
     for (i = 0; i < CACH.length; i++) {
-      var cach = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.135, 0.128, CACH_H, 16), M_PATATA));
-      part(2, place(cach, CACH[i][0], CACH_Y, CACH[i][1]), "cachelo");
+      var cs = new THREE.Shape();
+      cs.moveTo(-0.11, -0.07); cs.lineTo(0.10, -0.09);
+      cs.lineTo(0.13, 0.06); cs.lineTo(-0.02, 0.10); cs.lineTo(-0.12, 0.03);
+      cs.closePath();
+      var cach = lined(new THREE.Mesh(slab(cs, CACH_H, 0.010, 5), M_PATATA));
+      cach.scale.setScalar(0.72);
+      cach.rotation.y = 0.4 + i * 1.7;
+      part(2, place(cach, CACH[i][0], WELL, CACH[i][1]), "cachelo");
     }
 
-    var pulpoPts = [
-      new THREE.Vector2(0.030, 0.000), new THREE.Vector2(0.030, 0.020),
-      new THREE.Vector2(0.052, 0.030), new THREE.Vector2(0.082, 0.028),
-      new THREE.Vector2(0.092, 0.014), new THREE.Vector2(0.086, 0.000)
+    /* Radii from the taper of a tentacle. Packed, slightly overlapping,
+       covering the well — a ración, not three tokens. */
+    var RODAJAS = [
+      { x: -0.02, z: -0.02, r: 0.118, h: 0.030, ry: 0.20 },
+      { x: -0.16, z: 0.04, r: 0.100, h: 0.028, ry: 1.10 },
+      { x: 0.14, z: 0.06, r: 0.108, h: 0.032, ry: -0.45 },
+      { x: -0.10, z: -0.16, r: 0.092, h: 0.026, ry: 0.80 },
+      { x: 0.12, z: -0.14, r: 0.096, h: 0.028, ry: 2.05 },
+      { x: -0.22, z: -0.08, r: 0.078, h: 0.024, ry: 0.35 },
+      { x: 0.22, z: -0.04, r: 0.082, h: 0.026, ry: 1.40 },
+      { x: 0.00, z: 0.14, r: 0.088, h: 0.027, ry: -0.90 }
     ];
-    var CACH_TOP = BOARD_TOP + CACH_H;
-    var PULPO = [
-      [CACH[0][0], CACH_TOP, CACH[0][1]], [CACH[1][0], CACH_TOP, CACH[1][1]],
-      [CACH[2][0], CACH_TOP, CACH[2][1]],
-      [-0.13, BOARD_TOP, -0.19], [0.17, BOARD_TOP, 0.20]
-    ];
-    for (i = 0; i < PULPO.length; i++) {
-      var pul = lined(new THREE.Mesh(new THREE.LatheGeometry(pulpoPts, 14), M_ACCENT), 28);
-      part(2, place(pul, PULPO[i][0], PULPO[i][1], PULPO[i][2], i * 1.1), "pulpo");
+    for (i = 0; i < RODAJAS.length; i++) {
+      var rd = RODAJAS[i];
+      var y = WELL + rd.h / 2 + (i % 3 === 0 ? 0.010 : 0);
+      var carne = lined(new THREE.Mesh(new THREE.CylinderGeometry(rd.r * 0.96, rd.r, rd.h, 12), M_PULPO), 28);
+      carne.scale.set(0.88 + rnd(i) * 0.22, 1, 0.92 + rnd(i + 5) * 0.16);
+      part(2, place(carne, rd.x, y, rd.z, rd.ry), "pulpo");
+      var piel = new THREE.Mesh(
+        new THREE.CylinderGeometry(rd.r + 0.012, rd.r + 0.010, rd.h, 12, 1, true),
+        M_PIEL
+      );
+      piel.scale.copy(carne.scale);
+      part(2, place(piel, rd.x, y, rd.z, rd.ry), "piel");
+      var aro = new THREE.Mesh(new THREE.TorusGeometry(rd.r * 0.90, 0.009, 5, 12), M_PIEL);
+      aro.rotation.x = -Math.PI / 2;
+      aro.scale.set(carne.scale.x, carne.scale.z, 1);
+      part(2, place(aro, rd.x, y + rd.h / 2 + 0.001, rd.z), "piel");
+      if (i % 2 === 0) {
+        var vent = new THREE.Mesh(new THREE.TorusGeometry(0.015, 0.005, 5, 8), matte(mix(M_PIEL.color, GROUND, 0.35)));
+        vent.rotation.x = -Math.PI / 2;
+        part(2, place(vent, rd.x + rd.r * 0.28, y + rd.h / 2 + 0.003, rd.z + rd.r * 0.12), "ventosa");
+      }
+      for (var p = 0; p < 2; p++) {
+        var pim = new THREE.Mesh(new THREE.CircleGeometry(0.009 + rnd(i + p) * 0.007, 5), M_ACCENT);
+        pim.rotation.x = -Math.PI / 2;
+        part(2, place(pim, rd.x + (rnd(i * 3 + p) - 0.5) * rd.r * 0.7, y + rd.h / 2 + 0.004, rd.z + (rnd(i * 3 + p + 8) - 0.5) * rd.r * 0.7), "pimentón");
+      }
     }
-    /* Suckers ride their own slice, on its top face. */
-    for (i = 0; i < PULPO.length; i++) {
-      var vent = new THREE.Mesh(new THREE.TorusGeometry(0.017, 0.006, 6, 10), matte(mix(C_ACCENT, GROUND, 0.28)));
-      vent.rotation.x = -Math.PI / 2;
-      part(2, place(vent, PULPO[i][0] + 0.030, PULPO[i][1] + 0.031, PULPO[i][2] + 0.010), "ventosa");
+    for (i = 0; i < 3; i++) {
+      var oil = new THREE.Mesh(new THREE.CircleGeometry(0.055 + rnd(i) * 0.03, 10), M_ACEITE);
+      oil.rotation.x = -Math.PI / 2;
+      part(2, place(oil, (rnd(i + 2) - 0.5) * 0.22, WELL + 0.001, (rnd(i + 9) - 0.5) * 0.18), "aceite");
     }
-    for (i = 0; i < 10; i++) {
-      var pim = new THREE.Mesh(new THREE.CircleGeometry(0.012 + rnd(i) * 0.010, 6), M_ACCENT);
-      pim.rotation.x = -Math.PI / 2;
-      /* Board is ±0.44 × ±0.30. The old 0.74 × 0.50 scatter landed paprika
-         on the plate around the board, which the caption then named. */
-      part(2, place(pim, (rnd(i + 3) - 0.5) * 0.72, BOARD_TOP + 0.002, (rnd(i + 11) - 0.5) * 0.46), "pimentón");
-    }
-    var oilCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-0.34, BOARD_TOP + 0.004, 0.20), new THREE.Vector3(-0.08, BOARD_TOP + 0.004, 0.25),
-      new THREE.Vector3(0.18, BOARD_TOP + 0.004, 0.17), new THREE.Vector3(0.36, BOARD_TOP + 0.004, 0.23)
-    ]);
-    part(2, new THREE.Mesh(new THREE.TubeGeometry(oilCurve, 24, 0.010, 6, false), M_ACEITE), "aceite");
-    for (i = 0; i < 4; i++) {
-      var sg = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.015, 0.018), M_SUGAR);
+    for (i = 0; i < 5; i++) {
+      var sg = new THREE.Mesh(new THREE.BoxGeometry(0.016, 0.014, 0.016), M_SUGAR);
       sg.rotation.set(rnd(i + 4) * 1.3, rnd(i) * 1.5, 0);
-      part(2, place(sg, -0.26 + i * 0.18, BOARD_TOP + 0.009, -0.22 + rnd(i + 6) * 0.12), "sal");
+      part(2, place(sg, (rnd(i + 1) - 0.5) * 0.36, WELL + 0.034, (rnd(i + 6) - 0.5) * 0.28), "sal");
     }
 
     /* ================= 04 · Tarta de Santiago ========================== */
