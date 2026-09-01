@@ -793,9 +793,6 @@ window.__initB = function (A, panel) {
         emissive: mix(C_ACCENT, T_CHAR, 0.50),
         emissiveIntensity: 0.42
       });
-      m.polygonOffset = true;
-      m.polygonOffsetFactor = -2;
-      m.polygonOffsetUnits = -2;
       m.userData.baseEmissive = 0.42;
       return m;
     }
@@ -1158,24 +1155,18 @@ window.__initB = function (A, panel) {
       veta.rotation.y = 0.35 - i * 0.8;
       part(1, place(veta, -0.02 + i * 0.10, STEAK_TOP + 0.002, 0.02 - i * 0.11), "veta");
     }
-    /* Capsule brands, welded so the capsule is smooth, with the charcoal
-       map across the width. Shared geometry; each stripe still owns its
-       own material so the coal can breathe on idle. */
-    var MARCA_LEN = 0.46, MARCA_W = 0.018;
-    var marcaGeom = brandUVs(weld(slab(stadium(MARCA_LEN, MARCA_W), 0.005, 0.003, 16, 3)), MARCA_LEN, MARCA_W);
-    var M_QUEMADO = matte(mix(T_CHAR, INK, 0.55));
-    M_QUEMADO.transparent = true;
-    M_QUEMADO.opacity = 0.70;
-    M_QUEMADO.depthWrite = false;
-    var quemadoGeom = weld(slab(stadium(MARCA_LEN + 0.05, MARCA_W + 0.012), 0.002, 0.001, 14, 2));
+    /* Capsule brands sit ON the face and span it. The seared stain was
+       the sparkle at the tips — gone. A 6% taper on the outer two is
+       only the oval of the cut, not a shy stripe in the middle.
+       absarc already adds halfW at each end, so MARCA_LEN is the inner run. */
+    var MARCA_LEN = 0.54, MARCA_W = 0.018;
+    var marcaGeom = brandUVs(weld(slab(stadium(MARCA_LEN, MARCA_W), 0.006, 0.002, 16, 3)), MARCA_LEN, MARCA_W);
     for (i = 0; i < 5; i++) {
       var t = (i - 2) * 0.085;
-      var quemado = new THREE.Mesh(quemadoGeom, M_QUEMADO);
-      quemado.rotation.y = 0.20;
-      part(1, place(quemado, -0.04 + t * 0.28, STEAK_TOP - 0.003, 0.02 + t), "quemado");
       var marca = new THREE.Mesh(marcaGeom, M_MARCA);
       marca.rotation.y = 0.20;
-      part(1, place(marca, -0.04 + t * 0.28, STEAK_TOP - 0.001, 0.02 + t), "marca");
+      marca.scale.x = 1 - Math.abs(i - 2) * 0.04;
+      part(1, place(marca, -0.04 + t * 0.28, STEAK_TOP + 0.004, 0.02 + t), "marca");
     }
     /* Same height trap as the grill marks: at 0.086 the sprig sat inside
        the steak, so it never read as garnish. It lies on the far corner. */
