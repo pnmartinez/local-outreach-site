@@ -752,19 +752,51 @@ window.__initB = function (A, panel) {
     function cooked(color) {
       return new THREE.MeshLambertMaterial({ color: color, flatShading: false });
     }
-    /* The brand is the heat: token char, with a little of the accent as
-       emissive so the stripe looks just off the grill instead of a
-       painted bar. No new hue. */
+    /* The brand is charcoal with a seared lip, not a painted red bar.
+       The canvas stays inside the page tokens; the emissive is the
+       coal, pulsed on idle so the stripe still reads as heat. */
+    function brandMap() {
+      var cv = document.createElement("canvas");
+      cv.width = 64;
+      cv.height = 32;
+      var ctx = cv.getContext("2d");
+      var img = ctx.createImageData(64, 32);
+      var heat = mix(T_CHAR, C_ACCENT, 0.82);
+      var char = mix(T_CHAR, INK, 0.40);
+      var core = mix(INK, T_CHAR, 0.08);
+      var tmp = new THREE.Color();
+      for (var y = 0; y < 32; y++) {
+        for (var x = 0; x < 64; x++) {
+          var edge = Math.abs(y / 31 - 0.5) * 2;
+          var t = Math.min(1, Math.max(0, edge + 0.10 * Math.sin(x * 0.55 + y * 0.21)));
+          if (t < 0.38) tmp.copy(core).lerp(char, t / 0.38);
+          else tmp.copy(char).lerp(heat, (t - 0.38) / 0.62);
+          var o = (y * 64 + x) * 4;
+          img.data[o] = tmp.r * 255;
+          img.data[o + 1] = tmp.g * 255;
+          img.data[o + 2] = tmp.b * 255;
+          img.data[o + 3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      var tex = new THREE.CanvasTexture(cv);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.ClampToEdgeWrapping;
+      return tex;
+    }
     function branded() {
       var m = new THREE.MeshLambertMaterial({
-        color: mix(T_CHAR, C_ACCENT, 0.32),
+        color: mix(GROUND, T_CHAR, 0.08),
+        map: brandMap(),
         flatShading: false,
-        emissive: mix(C_ACCENT, T_CHAR, 0.45),
-        emissiveIntensity: 0.48
+        emissive: mix(C_ACCENT, T_CHAR, 0.50),
+        emissiveIntensity: 0.42
       });
       m.polygonOffset = true;
       m.polygonOffsetFactor = -2;
       m.polygonOffsetUnits = -2;
+      m.userData.baseEmissive = 0.42;
       return m;
     }
     /* The rungs above are now mostly used as *lightness* for produce()
@@ -927,32 +959,54 @@ window.__initB = function (A, panel) {
     }
     scene.add(table);
 
-    function slab(shape, depth, bevel, curveSeg) {
+    function slab(shape, depth, bevel, curveSeg, bevelSeg) {
       var g = new THREE.ExtrudeGeometry(shape, {
         depth: depth, bevelEnabled: true, bevelThickness: bevel,
-        bevelSize: bevel, bevelSegments: 2, curveSegments: curveSeg || 8
+        bevelSize: bevel, bevelSegments: bevelSeg == null ? 2 : bevelSeg,
+        curveSegments: curveSeg || 8
       });
       g.rotateX(-Math.PI / 2);
       return g;
     }
-    /* ExtrudeGeometry does not weld the side strip, so computeVertexNormals
-       is a no-op and the chuletón stays a gem. Weld, then shade. */
+    /* ExtrudeGeometry is non-indexed, so Lambert cannot average the
+       wall. Walk the triangles, merge coincident verts, keep the first
+       UV so a canvas map still sits on the brand. */
     function weld(geom) {
-      var pos = geom.attributes.position, tol = 1e-4;
-      var map = {}, out = [], idx = [];
-      for (var i = 0; i < pos.count; i++) {
-        var k = Math.round(pos.getX(i) / tol) + "," + Math.round(pos.getY(i) / tol) + "," + Math.round(pos.getZ(i) / tol);
+      var pos = geom.attributes.position, uv = geom.attributes.uv;
+      var index = geom.index, tol = 5e-4;
+      var map = {}, out = [], uvs = [], idx = [];
+      function pushVert(vi) {
+        var x = pos.getX(vi), y = pos.getY(vi), z = pos.getZ(vi);
+        var k = Math.round(x / tol) + "," + Math.round(y / tol) + "," + Math.round(z / tol);
         if (map[k] == null) {
           map[k] = out.length / 3;
-          out.push(pos.getX(i), pos.getY(i), pos.getZ(i));
+          out.push(x, y, z);
+          if (uv) uvs.push(uv.getX(vi), uv.getY(vi));
         }
         idx.push(map[k]);
       }
+      if (index) {
+        for (var i = 0; i < index.count; i++) pushVert(index.getX(i));
+      } else {
+        for (i = 0; i < pos.count; i++) pushVert(i);
+      }
       var ng = new THREE.BufferGeometry();
       ng.setAttribute("position", new THREE.Float32BufferAttribute(out, 3));
+      if (uv) ng.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
       ng.setIndex(idx);
       ng.computeVertexNormals();
       return ng;
+    }
+    /* After rotateX the cap UV is still shape-space and spans centimetres,
+       not 0–1. Put U across the stripe and V across its width so the
+       charcoal-to-sear gradient actually reads. */
+    function brandUVs(geom, len, halfW) {
+      var pos = geom.attributes.position, uvs = [];
+      for (var i = 0; i < pos.count; i++) {
+        uvs.push(pos.getX(i) / len + 0.5, pos.getZ(i) / (halfW * 2) + 0.5);
+      }
+      geom.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+      return geom;
     }
     function place(mesh, x, y, z, ry) {
       mesh.position.set(x, y, z);
@@ -1072,13 +1126,14 @@ window.__initB = function (A, panel) {
        here — the first pass had the grill marks at 0.144, twenty-three
        thousandths INSIDE the steak, so the leader line said MARCA DE
        PARRILLA and pointed at nothing. */
-    var STEAK_Y = 0.062, STEAK_TOP = STEAK_Y + 0.085 + 0.018;
+    var STEAK_Y = 0.062, STEAK_TOP = STEAK_Y + 0.085 + 0.010;
 
     /* An irregular cut with one straight bone side. The old outline was
        four symmetric beziers and came out a disc — it read as a slice of
-       mortadella, not as a chuletón. curveSegments 28 is the cut, not
-       a ball: the hairline threshold is high so tessellation edges stay
-       off and only the butcher's line draws. */
+       mortadella, not as a chuletón. The cut is the named line, so it
+       spends segments; a tight fillet is the crust, not a terrace.
+       No hairline on the meat: EdgesGeometry turned every tessellation
+       into a gem facet, which is the opposite of a chuletón. */
     var steak = new THREE.Shape();
     steak.moveTo(-0.36, -0.02);
     steak.lineTo(-0.30, -0.20);
@@ -1086,8 +1141,8 @@ window.__initB = function (A, panel) {
     steak.bezierCurveTo(0.42, 0.02, 0.36, 0.18, 0.18, 0.24);
     steak.bezierCurveTo(-0.02, 0.30, -0.24, 0.26, -0.32, 0.14);
     steak.lineTo(-0.36, -0.02);
-    var steakGeom = weld(slab(steak, 0.085, 0.018, 40));
-    part(1, lined(place(new THREE.Mesh(steakGeom, M_CARNE), -0.04, STEAK_Y, 0.02), 48), "chuletón");
+    var steakGeom = weld(slab(steak, 0.085, 0.010, 72, 3));
+    part(1, place(new THREE.Mesh(steakGeom, M_CARNE), -0.04, STEAK_Y, 0.02), "chuletón");
 
     /* Thinner and tucked against the flank. At r=0.036 out at x=-0.44 it
        read as a white worm crawling out from under the meat. */
@@ -1103,12 +1158,23 @@ window.__initB = function (A, panel) {
       veta.rotation.y = 0.35 - i * 0.8;
       part(1, place(veta, -0.02 + i * 0.10, STEAK_TOP + 0.002, 0.02 - i * 0.11), "veta");
     }
-    /* Capsule brands, not boxes: a stadium extrusion sits in the face
-       and the branded material does the heat. */
+    /* Capsule brands, welded so the capsule is smooth, with the charcoal
+       map across the width. Shared geometry; each stripe still owns its
+       own material so the coal can breathe on idle. */
+    var MARCA_LEN = 0.46, MARCA_W = 0.018;
+    var marcaGeom = brandUVs(weld(slab(stadium(MARCA_LEN, MARCA_W), 0.005, 0.003, 16, 3)), MARCA_LEN, MARCA_W);
+    var M_QUEMADO = matte(mix(T_CHAR, INK, 0.55));
+    M_QUEMADO.transparent = true;
+    M_QUEMADO.opacity = 0.70;
+    M_QUEMADO.depthWrite = false;
+    var quemadoGeom = weld(slab(stadium(MARCA_LEN + 0.05, MARCA_W + 0.012), 0.002, 0.001, 14, 2));
     for (i = 0; i < 5; i++) {
-      var marca = new THREE.Mesh(slab(stadium(0.44, 0.016), 0.006, 0.002, 10), M_MARCA);
-      marca.rotation.y = 0.20;
       var t = (i - 2) * 0.085;
+      var quemado = new THREE.Mesh(quemadoGeom, M_QUEMADO);
+      quemado.rotation.y = 0.20;
+      part(1, place(quemado, -0.04 + t * 0.28, STEAK_TOP - 0.003, 0.02 + t), "quemado");
+      var marca = new THREE.Mesh(marcaGeom, M_MARCA);
+      marca.rotation.y = 0.20;
       part(1, place(marca, -0.04 + t * 0.28, STEAK_TOP - 0.001, 0.02 + t), "marca");
     }
     /* Same height trap as the grill marks: at 0.086 the sprig sat inside
@@ -1416,6 +1482,10 @@ window.__initB = function (A, panel) {
                cutoff never tripped if scroll skipped the peak. */
             mat.transparent = vis < 1 || base < 1;
             mat.opacity = base * vis;
+            if (u.id === "marca" && mat.userData.baseEmissive != null) {
+              var coal = 0.72 + 0.28 * Math.sin(state.idle * 2.2 + j * 0.65);
+              mat.emissiveIntensity = mat.userData.baseEmissive * vis * coal;
+            }
           }
         }
         var el = courseEls[c];
