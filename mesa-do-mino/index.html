@@ -745,6 +745,28 @@ window.__initB = function (A, panel) {
     function matte(color) {
       return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
     }
+    /* The chuletón is the one object that has to read as food, not as a
+       faceted blank. Smooth Lambert under the same key — still one light,
+       still the page's colours. flatShading stays on the plate and on
+       every other course; this is the parrilla exception, not a new look. */
+    function cooked(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: false });
+    }
+    /* The brand is the heat: token char, with a little of the accent as
+       emissive so the stripe looks just off the grill instead of a
+       painted bar. No new hue. */
+    function branded() {
+      var m = new THREE.MeshLambertMaterial({
+        color: mix(T_CHAR, C_ACCENT, 0.32),
+        flatShading: false,
+        emissive: mix(C_ACCENT, T_CHAR, 0.45),
+        emissiveIntensity: 0.48
+      });
+      m.polygonOffset = true;
+      m.polygonOffsetFactor = -2;
+      m.polygonOffsetUnits = -2;
+      return m;
+    }
     /* The rungs above are now mostly used as *lightness* for produce()
        rather than as materials of their own. What still paints straight
        from the ladder is the plate, the char and the sugar. */
@@ -785,7 +807,8 @@ window.__initB = function (A, panel) {
     var M_PATATA = matte(produce(45, T_PALE, 0.62, 0.88)); // cachelo cocido
     var M_CALDO = matte(produce(38, T_DEEP, 0.45, 0.95));  // el caldo, bajo la verdura
     var M_UNTO = matte(produce(30, T_PALE, 0.34, 0.94));
-    var M_CARNE = matte(produce(9, T_MID, 0.80, 0.82));    // chuletón
+    var M_CARNE = cooked(produce(9, T_MID, 0.80, 0.82));    // chuletón
+    var M_MARCA = branded();                                 // la brasa
     var M_MADERA = matte(produce(28, T_CHAR, 0.55));       // la tabla del pulpo
     var M_ACEITE = matte(produce(48, T_MID, 0.85, 1.15));
     var M_TARTA = matte(produce(36, T_MID, 0.60, 1.05));
@@ -849,7 +872,7 @@ window.__initB = function (A, panel) {
       new THREE.Vector2(0.225, 0.000), new THREE.Vector2(0.205, 0.018),
       new THREE.Vector2(0.00, 0.022)
     ];
-    var plateGeom = new THREE.LatheGeometry(platePts, 48);
+    var plateGeom = new THREE.LatheGeometry(platePts, 72);
     var plato = lined(new THREE.Mesh(plateGeom, M_CERAMIC), 30);
     rig.add(plato);
 
@@ -911,6 +934,25 @@ window.__initB = function (A, panel) {
       });
       g.rotateX(-Math.PI / 2);
       return g;
+    }
+    /* ExtrudeGeometry does not weld the side strip, so computeVertexNormals
+       is a no-op and the chuletón stays a gem. Weld, then shade. */
+    function weld(geom) {
+      var pos = geom.attributes.position, tol = 1e-4;
+      var map = {}, out = [], idx = [];
+      for (var i = 0; i < pos.count; i++) {
+        var k = Math.round(pos.getX(i) / tol) + "," + Math.round(pos.getY(i) / tol) + "," + Math.round(pos.getZ(i) / tol);
+        if (map[k] == null) {
+          map[k] = out.length / 3;
+          out.push(pos.getX(i), pos.getY(i), pos.getZ(i));
+        }
+        idx.push(map[k]);
+      }
+      var ng = new THREE.BufferGeometry();
+      ng.setAttribute("position", new THREE.Float32BufferAttribute(out, 3));
+      ng.setIndex(idx);
+      ng.computeVertexNormals();
+      return ng;
     }
     function place(mesh, x, y, z, ry) {
       mesh.position.set(x, y, z);
@@ -1012,6 +1054,17 @@ window.__initB = function (A, panel) {
       part(0, place(unto, Math.cos(ua) * 0.34, 0.082, Math.sin(ua) * 0.34, ua), "unto");
     }
 
+    function stadium(len, halfW) {
+      var s = new THREE.Shape();
+      var x0 = -len / 2, x1 = len / 2;
+      s.moveTo(x0, -halfW);
+      s.lineTo(x1, -halfW);
+      s.absarc(x1, 0, halfW, -Math.PI / 2, Math.PI / 2, false);
+      s.lineTo(x0, halfW);
+      s.absarc(x0, 0, halfW, Math.PI / 2, -Math.PI / 2, false);
+      return s;
+    }
+
     /* ================= 02 · Parrilla — chuletón ========================
        The slab runs from y 0.042 to STEAK_TOP: ExtrudeGeometry adds the
        bevel at BOTH ends, so the top is depth + bevelThickness above the
@@ -1019,11 +1072,13 @@ window.__initB = function (A, panel) {
        here — the first pass had the grill marks at 0.144, twenty-three
        thousandths INSIDE the steak, so the leader line said MARCA DE
        PARRILLA and pointed at nothing. */
-    var STEAK_Y = 0.062, STEAK_TOP = STEAK_Y + 0.085 + 0.020;
+    var STEAK_Y = 0.062, STEAK_TOP = STEAK_Y + 0.085 + 0.018;
 
     /* An irregular cut with one straight bone side. The old outline was
        four symmetric beziers and came out a disc — it read as a slice of
-       mortadella, not as a chuletón. */
+       mortadella, not as a chuletón. curveSegments 28 is the cut, not
+       a ball: the hairline threshold is high so tessellation edges stay
+       off and only the butcher's line draws. */
     var steak = new THREE.Shape();
     steak.moveTo(-0.36, -0.02);
     steak.lineTo(-0.30, -0.20);
@@ -1031,7 +1086,8 @@ window.__initB = function (A, panel) {
     steak.bezierCurveTo(0.42, 0.02, 0.36, 0.18, 0.18, 0.24);
     steak.bezierCurveTo(-0.02, 0.30, -0.24, 0.26, -0.32, 0.14);
     steak.lineTo(-0.36, -0.02);
-    part(1, lined(place(new THREE.Mesh(slab(steak, 0.085, 0.020, 12), M_CARNE), -0.04, STEAK_Y, 0.02)), "chuletón");
+    var steakGeom = weld(slab(steak, 0.085, 0.018, 40));
+    part(1, lined(place(new THREE.Mesh(steakGeom, M_CARNE), -0.04, STEAK_Y, 0.02), 48), "chuletón");
 
     /* Thinner and tucked against the flank. At r=0.036 out at x=-0.44 it
        read as a white worm crawling out from under the meat. */
@@ -1047,13 +1103,13 @@ window.__initB = function (A, panel) {
       veta.rotation.y = 0.35 - i * 0.8;
       part(1, place(veta, -0.02 + i * 0.10, STEAK_TOP + 0.002, 0.02 - i * 0.11), "veta");
     }
-    /* Five parallel bars across the face, not a tight cluster that
-       collapsed to two smudges. Recessed so they read as brands. */
+    /* Capsule brands, not boxes: a stadium extrusion sits in the face
+       and the branded material does the heat. */
     for (i = 0; i < 5; i++) {
-      var marca = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.016, 0.046), M_CHAR);
+      var marca = new THREE.Mesh(slab(stadium(0.44, 0.016), 0.006, 0.002, 10), M_MARCA);
       marca.rotation.y = 0.20;
       var t = (i - 2) * 0.085;
-      part(1, place(marca, -0.04 + t * 0.28, STEAK_TOP - 0.002, 0.02 + t), "marca");
+      part(1, place(marca, -0.04 + t * 0.28, STEAK_TOP - 0.001, 0.02 + t), "marca");
     }
     /* Same height trap as the grill marks: at 0.086 the sprig sat inside
        the steak, so it never read as garnish. It lies on the far corner. */
