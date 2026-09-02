@@ -1,0 +1,22 @@
+{
+  "category": "abogado",
+  "seed": "abogados-luis-orge-v1",
+  "motion": "animejs",
+  "mode": "docket",
+  "layout": "folio",
+  "display": "Libre Baskerville",
+  "body": "Karla",
+  "radius": "14px",
+  "density": "compact",
+  "nav": "split",
+  "palette": {
+    "bg": "#f3eee4",
+    "ink": "#1a1612",
+    "muted": "#6a6258",
+    "accent": "#9c2a1a",
+    "accent2": "#2c3a4a",
+    "line": "#ddd4c6",
+    "photo": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "abogado|animejs|docket|folio|Libre Baskerville|Karla|14px|compact|split"
+}

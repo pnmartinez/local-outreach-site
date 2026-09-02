@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abogados Luis Orge · Redondela</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%231a1612%22%2F%3E%3Cpath%20d%3D%22M8%2012h16M10%2012v10h12V12%22%20fill%3D%22none%22%20stroke%3D%22%23e8d7b8%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M16%208v4M12%2022h8%22%20stroke%3D%22%239c2a1a%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Karla:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #f3eee4;
+  --ink: #1a1612;
+  --muted: #6a6258;
+  --accent: #9c2a1a;
+  --accent2: #2c3a4a;
+  --line: #ddd4c6;
+  --display: "Libre Baskerville", serif;
+  --body: "Karla", system-ui, sans-serif;
+  --radius: 14px;
+  --pad: 16px; --gap: 16px; --hero: clamp(40px, 8vw, 84px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 28px var(--pad) 12px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+}
+.mark { font-family: var(--display); font-style: italic; letter-spacing: 0; text-transform: none; font-size: 22px; }
+.folio {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px;
+  padding: 12px var(--pad) 64px; align-items: end; min-height: 78vh;
+}
+.kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--accent2); }
+h1 {
+  font-family: var(--display); font-weight: 400; font-size: clamp(40px, 6vw, 84px);
+  line-height: .95; margin: 10px 0 18px; max-width: 14ch;
+}
+.lead { font-size: 18px; line-height: 1.55; max-width: 38ch; color: var(--muted); }
+.cta-line {
+  display: inline-block; margin-top: 26px; text-decoration: none;
+  border-bottom: 1px solid var(--accent); padding-bottom: 4px;
+  letter-spacing: .12em; text-transform: uppercase; font-size: 12px;
+}
+.sheet {
+  min-height: 64vh; border: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 27px,
+      color-mix(in srgb, var(--ink) 10%, transparent) 27px 28px
+    ),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, var(--bg)), var(--bg));
+}
+.pleas {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+.plea { padding: 26px var(--pad); border-right: 1px solid var(--line); min-height: 180px; }
+.plea:nth-child(3n) { border-right: 0; }
+.plea em { font-style: normal; font-size: 11px; letter-spacing: .16em; color: var(--accent); }
+.plea h3 { font-family: var(--display); font-size: 26px; margin: 10px 0 8px; font-weight: 400; }
+.plea p { margin: 0; color: var(--muted); }
+.exam {
+  padding: 68px var(--pad); display: flex; justify-content: space-between;
+  align-items: flex-end; gap: 24px; border-top: 1px solid var(--line);
+}
+.exam h2 { font-family: var(--display); font-size: clamp(32px, 5vw, 56px); margin: 0; max-width: 16ch; }
+.exam a {
+  background: var(--accent); color: #fff8ef; text-decoration: none;
+  padding: 16px 20px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; font-size: 12px;
+}
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .folio { grid-template-columns: 1fr; min-height: auto; }
+  .sheet { min-height: 42vh; }
+  .pleas { grid-template-columns: 1fr; }
+  .plea { border-right: 0; border-bottom: 1px solid var(--line); min-height: 0; }
+  .exam { flex-direction: column; align-items: flex-start; }
+}
+
+
+#dsgB {
+  --st-bg: #faf9f5;
+  --st-fg: #14100e;
+  --st-accent: #9c2a1a;
+  --st-second: #2c3a4a;
+  --st-glow: #9c2a1a;
+  --st-line: #d1cfcb;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .ab { min-height: 100vh; }
+#dsgB .ab-rail {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px clamp(20px, 4vw, 56px);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+}
+#dsgB .ab-brand { font-weight: 700; }
+#dsgB .ab-place { opacity: .6; margin-right: auto; }
+#dsgB .ab-hero {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  padding: 24px clamp(20px, 4vw, 56px) 64px; align-items: end;
+}
+#dsgB .ab-eyebrow, #dsgB .ab-kicker {
+  letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--st-second);
+}
+#dsgB .ab-name {
+  font-family: "Libre Baskerville", serif; font-size: clamp(36px, 5vw, 68px);
+  line-height: .95; margin: 8px 0 14px; font-weight: 400;
+}
+#dsgB .ab-lead { max-width: 38ch; color: var(--st-dim); }
+#dsgB .ab-cta {
+  display: inline-block; margin-top: 20px; color: inherit;
+  border-bottom: 1px solid var(--st-accent); text-decoration: none;
+  letter-spacing: .12em; text-transform: uppercase; font-size: 12px; padding-bottom: 4px;
+}
+#dsgB .ab-grid { padding: 0 clamp(20px, 4vw, 56px) 72px; }
+#dsgB .ab-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--st-line); }
+#dsgB .ab-tile { background: var(--st-bg); padding: 22px 18px; }
+#dsgB .ab-tile em { font-style: normal; font-size: 11px; letter-spacing: .14em; color: var(--st-accent); }
+#dsgB .ab-tile h3 { font-family: "Libre Baskerville", serif; font-size: 22px; margin: 8px 0; font-weight: 400; }
+@media (max-width: 860px) {
+  #dsgB .ab-hero, #dsgB .ab-tiles { grid-template-columns: 1fr; }
+}
+/* Abogados Luis Orge — the dossier, as one scroll. This lead only.
+
+   The page is the animation. No section paints its own ground. The
+   folder, the sheets and the type share one clock. */
+
+#dsgB {
+  background: var(--st-bg);
+  color: var(--st-fg);
+}
+
+#dsgB .lo { position: relative; }
+
+#dsgB .lo-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#dsgB .lo-desk {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+#dsgB .lo-grid {
+  position: absolute;
+  inset: 8% 10% 12%;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--st-fg) 10%, transparent) 0,
+      color-mix(in srgb, var(--st-fg) 10%, transparent) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--st-fg) 8%, transparent) 0,
+      color-mix(in srgb, var(--st-fg) 8%, transparent) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  opacity: .55;
+}
+
+#dsgB .lo-file {
+  position: relative;
+  width: min(420px, 56vw);
+  height: min(560px, 72vh);
+  transform-origin: 50% 62%;
+}
+
+#dsgB .lo-shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -6%;
+  height: 18%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--st-fg) 22%, transparent);
+  filter: blur(18px);
+  opacity: .55;
+}
+
+#dsgB .lo-flap,
+#dsgB .lo-sheet,
+#dsgB .lo-spine,
+#dsgB .lo-tab {
+  position: absolute;
+}
+
+#dsgB .lo-flap-back {
+  inset: 0 0 0 8%;
+  background: color-mix(in srgb, var(--st-second) 18%, var(--st-bg));
+  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--st-fg) 6%, transparent);
+}
+
+#dsgB .lo-spine {
+  top: 6%;
+  bottom: 6%;
+  left: 0;
+  width: 18px;
+  background: color-mix(in srgb, var(--st-second) 28%, var(--st-bg));
+  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+}
+
+#dsgB .lo-tab {
+  top: 10%;
+  right: -18px;
+  width: 22px;
+  height: 72px;
+  background: var(--st-bg);
+  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  writing-mode: vertical-rl;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+#dsgB .lo-clip {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  width: 54px;
+  height: 14px;
+  margin-left: -27px;
+  border: 1px solid color-mix(in srgb, var(--st-fg) 28%, transparent);
+  background: color-mix(in srgb, var(--st-fg) 8%, var(--st-bg));
+  z-index: 6;
+}
+
+#dsgB .lo-punch {
+  position: absolute;
+  left: 28px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--st-fg) 22%, transparent);
+  background: var(--st-bg);
+  z-index: 5;
+}
+#dsgB .lo-punch-a { top: 22%; }
+#dsgB .lo-punch-b { top: 72%; }
+
+#dsgB .lo-sheets { position: absolute; inset: 18px 18px 18px 28px; }
+#dsgB .lo-sheet {
+  inset: 0;
+  background: color-mix(in srgb, var(--st-bg) 92%, var(--st-fg));
+  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  transform-origin: 8% 100%;
+}
+#dsgB .lo-folio {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  opacity: .55;
+  font-weight: 400;
+}
+#dsgB .lo-rule {
+  position: absolute;
+  left: 16%;
+  right: 12%;
+  height: 1px;
+  background: color-mix(in srgb, var(--st-fg) 16%, transparent);
+}
+#dsgB .lo-rule-head { top: 22%; }
+#dsgB .lo-rule-mid { top: 48%; }
+#dsgB .lo-rule-foot { top: 74%; }
+
+#dsgB .lo-margin {
+  position: absolute;
+  top: 16%;
+  bottom: 12%;
+  left: 36px;
+  width: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 4;
+}
+#dsgB .lo-margin i {
+  display: block;
+  height: 1px;
+  background: color-mix(in srgb, var(--st-fg) 28%, transparent);
+}
+
+#dsgB .lo-redacts { position: absolute; inset: 28% 18% 30% 22%; z-index: 4; }
+#dsgB .lo-redact {
+  display: block;
+  height: 10px;
+  margin: 18px 0;
+  background: color-mix(in srgb, var(--st-fg) 72%, transparent);
+  transform-origin: left center;
+}
+
+#dsgB .lo-stamp {
+  position: absolute;
+  right: 14%;
+  bottom: 16%;
+  width: 92px;
+  height: 92px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+}
+#dsgB .lo-stamp-ring,
+#dsgB .lo-stamp-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+#dsgB .lo-stamp-ring {
+  border: 1px solid color-mix(in srgb, var(--st-accent) 80%, transparent);
+}
+#dsgB .lo-stamp-disc {
+  inset: 10px;
+  border: 1px solid color-mix(in srgb, var(--st-accent) 55%, transparent);
+}
+#dsgB .lo-stamp b {
+  position: relative;
+  font-size: 8px;
+  letter-spacing: .2em;
+  color: var(--st-accent);
+  font-weight: 700;
+}
+
+#dsgB .lo-flap-front {
+  inset: 0 0 0 10%;
+  background: color-mix(in srgb, var(--st-bg) 86%, var(--st-second));
+  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  transform-origin: 0 50%;
+  z-index: 7;
+}
+
+#dsgB .lo-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -28px;
+  margin: 0;
+  text-align: center;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--st-fg) 50%, transparent);
+}
+
+#dsgB .lo-leader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--st-fg) 50%, transparent);
+}
+#dsgB .lo-leader i {
+  display: block;
+  height: 1px;
+  width: 48px;
+  background: color-mix(in srgb, var(--st-fg) 50%, transparent);
+}
+#dsgB .lo-leader-street { left: 6%; top: 22%; }
+#dsgB .lo-leader-phone { right: 6%; bottom: 18%; flex-direction: row-reverse; }
+
+#dsgB .lo-rail {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px clamp(20px, 4vw, 56px);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+#dsgB .lo-brand { font-weight: 700; }
+#dsgB .lo-place { opacity: .55; }
+#dsgB .lo-docket {
+  margin-left: auto;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: .14em;
+  color: var(--st-accent);
+}
+#dsgB .lo .dsg-switch {
+  border-color: color-mix(in srgb, var(--st-fg) 28%, transparent);
+  background: transparent;
+}
+#dsgB .lo .dsg-btn { color: color-mix(in srgb, var(--st-fg) 62%, transparent); }
+#dsgB .lo .dsg-btn[aria-pressed="true"] {
+  background: var(--st-accent);
+  color: var(--st-bg);
+}
+
+#dsgB .lo-scroll { position: relative; z-index: 2; }
+#dsgB .lo-ch { position: relative; }
+#dsgB .lo-ch-0 { height: 140vh; }
+#dsgB .lo-ch-1 { height: 140vh; }
+#dsgB .lo-ch-2 { height: 220vh; }
+#dsgB .lo-ch-3 { height: 140vh; }
+#dsgB .lo-ch-4 { height: 130vh; }
+
+#dsgB .lo-in {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: center;
+  padding: 0 clamp(20px, 5vw, 84px);
+  pointer-events: none;
+}
+#dsgB .lo-in > * { pointer-events: auto; }
+#dsgB .lo-in-left { justify-items: start; text-align: left; max-width: 44ch; }
+#dsgB .lo-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
+#dsgB .lo-in-centre { justify-items: center; text-align: center; }
+
+#dsgB .lo-eyebrow,
+#dsgB .lo-kicker {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--st-second);
+}
+#dsgB .lo-name {
+  font-family: "Libre Baskerville", "Newsreader", serif;
+  font-size: clamp(40px, 6vw, 78px);
+  line-height: .92;
+  font-weight: 400;
+  margin: 0 0 12px;
+}
+#dsgB .lo-claim,
+#dsgB .lo-h2 {
+  font-family: "Libre Baskerville", serif;
+  font-size: clamp(26px, 3.4vw, 42px);
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0 0 16px;
+  max-width: 16ch;
+}
+#dsgB .lo-lead,
+#dsgB .lo-note {
+  margin: 0;
+  max-width: 36ch;
+  color: var(--st-dim);
+  line-height: 1.55;
+}
+#dsgB .lo-cue {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 0;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+#dsgB .lo-cue i {
+  width: 28px;
+  height: 1px;
+  background: var(--st-accent);
+}
+
+#dsgB .lo-word { display: inline-block; white-space: nowrap; }
+#dsgB .lo-c { display: inline-block; }
+
+#dsgB .lo-clauses { display: grid; gap: 22px; }
+#dsgB .lo-clause em,
+#dsgB .lo-matter em {
+  display: block;
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--st-accent);
+  margin-bottom: 6px;
+}
+#dsgB .lo-clause h2,
+#dsgB .lo-matter h3 {
+  font-family: "Libre Baskerville", serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0 0 6px;
+}
+#dsgB .lo-clause p,
+#dsgB .lo-matter p { margin: 0; color: var(--st-dim); }
+
+#dsgB .lo-matters { display: grid; gap: 18px; }
+#dsgB .lo-matter { display: grid; grid-template-columns: 34px 1fr; gap: 10px; }
+
+#dsgB .lo-tel {
+  font-family: "Libre Baskerville", serif;
+  font-size: clamp(36px, 6vw, 72px);
+  text-decoration: none;
+  color: inherit;
+  letter-spacing: -.02em;
+}
+#dsgB .lo-hours,
+#dsgB .lo-addr {
+  margin: 10px 0 0;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--st-dim);
+}
+
+@media (max-width: 860px) {
+  #dsgB .lo-file {
+    width: min(240px, 70vw);
+    height: min(300px, 40vh);
+    align-self: start;
+    margin-top: 12vh;
+  }
+  #dsgB .lo-leader { display: none; }
+  #dsgB .lo-in {
+    align-content: end;
+    padding-bottom: 28px;
+    max-width: none;
+  }
+  #dsgB .lo-in-right { margin-left: 0; justify-items: start; text-align: left; }
+  #dsgB .lo-name { font-size: clamp(30px, 10vw, 44px); }
+  #dsgB .lo-claim,
+  #dsgB .lo-h2 { font-size: clamp(20px, 6vw, 28px); line-height: 1.15; max-width: 18ch; }
+  #dsgB .lo-tel { font-size: clamp(26px, 8vw, 36px); }
+  #dsgB .lo-docket { display: none; }
+  #dsgB .lo-lead { font-size: 15px; }
+}
+
+</style>
+</head>
+<body data-motion="animejs" data-layout="folio" data-mode="docket">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="mark">Abogados Luis Orge</span>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="folio">
+  <div>
+    <p class="kicker">Rúa Reveriano Soutullo · Redondela</p>
+    <h1>El teléfono<br>directo.</h1>
+    <p class="lead">Despacho en Reveriano Soutullo. Civil, familia y lo que no cabe en un directorio. El teléfono coge.</p>
+    <a class="cta-line" href="https://wa.me/34986404870">+34 986 40 48 70</a>
+  </div>
+  <div class="sheet" role="img" aria-label=""></div>
+</section>
+<section class="pleas"><article class="plea"><em>01</em><h3>Consulta</h3><p>Os sentamos y oímos el asunto. Sin reloj de pasillo.</p></article><article class="plea"><em>02</em><h3>Civil</h3><p>Contratos, reclamaciones y lo que se atasca entre vecinos.</p></article><article class="plea"><em>03</em><h3>Familia</h3><p>Separaciones y tutelas. Discreción, no un escaparate.</p></article><article class="plea"><em>04</em><h3>Laboral</h3><p>Despido, nómina y lo que la empresa no quiere oír.</p></article><article class="plea"><em>05</em><h3>Trámites</h3><p>Papeles que hay que presentar bien a la primera.</p></article><article class="plea"><em>06</em><h3>Cita</h3><p>Llamáis. Os damos hora. No un formulario de tres páginas.</p></article></section>
+<section class="exam">
+  <h2>El teléfono coge. El listado, no.</h2>
+  <a href="https://wa.me/34986404870">Cita previa</a>
+</section>
+<footer>Abogados Luis Orge · Redondela · propuesta de sitio</footer>
+
+</div>
+<div id="dsgB" hidden>
+<div class="lo">
+  <div class="lo-stage" aria-hidden="true">
+    <div class="lo-desk">
+      <div class="lo-grid"></div>
+      <div class="lo-file">
+        <div class="lo-shadow"></div>
+        <div class="lo-flap lo-flap-back"></div>
+        <div class="lo-spine"></div>
+        <div class="lo-tab"><span>ORGE</span></div>
+        <div class="lo-clip"></div>
+        <div class="lo-punch lo-punch-a"></div>
+        <div class="lo-punch lo-punch-b"></div>
+        <div class="lo-sheets"><div class="lo-sheet" data-sheet="0" aria-hidden="true"><b class="lo-folio">01</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div><div class="lo-sheet" data-sheet="1" aria-hidden="true"><b class="lo-folio">02</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div><div class="lo-sheet" data-sheet="2" aria-hidden="true"><b class="lo-folio">03</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div><div class="lo-sheet" data-sheet="3" aria-hidden="true"><b class="lo-folio">04</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div></div>
+        <div class="lo-margin"><i data-tick="0"></i><i data-tick="1"></i><i data-tick="2"></i><i data-tick="3"></i><i data-tick="4"></i><i data-tick="5"></i><i data-tick="6"></i><i data-tick="7"></i><i data-tick="8"></i><i data-tick="9"></i><i data-tick="10"></i><i data-tick="11"></i><i data-tick="12"></i><i data-tick="13"></i><i data-tick="14"></i><i data-tick="15"></i><i data-tick="16"></i><i data-tick="17"></i><i data-tick="18"></i><i data-tick="19"></i><i data-tick="20"></i><i data-tick="21"></i><i data-tick="22"></i><i data-tick="23"></i><i data-tick="24"></i><i data-tick="25"></i><i data-tick="26"></i><i data-tick="27"></i></div>
+        <div class="lo-redacts"><span class="lo-redact" data-redact="0"></span><span class="lo-redact" data-redact="1"></span><span class="lo-redact" data-redact="2"></span></div>
+        <div class="lo-stamp">
+          <span class="lo-stamp-ring"></span>
+          <span class="lo-stamp-disc"></span>
+          <b>REDONDELA</b>
+        </div>
+        <div class="lo-flap lo-flap-front"></div>
+        <p class="lo-caption">Exp. · Reveriano Soutullo</p>
+      </div>
+      <div class="lo-leader lo-leader-street"><i></i><span>Rúa Reveriano Soutullo</span></div>
+      <div class="lo-leader lo-leader-phone"><i></i><span>Teléfono directo</span></div>
+    </div>
+  </div>
+
+  <header class="lo-rail">
+    <span class="lo-brand">Abogados Luis Orge</span>
+    <span class="lo-place">Redondela</span>
+    <span class="lo-docket" data-lo-docket>EXP. 000 / 000</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <div class="lo-scroll">
+    <section class="lo-ch lo-ch-0">
+      <div class="lo-in lo-in-left">
+        <p class="lo-eyebrow">Rúa Reveriano Soutullo · Redondela</p>
+        <h1 class="lo-name" data-lo-split>Abogados Luis Orge</h1>
+        <p class="lo-claim" data-lo-split>El teléfono directo. El listado, no.</p>
+        <p class="lo-lead">Despacho en Reveriano Soutullo. Civil, familia y lo que no cabe en un directorio. El teléfono coge.</p>
+        <p class="lo-cue"><i></i>Abrir el expediente</p>
+      </div>
+    </section>
+
+    <section class="lo-ch lo-ch-1">
+      <div class="lo-in lo-in-right">
+        <p class="lo-kicker">El margen</p>
+        <h2 class="lo-h2" data-lo-split>Un número de expediente. Una calle. Nada de listado.</h2>
+        <p class="lo-note">El papel abre por Reveriano Soutullo. El asunto entra con nombre y fecha, no con un formulario de tres páginas.</p>
+      </div>
+    </section>
+
+    <section class="lo-ch lo-ch-2">
+      <div class="lo-in lo-in-left">
+        <p class="lo-kicker">Las cláusulas</p>
+        <div class="lo-clauses"><article class="lo-clause" data-clause="0"><em>Art. 01</em><h2>Consulta</h2><p>Os sentamos y oímos el asunto. Sin reloj de pasillo.</p></article><article class="lo-clause" data-clause="1"><em>Art. 02</em><h2>Civil</h2><p>Contratos, reclamaciones y lo que se atasca entre vecinos.</p></article><article class="lo-clause" data-clause="2"><em>Art. 03</em><h2>Familia</h2><p>Separaciones y tutelas. Discreción, no un escaparate.</p></article><article class="lo-clause" data-clause="3"><em>Art. 04</em><h2>Laboral</h2><p>Despido, nómina y lo que la empresa no quiere oír.</p></article></div>
+      </div>
+    </section>
+
+    <section class="lo-ch lo-ch-3">
+      <div class="lo-in lo-in-right">
+        <p class="lo-kicker">El sello</p>
+        <h2 class="lo-h2" data-lo-split>Despacho en Redondela: cita, papeles y un número que responde.</h2>
+        <div class="lo-matters"><article class="lo-matter"><em>01</em><div><h3>Consulta</h3><p>Os sentamos y oímos el asunto. Sin reloj de pasillo.</p></div></article><article class="lo-matter"><em>02</em><div><h3>Civil</h3><p>Contratos, reclamaciones y lo que se atasca entre vecinos.</p></div></article><article class="lo-matter"><em>03</em><div><h3>Familia</h3><p>Separaciones y tutelas. Discreción, no un escaparate.</p></div></article><article class="lo-matter"><em>04</em><div><h3>Laboral</h3><p>Despido, nómina y lo que la empresa no quiere oír.</p></div></article></div>
+      </div>
+    </section>
+
+    <section class="lo-ch lo-ch-4">
+      <div class="lo-in lo-in-centre">
+        <p class="lo-kicker">El teléfono</p>
+        <a class="lo-tel" href="tel:34986404870">+34 986 40 48 70</a>
+        <p class="lo-hours">Cita previa</p>
+        <p class="lo-addr">Rúa Reveriano Soutullo · Redondela</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+</div>
+<script type="module">
+
+import { animate, inView, stagger } from "https://esm.sh/motion@11.15.0";
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || new URLSearchParams(location.search).has("static");
+if (!reduced) {
+  animate(".sheet", { opacity: [0.6, 1] }, { duration: 1.0, easing: [0.16, 1, 0.3, 1] });
+  animate("h1, .lead, .kicker, .cta-line", { y: [16, 0] }, { delay: stagger(0.07), duration: 0.7, easing: [0.16, 1, 0.3, 1] });
+  inView(".pleas", () => {
+    animate(".plea", { y: [14, 0] }, { delay: stagger(0.06), duration: 0.48 });
+  });
+}
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+/* Abogados Luis Orge — the dossier that opens, in one scroll. This lead only.
+ *
+ * The page IS the animation. One fixed stage holds the file; the markup
+ * is an overlay of sticky chapters with no ground of their own. A single
+ * damped progress p ∈ [0,1] drives everything.
+ *
+ *   00 · portada     the folder closed, the name arrives
+ *   01 · el margen   the flap opens, the docket charges, leaders name the street
+ *   02 · cláusulas   four sheets fan; articles stagger in; redaction lifts
+ *   03 · el sello    the wax lands; the matters of the desk
+ *   04 · el teléfono the file recedes; the number is the last frame
+ *
+ * Named parts (25+): flap back, flap front, spine, tab, clip, punch a,
+ * punch b, sheet 1–4, folio marks, rule head/mid/foot ×4, margin ticks,
+ * redact 1–3, stamp ring, stamp disc, stamp text, street leader, phone
+ * leader, docket, caption, desk grid, contact shadow.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md for look (page tokens,
+ * hairline, no toon). Not «one mesh and stop».
+ */
+
+window.__staticB = function (panel) {
+  panel.querySelectorAll(".lo-in > *, .lo-clause, .lo-matter, .lo-c").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  var cue = panel.querySelector(".lo-cue");
+  if (cue) cue.remove();
+  var docket = panel.querySelector("[data-lo-docket]");
+  if (docket) docket.textContent = "EXP. 2026 / 184";
+  var flap = panel.querySelector(".lo-flap-front");
+  if (flap) flap.style.transform = "translateX(-108%)";
+  panel.querySelectorAll(".lo-redact").forEach(function (el) {
+    el.style.transform = "scaleX(0)";
+  });
+  var stamp = panel.querySelector(".lo-stamp");
+  if (stamp) stamp.style.opacity = "1";
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger;
+
+  var stage = panel.querySelector(".lo-stage");
+  var scroller = panel.querySelector(".lo-scroll");
+  var file = panel.querySelector(".lo-file");
+  if (!stage || !scroller || !file) return;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  function splitText(el) {
+    if (!el || el.dataset.loDone) return [];
+    el.dataset.loDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var word = document.createElement("span");
+      word.className = "lo-word";
+      for (var i = 0; i < w.length; i++) {
+        var c = document.createElement("span");
+        c.className = "lo-c";
+        c.textContent = w[i];
+        word.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(word);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
+  }
+
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function span(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function ease(t) { return t * t * (3 - 2 * t); }
+  function mix(a, b, t) { return a + (b - a) * t; }
+
+  var clock = { p: 0, settle: 0 };
+  animate(clock, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.12
+    })
+  });
+  animate(clock, { settle: [0, 1], duration: 1400, delay: 180, ease: "outExpo" });
+
+  var nameChars = splitText(panel.querySelector(".lo-name"));
+  var claimChars = splitText(panel.querySelector(".lo-claim"));
+  panel.querySelectorAll(".lo-h2").forEach(splitText);
+
+  var intro = createTimeline({
+    defaults: { ease: "outExpo" },
+    onComplete: function () {
+      nameChars.concat(claimChars).forEach(function (c) { c.style.transform = "none"; });
+    }
+  });
+  intro.add(panel.querySelector(".lo-eyebrow"), { opacity: [0, 1], y: [12, 0], duration: 640 }, 160);
+  intro.add(nameChars, { opacity: [0, 1], y: [48, 0], duration: 980, delay: stagger(16) }, 240);
+  intro.add(claimChars, { opacity: [0, 1], y: [22, 0], duration: 720, delay: stagger(8) }, 720);
+  intro.add(panel.querySelectorAll(".lo-lead, .lo-cue"), {
+    opacity: [0, 1], y: [16, 0], duration: 700, delay: stagger(90)
+  }, 980);
+
+  var flapFront = panel.querySelector(".lo-flap-front");
+  var sheets = panel.querySelectorAll(".lo-sheet");
+  var stamp = panel.querySelector(".lo-stamp");
+  var redacts = panel.querySelectorAll(".lo-redact");
+  var ticks = panel.querySelectorAll(".lo-margin i");
+  var docket = panel.querySelector("[data-lo-docket]");
+  var leaders = panel.querySelectorAll(".lo-leader");
+  var caption = panel.querySelector(".lo-caption");
+  var cue = panel.querySelector(".lo-cue");
+  var ch0 = panel.querySelector(".lo-ch-0 .lo-in");
+  var ch1 = panel.querySelector(".lo-ch-1 .lo-in");
+  var ch2 = panel.querySelector(".lo-ch-2 .lo-in");
+  var ch3 = panel.querySelector(".lo-ch-3 .lo-in");
+  var ch4 = panel.querySelector(".lo-ch-4 .lo-in");
+  var clauses = panel.querySelectorAll(".lo-clause");
+  var matters = panel.querySelectorAll(".lo-matter");
+  var h2b = panel.querySelectorAll(".lo-ch-1 .lo-c, .lo-ch-3 .lo-c");
+  var grid = panel.querySelector(".lo-grid");
+  var shadow = panel.querySelector(".lo-shadow");
+
+  function fadeBlock(el, t) {
+    if (!el) return;
+    el.style.opacity = String(t);
+    el.style.transform = "translateY(" + mix(18, 0, t) + "px)";
+  }
+
+  function paint() {
+    var p = clock.p;
+    var open = ease(span(p, 0.08, 0.28));
+    var fan = ease(span(p, 0.22, 0.52));
+    var lift = ease(span(p, 0.38, 0.58));
+    var wax = ease(span(p, 0.58, 0.74));
+    var close = ease(span(p, 0.80, 0.96));
+    var settle = clock.settle;
+
+    if (flapFront) {
+      flapFront.style.transform = "translateX(" + mix(0, -108, open) + "%)";
+      flapFront.style.opacity = String(mix(1, 0.12, open));
+    }
+
+    sheets.forEach(function (sheet, i) {
+      var rot = mix(0, -3.2 - i * 3.4, fan);
+      var x = mix(0, 10 + i * 14, fan);
+      var y = mix(0, -6 - i * 8, fan);
+      sheet.style.transform = "translate(" + x + "px," + y + "px) rotate(" + rot + "deg)";
+    });
+
+    redacts.forEach(function (bar, i) {
+      var t = ease(span(p, 0.40 + i * 0.04, 0.56 + i * 0.04));
+      bar.style.transform = "scaleX(" + (1 - t) + ")";
+      bar.style.opacity = String(1 - t * 0.85);
+    });
+
+    ticks.forEach(function (tick, i) {
+      tick.style.opacity = String(mix(0.15, 1, ease(span(p, 0.10 + i * 0.006, 0.34))));
+    });
+
+    if (stamp) {
+      var s = mix(1.35, 1, wax);
+      stamp.style.opacity = String(wax);
+      stamp.style.transform = "scale(" + s + ") rotate(" + mix(16, -8, wax) + "deg)";
+    }
+
+    if (file) {
+      var recede = mix(1, 0.72, close);
+      var down = mix(0, 36, close);
+      file.style.transform = "translateY(" + mix(18 * (1 - settle), down, 1) + "px) scale(" + mix(0.96 + 0.04 * settle, recede, close) + ")";
+    }
+    if (shadow) shadow.style.opacity = String(mix(0.55, 0.18, close));
+    if (grid) grid.style.opacity = String(mix(0.55, 0.12, close));
+
+    leaders.forEach(function (el, i) {
+      var t = ease(span(p, 0.18 + i * 0.08, 0.36 + i * 0.08)) * (1 - close);
+      el.style.opacity = String(t);
+      el.style.transform = "translateX(" + mix(i ? 12 : -12, 0, t) + "px)";
+    });
+
+    if (caption) caption.style.opacity = String(mix(0, 0.8, open) * (1 - close));
+
+    if (docket) {
+      var n = Math.round(mix(0, 184, ease(span(p, 0.10, 0.34))));
+      var year = String(2020 + Math.round(mix(0, 6, ease(span(p, 0.08, 0.22)))));
+      docket.textContent = "EXP. " + year + " / " + String(n).padStart(3, "0");
+    }
+
+    if (cue) cue.style.opacity = String(1 - span(p, 0.04, 0.12));
+
+    fadeBlock(ch0, (1 - span(p, 0.12, 0.22)) * settle);
+    fadeBlock(ch1, span(p, 0.16, 0.26) * (1 - span(p, 0.36, 0.46)));
+    fadeBlock(ch2, span(p, 0.38, 0.48) * (1 - span(p, 0.62, 0.70)));
+    fadeBlock(ch3, span(p, 0.64, 0.74) * (1 - span(p, 0.80, 0.88)));
+    fadeBlock(ch4, span(p, 0.82, 0.92));
+
+    clauses.forEach(function (el, i) {
+      var t = ease(span(p, 0.40 + i * 0.04, 0.52 + i * 0.04));
+      el.style.opacity = String(t);
+      el.style.transform = "translateY(" + mix(22, 0, t) + "px)";
+    });
+    matters.forEach(function (el, i) {
+      var t = ease(span(p, 0.66 + i * 0.03, 0.76 + i * 0.03));
+      el.style.opacity = String(t);
+      el.style.transform = "translateY(" + mix(18, 0, t) + "px)";
+    });
+    h2b.forEach(function (el, i) {
+      var t = ease(span(p, 0.18 + (i % 24) * 0.004, 0.30));
+      if (p > 0.6) t = ease(span(p, 0.64 + (i % 24) * 0.003, 0.74));
+      el.style.opacity = String(clamp(t, 0, 1));
+    });
+  }
+
+  var live = true;
+  function tick() {
+    if (!live) return;
+    paint();
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  panel.addEventListener("lo:stop", function () { live = false; }, { once: true });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>
