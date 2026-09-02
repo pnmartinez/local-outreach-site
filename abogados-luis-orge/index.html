@@ -171,17 +171,22 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 @media (max-width: 860px) {
   #dsgB .ab-hero, #dsgB .ab-tiles { grid-template-columns: 1fr; }
 }
-/* Abogados Luis Orge — the dossier, as one scroll. This lead only.
-
-   The page is the animation. No section paints its own ground. The
-   folder, the sheets and the type share one clock. */
+/* Abogados Luis Orge — el expediente que se abre. This lead only.
+ *
+ * The page IS the drawing. One fixed SVG holds the desk; the type is a
+ * second fixed layer in lanes that never overlap the object, and the
+ * scroll column is empty spacers. Nothing here paints its own ground:
+ * the page's cream is the desk. */
 
 #dsgB {
   background: var(--st-bg);
   color: var(--st-fg);
+  --lo-paper: #f6f3ec;
 }
 
 #dsgB .lo { position: relative; }
+
+/* ---- the desk ---------------------------------------------------- */
 
 #dsgB .lo-stage {
   position: fixed;
@@ -189,404 +194,325 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   z-index: 0;
   pointer-events: none;
 }
-#dsgB .lo-desk {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-}
-#dsgB .lo-grid {
-  position: absolute;
-  inset: 8% 10% 12%;
-  background-image:
-    repeating-linear-gradient(
-      to right,
-      color-mix(in srgb, var(--st-fg) 10%, transparent) 0,
-      color-mix(in srgb, var(--st-fg) 10%, transparent) 1px,
-      transparent 1px,
-      transparent 48px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--st-fg) 8%, transparent) 0,
-      color-mix(in srgb, var(--st-fg) 8%, transparent) 1px,
-      transparent 1px,
-      transparent 28px
-    );
-  opacity: .55;
-}
-
-#dsgB .lo-file {
-  position: relative;
-  width: min(420px, 56vw);
-  height: min(560px, 72vh);
-  transform-origin: 50% 62%;
-}
-
-#dsgB .lo-shadow {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  bottom: -6%;
-  height: 18%;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--st-fg) 22%, transparent);
-  filter: blur(18px);
-  opacity: .55;
-}
-
-#dsgB .lo-flap,
-#dsgB .lo-sheet,
-#dsgB .lo-spine,
-#dsgB .lo-tab {
-  position: absolute;
-}
-
-#dsgB .lo-flap-back {
-  inset: 0 0 0 8%;
-  background: color-mix(in srgb, var(--st-second) 18%, var(--st-bg));
-  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--st-fg) 6%, transparent);
-}
-
-#dsgB .lo-spine {
-  top: 6%;
-  bottom: 6%;
-  left: 0;
-  width: 18px;
-  background: color-mix(in srgb, var(--st-second) 28%, var(--st-bg));
-  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
-}
-
-#dsgB .lo-tab {
-  top: 10%;
-  right: -18px;
-  width: 22px;
-  height: 72px;
-  background: var(--st-bg);
-  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
-  writing-mode: vertical-rl;
-  display: grid;
-  place-items: center;
-  font-size: 9px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-}
-
-#dsgB .lo-clip {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  width: 54px;
-  height: 14px;
-  margin-left: -27px;
-  border: 1px solid color-mix(in srgb, var(--st-fg) 28%, transparent);
-  background: color-mix(in srgb, var(--st-fg) 8%, var(--st-bg));
-  z-index: 6;
-}
-
-#dsgB .lo-punch {
-  position: absolute;
-  left: 28px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--st-fg) 22%, transparent);
-  background: var(--st-bg);
-  z-index: 5;
-}
-#dsgB .lo-punch-a { top: 22%; }
-#dsgB .lo-punch-b { top: 72%; }
-
-#dsgB .lo-sheets { position: absolute; inset: 18px 18px 18px 28px; }
-#dsgB .lo-sheet {
-  inset: 0;
-  background: color-mix(in srgb, var(--st-bg) 92%, var(--st-fg));
-  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
-  transform-origin: 8% 100%;
-}
-#dsgB .lo-folio {
-  position: absolute;
-  top: 14px;
-  right: 16px;
+#dsgB .lo-file { position: absolute; inset: 0; }
+#dsgB .lo-svg { width: 100%; height: 100%; display: block; }
+#dsgB .lo-solids path { stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+#dsgB .lo-marks text {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .18em;
-  opacity: .55;
-  font-weight: 400;
+  fill: var(--st-fg);
+  text-anchor: middle;
+  dominant-baseline: middle;
 }
-#dsgB .lo-rule {
-  position: absolute;
-  left: 16%;
-  right: 12%;
-  height: 1px;
-  background: color-mix(in srgb, var(--st-fg) 16%, transparent);
+#dsgB .lo-leads polyline {
+  fill: none;
+  stroke: var(--st-fg);
+  stroke-width: 1;
+  stroke-opacity: .5;
+  vector-effect: non-scaling-stroke;
 }
-#dsgB .lo-rule-head { top: 22%; }
-#dsgB .lo-rule-mid { top: 48%; }
-#dsgB .lo-rule-foot { top: 74%; }
-
-#dsgB .lo-margin {
-  position: absolute;
-  top: 16%;
-  bottom: 12%;
-  left: 36px;
-  width: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 4;
-}
-#dsgB .lo-margin i {
-  display: block;
-  height: 1px;
-  background: color-mix(in srgb, var(--st-fg) 28%, transparent);
-}
-
-#dsgB .lo-redacts { position: absolute; inset: 28% 18% 30% 22%; z-index: 4; }
-#dsgB .lo-redact {
-  display: block;
-  height: 10px;
-  margin: 18px 0;
-  background: color-mix(in srgb, var(--st-fg) 72%, transparent);
-  transform-origin: left center;
-}
-
-#dsgB .lo-stamp {
-  position: absolute;
-  right: 14%;
-  bottom: 16%;
-  width: 92px;
-  height: 92px;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-}
-#dsgB .lo-stamp-ring,
-#dsgB .lo-stamp-disc {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-}
-#dsgB .lo-stamp-ring {
-  border: 1px solid color-mix(in srgb, var(--st-accent) 80%, transparent);
-}
-#dsgB .lo-stamp-disc {
-  inset: 10px;
-  border: 1px solid color-mix(in srgb, var(--st-accent) 55%, transparent);
-}
-#dsgB .lo-stamp b {
-  position: relative;
-  font-size: 8px;
-  letter-spacing: .2em;
-  color: var(--st-accent);
-  font-weight: 700;
-}
-
-#dsgB .lo-flap-front {
-  inset: 0 0 0 10%;
-  background: color-mix(in srgb, var(--st-bg) 86%, var(--st-second));
-  border: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
-  transform-origin: 0 50%;
-  z-index: 7;
-}
-
-#dsgB .lo-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -28px;
-  margin: 0;
-  text-align: center;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--st-fg) 50%, transparent);
-}
-
-#dsgB .lo-leader {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+#dsgB .lo-leads text {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--st-fg) 50%, transparent);
+  fill: var(--st-fg);
+  fill-opacity: .62;
 }
-#dsgB .lo-leader i {
-  display: block;
-  height: 1px;
-  width: 48px;
-  background: color-mix(in srgb, var(--st-fg) 50%, transparent);
-}
-#dsgB .lo-leader-street { left: 6%; top: 22%; }
-#dsgB .lo-leader-phone { right: 6%; bottom: 18%; flex-direction: row-reverse; }
+
+/* ---- the rail ---------------------------------------------------- */
 
 #dsgB .lo-rail {
   position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 18px clamp(20px, 4vw, 56px);
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-}
-#dsgB .lo-brand { font-weight: 700; }
-#dsgB .lo-place { opacity: .55; }
-#dsgB .lo-docket {
-  margin-left: auto;
+  gap: 18px;
+  padding: 20px clamp(18px, 4vw, 46px);
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  letter-spacing: .14em;
-  color: var(--st-accent);
-}
-#dsgB .lo .dsg-switch {
-  border-color: color-mix(in srgb, var(--st-fg) 28%, transparent);
-  background: transparent;
-}
-#dsgB .lo .dsg-btn { color: color-mix(in srgb, var(--st-fg) 62%, transparent); }
-#dsgB .lo .dsg-btn[aria-pressed="true"] {
-  background: var(--st-accent);
-  color: var(--st-bg);
-}
-
-#dsgB .lo-scroll { position: relative; z-index: 2; }
-#dsgB .lo-ch { position: relative; }
-#dsgB .lo-ch-0 { height: 140vh; }
-#dsgB .lo-ch-1 { height: 140vh; }
-#dsgB .lo-ch-2 { height: 220vh; }
-#dsgB .lo-ch-3 { height: 140vh; }
-#dsgB .lo-ch-4 { height: 130vh; }
-
-#dsgB .lo-in {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: grid;
-  align-content: center;
-  padding: 0 clamp(20px, 5vw, 84px);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
   pointer-events: none;
 }
-#dsgB .lo-in > * { pointer-events: auto; }
-#dsgB .lo-in-left { justify-items: start; text-align: left; max-width: 44ch; }
-#dsgB .lo-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
-#dsgB .lo-in-centre { justify-items: center; text-align: center; }
+#dsgB .lo-rail .dsg-switch { pointer-events: auto; margin-left: 22px; }
+#dsgB .lo-brand { font-weight: 700; }
+#dsgB .lo-place { opacity: .45; }
+#dsgB .lo-docket {
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* ---- the type ---------------------------------------------------- */
+
+#dsgB .lo-type {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+#dsgB .lo-in {
+  position: absolute;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .lo-in a { pointer-events: auto; }
+
+#dsgB .lo-lane-left {
+  left: clamp(20px, 6vw, 104px);
+  top: 50%;
+  width: min(40vw, 452px);
+  transform: translateY(-50%);
+}
+#dsgB .lo-lane-right {
+  right: clamp(20px, 6vw, 104px);
+  top: 50%;
+  width: min(38vw, 430px);
+  text-align: right;
+  transform: translateY(-50%);
+}
+#dsgB .lo-lane-foot {
+  left: 50%;
+  bottom: clamp(56px, 12vh, 130px);
+  width: min(92vw, 900px);
+  text-align: center;
+  transform: translateX(-50%);
+}
 
 #dsgB .lo-eyebrow,
 #dsgB .lo-kicker {
-  margin: 0 0 10px;
-  font-size: 11px;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--st-second);
-}
-#dsgB .lo-name {
-  font-family: "Libre Baskerville", "Newsreader", serif;
-  font-size: clamp(40px, 6vw, 78px);
-  line-height: .92;
-  font-weight: 400;
-  margin: 0 0 12px;
-}
-#dsgB .lo-claim,
-#dsgB .lo-h2 {
-  font-family: "Libre Baskerville", serif;
-  font-size: clamp(26px, 3.4vw, 42px);
-  line-height: 1.1;
-  font-weight: 400;
-  margin: 0 0 16px;
-  max-width: 16ch;
-}
-#dsgB .lo-lead,
-#dsgB .lo-note {
-  margin: 0;
-  max-width: 36ch;
-  color: var(--st-dim);
-  line-height: 1.55;
-}
-#dsgB .lo-cue {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 28px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: .2em;
   text-transform: uppercase;
+  opacity: .55;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#dsgB .lo-lane-right .lo-kicker { justify-content: flex-end; }
+#dsgB .lo-lane-foot .lo-kicker { justify-content: center; }
+#dsgB .lo-kicker b { color: var(--st-accent); font-weight: 700; }
+
+#dsgB .lo-name {
+  font-family: var(--st-display, "Libre Baskerville"), Georgia, serif;
+  font-size: clamp(40px, 5.6vw, 82px);
+  line-height: .98;
+  letter-spacing: -.015em;
+  margin: 0 0 22px;
+  font-weight: 400;
+}
+#dsgB .lo-name .lo-c { display: inline-block; will-change: transform, opacity; }
+
+#dsgB .lo-claim {
+  font-family: var(--st-display, "Libre Baskerville"), Georgia, serif;
+  font-size: clamp(21px, 2.1vw, 30px);
+  line-height: 1.22;
+  margin: 0 0 20px;
+  max-width: 20ch;
+}
+#dsgB .lo-lead,
+#dsgB .lo-note {
+  font-size: 15.5px;
+  line-height: 1.62;
+  margin: 0;
+  max-width: 46ch;
+  opacity: .74;
+}
+#dsgB .lo-h2 {
+  font-family: var(--st-display, "Libre Baskerville"), Georgia, serif;
+  font-size: clamp(26px, 2.9vw, 44px);
+  line-height: 1.14;
+  letter-spacing: -.01em;
+  font-weight: 400;
+  margin: 0 0 22px;
+  max-width: 17ch;
+}
+#dsgB .lo-lane-right .lo-h2 { margin-left: auto; }
+#dsgB .lo-lane-right .lo-note { margin-left: auto; }
+
+#dsgB .lo-cue {
+  margin: 34px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 #dsgB .lo-cue i {
-  width: 28px;
+  width: 44px;
   height: 1px;
-  background: var(--st-accent);
-}
-
-#dsgB .lo-word { display: inline-block; white-space: nowrap; }
-#dsgB .lo-c { display: inline-block; }
-
-#dsgB .lo-clauses { display: grid; gap: 22px; }
-#dsgB .lo-clause em,
-#dsgB .lo-matter em {
+  background: currentColor;
   display: block;
-  font-style: normal;
+}
+
+/* clauses: one per folio */
+#dsgB .lo-clauses { display: grid; gap: 20px; }
+#dsgB .lo-clause {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 0 16px;
+  align-items: baseline;
+  border-top: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  padding-top: 12px;
+  will-change: opacity, transform;
+}
+#dsgB .lo-clause em {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: .16em;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .14em;
   color: var(--st-accent);
-  margin-bottom: 6px;
+  opacity: .85;
 }
-#dsgB .lo-clause h2,
-#dsgB .lo-matter h3 {
-  font-family: "Libre Baskerville", serif;
-  font-size: 28px;
+#dsgB .lo-clause h3 {
+  font-family: var(--st-display, "Libre Baskerville"), Georgia, serif;
+  font-size: 25px;
   font-weight: 400;
-  margin: 0 0 6px;
+  margin: 0 0 4px;
+  line-height: 1.1;
 }
-#dsgB .lo-clause p,
-#dsgB .lo-matter p { margin: 0; color: var(--st-dim); }
+#dsgB .lo-clause p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  opacity: .68;
+  max-width: 34ch;
+}
 
-#dsgB .lo-matters { display: grid; gap: 18px; }
-#dsgB .lo-matter { display: grid; grid-template-columns: 34px 1fr; gap: 10px; }
+/* matters: the two that are not a folio */
+#dsgB .lo-matters { display: grid; gap: 16px; }
+#dsgB .lo-matter {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  gap: 0 14px;
+  align-items: baseline;
+  border-top: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  padding-top: 11px;
+  will-change: opacity, transform;
+}
+#dsgB .lo-matter em {
+  order: 2;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: var(--st-accent);
+  opacity: .8;
+  text-align: right;
+}
+#dsgB .lo-matter h3 {
+  font-family: var(--st-display, "Libre Baskerville"), Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 3px;
+}
+#dsgB .lo-matter p { margin: 0; font-size: 13.5px; line-height: 1.5; opacity: .66; }
 
+/* the last frame */
 #dsgB .lo-tel {
-  font-family: "Libre Baskerville", serif;
-  font-size: clamp(36px, 6vw, 72px);
-  text-decoration: none;
-  color: inherit;
+  display: block;
+  font-family: var(--st-display, "Libre Baskerville"), Georgia, serif;
+  font-size: clamp(34px, 6.6vw, 92px);
+  line-height: 1;
   letter-spacing: -.02em;
+  color: inherit;
+  text-decoration: none;
+  margin: 0 0 20px;
+  white-space: nowrap;
 }
+#dsgB .lo-tel:hover { color: var(--st-accent); }
 #dsgB .lo-hours,
 #dsgB .lo-addr {
-  margin: 10px 0 0;
-  letter-spacing: .16em;
+  margin: 0 0 6px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  font-size: 12px;
-  color: var(--st-dim);
+  opacity: .55;
 }
 
-@media (max-width: 860px) {
-  #dsgB .lo-file {
-    width: min(240px, 70vw);
-    height: min(300px, 40vh);
-    align-self: start;
-    margin-top: 12vh;
+/* ---- the scroll column ------------------------------------------- */
+
+#dsgB .lo-scroll { position: relative; z-index: 1; pointer-events: none; }
+#dsgB .lo-scroll i { display: block; height: 100vh; }
+
+/* ---- portrait ---------------------------------------------------- */
+
+@media (max-width: 880px) {
+  #dsgB .lo-lane-left,
+  #dsgB .lo-lane-right,
+  #dsgB .lo-lane-foot {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    text-align: left;
+    transform: none;
+    padding: 74px clamp(18px, 6vw, 34px) clamp(30px, 7vh, 54px);
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--st-bg) 0%, transparent) 0,
+      color-mix(in srgb, var(--st-bg) 82%, transparent) 34%,
+      var(--st-bg) 62%
+    );
   }
-  #dsgB .lo-leader { display: none; }
-  #dsgB .lo-in {
-    align-content: end;
-    padding-bottom: 28px;
-    max-width: none;
+  #dsgB .lo-lane-right .lo-kicker,
+  #dsgB .lo-lane-foot .lo-kicker { justify-content: flex-start; }
+  #dsgB .lo-lane-right .lo-h2,
+  #dsgB .lo-lane-right .lo-note { margin-left: 0; }
+  #dsgB .lo-lane-foot { text-align: left; }
+  #dsgB .lo-name { font-size: clamp(38px, 12vw, 58px); margin-bottom: 16px; }
+  #dsgB .lo-claim { font-size: clamp(19px, 5.4vw, 26px); max-width: none; }
+  #dsgB .lo-lead, #dsgB .lo-note { font-size: 14.5px; }
+  #dsgB .lo-h2 { font-size: clamp(24px, 7.4vw, 34px); max-width: none; }
+  #dsgB .lo-clauses { gap: 13px; }
+  #dsgB .lo-clause { grid-template-columns: 44px 1fr; padding-top: 9px; }
+  #dsgB .lo-clause h3 { font-size: 20px; }
+  #dsgB .lo-clause p { font-size: 13px; max-width: none; }
+  #dsgB .lo-matter h3 { font-size: 18px; }
+  #dsgB .lo-tel { font-size: clamp(28px, 9.6vw, 46px); }
+  #dsgB .lo-cue { margin-top: 22px; }
+  #dsgB .lo-rail { font-size: 9px; gap: 10px; padding: 14px clamp(14px, 4vw, 24px); }
+  #dsgB .lo-brand {
+    max-width: 38vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  #dsgB .lo-in-right { margin-left: 0; justify-items: start; text-align: left; }
-  #dsgB .lo-name { font-size: clamp(30px, 10vw, 44px); }
-  #dsgB .lo-claim,
-  #dsgB .lo-h2 { font-size: clamp(20px, 6vw, 28px); line-height: 1.15; max-width: 18ch; }
-  #dsgB .lo-tel { font-size: clamp(26px, 8vw, 36px); }
-  #dsgB .lo-docket { display: none; }
-  #dsgB .lo-lead { font-size: 15px; }
+  #dsgB .lo-place { display: none; }
+  #dsgB .lo-leads text { font-size: 9px; }
 }
+
+/* ---- reduced motion / no JS: the file becomes a document ---------- */
+
+#dsgB .lo-static .lo-stage,
+#dsgB .lo-static .lo-scroll { display: none; }
+#dsgB .lo-static .lo-type { position: static; }
+#dsgB .lo-static .lo-in {
+  position: static;
+  opacity: 1;
+  transform: none;
+  width: auto;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 0 clamp(18px, 5vw, 40px) 72px;
+  background: none;
+}
+#dsgB .lo-static .lo-in-0 { padding-top: 108px; }
+#dsgB .lo-static .lo-in .lo-kicker { justify-content: flex-start; }
+#dsgB .lo-static .lo-h2, #dsgB .lo-static .lo-note { margin-left: 0; }
+#dsgB .lo-static .lo-rail { position: static; }
 
 </style>
 </head>
@@ -621,85 +547,54 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 <div id="dsgB" hidden>
 <div class="lo">
   <div class="lo-stage" aria-hidden="true">
-    <div class="lo-desk">
-      <div class="lo-grid"></div>
-      <div class="lo-file">
-        <div class="lo-shadow"></div>
-        <div class="lo-flap lo-flap-back"></div>
-        <div class="lo-spine"></div>
-        <div class="lo-tab"><span>ORGE</span></div>
-        <div class="lo-clip"></div>
-        <div class="lo-punch lo-punch-a"></div>
-        <div class="lo-punch lo-punch-b"></div>
-        <div class="lo-sheets"><div class="lo-sheet" data-sheet="0" aria-hidden="true"><b class="lo-folio">01</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div><div class="lo-sheet" data-sheet="1" aria-hidden="true"><b class="lo-folio">02</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div><div class="lo-sheet" data-sheet="2" aria-hidden="true"><b class="lo-folio">03</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div><div class="lo-sheet" data-sheet="3" aria-hidden="true"><b class="lo-folio">04</b><span class="lo-rule lo-rule-head"></span><span class="lo-rule lo-rule-mid"></span><span class="lo-rule lo-rule-foot"></span></div></div>
-        <div class="lo-margin"><i data-tick="0"></i><i data-tick="1"></i><i data-tick="2"></i><i data-tick="3"></i><i data-tick="4"></i><i data-tick="5"></i><i data-tick="6"></i><i data-tick="7"></i><i data-tick="8"></i><i data-tick="9"></i><i data-tick="10"></i><i data-tick="11"></i><i data-tick="12"></i><i data-tick="13"></i><i data-tick="14"></i><i data-tick="15"></i><i data-tick="16"></i><i data-tick="17"></i><i data-tick="18"></i><i data-tick="19"></i><i data-tick="20"></i><i data-tick="21"></i><i data-tick="22"></i><i data-tick="23"></i><i data-tick="24"></i><i data-tick="25"></i><i data-tick="26"></i><i data-tick="27"></i></div>
-        <div class="lo-redacts"><span class="lo-redact" data-redact="0"></span><span class="lo-redact" data-redact="1"></span><span class="lo-redact" data-redact="2"></span></div>
-        <div class="lo-stamp">
-          <span class="lo-stamp-ring"></span>
-          <span class="lo-stamp-disc"></span>
-          <b>REDONDELA</b>
-        </div>
-        <div class="lo-flap lo-flap-front"></div>
-        <p class="lo-caption">Exp. · Reveriano Soutullo</p>
-      </div>
-      <div class="lo-leader lo-leader-street"><i></i><span>Rúa Reveriano Soutullo</span></div>
-      <div class="lo-leader lo-leader-phone"><i></i><span>Teléfono directo</span></div>
-    </div>
+    <div class="lo-file"></div>
   </div>
 
   <header class="lo-rail">
     <span class="lo-brand">Abogados Luis Orge</span>
     <span class="lo-place">Redondela</span>
-    <span class="lo-docket" data-lo-docket>EXP. 000 / 000</span>
+    <span class="lo-docket" data-lo-docket>EXP. ---- / ---</span>
     <div class="dsg-switch" role="group" aria-label="Elegir diseño">
     <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
     <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
   </div>
   </header>
 
-  <div class="lo-scroll">
-    <section class="lo-ch lo-ch-0">
-      <div class="lo-in lo-in-left">
-        <p class="lo-eyebrow">Rúa Reveriano Soutullo · Redondela</p>
-        <h1 class="lo-name" data-lo-split>Abogados Luis Orge</h1>
-        <p class="lo-claim" data-lo-split>El teléfono directo. El listado, no.</p>
-        <p class="lo-lead">Despacho en Reveriano Soutullo. Civil, familia y lo que no cabe en un directorio. El teléfono coge.</p>
-        <p class="lo-cue"><i></i>Abrir el expediente</p>
-      </div>
+  <div class="lo-type">
+    <section class="lo-in lo-in-0 lo-lane-left">
+      <p class="lo-eyebrow">Rúa Reveriano Soutullo · Redondela</p>
+      <h1 class="lo-name" data-lo-split>Abogados Luis Orge</h1>
+      <p class="lo-claim">El teléfono directo. El listado, no.</p>
+      <p class="lo-lead">Despacho en Reveriano Soutullo. Civil, familia y lo que no cabe en un directorio. El teléfono coge.</p>
+      <p class="lo-cue"><i></i>Abrir el expediente</p>
     </section>
 
-    <section class="lo-ch lo-ch-1">
-      <div class="lo-in lo-in-right">
-        <p class="lo-kicker">El margen</p>
-        <h2 class="lo-h2" data-lo-split>Un número de expediente. Una calle. Nada de listado.</h2>
-        <p class="lo-note">El papel abre por Reveriano Soutullo. El asunto entra con nombre y fecha, no con un formulario de tres páginas.</p>
-      </div>
+    <section class="lo-in lo-in-1 lo-lane-left">
+      <p class="lo-kicker"><b>01</b>El balduque</p>
+      <h2 class="lo-h2">Un asunto se abre con un número. No con un formulario.</h2>
+      <p class="lo-note">El expediente se desata en Rúa Reveriano Soutullo. Entra con nombre, fecha y un teléfono que coge — no con tres pantallas de campos obligatorios.</p>
     </section>
 
-    <section class="lo-ch lo-ch-2">
-      <div class="lo-in lo-in-left">
-        <p class="lo-kicker">Las cláusulas</p>
-        <div class="lo-clauses"><article class="lo-clause" data-clause="0"><em>Art. 01</em><h2>Consulta</h2><p>Os sentamos y oímos el asunto. Sin reloj de pasillo.</p></article><article class="lo-clause" data-clause="1"><em>Art. 02</em><h2>Civil</h2><p>Contratos, reclamaciones y lo que se atasca entre vecinos.</p></article><article class="lo-clause" data-clause="2"><em>Art. 03</em><h2>Familia</h2><p>Separaciones y tutelas. Discreción, no un escaparate.</p></article><article class="lo-clause" data-clause="3"><em>Art. 04</em><h2>Laboral</h2><p>Despido, nómina y lo que la empresa no quiere oír.</p></article></div>
-      </div>
+    <section class="lo-in lo-in-2 lo-lane-left">
+      <p class="lo-kicker"><b>02</b>Los folios</p>
+      <div class="lo-clauses"><article class="lo-clause" data-clause="0"><em>Art. 01</em><div><h3>Consulta</h3><p>Os sentamos y oímos el asunto. Sin reloj de pasillo.</p></div></article><article class="lo-clause" data-clause="1"><em>Art. 02</em><div><h3>Civil</h3><p>Contratos, reclamaciones y lo que se atasca entre vecinos.</p></div></article><article class="lo-clause" data-clause="2"><em>Art. 03</em><div><h3>Familia</h3><p>Separaciones y tutelas. Discreción, no un escaparate.</p></div></article><article class="lo-clause" data-clause="3"><em>Art. 04</em><div><h3>Laboral</h3><p>Despido, nómina y lo que la empresa no quiere oír.</p></div></article></div>
     </section>
 
-    <section class="lo-ch lo-ch-3">
-      <div class="lo-in lo-in-right">
-        <p class="lo-kicker">El sello</p>
-        <h2 class="lo-h2" data-lo-split>Despacho en Redondela: cita, papeles y un número que responde.</h2>
-        <div class="lo-matters"><article class="lo-matter"><em>01</em><div><h3>Consulta</h3><p>Os sentamos y oímos el asunto. Sin reloj de pasillo.</p></div></article><article class="lo-matter"><em>02</em><div><h3>Civil</h3><p>Contratos, reclamaciones y lo que se atasca entre vecinos.</p></div></article><article class="lo-matter"><em>03</em><div><h3>Familia</h3><p>Separaciones y tutelas. Discreción, no un escaparate.</p></div></article><article class="lo-matter"><em>04</em><div><h3>Laboral</h3><p>Despido, nómina y lo que la empresa no quiere oír.</p></div></article></div>
-      </div>
+    <section class="lo-in lo-in-3 lo-lane-right">
+      <p class="lo-kicker"><b>03</b>El sello</p>
+      <h2 class="lo-h2">Despacho en Redondela: cita, papeles y un número que responde.</h2>
+      <div class="lo-matters"><article class="lo-matter"><em>05</em><div><h3>Trámites</h3><p>Papeles que hay que presentar bien a la primera.</p></div></article><article class="lo-matter"><em>06</em><div><h3>Cita</h3><p>Llamáis. Os damos hora. No un formulario de tres páginas.</p></div></article></div>
     </section>
 
-    <section class="lo-ch lo-ch-4">
-      <div class="lo-in lo-in-centre">
-        <p class="lo-kicker">El teléfono</p>
-        <a class="lo-tel" href="tel:34986404870">+34 986 40 48 70</a>
-        <p class="lo-hours">Cita previa</p>
-        <p class="lo-addr">Rúa Reveriano Soutullo · Redondela</p>
-      </div>
+    <section class="lo-in lo-in-4 lo-lane-foot">
+      <p class="lo-kicker"><b>04</b>El teléfono</p>
+      <a class="lo-tel" href="tel:34986404870">+34 986 40 48 70</a>
+      <p class="lo-hours">Cita previa</p>
+      <p class="lo-addr">Rúa Reveriano Soutullo · Redondela</p>
     </section>
   </div>
+
+  <div class="lo-scroll" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 
 </div>
@@ -752,29 +647,51 @@ window.__splitB = function (panel) {
   });
   return out;
 };
-/* Abogados Luis Orge — the dossier that opens, in one scroll. This lead only.
+/* Abogados Luis Orge — el expediente que se abre. This lead only.
  *
- * The page IS the animation. One fixed stage holds the file; the markup
- * is an overlay of sticky chapters with no ground of their own. A single
- * damped progress p ∈ [0,1] drives everything.
+ * The page IS the drawing. One fixed SVG holds a desk in Reveriano
+ * Soutullo; the markup is a type layer in lanes that never cross the
+ * object, and the scroll column is empty spacers. A single damped
+ * progress p ∈ [0,1] drives the camera, the file and the copy, and the
+ * chapters are labelled sub-ranges of it.
  *
- *   00 · portada     the folder closed, the name arrives
- *   01 · el margen   the flap opens, the docket charges, leaders name the street
- *   02 · cláusulas   four sheets fan; articles stagger in; redaction lifts
- *   03 · el sello    the wax lands; the matters of the desk
- *   04 · el teléfono the file recedes; the number is the last frame
+ *   00 · atado        the file closed, tied with balduque. EXP. ---- / ---
+ *   01 · se desata    the knot pulls, the tape slides off, the number lands
+ *   02 · los folios   the cover swings, four folios turn — one per materia
+ *   03 · el sello     the stamp comes off the pad and prints in oxblood
+ *   04 · el teléfono  the handset lifts. The last frame is the number
  *
- * Named parts (25+): flap back, flap front, spine, tab, clip, punch a,
- * punch b, sheet 1–4, folio marks, rule head/mid/foot ×4, margin ticks,
- * redact 1–3, stamp ring, stamp disc, stamp text, street leader, phone
- * leader, docket, caption, desk grid, contact shadow.
+ * This is a lawyer's own object, drawn like its spec sheet. There is no
+ * toga, no scales, no gavel, and no Three.js. It is not Bar As Burgas's
+ * section, not Rustican's road, not Da Costa's recinto, not Garage
+ * Galicia's nave, not Bóuzas's reader and not Mesa do Miño's plate.
+ * A second abogado gets an empty hole.
  *
- * Rules: landings/heroes/ART-DIRECTION.md for look (page tokens,
- * hairline, no toon). Not «one mesh and stop».
+ * Named parts (ART-DIRECTION.md law 2) — 44, all of them things a client
+ * would name out loud:
+ *
+ *   carpeta   tapa trasera · tapa delantera · lomo · pestaña ·
+ *             etiqueta de la pestaña · solapa interior · esquina reforzada
+ *   cierre    balduque largo · balduque corto · nudo ·
+ *             cabo izquierdo · cabo derecho
+ *   folios    siete folios · encuadernador (dos varillas + pletina) ·
+ *             taladros · pauta · tres franjas tachadas · renglones ·
+ *             numeración de folio · firma
+ *   sello     mango · cuello · cuerpo · caucho · tampón ·
+ *             tapa del tampón · huella
+ *   teléfono  base · teclado (doce teclas) · horquilla · pulsador ·
+ *             placa · auricular · casquillo de boca ·
+ *             casquillo de oído · cable rizado
+ *   mesa      bolígrafo (cuerpo · capuchón · clip) ·
+ *             sombra de la carpeta · sombra del teléfono
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md, landings/heroes/FULL-PAGE-REPLAN.md.
  */
 
 window.__staticB = function (panel) {
-  panel.querySelectorAll(".lo-in > *, .lo-clause, .lo-matter, .lo-c").forEach(function (el) {
+  var root = panel.querySelector(".lo");
+  if (root) root.classList.add("lo-static");
+  panel.querySelectorAll(".lo-in, .lo-clause, .lo-matter").forEach(function (el) {
     el.style.opacity = "1";
     el.style.transform = "none";
   });
@@ -782,30 +699,609 @@ window.__staticB = function (panel) {
   if (cue) cue.remove();
   var docket = panel.querySelector("[data-lo-docket]");
   if (docket) docket.textContent = "EXP. 2026 / 184";
-  var flap = panel.querySelector(".lo-flap-front");
-  if (flap) flap.style.transform = "translateX(-108%)";
-  panel.querySelectorAll(".lo-redact").forEach(function (el) {
-    el.style.transform = "scaleX(0)";
-  });
-  var stamp = panel.querySelector(".lo-stamp");
-  if (stamp) stamp.style.opacity = "1";
 };
 
 window.__initB = function (A, panel) {
-  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
-      stagger = A.stagger;
+  var animate = A.animate, createTimeline = A.createTimeline,
+      onScroll = A.onScroll, stagger = A.stagger;
 
-  var stage = panel.querySelector(".lo-stage");
+  var root = panel.querySelector(".lo");
+  var stage = panel.querySelector(".lo-file");
   var scroller = panel.querySelector(".lo-scroll");
-  var file = panel.querySelector(".lo-file");
-  if (!stage || !scroller || !file) return;
+  if (!root || !stage || !scroller) return;
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.__staticB(panel);
     return;
   }
 
-  function splitText(el) {
+  /* The desk is built here, not in the markup: with JS off the panel is
+     a document and there is no empty drawing frame in it. */
+  var NS = "http://www.w3.org/2000/svg";
+  function svgEl(name, cls) {
+    var el = document.createElementNS(NS, name);
+    if (cls) el.setAttribute("class", cls);
+    return el;
+  }
+  var svg = svgEl("svg", "lo-svg");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+  var defs = svgEl("defs");
+  var blurF = svgEl("filter");
+  blurF.setAttribute("id", "loSoft");
+  blurF.setAttribute("x", "-60%");
+  blurF.setAttribute("y", "-60%");
+  blurF.setAttribute("width", "220%");
+  blurF.setAttribute("height", "220%");
+  var blur = svgEl("feGaussianBlur");
+  blur.setAttribute("stdDeviation", "13");
+  blurF.appendChild(blur);
+  defs.appendChild(blurF);
+  var gShadow = svgEl("g", "lo-shadows");
+  var gSolids = svgEl("g", "lo-solids");
+  var gMarks = svgEl("g", "lo-marks");
+  var gLeads = svgEl("g", "lo-leads");
+  [defs, gShadow, gSolids, gMarks, gLeads].forEach(function (n) { svg.appendChild(n); });
+  stage.appendChild(svg);
+
+  /* ---- scalars ---------------------------------------------------- */
+
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function span(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function ease(t) { return t * t * (3 - 2 * t); }
+  function mix(a, b, t) { return a + (b - a) * t; }
+  function seg(p, a, b) { return ease(span(p, a, b)); }
+
+  /* ---- colour: every material is a page token ---------------------- */
+
+  function hex(h) {
+    h = (h || "").trim().replace("#", "");
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    if (h.length !== 6 || isNaN(n)) return [128, 128, 128];
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function mixc(a, b, t) {
+    return [mix(a[0], b[0], t), mix(a[1], b[1], t), mix(a[2], b[2], t)];
+  }
+  function css(c, alpha) {
+    var s = "rgb(" + Math.round(clamp(c[0], 0, 255)) + "," +
+            Math.round(clamp(c[1], 0, 255)) + "," +
+            Math.round(clamp(c[2], 0, 255));
+    return alpha === undefined || alpha >= 1 ? s + ")" : s + "," + alpha.toFixed(3) + ")";
+  }
+
+  var cs = getComputedStyle(panel);
+  function tok(name, fb) {
+    var v = cs.getPropertyValue(name).trim();
+    return v && v.charAt(0) === "#" ? v : fb;
+  }
+  var INK = hex(tok("--st-fg", "#14100e"));
+  var GROUND = hex(tok("--st-bg", "#faf9f5"));
+  var ACCENT = hex(tok("--st-accent", "#9c2a1a"));
+  var SECOND = hex(tok("--st-second", "#2c3a4a"));
+
+  /* Three chromatic materials — paper, board, oxblood — plus ink and
+     the page's own ground. Nothing here is a colour of its own. */
+  var PAPER = mixc(GROUND, INK, 0.28);
+  var PAPER_2 = mixc(GROUND, INK, 0.36);
+  var BOARD = mixc(SECOND, GROUND, 0.22);
+  var BOARD_2 = mixc(SECOND, INK, 0.40);
+  var TAPE = ACCENT.slice();
+  var TAPE_2 = mixc(ACCENT, INK, 0.34);
+  var BODY = mixc(mixc(INK, SECOND, 0.46), GROUND, 0.24);
+  var METAL = mixc(GROUND, SECOND, 0.52);
+
+  /* ---- one light you can name -------------------------------------
+     The desk lamp: above, to the left, tipped a little forward — the
+     angle a banker's lamp actually sits at over an open file, so the
+     warmth lands on the paper and the board's near edge stays dark.
+     One fill only, cool, from the right: it keeps the folder's cut edge
+     from closing to black. No rim. */
+  function norm(v) {
+    var l = Math.hypot(v[0], v[1], v[2]) || 1;
+    return [v[0] / l, v[1] / l, v[2] / l];
+  }
+  var KEY = norm([-0.46, 0.82, 0.34]);
+  var FILL = norm([0.66, 0.24, 0.52]);
+  var AMB = 0.22, KEYI = 1.06, FILLI = 0.28;
+  var KTINT = [1.03, 1.00, 0.94];   /* tungsten */
+  var FTINT = [0.93, 0.97, 1.06];   /* the wall */
+
+  /* `thin` is for the folios only: paper is translucent, so a page
+     caught edge-on to the lamp is lit through rather than going to the
+     ambient floor. Without it a turning folio reads as a black card. */
+  function shade(base, n, thin) {
+    var kd = n[0] * KEY[0] + n[1] * KEY[1] + n[2] * KEY[2];
+    var fd = n[0] * FILL[0] + n[1] * FILL[1] + n[2] * FILL[2];
+    if (kd < 0) kd = thin ? -kd * 0.46 : 0;
+    if (fd < 0) fd = 0;
+    return [
+      base[0] * (AMB + KEYI * kd * KTINT[0] + FILLI * fd * FTINT[0]),
+      base[1] * (AMB + KEYI * kd * KTINT[1] + FILLI * fd * FTINT[1]),
+      base[2] * (AMB + KEYI * kd * KTINT[2] + FILLI * fd * FTINT[2])
+    ];
+  }
+
+  /* ---- camera ------------------------------------------------------ */
+
+  var cam = {
+    yaw: -0.30, pitch: 0.86, dist: 2600, zoom: 1.4,
+    cx: 0, cy: 0, tx: 0, ty: 0, tz: 0
+  };
+
+  function project(pt) {
+    var x = pt[0] - cam.tx, y = pt[1] - cam.ty, z = pt[2] - cam.tz;
+    var cw = Math.cos(cam.yaw), sw = Math.sin(cam.yaw);
+    var x1 = x * cw + z * sw, z1 = -x * sw + z * cw;
+    var ca = Math.cos(cam.pitch), sa = Math.sin(cam.pitch);
+    var y1 = y * ca - z1 * sa;
+    var dep = y * sa + z1 * ca;
+    var k = cam.zoom * cam.dist / Math.max(240, cam.dist - dep);
+    return [cam.cx + x1 * k, cam.cy - y1 * k, dep, k];
+  }
+
+  /* ---- prims: one pool of <path>, painter-sorted -------------------- */
+
+  var prims = [];
+  function face(pts, base, o) {
+    o = o || {};
+    var pr = [], dep = 0, i;
+    for (i = 0; i < pts.length; i++) {
+      var q = project(pts[i]);
+      pr.push(q);
+      dep += q[2];
+    }
+    dep /= pts.length;
+    var area = 0;
+    for (i = 0; i < pr.length; i++) {
+      var a = pr[i], b = pr[(i + 1) % pr.length];
+      area += a[0] * b[1] - b[0] * a[1];
+    }
+    var u = [pts[1][0] - pts[0][0], pts[1][1] - pts[0][1], pts[1][2] - pts[0][2]];
+    var v = [pts[2][0] - pts[0][0], pts[2][1] - pts[0][1], pts[2][2] - pts[0][2]];
+    var n = norm([
+      u[1] * v[2] - u[2] * v[1],
+      u[2] * v[0] - u[0] * v[2],
+      u[0] * v[1] - u[1] * v[0]
+    ]);
+    if (area > 0) n = [-n[0], -n[1], -n[2]];   /* paper has two sides */
+    var d = "M" + pr[0][0].toFixed(1) + " " + pr[0][1].toFixed(1);
+    for (i = 1; i < pr.length; i++) d += "L" + pr[i][0].toFixed(1) + " " + pr[i][1].toFixed(1);
+    prims.push({
+      d: d + "Z",
+      fill: css(shade(base, n, o.thin), o.alpha),
+      stroke: css(INK, (o.edge === undefined ? 0.22 : o.edge) * (o.alpha === undefined ? 1 : o.alpha)),
+      w: 1,
+      dep: (o.depAt === undefined ? dep : o.depAt) + (o.bias || 0)
+    });
+  }
+
+  function line(pts, colour, o) {
+    o = o || {};
+    var d = "", dep = 0;
+    for (var i = 0; i < pts.length; i++) {
+      var q = project(pts[i]);
+      d += (i ? "L" : "M") + q[0].toFixed(1) + " " + q[1].toFixed(1);
+      dep += q[2];
+    }
+    prims.push({
+      d: d + (o.close ? "Z" : ""),
+      fill: "none",
+      stroke: css(colour, o.alpha === undefined ? 0.5 : o.alpha),
+      w: o.w || 1,
+      /* Anything printed on a face must inherit that face's depth: a
+         rule near the far edge of a folio has a centroid well behind
+         the folio's own, and painter-sorts underneath it. */
+      dep: (o.depAt === undefined ? dep / pts.length : o.depAt)
+        + (o.bias === undefined ? 0.8 : o.bias)
+    });
+  }
+
+  /* a solid: eight corners through an optional transform */
+  function faceDep(pt) { return project(pt)[2]; }
+
+  function box(x0, y0, z0, w, h, d, base, xf, o) {
+    var X = [x0, x0 + w], Y = [y0, y0 + h], Z = [z0, z0 + d], c = [], i, j, k;
+    for (i = 0; i < 2; i++) for (j = 0; j < 2; j++) for (k = 0; k < 2; k++) {
+      var p = [X[i], Y[j], Z[k]];
+      c.push(xf ? xf(p) : p);
+    }
+    /* index = i*4 + j*2 + k */
+    var f = [
+      [0, 1, 3, 2], [4, 6, 7, 5],      /* x- , x+ */
+      [0, 4, 5, 1], [2, 3, 7, 6],      /* y- , y+ */
+      [0, 2, 6, 4], [1, 5, 7, 3]       /* z- , z+ */
+    ];
+    for (i = 0; i < 6; i++) {
+      face([c[f[i][0]], c[f[i][1]], c[f[i][2]], c[f[i][3]]], base, o);
+    }
+  }
+
+  /* rotation about a line parallel to Z */
+  function hinge(ax, ay, th) {
+    var c = Math.cos(th), s = Math.sin(th);
+    return function (p) {
+      var dx = p[0] - ax, dy = p[1] - ay;
+      return [ax + dx * c - dy * s, ay + dx * s + dy * c, p[2]];
+    };
+  }
+  /* rotation about a line parallel to X — the cover's far edge */
+  function hingeX(az, ay, th) {
+    var c = Math.cos(th), s = Math.sin(th);
+    return function (p) {
+      var dz = p[2] - az, dy = p[1] - ay;
+      return [p[0], ay + dz * s + dy * c, az + dz * c - dy * s];
+    };
+  }
+  function shift(dx, dy, dz, inner) {
+    return function (p) {
+      var q = inner ? inner(p) : p;
+      return [q[0] + dx, q[1] + dy, q[2] + dz];
+    };
+  }
+
+  /* ---- the desk ---------------------------------------------------- */
+
+  var SHEET_W = 210, SHEET_D = 297;
+  var HINGE = 105;            /* folios turn on the right edge */
+  var COVER_HINGE = 114;
+  var SHEETS = 7, TURNS = 4;  /* four turn over, one per materia */
+
+  function sheetY(i) { return 4.6 + (SHEETS - 1 - i) * 0.95; }
+
+  /* 04 · el teléfono: the file is closed and set aside before the hand
+     goes to the handset. Everything that belongs to the expediente
+     rides this one transform out of the frame. */
+  function shutFolios(p) { return seg(p, 0.760, 0.828); }
+  function shutLid(p) { return seg(p, 0.815, 0.878); }
+  function shutAside(p) { return seg(p, 0.845, 0.950); }
+  function fileOff(p, inner) {
+    var c = shutAside(p);
+    return shift(452 * c, 0, -206 * c, inner);
+  }
+  function sheetAngle(i, p) {
+    if (i >= TURNS) return 0;
+    return Math.PI * seg(p, 0.360 + i * 0.030, 0.478 + i * 0.030) * (1 - shutFolios(p));
+  }
+  function sheetXf(i, p) {
+    return fileOff(p, hinge(HINGE, sheetY(i), -sheetAngle(i, p)));
+  }
+
+  /* a point on folio i's printed face, in sheet coordinates */
+  function sheetPt(i, u, v, p, lift) {
+    return sheetXf(i, p)([u, sheetY(i) + 0.62 + (lift || 0), v]);
+  }
+
+  var CLAUSE_TITLES = ["Consulta", "Civil", "Familia", "Laboral"];
+  var marks = [];   /* {x, y, s, a, t, cls, op} */
+  var anchors = {};
+
+  function mark(pt, size, text, o) {
+    o = o || {};
+    var q = project(pt);
+    var q2 = project([pt[0] - 24, pt[1], pt[2]]);
+    marks.push({
+      x: q[0], y: q[1],
+      a: Math.atan2(q2[1] - q[1], q2[0] - q[0]) * 180 / Math.PI + 180,
+      s: Math.max(4, size * q[3]),
+      t: text,
+      op: o.alpha === undefined ? 0.62 : o.alpha,
+      fill: o.fill || css(INK),
+      weight: o.weight || 400,
+      track: o.track === undefined ? 0.14 : o.track,
+      family: o.family || null
+    });
+    return q;
+  }
+
+  function buildScene(p) {
+    prims.length = 0;
+    marks.length = 0;
+
+    var untie = seg(p, 0.115, 0.255);
+    var slide = seg(p, 0.200, 0.330);
+    var closed = shutAside(p);
+    var openC = seg(p, 0.235, 0.400) * (1 - shutLid(p));
+    var desk = 1 - seg(p, 0.770, 0.850);   /* the props clear first */
+    var FX = fileOff(p);
+    var unred = seg(p, 0.520, 0.630);
+    var stampT = span(p, 0.600, 0.740);
+    var lift = seg(p, 0.900, 0.985);
+
+    /* -- contact shadows: mandatory, or the file floats -------------- */
+    var sh = [];
+    var fanOut = 0;
+    for (var i = 0; i < TURNS; i++) fanOut += sheetAngle(i, p) / Math.PI;
+    fanOut /= TURNS;
+    sh.push({ c: project(FX([mix(-6, 44, openC), 0, 8])),
+              rx: mix(150, 268, Math.max(openC, fanOut)), ry: 96,
+              o: mix(0.30, 0.10, closed) });
+    sh.push({ c: project([-262, 0, mix(-286, -252, seg(p, 0.860, 0.960)) + 6]),
+              rx: 106, ry: 60, o: 0.08 + 0.18 * seg(p, 0.820, 0.940) });
+    sh.push({ c: project([-238, 0, -60]), rx: 132, ry: 74, o: 0.13 * desk });
+
+    /* -- la carpeta -------------------------------------------------- */
+    var coverXf = fileOff(p, hingeX(-158, 17.4, Math.PI * openC));
+
+    box(-113, 0, -158, 227, 3.4, 316, BOARD, FX, {});                      /* tapa trasera */
+    box(111, 0, -158, 7.4, 17.4, 316, BOARD_2, FX, {});                    /* lomo */
+    box(-113, 3.4, 118, 224, 2.0, 34, BOARD_2, FX, {});                    /* solapa interior */
+    box(-113, 14.0, -158, 227, 3.4, 316, BOARD, coverXf, {});              /* tapa delantera */
+    box(-96, 0, 158, 74, 3.4, 26, BOARD_2, FX, {});                        /* pestaña */
+    line([FX([-92, 3.5, 176]), FX([-26, 3.5, 176])],
+         ACCENT, { alpha: 0.6, w: 1.4 });                                  /* etiqueta */
+    face([coverXf([70, 17.5, -158]), coverXf([111, 17.5, -158]),
+          coverXf([111, 17.5, -117])], BOARD_2, { bias: -1.2 });           /* esquina reforzada */
+
+    /* la carátula, impresa en el interior de la tapa */
+    if (openC > 0.35) {
+      var lid = function (u, v) { return coverXf([u, 13.86, v]); };
+      var la = 0.5 * seg(p, 0.35, 0.62);
+      var lidD = faceDep(lid(0, -82));
+      line([lid(-92, -142), lid(92, -142), lid(92, -22), lid(-92, -22)],
+           INK, { alpha: la * 0.5, w: 1, close: true, depAt: lidD });
+      for (var lr = 0; lr < 6; lr++) {
+        line([lid(-78, -126 + lr * 17), lid(-78 + (lr === 0 ? 122 : (lr % 2 ? 148 : 96)), -126 + lr * 17)],
+             INK, { alpha: la * (lr === 0 ? 0.62 : 0.3), w: lr === 0 ? 2.4 : 1, depAt: lidD });
+      }
+      if (openC > 0.55) {
+        mark(lid(0, -52), 9.5, "EXPEDIENTE · REDONDELA",
+             { alpha: 0.5 * seg(p, 0.45, 0.62) * (1 - shutLid(p)), track: 0.2 });
+      }
+    }
+
+    mark(FX([-59, 3.6, 171]), 11, "ORGE",
+         { alpha: 0.85 * (1 - closed), fill: css(mixc(GROUND, SECOND, 0.06)), track: 0.3 });
+
+    /* -- el balduque -------------------------------------------------- */
+    var tapeOff = mix(0, 92, slide * slide);
+    var tapeA = 1 - seg(p, 0.215, 0.318);
+    if (tapeA > 0.01) {
+      var tapeXf = shift(0, -tapeOff * 0.14, tapeOff * 1.9, coverXf);
+      box(-113, 17.4, -14, 227, 2.4, 27, TAPE, tapeXf, { alpha: tapeA });   /* balduque largo */
+      box(-24, 17.4, -158, 25, 2.4, 316, TAPE_2, tapeXf, { alpha: tapeA });  /* balduque corto */
+      var knotXf = shift(0, mix(0, 15, untie), 0, tapeXf);
+      box(-25, 19.8, -17, 29, 7, 32, TAPE, knotXf, { alpha: tapeA });        /* nudo */
+      var flick = untie * 0.9;
+      box(-24, 19.0, 15, 19, 2.0, mix(22, 82, flick), TAPE_2, knotXf,
+          { alpha: tapeA * (1 - flick * 0.35) });                            /* cabo izquierdo */
+      box(-7, 19.0, -mix(37, 97, flick), 19, 2.0, mix(22, 82, flick), TAPE_2, knotXf,
+          { alpha: tapeA * (1 - flick * 0.35) });                            /* cabo derecho */
+      anchors.tape = project(knotXf([-10, 26, 0]));
+    }
+
+    /* -- el encuadernador ------------------------------------------- */
+    box(80, 3.4, -34, 6, 2.6, 68, METAL, FX, {});                          /* pletina */
+    box(82, 3.4, -33, 2.6, 12, 3, METAL, FX, {});                          /* varilla A */
+    box(82, 3.4, 30, 2.6, 12, 3, METAL, FX, {});                           /* varilla B */
+
+    /* -- los folios ---------------------------------------------------
+       Only one folio is ever legible: the one being turned, or — when
+       none is in the air — the one lying on top. Two labels at once and
+       the page reads as a stack of tooltips. */
+    var markSheet = TURNS, best = 9;
+    for (var q = 0; q < TURNS; q++) {
+      var qa = sheetAngle(q, p);
+      if (qa > 0.05 && qa < Math.PI - 0.05) {
+        var off = Math.abs(qa - Math.PI / 2);
+        if (off < best) { best = off; markSheet = q; }
+      }
+    }
+
+    for (var s = SHEETS - 1; s >= 0; s--) {
+      var th = sheetAngle(s, p);
+      var xf = sheetXf(s, p);
+      box(-105, sheetY(s), -SHEET_D / 2, SHEET_W, 0.62, SHEET_D, PAPER, xf,
+          { edge: 0.20, thin: true });
+      var sd = faceDep(sheetPt(s, 0, 0, p));
+      /* taladros */
+      line([sheetPt(s, 83, -34, p), sheetPt(s, 83, -30, p)], INK, { alpha: 0.5, w: 2.4, depAt: sd });
+      line([sheetPt(s, 83, 30, p), sheetPt(s, 83, 34, p)], INK, { alpha: 0.5, w: 2.4, depAt: sd });
+
+      var faceUp = Math.cos(th) > 0;      /* the printed side still showing */
+      var ink = faceUp ? 0.5 : 0.30;
+      /* <text> cannot be depth-sorted against the paths, so a folio only
+         gets its writing while it is genuinely the top of the pile: the
+         one being turned, or the first one still lying flat. */
+      var exposed = openC > 0.6 && s === markSheet;
+
+      if (exposed) {
+        mark(sheetPt(s, 66, -122, p), 8.4, "FOL. " + (s + 1 < 10 ? "0" : "") + (s + 1),
+             { alpha: 0.45 * (faceUp ? 1 : 0.3) });
+      }
+
+      /* tres renglones de encabezado */
+      for (var h = 0; h < 3; h++) {
+        line([sheetPt(s, -86, -128 + h * 11, p), sheetPt(s, -86 + (h === 2 ? 62 : 104), -128 + h * 11, p)],
+             INK, { alpha: ink * 0.62, w: h === 0 ? 2.2 : 1.2, depAt: sd });
+      }
+
+      /* pauta */
+      var rows = 11;
+      for (var r = 0; r < rows; r++) {
+        var draw = faceUp ? seg(p, 0.300 + r * 0.008, 0.400 + r * 0.008) : 1;
+        var wRow = (r % 4 === 3) ? 96 : (r % 3 === 0 ? 168 : 140);
+        line([sheetPt(s, -86, -76 + r * 15, p),
+              sheetPt(s, -86 + wRow * draw, -76 + r * 15, p)],
+             INK, { alpha: ink * 0.46, w: 1, depAt: sd });
+      }
+
+      if (s < TURNS && exposed) {
+        /* la materia, escrita en el folio que se pasa */
+        mark(sheetPt(s, -34, -100, p), 15,
+             "Art. 0" + (s + 1) + " · " + CLAUSE_TITLES[s],
+             { alpha: 0.78 * (faceUp ? 1 : 0.22), track: 0.02 });
+      }
+
+      if (s === TURNS) {
+        /* tres franjas tachadas que se abren */
+        for (var b = 0; b < 3; b++) {
+          var t = seg(p, 0.520 + b * 0.030, 0.630 + b * 0.030);
+          var w0 = 150 - b * 28;
+          if (t < 0.995) {
+            box(-86, sheetY(s) + 0.62, -46 + b * 22, w0 * (1 - t), 0.5, 9.5,
+                mixc(INK, GROUND, 0.1), xf, { edge: 0, depAt: sd, bias: 1.2 });
+          }
+          line([sheetPt(s, -86 + w0 * (1 - t), -41.5 + b * 22, p, 0.1),
+                sheetPt(s, -86 + w0, -41.5 + b * 22, p, 0.1)],
+               INK, { alpha: 0.42 * t, w: 2.2, depAt: sd, bias: 1.4 });
+        }
+        anchors.sheet = project(FX([84, 15, -34]));
+      }
+
+      if (s === SHEETS - 1) {
+        /* la firma */
+        var sig = [];
+        for (var g = 0; g <= 22; g++) {
+          var u = g / 22;
+          sig.push(sheetPt(s,
+            -70 + u * 84,
+            108 - Math.sin(u * 8.2) * 7 * (1 - u * 0.55) - u * 5, p, 0.2));
+        }
+        line(sig, INK, { alpha: 0.4, w: 1.6, depAt: sd });
+        line([sheetPt(s, -76, 120, p), sheetPt(s, 34, 120, p)],
+             INK, { alpha: 0.26, w: 1, depAt: sd });
+      }
+    }
+
+    /* -- el tampón y el sello ---------------------------------------- */
+    var padOpen = seg(p, 0.560, 0.660);
+    if (desk > 0.02) {
+      box(-268, 0, -128, 92, 15, 68, BOARD_2, null, { alpha: desk });      /* tampón */
+      box(-268, 15, -128, 92, 3, 68, mixc(ACCENT, INK, 0.52), null,
+          { alpha: desk });                                                /* almohadilla */
+      box(-268, 15, -128, 92, 3.4, 68, BOARD, hinge(-268, 16, padOpen * 2.1),
+          { alpha: desk });                                                /* tapa del tampón */
+    }
+
+    var travel = clamp(stampT * 1.6, 0, 1);
+    var press = Math.sin(clamp((stampT - 0.42) / 0.30, 0, 1) * Math.PI);
+    var sx = mix(-244, -34, ease(travel));
+    var sy = mix(4, 96 - 86 * press, ease(clamp(stampT * 2.0, 0, 1)));
+    var sz = mix(-94, 62, ease(travel));
+    if (stampT > 0.001 && desk > 0.05) {
+      var sa = desk;
+      box(sx - 36, sy, sz - 36, 72, 11, 72, TAPE_2, null, { alpha: sa });    /* caucho */
+      box(sx - 40, sy + 11, sz - 40, 80, 18, 80, BOARD, null, { alpha: sa }); /* cuerpo */
+      box(sx - 30, sy + 29, sz - 30, 60, 9, 60, BOARD_2, null, { alpha: sa });/* cuello */
+      box(sx - 17, sy + 38, sz - 17, 34, 48, 34, BODY, null, { alpha: sa });  /* mango */
+      anchors.stamp = project([sx, sy + 82, sz]);
+    }
+
+    /* la huella */
+    var printT = seg(p, 0.672, 0.752);
+    if (printT > 0.01) {
+      var ring = [], ring2 = [];
+      for (var a = 0; a <= 36; a++) {
+        var ang = a / 36 * Math.PI * 2;
+        ring.push(sheetPt(TURNS, -34 + Math.cos(ang) * 42, 62 + Math.sin(ang) * 42, p, 0.3));
+        ring2.push(sheetPt(TURNS, -34 + Math.cos(ang) * 33, 62 + Math.sin(ang) * 33, p, 0.3));
+      }
+      var hd = faceDep(sheetPt(TURNS, 0, 0, p));
+      line(ring, ACCENT, { alpha: 0.86 * printT, w: 2.4, depAt: hd, bias: 1.6 });
+      line(ring2, ACCENT, { alpha: 0.62 * printT, w: 1.2, depAt: hd, bias: 1.6 });
+      if (openC > 0.4) {
+        mark(sheetPt(TURNS, -34, 62, p, 0.3), 10, "REDONDELA",
+             { alpha: 0.9 * printT * seg(openC, 0.4, 0.6), fill: css(ACCENT), track: 0.22 });
+      }
+    }
+
+    /* -- el bolígrafo -------------------------------------------------- */
+    if (desk > 0.02) {
+      box(-252, 0, 24, 118, 9, 9, BODY, null, { alpha: desk });            /* cuerpo */
+      box(-270, 0, 24, 20, 9.6, 9.6, BOARD_2, null, { alpha: desk });      /* capuchón */
+      box(-268, 9, 28, 15, 2.2, 2.6, METAL, null, { alpha: desk });        /* clip */
+    }
+
+    /* -- el teléfono: al fondo de la mesa hasta que hace falta --------- */
+    var phoneIn = seg(p, 0.860, 0.960);
+    var px = -268, pz = mix(-286, -252, phoneIn);
+    box(px - 74, 0, pz - 58, 148, 22, 116, BODY, null, {});                /* base */
+    /* teclado: doce teclas */
+    var kd = faceDep([px, 22.3, pz]);
+    for (var kx = 0; kx < 3; kx++) {
+      for (var kz = 0; kz < 4; kz++) {
+        var ka = px - 34 + kx * 24, kb = pz - 34 + kz * 22;
+        face([[ka, 22.3, kb], [ka + 17, 22.3, kb], [ka + 17, 22.3, kb + 15], [ka, 22.3, kb + 15]],
+             mixc(GROUND, INK, 0.14), { depAt: kd, bias: 0.8, edge: 0.3 });
+      }
+    }
+    box(px - 62, 22, pz - 50, 14, 10, 24, BODY, null, {});                 /* horquilla A */
+    box(px - 62, 22, pz + 26, 14, 10, 24, BODY, null, {});                 /* horquilla B */
+    box(px - 58, 22, pz - 12, 9, 7 - 5 * ease(lift), 24, METAL, null, {}); /* pulsador */
+    line([[px - 60, 22.4, pz + 44], [px + 62, 22.4, pz + 44]],
+         ACCENT, { alpha: 0.42, w: 1.4, depAt: kd, bias: 0.9 });           /* placa */
+
+    /* el auricular se levanta y viene hacia la mesa, no gira sobre sí */
+    var hu = ease(lift);
+    var hXf = shift(6 * hu, 74 * hu, 34 * hu, hinge(px + 6, 31, -0.30 * hu));
+    box(px - 66, 31, pz - 17, 150, 15, 34, BODY, hXf, {});                 /* auricular */
+    box(px - 74, 26, pz - 23, 30, 25, 46, BODY, hXf, {});                  /* casquillo de oído */
+    box(px + 58, 26, pz - 23, 30, 25, 46, BODY, hXf, {});                  /* casquillo de boca */
+    if (hu > 0.05) anchors.phone = project(hXf([px + 74, 52, pz]));
+
+    /* cable rizado: determinista, se estira con el auricular */
+    var cordA = [px - 70, 14, pz + 34];
+    var cordB = hXf([px - 62, 30, pz + 18]);
+    var cord = [];
+    for (var t2 = 0; t2 <= 52; t2++) {
+      var u2 = t2 / 52;
+      var amp = 15 * (1 - hu * 0.38) * Math.sin(Math.min(1, u2 * 1.12) * Math.PI);
+      var ph = u2 * Math.PI * 11;
+      cord.push([
+        mix(cordA[0], cordB[0], u2) + Math.cos(ph) * amp,
+        mix(cordA[1], cordB[1], u2 * u2) - 9 * Math.sin(u2 * Math.PI) * (1 - hu),
+        mix(cordA[2], cordB[2], u2) + Math.sin(ph) * amp
+      ]);
+    }
+    line(cord, INK, { alpha: 0.44, w: 1.6 });
+
+    return sh;
+  }
+
+  /* ---- pools -------------------------------------------------------- */
+
+  var pool = [], POOL = 520;
+  for (var i = 0; i < POOL; i++) {
+    var pth = document.createElementNS(NS, "path");
+    gSolids.appendChild(pth);
+    pool.push(pth);
+  }
+  var textPool = [], TEXTS = 26;
+  for (i = 0; i < TEXTS; i++) {
+    var tx = document.createElementNS(NS, "text");
+    gMarks.appendChild(tx);
+    textPool.push(tx);
+  }
+  var shadowPool = [];
+  for (i = 0; i < 3; i++) {
+    var el = document.createElementNS(NS, "ellipse");
+    el.setAttribute("filter", "url(#loSoft)");
+    gShadow.appendChild(el);
+    shadowPool.push(el);
+  }
+
+  /* ---- leader lines: a label on a part, out to the margin ----------- */
+
+  var LEADERS = [
+    { key: "tape", text: "Balduque · nº 184", a: 0.115, b: 0.300, side: 1 },
+    { key: "sheet", text: "Encuadernador · folio 05", a: 0.430, b: 0.600, side: 1 },
+    { key: "stamp", text: "Sello de caucho", a: 0.618, b: 0.744, side: -1 },
+    { key: "phone", text: "Teléfono directo", a: 0.945, b: 1.30, side: 1 }
+  ];
+  var leadNodes = LEADERS.map(function (L) {
+    var g = document.createElementNS(NS, "g");
+    var pl = document.createElementNS(NS, "polyline");
+    var tt = document.createElementNS(NS, "text");
+    tt.textContent = L.text.toUpperCase();
+    g.appendChild(pl); g.appendChild(tt);
+    gLeads.appendChild(g);
+    return { g: g, pl: pl, tt: tt };
+  });
+
+  /* ---- copy --------------------------------------------------------- */
+
+  function splitChars(el) {
     if (!el || el.dataset.loDone) return [];
     el.dataset.loDone = "1";
     var out = [], frag = document.createDocumentFragment();
@@ -813,169 +1309,205 @@ window.__initB = function (A, panel) {
       if (!w) return;
       if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
       var word = document.createElement("span");
-      word.className = "lo-word";
-      for (var i = 0; i < w.length; i++) {
+      word.style.display = "inline-block";
+      word.style.whiteSpace = "nowrap";
+      for (var j = 0; j < w.length; j++) {
         var c = document.createElement("span");
         c.className = "lo-c";
-        c.textContent = w[i];
+        c.textContent = w[j];
         word.appendChild(c);
         out.push(c);
       }
       frag.appendChild(word);
+      frag.appendChild(document.createTextNode(" "));
     });
     el.textContent = "";
     el.appendChild(frag);
     return out;
   }
 
-  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
-  function span(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
-  function ease(t) { return t * t * (3 - 2 * t); }
-  function mix(a, b, t) { return a + (b - a) * t; }
+  var ins = [0, 1, 2, 3, 4].map(function (n) { return panel.querySelector(".lo-in-" + n); });
+  var clauses = panel.querySelectorAll(".lo-clause");
+  var matters = panel.querySelectorAll(".lo-matter");
+  var docket = panel.querySelector("[data-lo-docket]");
+  var cue = panel.querySelector(".lo-cue");
+  var nameChars = splitChars(panel.querySelector(".lo-name"));
 
-  var clock = { p: 0, settle: 0 };
+  /* Chapter windows. They are strictly ordered and never overlap by
+     more than the 0.03 handover, so two headlines can never be on the
+     screen at once — the defect this hero shipped with on 2-sep. */
+  var WIN = [
+    [-0.20, 0.000, 0.105, 0.150],
+    [0.130, 0.185, 0.300, 0.345],
+    [0.330, 0.385, 0.548, 0.592],
+    [0.578, 0.632, 0.742, 0.784],
+    [0.848, 0.908, 1.400, 1.500]
+  ];
+
+  var portrait = false;
+  var W = 0, H = 0;
+  function measure() {
+    var r = svg.getBoundingClientRect();
+    W = Math.max(320, r.width); H = Math.max(360, r.height);
+    svg.setAttribute("viewBox", "0 0 " + W.toFixed(0) + " " + H.toFixed(0));
+    portrait = W < 880;
+  }
+  measure();
+  addEventListener("resize", measure);
+
+  /* ---- the clock ---------------------------------------------------- */
+
+  var clock = { p: 0, intro: 0 };
   animate(clock, {
     p: [0, 1], duration: 1000, ease: "linear",
     autoplay: onScroll({
-      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.12
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
     })
   });
-  animate(clock, { settle: [0, 1], duration: 1400, delay: 180, ease: "outExpo" });
+  animate(clock, { intro: [0, 1], duration: 1500, delay: 140, ease: "outExpo" });
 
-  var nameChars = splitText(panel.querySelector(".lo-name"));
-  var claimChars = splitText(panel.querySelector(".lo-claim"));
-  panel.querySelectorAll(".lo-h2").forEach(splitText);
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".lo-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 620 }, 140);
+  intro.add(nameChars, { opacity: [0, 1], y: [46, 0], duration: 900, delay: stagger(15) }, 220);
+  intro.add(panel.querySelectorAll(".lo-claim, .lo-lead, .lo-cue"),
+    { opacity: [0, 1], y: [18, 0], duration: 720, delay: stagger(110) }, 640);
 
-  var intro = createTimeline({
-    defaults: { ease: "outExpo" },
-    onComplete: function () {
-      nameChars.concat(claimChars).forEach(function (c) { c.style.transform = "none"; });
-    }
-  });
-  intro.add(panel.querySelector(".lo-eyebrow"), { opacity: [0, 1], y: [12, 0], duration: 640 }, 160);
-  intro.add(nameChars, { opacity: [0, 1], y: [48, 0], duration: 980, delay: stagger(16) }, 240);
-  intro.add(claimChars, { opacity: [0, 1], y: [22, 0], duration: 720, delay: stagger(8) }, 720);
-  intro.add(panel.querySelectorAll(".lo-lead, .lo-cue"), {
-    opacity: [0, 1], y: [16, 0], duration: 700, delay: stagger(90)
-  }, 980);
-
-  var flapFront = panel.querySelector(".lo-flap-front");
-  var sheets = panel.querySelectorAll(".lo-sheet");
-  var stamp = panel.querySelector(".lo-stamp");
-  var redacts = panel.querySelectorAll(".lo-redact");
-  var ticks = panel.querySelectorAll(".lo-margin i");
-  var docket = panel.querySelector("[data-lo-docket]");
-  var leaders = panel.querySelectorAll(".lo-leader");
-  var caption = panel.querySelector(".lo-caption");
-  var cue = panel.querySelector(".lo-cue");
-  var ch0 = panel.querySelector(".lo-ch-0 .lo-in");
-  var ch1 = panel.querySelector(".lo-ch-1 .lo-in");
-  var ch2 = panel.querySelector(".lo-ch-2 .lo-in");
-  var ch3 = panel.querySelector(".lo-ch-3 .lo-in");
-  var ch4 = panel.querySelector(".lo-ch-4 .lo-in");
-  var clauses = panel.querySelectorAll(".lo-clause");
-  var matters = panel.querySelectorAll(".lo-matter");
-  var h2b = panel.querySelectorAll(".lo-ch-1 .lo-c, .lo-ch-3 .lo-c");
-  var grid = panel.querySelector(".lo-grid");
-  var shadow = panel.querySelector(".lo-shadow");
-
-  function fadeBlock(el, t) {
-    if (!el) return;
-    el.style.opacity = String(t);
-    el.style.transform = "translateY(" + mix(18, 0, t) + "px)";
-  }
+  /* ---- the frame ----------------------------------------------------- */
 
   function paint() {
     var p = clock.p;
-    var open = ease(span(p, 0.08, 0.28));
-    var fan = ease(span(p, 0.22, 0.52));
-    var lift = ease(span(p, 0.38, 0.58));
-    var wax = ease(span(p, 0.58, 0.74));
-    var close = ease(span(p, 0.80, 0.96));
-    var settle = clock.settle;
 
-    if (flapFront) {
-      flapFront.style.transform = "translateX(" + mix(0, -108, open) + "%)";
-      flapFront.style.opacity = String(mix(1, 0.12, open));
+    /* The camera keeps the object in the lane the copy is not using:
+       right for 00-02, left for 03, and up top for 04 with the number
+       under it. Nothing here ever lands on the type. */
+    var toStamp = seg(p, 0.580, 0.720);
+    var toPhone = seg(p, 0.850, 0.962);
+    cam.yaw = mix(-0.30, -0.15, seg(p, 0.180, 0.560)) + 0.13 * toPhone;
+    cam.pitch = mix(0.82, 0.97, seg(p, 0.150, 0.520)) - 0.22 * toPhone;
+    cam.tx = mix(0, 66, seg(p, 0.300, 0.560)) * (1 - toPhone) - 268 * toPhone;
+    cam.tz = -8 * toStamp - 246 * toPhone;
+    cam.ty = 6 + 24 * toPhone;
+
+    var fit = portrait ? Math.min(W / 730, H / 1420) : Math.min(W / 920, H / 800);
+    cam.zoom = fit * mix(1.0, 1.10, seg(p, 0.10, 0.40)) * mix(1, 0.95, toStamp)
+      * mix(1, portrait ? 1.95 : 1.34, toPhone);
+    cam.dist = 2600;
+    if (portrait) {
+      cam.cx = W * mix(0.52, 0.50, toPhone);
+      cam.cy = H * mix(0.335, 0.330, toPhone);
+    } else {
+      cam.cx = W * (mix(0.635, 0.600, seg(p, 0.300, 0.560))
+                    - 0.30 * toStamp + 0.12 * toPhone);
+      cam.cy = H * (mix(0.520, 0.560, seg(p, 0.150, 0.520))
+                    + 0.03 * toStamp - 0.245 * toPhone);
     }
 
-    sheets.forEach(function (sheet, i) {
-      var rot = mix(0, -3.2 - i * 3.4, fan);
-      var x = mix(0, 10 + i * 14, fan);
-      var y = mix(0, -6 - i * 8, fan);
-      sheet.style.transform = "translate(" + x + "px," + y + "px) rotate(" + rot + "deg)";
-    });
+    var sh = buildScene(p);
 
-    redacts.forEach(function (bar, i) {
-      var t = ease(span(p, 0.40 + i * 0.04, 0.56 + i * 0.04));
-      bar.style.transform = "scaleX(" + (1 - t) + ")";
-      bar.style.opacity = String(1 - t * 0.85);
-    });
-
-    ticks.forEach(function (tick, i) {
-      tick.style.opacity = String(mix(0.15, 1, ease(span(p, 0.10 + i * 0.006, 0.34))));
-    });
-
-    if (stamp) {
-      var s = mix(1.35, 1, wax);
-      stamp.style.opacity = String(wax);
-      stamp.style.transform = "scale(" + s + ") rotate(" + mix(16, -8, wax) + "deg)";
+    /* painter's algorithm: far first */
+    prims.sort(function (a, b) { return a.dep - b.dep; });
+    var n = Math.min(prims.length, POOL);
+    for (var i = 0; i < n; i++) {
+      var pr = prims[i], node = pool[i];
+      if (node.__d !== pr.d) { node.setAttribute("d", pr.d); node.__d = pr.d; }
+      if (node.__f !== pr.fill) { node.setAttribute("fill", pr.fill); node.__f = pr.fill; }
+      if (node.__s !== pr.stroke) { node.setAttribute("stroke", pr.stroke); node.__s = pr.stroke; }
+      if (node.__w !== pr.w) { node.setAttribute("stroke-width", pr.w); node.__w = pr.w; }
+    }
+    for (i = n; i < POOL; i++) {
+      if (pool[i].__d !== "") { pool[i].setAttribute("d", ""); pool[i].__d = ""; }
     }
 
-    if (file) {
-      var recede = mix(1, 0.72, close);
-      var down = mix(0, 36, close);
-      file.style.transform = "translateY(" + mix(18 * (1 - settle), down, 1) + "px) scale(" + mix(0.96 + 0.04 * settle, recede, close) + ")";
+    for (i = 0; i < TEXTS; i++) {
+      var tn = textPool[i], m = marks[i];
+      if (!m) { tn.setAttribute("opacity", "0"); continue; }
+      tn.setAttribute("opacity", m.op.toFixed(3));
+      tn.setAttribute("x", m.x.toFixed(1));
+      tn.setAttribute("y", m.y.toFixed(1));
+      tn.setAttribute("font-size", m.s.toFixed(2));
+      tn.setAttribute("letter-spacing", (m.track * m.s).toFixed(2));
+      tn.setAttribute("fill", m.fill);
+      tn.setAttribute("transform", "rotate(" + m.a.toFixed(2) + " " + m.x.toFixed(1) + " " + m.y.toFixed(1) + ")");
+      if (tn.textContent !== m.t) tn.textContent = m.t;
     }
-    if (shadow) shadow.style.opacity = String(mix(0.55, 0.18, close));
-    if (grid) grid.style.opacity = String(mix(0.55, 0.12, close));
 
-    leaders.forEach(function (el, i) {
-      var t = ease(span(p, 0.18 + i * 0.08, 0.36 + i * 0.08)) * (1 - close);
-      el.style.opacity = String(t);
-      el.style.transform = "translateX(" + mix(i ? 12 : -12, 0, t) + "px)";
-    });
+    for (i = 0; i < shadowPool.length; i++) {
+      var s2 = sh[i], sn = shadowPool[i];
+      sn.setAttribute("cx", s2.c[0].toFixed(1));
+      sn.setAttribute("cy", s2.c[1].toFixed(1));
+      sn.setAttribute("rx", (s2.rx * s2.c[3]).toFixed(1));
+      sn.setAttribute("ry", (s2.ry * s2.c[3] * Math.cos(cam.pitch) * 1.5).toFixed(1));
+      sn.setAttribute("fill", css(mixc(GROUND, INK, 0.72)));
+      sn.setAttribute("opacity", s2.o.toFixed(3));
+    }
 
-    if (caption) caption.style.opacity = String(mix(0, 0.8, open) * (1 - close));
+    /* leaders */
+    for (i = 0; i < LEADERS.length; i++) {
+      var L = LEADERS[i], nd = leadNodes[i], anc = anchors[L.key];
+      var vis = Math.min(span(p, L.a, L.a + 0.05), 1 - span(p, L.b - 0.05, L.b));
+      /* Portrait has no margin to call out into: only the last frame's
+         label fits, and it is the one that matters. */
+      if (!anc || vis <= 0.01 || (portrait && L.key !== "phone")) {
+        nd.g.setAttribute("opacity", "0");
+        continue;
+      }
+      var right = L.side > 0;
+      var colX = right ? (portrait ? W - 152 : W - 210) : (portrait ? 18 : 42);
+      var kneeX = right ? Math.max(anc[0] + 26, colX - 58)
+                        : Math.min(anc[0] - 26, colX + 58);
+      var kneeY = anc[1] - 46;
+      var endX = kneeX + (colX - kneeX) * vis;
+      nd.g.setAttribute("opacity", vis.toFixed(3));
+      nd.pl.setAttribute("points",
+        anc[0].toFixed(1) + "," + anc[1].toFixed(1) + " " +
+        kneeX.toFixed(1) + "," + kneeY.toFixed(1) + " " +
+        endX.toFixed(1) + "," + kneeY.toFixed(1));
+      nd.tt.setAttribute("x", colX.toFixed(1));
+      nd.tt.setAttribute("y", (kneeY - 9).toFixed(1));
+    }
+
+    /* copy */
+    for (i = 0; i < 5; i++) {
+      var w = WIN[i];
+      var t = Math.min(span(p, w[0], w[1]), 1 - span(p, w[2], w[3]));
+      if (i === 0) t = Math.min(t, clock.intro);
+      var el = ins[i];
+      if (!el) continue;
+      el.style.opacity = t.toFixed(3);
+      var dy = mix(26, 0, ease(clamp(t, 0, 1)));
+      var base = portrait ? "" : (i === 4 ? "translateX(-50%)" : "translateY(-50%)");
+      el.style.transform = base + " translateY(" + dy.toFixed(1) + "px)";
+      el.style.visibility = t < 0.004 ? "hidden" : "visible";
+    }
+
+    /* one clause per folio turned */
+    for (i = 0; i < clauses.length; i++) {
+      var ct = seg(p, 0.365 + i * 0.030, 0.462 + i * 0.030);
+      clauses[i].style.opacity = ct.toFixed(3);
+      clauses[i].style.transform = "translateY(" + mix(18, 0, ct).toFixed(1) + "px)";
+    }
+    for (i = 0; i < matters.length; i++) {
+      var mt = seg(p, 0.640 + i * 0.026, 0.712 + i * 0.026);
+      matters[i].style.opacity = mt.toFixed(3);
+      matters[i].style.transform = "translateY(" + mix(14, 0, mt).toFixed(1) + "px)";
+    }
 
     if (docket) {
-      var n = Math.round(mix(0, 184, ease(span(p, 0.10, 0.34))));
-      var year = String(2020 + Math.round(mix(0, 6, ease(span(p, 0.08, 0.22)))));
-      docket.textContent = "EXP. " + year + " / " + String(n).padStart(3, "0");
+      var dn = Math.round(mix(0, 184, seg(p, 0.130, 0.300)));
+      var dy2 = seg(p, 0.115, 0.230);
+      docket.textContent = dy2 < 0.02
+        ? "EXP. ---- / ---"
+        : "EXP. " + String(2020 + Math.round(6 * dy2)) + " / " + String(dn).padStart(3, "0");
     }
-
-    if (cue) cue.style.opacity = String(1 - span(p, 0.04, 0.12));
-
-    fadeBlock(ch0, (1 - span(p, 0.12, 0.22)) * settle);
-    fadeBlock(ch1, span(p, 0.16, 0.26) * (1 - span(p, 0.36, 0.46)));
-    fadeBlock(ch2, span(p, 0.38, 0.48) * (1 - span(p, 0.62, 0.70)));
-    fadeBlock(ch3, span(p, 0.64, 0.74) * (1 - span(p, 0.80, 0.88)));
-    fadeBlock(ch4, span(p, 0.82, 0.92));
-
-    clauses.forEach(function (el, i) {
-      var t = ease(span(p, 0.40 + i * 0.04, 0.52 + i * 0.04));
-      el.style.opacity = String(t);
-      el.style.transform = "translateY(" + mix(22, 0, t) + "px)";
-    });
-    matters.forEach(function (el, i) {
-      var t = ease(span(p, 0.66 + i * 0.03, 0.76 + i * 0.03));
-      el.style.opacity = String(t);
-      el.style.transform = "translateY(" + mix(18, 0, t) + "px)";
-    });
-    h2b.forEach(function (el, i) {
-      var t = ease(span(p, 0.18 + (i % 24) * 0.004, 0.30));
-      if (p > 0.6) t = ease(span(p, 0.64 + (i % 24) * 0.003, 0.74));
-      el.style.opacity = String(clamp(t, 0, 1));
-    });
+    if (cue) cue.style.opacity = String((1 - span(p, 0.02, 0.09)) * clock.intro);
   }
 
   var live = true;
-  function tick() {
+  (function frame() {
     if (!live) return;
     paint();
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+    requestAnimationFrame(frame);
+  })();
   panel.addEventListener("lo:stop", function () { live = false; }, { once: true });
 };
 
