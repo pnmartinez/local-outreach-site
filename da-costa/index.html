@@ -304,122 +304,351 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
     max-width: calc(100% - 96px);
   }
 }
-/* Da Costa — dark den, copper vignette. This lead only. */
-#dsgB .vb-trail,
-#dsgB .vb-stamp { display: none; }
-#dsgB .vb-name { perspective: 900px; }
-#dsgB .vb-eyebrow, #dsgB .vb-claim, #dsgB .vb-lead, #dsgB .vb-cta { opacity: 0; }
+/* Da Costa — Allariz as a closed town. This lead only.
+ *
+ * The page is a cadastral sheet: a square grid every 88px, because that
+ * is the paper a walled town is drawn on. Nothing else paints a ground —
+ * the render loop writes --dc-ground, so the gold that comes up at the
+ * door is a lighting change, not a section background. */
 
-/* No frame. The den is a pool of light that dissolves into the page, so
-   the animals sit in the layout instead of inside a sticker. */
-#dsgB .dc-field {
-  position: relative;
-  width: min(100%, 560px);
-  aspect-ratio: 16 / 11;
-  margin-bottom: 38px;
-  justify-self: center;
+#dsgB {
   background:
-    radial-gradient(44% 32% at 50% 56%, #2b221ad9 0%, #221b1580 42%, #1d171300 74%);
+    linear-gradient(var(--dc-line, var(--st-line)) 1px, transparent 1px) 0 0 / 100% 88px,
+    linear-gradient(90deg, var(--dc-line, var(--st-line)) 1px, transparent 1px) 0 0 / 88px 100%,
+    var(--dc-ground, var(--st-bg));
+  background-attachment: fixed, fixed, fixed;
+  color: var(--dc-fg, var(--st-fg));
+  font-family: "Nunito Sans", "DM Sans", system-ui, sans-serif;
+  overflow-x: clip;
 }
-#dsgB .dc-field:after {
-  content: "";
+
+#dsgB .dc { position: relative; }
+
+#dsgB .dc-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(34% 24% at 50% 58%, #c07a3a33, transparent 72%);
 }
-#dsgB .dc-view {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
+#dsgB .dc-view { display: block; width: 100%; height: 100%; }
+
+#dsgB .dc-rail {
+  background: transparent;
+  border: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px clamp(18px, 3.4vw, 52px);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--dc-fg, var(--st-fg));
 }
-#dsgB .dc-ficha {
-  position: absolute;
-  left: 8px;
-  bottom: 26px;
-  z-index: 2;
-  padding: 10px 14px;
-  background: color-mix(in srgb, #1a1714 82%, #d9a15a);
-  color: #f0e6d6;
-  border: 1px solid #d9a15a;
-  min-width: 140px;
-}
-#dsgB .dc-ficha[hidden] { display: none; }
-#dsgB .dc-name {
-  display: block;
+#dsgB .dc-brand {
   font-family: "Cormorant Garamond", var(--display);
   font-size: 22px;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
 }
-#dsgB .dc-who {
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: #d9a15a;
+#dsgB .dc-place { opacity: .78; margin-right: auto; }
+
+/* The readout the whole page is built on: 220 m from the wall, 0 m
+   at the door — Allariz is that small. */
+#dsgB .dc-m {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 5px 11px;
+  border: 1px solid color-mix(in srgb, var(--dc-fg, var(--st-fg)) 26%, transparent);
 }
-#dsgB .dc-token {
-  position: absolute;
-  right: 18px;
-  bottom: 44px;
-  z-index: 2;
-  border: 1px solid #d9a15a;
-  background: #d9a15a;
-  color: #1a1714;
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  padding: 8px 12px;
-  cursor: grab;
-  touch-action: none;
-}
-#dsgB .dc-hint {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -22px;
-  z-index: 3;
-  margin: 0;
-  text-align: center;
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #c98f4e;
+#dsgB .dc-m i { font-style: normal; opacity: .5; }
+#dsgB .dc-m-v {
+  min-width: 3.2ch;
+  text-align: right;
+  font-weight: 700;
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
 }
 
-#dsgB .dc-net { padding: clamp(40px, 7vw, 90px) var(--pad); }
-#dsgB .dc-net-k {
-  margin: 0 0 8px;
-  font-size: 12px;
-  letter-spacing: .16em;
+#dsgB .dc .dsg-switch {
+  border-color: color-mix(in srgb, var(--dc-fg, var(--st-fg)) 30%, transparent);
+  background: transparent;
+}
+#dsgB .dc .dsg-btn { color: color-mix(in srgb, var(--dc-fg, var(--st-fg)) 64%, transparent); }
+#dsgB .dc .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .dc-log {
+  position: fixed;
+  left: clamp(18px, 3.4vw, 52px);
+  bottom: 22px;
+  z-index: 4;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--dc-fg, var(--st-fg));
+  opacity: .92;
+  pointer-events: none;
+}
+#dsgB .dc-log-n { color: var(--st-accent); font-weight: 700; }
+#dsgB .dc-log-s { opacity: .82; font-variant-numeric: tabular-nums; }
+
+#dsgB .dc-scroll { position: relative; z-index: 2; }
+
+#dsgB .dc-ch { position: relative; }
+#dsgB .dc-ch-0 { height: 130vh; }
+#dsgB .dc-ch-1 { height: 380vh; }
+#dsgB .dc-ch-2 { height: 200vh; }
+#dsgB .dc-ch-3 { height: 150vh; }
+
+#dsgB .dc-in {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: center;
+  padding: 0 clamp(20px, 5vw, 88px);
+  pointer-events: none;
+}
+#dsgB .dc-in > * { pointer-events: auto; position: relative; z-index: 1; }
+#dsgB .dc-in-left { justify-items: start; text-align: left; max-width: 48ch; }
+#dsgB .dc-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
+
+#dsgB .dc-word { display: inline-block; white-space: nowrap; }
+#dsgB .dc-c { display: inline-block; will-change: transform, opacity; }
+
+#dsgB .dc-h2 .dc-c,
+#dsgB .dc-service,
+#dsgB .dc-ch-2 .dc-kicker,
+#dsgB .dc-ch-3 .dc-in > * { opacity: 0; }
+
+#dsgB .dc-eyebrow,
+#dsgB .dc-kicker {
+  margin: 0 0 20px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
   text-transform: uppercase;
   color: var(--st-accent);
 }
-#dsgB .dc-net-lead {
-  max-width: 36ch;
-  color: var(--st-dim);
-  margin: 0 0 28px;
-}
-#dsgB .dc-chips {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-#dsgB .dc-chip {
-  opacity: 0;
-  padding: 18px 16px;
-  border-top: 1px solid var(--st-line);
-}
-#dsgB .dc-chip b { display: block; font-size: 10px; letter-spacing: .2em; color: var(--st-accent); }
-#dsgB .dc-chip span {
+#dsgB .dc-name {
+  margin: 0;
   font-family: "Cormorant Garamond", var(--display);
-  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(52px, 10vw, 136px);
+  line-height: .86;
+  letter-spacing: -.02em;
+}
+#dsgB .dc-claim {
+  margin: 22px 0 0;
+  font-family: "Cormorant Garamond", var(--display);
+  font-size: clamp(22px, 3vw, 38px);
+  line-height: 1.12;
+  max-width: 16ch;
+  opacity: .95;
+}
+#dsgB .dc-lead {
+  margin: 20px 0 0;
+  max-width: 44ch;
+  font-size: 13px;
+  line-height: 1.8;
+  opacity: .88;
+}
+#dsgB .dc-cue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 42px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+#dsgB .dc-cue i { display: block; width: 44px; height: 1px; background: currentColor; }
+
+#dsgB .dc-steps { display: grid; }
+#dsgB .dc-step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .dc-step em {
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .28em;
+  color: var(--st-accent);
+}
+#dsgB .dc-step h2 {
+  margin: 10px 0 0;
+  font-family: "Cormorant Garamond", var(--display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(36px, 5.6vw, 76px);
+  line-height: .96;
+}
+#dsgB .dc-pk {
+  display: block;
+  margin: 4px 0 14px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--st-second);
+  font-variant-numeric: tabular-nums;
+}
+#dsgB .dc-step p {
+  margin: 0 0 0 auto;
+  max-width: 32ch;
+  font-size: 13px;
+  line-height: 1.75;
+  opacity: .82;
 }
 
-@media (max-width: 640px) {
-  #dsgB .dc-chips { grid-template-columns: 1fr; }
-  #dsgB .dc-field { aspect-ratio: 1 / 1; }
+#dsgB .dc-ch-2 .dc-in-left {
+  width: min(92vw, 940px);
+  max-width: none;
+  justify-items: stretch;
+}
+#dsgB .dc-h2 {
+  margin: 0 0 32px;
+  font-family: "Cormorant Garamond", var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 3.2vw, 44px);
+  line-height: 1.08;
+  max-width: 22ch;
+}
+#dsgB .dc-services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 40px;
+  width: 100%;
+}
+#dsgB .dc-service {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding-top: 15px;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+#dsgB .dc-service em {
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: var(--st-accent);
+}
+#dsgB .dc-service h3 {
+  margin: 0 0 5px;
+  font-family: "Cormorant Garamond", var(--display);
+  font-weight: 500;
+  font-size: 24px;
+}
+#dsgB .dc-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .78; }
+
+#dsgB .dc-tel {
+  font-family: "Cormorant Garamond", var(--display);
+  font-size: clamp(28px, 4.4vw, 58px);
+  font-style: italic;
+  text-decoration: none;
+  line-height: .96;
+  color: inherit;
+}
+#dsgB .dc-say { margin: 20px 0 0; max-width: 36ch; font-size: 13px; line-height: 1.7; opacity: .82; }
+#dsgB .dc-hours { margin: 18px 0 0; font-size: 12px; opacity: .78; }
+#dsgB .dc-addr {
+  margin: 8px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+
+#dsgB .dc-notes {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+#dsgB .dc-lead-line {
+  fill: none;
+  stroke: var(--dc-fg, var(--st-fg));
+  stroke-width: 1px;
+  stroke-opacity: .5;
+  vector-effect: non-scaling-stroke;
+}
+#dsgB .dc-note-dot { fill: var(--st-accent); }
+#dsgB .dc-note {
+  fill: var(--dc-fg, var(--st-fg));
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  #dsgB { background-attachment: scroll, scroll, scroll; }
+  #dsgB .dc-rail {
+    background: linear-gradient(
+      180deg,
+      var(--dc-ground, var(--st-bg)) 0%,
+      color-mix(in srgb, var(--dc-ground, var(--st-bg)) 82%, transparent) 62%,
+      transparent
+    );
+  }
+  #dsgB .dc-place { display: none; }
+  #dsgB .dc-name { font-size: clamp(36px, 12vw, 52px); }
+  #dsgB .dc-in {
+    padding: 0 20px 13vh;
+    align-content: end;
+  }
+  #dsgB .dc-in::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 74%;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--dc-ground, var(--st-bg)) 0%, transparent) 0%,
+      color-mix(in srgb, var(--dc-ground, var(--st-bg)) 94%, transparent) 16%,
+      var(--dc-ground, var(--st-bg)) 34%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  #dsgB .dc-in-right { text-align: left; justify-items: start; margin-left: 0; }
+  #dsgB .dc-step p { margin-left: 0; }
+  #dsgB .dc-services { grid-template-columns: 1fr; gap: 14px; }
+  #dsgB .dc-m { display: none; }
+  #dsgB .dc-lead { font-size: 15px; opacity: .92; }
+  #dsgB .dc-claim { opacity: 1; }
+  #dsgB .dc-cue { opacity: .78; }
+  #dsgB .dc-step p,
+  #dsgB .dc-service p,
+  #dsgB .dc-say { opacity: .92; }
+  #dsgB .dc-note { font-size: 9px; letter-spacing: .1em; }
+  #dsgB .dc-log {
+    font-size: 10px;
+    bottom: 12px;
+    gap: 8px;
+    opacity: 1;
+  }
+  #dsgB .dc-ch-1 { height: 420vh; }
 }
 
 </style>
@@ -457,74 +686,63 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 
 </div>
 <div id="dsgB" hidden>
+<div class="dc dc-field">
+  <div class="dc-stage" aria-hidden="true">
+    <canvas class="dc-view"></canvas>
+  </div>
 
-<div class="vb">
-  <header class="vb-rail">
-    <span class="vb-brand">Da Costa</span>
-    <span class="vb-open">Allariz · L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</span>
+  <header class="dc-rail">
+    <span class="dc-brand">Da Costa</span>
+    <span class="dc-place">Allariz</span>
+    <span class="dc-m"><i class="dc-m-k">M</i><b class="dc-m-v">220</b></span>
     <div class="dsg-switch" role="group" aria-label="Elegir diseño">
     <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
     <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
   </div>
   </header>
 
-  <section class="vb-hero">
-    <!-- slot:hero-3d -->
-<div class="dc-field">
-  <canvas class="dc-view"></canvas>
-  <div class="dc-ficha" hidden>
-    <b class="dc-name"></b>
-    <span class="dc-who"></span>
+  <div class="dc-log" aria-hidden="true">
+    <b class="dc-log-n">00</b>
+    <span class="dc-log-t">O recinto</span>
+    <span class="dc-log-s">+220 m · a muralla</span>
   </div>
-  <p class="dc-hint">Allariz es pequeño. Os recordamos.</p>
-</div>
 
-<!-- /slot:hero-3d -->
-    <div class="vb-hero-copy">
-      <p class="vb-eyebrow">Rúa Santo Estevo · Allariz</p>
-      <h1 class="vb-name" data-split>Da Costa</h1>
-      <p class="vb-claim">El vet de Allariz. Cerca de casa.</p>
-      <p class="vb-lead">Consulta en Santo Estevo. Perro de aldea o gato del casco: os atienden sin mandaros a Ourense por un control.</p>
-      <div class="vb-actions">
-        <a class="vb-cta" href="https://wa.me/34631669355">Urgencias · WhatsApp</a>
-        <a class="vb-ghost" href="tel:34631669355">+34 631 669 355</a>
+  <div class="dc-scroll">
+    <section class="dc-ch dc-ch-0">
+      <div class="dc-in dc-in-left">
+        <p class="dc-eyebrow">Rúa Santo Estevo · Allariz</p>
+        <h1 class="dc-name" data-dc-split>Da Costa</h1>
+        <p class="dc-claim" data-dc-split>El vet de Allariz. Cerca de casa.</p>
+        <p class="dc-lead">Consulta en Santo Estevo. Perro de aldea o gato del casco: os atienden sin mandaros a Ourense por un control.</p>
+        <p class="dc-cue"><i></i>Entra</p>
       </div>
-    </div>
-    <svg class="vb-trail" viewBox="0 0 760 200" aria-hidden="true"><g class="vb-paw" transform="rotate(74 90.0 82.0)"><ellipse cx="90.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="75.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 75.0 71.7)"/><ellipse cx="84.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 84.8 65.3)"/><ellipse cx="95.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 95.2 65.3)"/><ellipse cx="105.0" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 105.0 71.7)"/></g><g class="vb-paw" transform="rotate(78 240.0 110.0)"><ellipse cx="240.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="225.1" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 225.1 99.7)"/><ellipse cx="234.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 234.8 93.3)"/><ellipse cx="245.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 245.2 93.3)"/><ellipse cx="254.9" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 254.9 99.7)"/></g><g class="vb-paw" transform="rotate(82 390.0 82.0)"><ellipse cx="390.0" cy="88.9" rx="13.8" ry="11.5"/><ellipse cx="375.1" cy="71.7" rx="6.0" ry="7.8" transform="rotate(-22 375.1 71.7)"/><ellipse cx="384.8" cy="65.3" rx="6.0" ry="7.8" transform="rotate(-8 384.8 65.3)"/><ellipse cx="395.2" cy="65.3" rx="6.0" ry="7.8" transform="rotate(8 395.2 65.3)"/><ellipse cx="404.9" cy="71.7" rx="6.0" ry="7.8" transform="rotate(22 404.9 71.7)"/></g><g class="vb-paw" transform="rotate(86 540.0 110.0)"><ellipse cx="540.0" cy="116.9" rx="13.8" ry="11.5"/><ellipse cx="525.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(-22 525.0 99.7)"/><ellipse cx="534.8" cy="93.3" rx="6.0" ry="7.8" transform="rotate(-8 534.8 93.3)"/><ellipse cx="545.2" cy="93.3" rx="6.0" ry="7.8" transform="rotate(8 545.2 93.3)"/><ellipse cx="555.0" cy="99.7" rx="6.0" ry="7.8" transform="rotate(22 555.0 99.7)"/></g></svg>
-  </section>
+    </section>
 
-  <section class="vb-care-sec">
-    <p class="vb-kicker">Lo que hacemos</p>
-    <h2 class="vb-h2" data-split>Veterinario en Allariz: consulta, vacunas y un móvil que responde.</h2>
-    <div class="vb-care-grid"><article class="vb-care"><span class="vb-care-n">01</span><h3>Consulta</h3><p>Mesa, tiempo y que el dueño se quede dentro.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">02</span><h3>Vacunas</h3><p>El calendario, sin cita perdida en otra villa.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">03</span><h3>Chip</h3><p>Alta y lectura. El papel se queda hecho.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">04</span><h3>Revisión</h3><p>Oídos, piel y peso. Lo de siempre, bien hecho.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">05</span><h3>Urgencia local</h3><p>Si se puede ver hoy, se ve hoy. Si no, os decimos dónde.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article><article class="vb-care"><span class="vb-care-n">06</span><h3>Consejo</h3><p>Pienso, celo y viajes. Preguntad, que contestamos.</p><svg class="vb-stamp" viewBox="0 0 60 60" aria-hidden="true"><g class="vb-stamp-p" transform="rotate(0 30.0 38.0)"><ellipse cx="30.0" cy="45.5" rx="15.0" ry="12.5"/><ellipse cx="13.8" cy="26.8" rx="6.5" ry="8.5" transform="rotate(-22 13.8 26.8)"/><ellipse cx="24.4" cy="19.9" rx="6.5" ry="8.5" transform="rotate(-8 24.4 19.9)"/><ellipse cx="35.6" cy="19.9" rx="6.5" ry="8.5" transform="rotate(8 35.6 19.9)"/><ellipse cx="46.2" cy="26.8" rx="6.5" ry="8.5" transform="rotate(22 46.2 26.8)"/></g></svg></article></div>
-  </section>
+    <section class="dc-ch dc-ch-1">
+      <div class="dc-in dc-in-right">
+        <p class="dc-kicker">O paseo</p>
+        <div class="dc-steps"><article class="dc-step" data-step="0"><em>01</em><h2>A porta</h2><b class="dc-pk">+220 m</b><p>Entras por la muralla. Allariz cabe en un paseo.</p></article><article class="dc-step" data-step="1"><em>02</em><h2>O Arnoia</h2><b class="dc-pk">+140 m</b><p>El río baja al lado. No hay que cruzar la ciudad.</p></article><article class="dc-step" data-step="2"><em>03</em><h2>As rúas</h2><b class="dc-pk">+70 m</b><p>Casas que se tocan. Aquí no se pierde nadie.</p></article><article class="dc-step" data-step="3"><em>04</em><h2>Santo Estevo</h2><b class="dc-pk">0 m</b><p>La consulta. Ya os conocen.</p></article></div>
+      </div>
+    </section>
 
-  <!-- slot:stage-3d -->
-<section class="dc-net">
-  <p class="dc-net-k">La consulta que os conoce</p>
-  <p class="dc-net-lead">Cuando el campo se cierra, quedan tres gestos. Los de siempre.</p>
-  <div class="dc-chips">
-    <article class="dc-chip"><b>01</b><span>Consulta</span></article>
-    <article class="dc-chip"><b>02</b><span>Vacunas</span></article>
-    <article class="dc-chip"><b>03</b><span>Chip</span></article>
+    <section class="dc-ch dc-ch-2">
+      <div class="dc-in dc-in-left">
+        <p class="dc-kicker">Santo Estevo</p>
+        <h2 class="dc-h2" data-dc-split>Veterinario en Allariz: consulta, vacunas y un móvil que responde.</h2>
+        <div class="dc-services"><article class="dc-service"><em>01</em><div><h3>Consulta</h3><p>Mesa, tiempo y que el dueño se quede dentro.</p></div></article><article class="dc-service"><em>02</em><div><h3>Vacunas</h3><p>El calendario, sin cita perdida en otra villa.</p></div></article><article class="dc-service"><em>03</em><div><h3>Chip</h3><p>Alta y lectura. El papel se queda hecho.</p></div></article><article class="dc-service"><em>04</em><div><h3>Revisión</h3><p>Oídos, piel y peso. Lo de siempre, bien hecho.</p></div></article></div>
+      </div>
+    </section>
+
+    <section class="dc-ch dc-ch-3">
+      <div class="dc-in dc-in-right">
+        <p class="dc-kicker">Os recordamos</p>
+        <a class="dc-tel" href="tel:34631669355">+34 631 669 355</a>
+        <p class="dc-say">Allariz es pequeño. Os recordamos.</p>
+        <p class="dc-hours">L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</p>
+        <p class="dc-addr">Rúa Santo Estevo · Allariz</p>
+      </div>
+    </section>
   </div>
-</section>
-
-<!-- /slot:stage-3d -->
-
-  <section class="vb-hours">
-    <div class="vb-hours-grid">
-      <div><span>Dónde</span><b>Rúa Santo Estevo, Allariz</b></div>
-      <div><span>Horario</span><b>L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</b></div>
-      <div><span>Teléfono</span><b>+34 631 669 355</b></div>
-    </div>
-    <a class="vb-cta vb-cta-big" href="https://wa.me/34631669355">Escribir por WhatsApp</a>
-  </section>
-
-  <footer class="vb-foot">
-    <span>Da Costa</span>
-    <span>L–V 10:00–13:00 / 17:00–20:00 · S 10:00–13:00</span>
-  </footer>
 </div>
 
 </div>
@@ -589,330 +807,697 @@ window.__splitB = function (panel) {
   });
   return out;
 };
-function dcRoster() {
-  return [
-    ["Xoco", "pastor", 7], ["Millo", "cruce", 11], ["Nube", "gato", 2], ["Roco", "galgo", 7],
-    ["Bica", "mestiza", 4], ["Uxía", "gato", 3], ["Branco", "labrador", 9], ["Pita", "gato", 6],
-    ["Lume", "setter", 5], ["Cova", "gato", 8], ["Tinto", "podenco", 10], ["Marela", "gato", 1],
-    ["Paxaro", "cruce", 4], ["Lúa", "gato", 5], ["Ferro", "mastín", 8], ["Sombra", "gato", 12],
-    ["Trigo", "collie", 6], ["Chispa", "gato", 3], ["Vento", "galgo", 4], ["Mel", "gato", 7],
-    ["Pebre", "terrier", 5], ["Neno", "gato", 2], ["Folla", "cruce", 9], ["Grao", "gato", 4],
-    ["Castaña", "labrador", 11], ["Bieito", "gato", 6], ["Ría", "podenco", 3], ["Centeo", "pastor", 8],
-    ["Brétema", "gato", 4], ["Carozo", "cruce", 7], ["Xesta", "gato", 5], ["Touciño", "mastín", 10],
-    ["Areeiro", "gato", 2], ["Muxía", "setter", 6], ["Pemento", "cruce", 5], ["Camiño", "gato", 8]
-  ];
-}
+/* Da Costa — Allariz as a closed town, in one scroll. This lead only.
+ *
+ * The page IS the drawing. One fixed canvas holds a cadastral plan of
+ * the walled casco; the markup is an overlay of sticky chapters with no
+ * ground of their own. A single damped progress p ∈ [0,1] drives
+ * everything, and the chapters are labelled sub-ranges of it.
+ *
+ *   00 · o recinto     the wall from above, the whole town in one sheet
+ *   01 · o paseo       the camera drops through the porta and walks the
+ *                      rúas; the readout counts the 220 m in
+ *   02 · santo estevo  the street arrives at the church and the clinic
+ *   03 · os recordamos the door, the phone, 0 m — they already know you
+ *
+ * This is a closed ring, walked inward. It is not Clínica Rustican's
+ * road, and it is not thirty-six silhouettes spinning in a box.
+ *
+ * 220 m is the figure the whole page is built on: Allariz is that
+ * small. The last readout is 0 m.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md and
+ * landings/heroes/FULL-PAGE-REPLAN.md.
+ */
 
 window.__staticB = function (panel) {
-  window.__splitB(panel);
-  panel.querySelectorAll(".vb-c, .vb-eyebrow, .vb-claim, .vb-lead, .vb-cta").forEach(function (el) {
+  panel.querySelectorAll(".dc-step, .dc-service, .dc-in > *, .dc-h2 .dc-c, .dc-kicker").forEach(function (el) {
     el.style.opacity = "1";
     el.style.transform = "none";
   });
-  panel.querySelectorAll(".vb-paw").forEach(function (p) { p.style.opacity = ".7"; });
-  panel.querySelectorAll(".dc-chip").forEach(function (c) { c.style.opacity = "1"; });
-  var hint = panel.querySelector(".dc-hint");
-  if (hint) hint.remove();
-  var ficha = panel.querySelector(".dc-ficha");
-  if (ficha) {
-    ficha.hidden = false;
-    ficha.querySelector(".dc-name").textContent = "Xoco";
-    ficha.querySelector(".dc-who").textContent = "pastor · 7 años";
-  }
+  var cue = panel.querySelector(".dc-cue");
+  if (cue) cue.remove();
+  panel.querySelectorAll(".dc-step").forEach(function (el, i) {
+    el.style.position = "static";
+    el.style.marginBottom = i < 3 ? "40px" : "0";
+  });
+  var steps = panel.querySelector(".dc-steps");
+  if (steps) steps.style.display = "block";
+  var log = panel.querySelector(".dc-log");
+  if (log) log.remove();
+  var m = panel.querySelector(".dc-m");
+  if (m) m.remove();
+  panel.style.setProperty("--dc-ground", "");
+  panel.style.setProperty("--dc-fg", "");
 };
 
 window.__initB = function (A, panel) {
   var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
       stagger = A.stagger;
 
+  var stage = panel.querySelector(".dc-stage");
+  var view = panel.querySelector(".dc-view");
+  var scroller = panel.querySelector(".dc-scroll");
+  if (!stage || !view || !scroller) return;
+
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.__staticB(panel);
     return;
   }
 
-  window.__splitB(panel);
-  var intro = createTimeline({ defaults: { ease: "outExpo" } });
-  intro.add(panel.querySelectorAll(".vb-hero .vb-c"), {
-    y: [70, 0], rotateX: [-84, 0], opacity: [0, 1], duration: 900, delay: stagger(15)
-  }, 0);
-  intro.add(panel.querySelectorAll(".vb-eyebrow, .vb-claim, .vb-lead, .vb-cta"), {
-    y: [26, 0], opacity: [0, 1], duration: 760, delay: stagger(80)
-  }, 180);
-  intro.add(panel.querySelectorAll(".vb-paw"), {
-    opacity: [0, 0.7], duration: 900, delay: stagger(80)
-  }, 400);
-
-  var pack = { k: 0 };
-  var stage = panel.querySelector(".dc-net");
-  if (stage) {
-    animate(pack, {
-      k: 1, duration: 1400, ease: "inOutCubic",
-      autoplay: onScroll({ target: stage, enter: "top 80%", leave: "bottom 20%", sync: 0.5 })
+  function splitText(el) {
+    if (!el || el.dataset.dcDone) return [];
+    el.dataset.dcDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var word = document.createElement("span");
+      word.className = "dc-word";
+      for (var i = 0; i < w.length; i++) {
+        var c = document.createElement("span");
+        c.className = "dc-c";
+        c.textContent = w[i];
+        word.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(word);
     });
-    animate(panel.querySelectorAll(".dc-chip"), {
-      opacity: [0, 1], y: [20, 0], duration: 700, delay: stagger(90), ease: "outExpo",
-      autoplay: onScroll({ target: stage, enter: "bottom-=80 top" })
-    });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
   }
 
-  var field = panel.querySelector(".dc-field");
-  var cv = panel.querySelector(".dc-view");
-  var ficha = panel.querySelector(".dc-ficha");
-  var nameEl = panel.querySelector(".dc-name");
-  var whoEl = panel.querySelector(".dc-who");
-  if (!field || !cv) return;
+  var state = { p: 0, settle: 0, idle: 0 };
+  animate(state, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
+    })
+  });
+  animate(state, { settle: [0, 1], duration: 1400, delay: 220, ease: "outElastic(1, 0.78)" });
+  animate(state, { idle: [0, Math.PI * 2], duration: 18000, ease: "linear", loop: true });
+
+  var nameChars = splitText(panel.querySelector(".dc-name"));
+  var claimChars = splitText(panel.querySelector(".dc-claim"));
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".dc-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 700 }, 200);
+  intro.add(nameChars, { opacity: [0, 1], y: [64, 0], duration: 1100, delay: stagger(18) }, 300);
+  intro.add(claimChars, { opacity: [0, 1], y: [24, 0], duration: 760, delay: stagger(8) }, 820);
+  intro.add(panel.querySelectorAll(".dc-lead, .dc-cue"), {
+    opacity: [0, 1], y: [16, 0], duration: 740, delay: stagger(100)
+  }, 1080);
+
+  splitText(panel.querySelector(".dc-h2"));
+  var h2Chars = panel.querySelectorAll(".dc-h2 .dc-c");
+  var serviceEls = panel.querySelectorAll(".dc-service");
+  var deskEls = panel.querySelectorAll(".dc-ch-3 .dc-in > *");
+  var stepEls = panel.querySelectorAll(".dc-step");
+  var ch0 = panel.querySelector(".dc-ch-0 .dc-in");
+  var ch1 = panel.querySelector(".dc-ch-1 .dc-in");
+  var kicker2 = panel.querySelector(".dc-ch-2 .dc-kicker");
+  var ch2 = panel.querySelector(".dc-ch-2 .dc-in");
+  var logN = panel.querySelector(".dc-log-n");
+  var logT = panel.querySelector(".dc-log-t");
+  var logS = panel.querySelector(".dc-log-s");
+  var mK = panel.querySelector(".dc-m-k");
+  var mV = panel.querySelector(".dc-m-v");
 
   import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
-    var tiny = matchMedia("(max-width: 700px)").matches;
-    var gpu = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
-    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.4 : 2));
-    gpu.setClearColor(0x000000, 0);
-
-    var world = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(36, 1, 0.1, 40);
-    camera.position.set(0, 0.86, tiny ? 4.35 : 3.30);
-    camera.lookAt(0, 0.10, -0.34);
-
-    var data = new Uint8Array([0, 85, 170, 255]);
-    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
-    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
-    ramp.needsUpdate = true;
-
-    function toon(color, extra) {
-      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
-      if (extra) Object.assign(mat, extra);
-      return mat;
+    var css = getComputedStyle(panel);
+    function tok(name, fallback) {
+      var v = css.getPropertyValue(name).trim();
+      return new THREE.Color(v || fallback);
     }
-    var ink = new THREE.MeshBasicMaterial({ color: 0x120e0a, side: THREE.BackSide });
-    function inked(mesh, s) {
-      var shell = new THREE.Mesh(mesh.geometry, ink);
-      shell.scale.setScalar(s || 1.05);
-      mesh.add(shell);
+    var GROUND = tok("--st-bg", "#f6f0e6");
+    var INK = tok("--st-fg", "#1a1714");
+    var ACCENT = tok("--st-accent", "#d9a15a");
+    var SECOND = tok("--st-second", "#7d4a2b");
+    var LINE = tok("--st-line", "#d8cfc2");
+
+    function mix(a, b, t) {
+      var A = a.clone().convertLinearToSRGB();
+      return A.lerp(b.clone().convertLinearToSRGB(), t).convertSRGBToLinear();
+    }
+    function parseHex(h) {
+      h = String(h || "").replace("#", "");
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [
+        parseInt(h.slice(0, 2), 16) / 255,
+        parseInt(h.slice(2, 4), 16) / 255,
+        parseInt(h.slice(4, 6), 16) / 255
+      ];
+    }
+    function toHex(rgb) {
+      return "#" + rgb.map(function (c) {
+        var n = Math.round(Math.min(1, Math.max(0, c)) * 255);
+        return (n + 256).toString(16).slice(1);
+      }).join("");
+    }
+    function mixHex(a, b, t) {
+      var A = parseHex(a), B = parseHex(b);
+      return toHex([
+        A[0] + (B[0] - A[0]) * t,
+        A[1] + (B[1] - A[1]) * t,
+        A[2] + (B[2] - A[2]) * t
+      ]);
+    }
+    function lerpHex(a, b, t) {
+      if (t <= 0) return a;
+      if (t >= 1) return b;
+      return mixHex(a, b, t);
+    }
+    var HEX_GROUND = css.getPropertyValue("--st-bg").trim() || "#f6f0e6";
+    var HEX_INK = css.getPropertyValue("--st-fg").trim() || "#1a1714";
+    var HEX_ACCENT = css.getPropertyValue("--st-accent").trim() || "#d9a15a";
+    var HEX_LINE = css.getPropertyValue("--st-line").trim() || "#d8cfc2";
+    var H_DUSK = mixHex(HEX_GROUND, HEX_INK, 0.10);
+    var H_GOLD = mixHex(HEX_GROUND, HEX_ACCENT, 0.06);
+    var H_LN_DUSK = mixHex(HEX_LINE, HEX_INK, 0.22);
+
+    /* Two chromatics: the gold door (accent) and the brown roofs (second).
+       The wall, the street and the river are rungs. */
+    var C_WALL    = mix(GROUND, INK, 0.42);
+    var C_WALK    = mix(GROUND, INK, 0.22);
+    var C_RIVER   = mix(GROUND, INK, 0.34);
+    var C_HOUSE   = mix(GROUND, INK, 0.30);
+    var C_ROOF    = mix(SECOND, INK, 0.12);
+    var C_STONE   = mix(GROUND, INK, 0.52);
+    var C_DOOR    = mix(ACCENT, INK, 0.10);
+    var C_TOWER   = mix(GROUND, INK, 0.48);
+
+    function matte(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
+    }
+    var M_WALL = matte(C_WALL), M_WALK = matte(C_WALK), M_RIVER = matte(C_RIVER),
+        M_HOUSE = matte(C_HOUSE), M_ROOF = matte(C_ROOF), M_STONE = matte(C_STONE),
+        M_DOOR = matte(C_DOOR), M_TOWER = matte(C_TOWER);
+
+    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.28 });
+    function lined(mesh, threshold) {
+      var seg = new THREE.LineSegments(
+        new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 24 : threshold),
+        EDGE
+      );
+      mesh.add(seg);
       return mesh;
     }
 
-    world.add(new THREE.AmbientLight(0x4a3828, 0.95));
-    var key = new THREE.DirectionalLight(0xffd2a0, 2.2);
-    key.position.set(2.4, 4.2, 3.2);
-    world.add(key);
-    var rim = new THREE.DirectionalLight(0xd9a15a, 1.15);
-    rim.position.set(-3.2, 1.6, -2.2);
-    world.add(rim);
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    gpu.setClearColor(0x000000, 0);
 
-    /* No ground mesh at all. Any plane under a low camera runs to the
-       horizon and fills the bottom of the frame with a slab that the canvas
-       edges then cut. The warm pool is a CSS gradient behind the canvas;
-       what keeps the animals from floating is a contact shadow each. */
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(28, 1, 0.12, 180);
 
-    /* One soft blob reused as every contact shadow, so nobody floats. */
-    function shadowTex() {
-      var c = document.createElement("canvas");
-      c.width = c.height = 64;
-      var x = c.getContext("2d");
-      var g = x.createRadialGradient(32, 32, 2, 32, 32, 31);
-      g.addColorStop(0, "rgba(0,0,0,.62)");
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      x.fillStyle = g;
-      x.fillRect(0, 0, 64, 64);
-      return new THREE.CanvasTexture(c);
+    /* law 4: one key you can name — the afternoon over the casco,
+       upper south-west, warm. It does not become a second lamp at the
+       door: it only golds a little. The fill keeps the inner face of
+       a wall readable. */
+    var ambient = new THREE.AmbientLight(0xfff0e0, 0.18);
+    scene.add(ambient);
+    var key = new THREE.DirectionalLight(0xfff4e6, 1.18);
+    key.position.set(-4.6, 7.2, -3.4);
+    scene.add(key);
+    var fill = new THREE.DirectionalLight(0xe8eef5, 0.26);
+    fill.position.set(3.8, 1.8, 4.2);
+    scene.add(fill);
+
+    function h1(i) { var s = Math.sin(i * 12.9898) * 43758.5453; return s - Math.floor(s); }
+
+    /* =====================================================================
+       Las piezas. Law 2: things somebody in Allariz could point at.
+
+       A MURALLA — lienzo sur · lienzo este · lienzo norte ·
+         lienzo oeste · lienzo noroeste · torreón leste ·
+         torreón oeste · adarve
+
+       A PORTA — xamba · dintel · folla · farol
+
+       O ARNOIA — río · ponte · pretil
+
+       O CASCO — rúa · cruce · casa do forno · casa da rúa ·
+         casa nova · casa vella · casa do río · casa do muro ·
+         tellado ×6
+
+       SANTO ESTEVO — nave · campanario · tellado da eirexa
+
+       A CONSULTA — fachada · porta · peldaño · placa ·
+         ventana · alero · ficha
+       ===================================================================== */
+
+    var METRES = 220;
+    var UP = new THREE.Vector3(0, 1, 0);
+    var _mat = new THREE.Matrix4();
+
+    var world = new THREE.Group();
+    scene.add(world);
+    var parts = [];
+    function part(host, mesh, id) {
+      mesh.userData.id = id || "";
+      host.add(mesh);
+      if (id) parts.push(mesh);
+      return mesh;
     }
-    var shadowMap = shadowTex();
-    var shadowGeo = new THREE.PlaneGeometry(1, 1);
-    function contactShadow(parent, w) {
-      var sh = new THREE.Mesh(shadowGeo, new THREE.MeshBasicMaterial({
-        map: shadowMap, transparent: true, depthWrite: false
-      }));
-      sh.rotation.x = -Math.PI / 2;
-      sh.position.y = -0.072;
-      sh.scale.set(w, w * 0.62, 1);
-      parent.add(sh);
+    function box(w, h, d, mat) {
+      return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
     }
+    function at(mesh, x, y, z) { mesh.position.set(x, y, z); return mesh; }
 
-    var PAL = [0xf0e0c4, 0x8a6a48, 0x3a2f28, 0xd9a15a, 0xb8b0a4, 0x6a5040, 0xfaf2e4, 0x2a2320];
+    /* --- a muralla: five liños, not a torus --------------------------- */
+    var CORNERS = [
+      [-6.4, -5.5],
+      [ 5.6, -4.9],
+      [ 6.5,  3.8],
+      [ 1.2,  6.1],
+      [-6.9,  3.4]
+    ];
+    var WALL_NAME = ["lienzo sur", "lienzo este", "lienzo norte", "lienzo oeste", "lienzo noroeste"];
+    for (var w = 0; w < CORNERS.length; w++) {
+      var a = CORNERS[w], b = CORNERS[(w + 1) % CORNERS.length];
+      var dx = b[0] - a[0], dz = b[1] - a[1];
+      var len = Math.sqrt(dx * dx + dz * dz);
+      var ang = Math.atan2(dx, dz);
+      var wall = lined(box(0.42, 1.15, len + 0.08, M_WALL), 22);
+      at(wall, (a[0] + b[0]) * 0.5, 0.57, (a[1] + b[1]) * 0.5);
+      wall.rotation.y = ang;
+      part(world, wall, WALL_NAME[w]);
+    }
+    var adarve = lined(box(0.22, 0.08, 4.2, M_STONE), 28);
+    at(adarve, -6.55, 1.18, -1.0);
+    adarve.rotation.y = 0.12;
+    part(world, adarve, "adarve");
 
-    function makeCat(color) {
+    var torE = lined(box(0.85, 1.85, 0.85, M_TOWER), 18);
+    at(torE, 5.6, 0.92, -4.9);
+    part(world, torE, "torreón leste");
+    var torW = lined(box(0.78, 1.70, 0.78, M_TOWER), 18);
+    at(torW, -6.4, 0.85, -5.5);
+    part(world, torW, "torreón oeste");
+
+    /* --- a porta, in the south wall ----------------------------------- */
+    var porta = new THREE.Group();
+    var jamL = lined(box(0.32, 1.35, 0.38, M_STONE), 22);
+    jamL.position.set(-0.62, 0.67, 0);
+    porta.add(jamL);
+    var jamR = lined(box(0.32, 1.35, 0.38, M_STONE), 22);
+    jamR.position.set(0.62, 0.67, 0);
+    porta.add(jamR);
+    var lintel = lined(box(1.62, 0.28, 0.42, M_STONE), 24);
+    lintel.position.set(0, 1.42, 0);
+    porta.add(lintel);
+    var leaf = lined(box(0.95, 1.12, 0.08, M_DOOR), 20);
+    leaf.position.set(0, 0.58, 0.02);
+    porta.add(leaf);
+    var lamp = lined(box(0.10, 0.10, 0.10, M_DOOR), 30);
+    lamp.position.set(0.72, 1.22, 0.22);
+    porta.add(lamp);
+    porta.position.set(0.05, 0, -5.15);
+    jamL.userData.id = "xamba";
+    lintel.userData.id = "dintel";
+    leaf.userData.id = "folla";
+    lamp.userData.id = "farol";
+    parts.push(jamL, lintel, leaf, lamp);
+    world.add(porta);
+
+    /* --- o Arnoia: a mark, not a granite wall ------------------------- */
+    var river = new THREE.Group();
+    for (var r = 0; r < 8; r++) {
+      var zt = -6.2 + r * 1.55;
+      var sl = lined(box(1.15, 0.08, 1.62, M_RIVER), 32);
+      sl.position.set(-8.15 + Math.sin(r * 0.55) * 0.35, 0.02, zt);
+      sl.rotation.y = 0.08 * Math.sin(r * 0.8);
+      river.add(sl);
+    }
+    river.userData.id = "río";
+    parts.push(river);
+    world.add(river);
+
+    var ponte = lined(box(2.35, 0.14, 0.95, M_STONE), 22);
+    at(ponte, -7.15, 0.18, -0.6);
+    part(world, ponte, "ponte");
+    var pretil = lined(box(2.35, 0.22, 0.08, M_STONE), 26);
+    at(pretil, -7.15, 0.36, -1.02);
+    part(world, pretil, "pretil");
+
+    /* --- as rúas ------------------------------------------------------ */
+    var rua = lined(box(1.55, 0.06, 9.4, M_WALK), 28);
+    at(rua, 0.15, 0.03, 0.05);
+    part(world, rua, "rúa");
+    var cruce = lined(box(3.4, 0.05, 1.45, M_WALK), 28);
+    at(cruce, 0.4, 0.025, -0.35);
+    part(world, cruce, "cruce");
+
+    /* --- o casco: eight named houses, not a sausage pile -------------- */
+    var HOUSES = [
+      { id: "casa do forno",  x: -1.85, z: -3.2, w: 1.35, d: 1.15, h: 1.25 },
+      { id: "casa da rúa",    x:  1.95, z: -2.6, w: 1.20, d: 1.05, h: 1.10 },
+      { id: "casa nova",      x: -2.05, z: -0.7, w: 1.40, d: 1.20, h: 1.35 },
+      { id: "casa vella",     x:  2.15, z: -0.2, w: 1.15, d: 1.00, h: 1.05 },
+      { id: "casa do río",    x: -2.25, z:  1.4, w: 1.30, d: 1.10, h: 1.20 },
+      { id: "casa do muro",   x:  2.35, z:  1.8, w: 1.25, d: 1.15, h: 1.15 }
+    ];
+    HOUSES.forEach(function (h, i) {
       var g = new THREE.Group();
-      var fur = toon(color);
-      var body = inked(new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 12), fur), 1.05);
-      body.scale.set(1.15, 0.72, 0.9);
-      var head = inked(new THREE.Mesh(new THREE.SphereGeometry(0.1, 14, 12), fur), 1.05);
-      head.position.set(0.13, 0.08, 0);
-      var earL = inked(new THREE.Mesh(new THREE.ConeGeometry(0.042, 0.09, 8), fur), 1.06);
-      earL.position.set(0.1, 0.18, 0.055);
-      var earR = inked(new THREE.Mesh(new THREE.ConeGeometry(0.042, 0.09, 8), fur), 1.06);
-      earR.position.set(0.1, 0.18, -0.055);
-      var tail = inked(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-0.12, 0.02, 0),
-        new THREE.Vector3(-0.2, 0.1, 0.04),
-        new THREE.Vector3(-0.18, 0.2, 0.02)
-      ]), 10, 0.018, 6, false), fur), 1.06);
+      var body = lined(box(h.w, h.h, h.d, M_HOUSE), 20);
+      body.position.y = h.h * 0.5;
       g.add(body);
-      g.add(head);
-      g.add(earL);
-      g.add(earR);
-      g.add(tail);
-      return g;
-    }
+      var roof = lined(box(h.w + 0.12, 0.10, h.d + 0.12, M_ROOF), 24);
+      roof.position.y = h.h + 0.04;
+      roof.rotation.x = -0.10 + (h1(i) - 0.5) * 0.04;
+      g.add(roof);
+      g.position.set(h.x, 0, h.z);
+      g.rotation.y = (h1(i + 4) - 0.5) * 0.08;
+      body.userData.id = h.id;
+      roof.userData.id = "tellado";
+      parts.push(body);
+      if (i < 3) parts.push(roof);
+      world.add(g);
+    });
 
-    function makeDog(color) {
-      var g = new THREE.Group();
-      var fur = toon(color);
-      var body = inked(new THREE.Mesh(new THREE.CapsuleGeometry(0.09, 0.2, 5, 12), fur), 1.05);
-      body.rotation.z = Math.PI / 2;
-      body.position.y = 0.02;
-      var head = inked(new THREE.Mesh(new THREE.SphereGeometry(0.095, 14, 12), fur), 1.05);
-      head.position.set(0.16, 0.07, 0);
-      var snout = inked(new THREE.Mesh(new THREE.LatheGeometry([
-        new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.045, 0.00),
-        new THREE.Vector2(0.038, 0.07), new THREE.Vector2(0.00, 0.08)
-      ], 12), fur), 1.05);
-      snout.rotation.z = -Math.PI / 2;
-      snout.position.set(0.24, 0.05, 0);
-      var earL = inked(new THREE.Mesh(new THREE.SphereGeometry(0.04, 10, 8), fur), 1.06);
-      earL.scale.set(0.6, 1.1, 0.5);
-      earL.position.set(0.12, 0.14, 0.07);
-      var earR = earL.clone();
-      earR.position.z = -0.07;
-      var tail = inked(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-0.16, 0.02, 0),
-        new THREE.Vector3(-0.22, 0.08, 0),
-        new THREE.Vector3(-0.2, 0.14, 0)
-      ]), 8, 0.016, 6, false), fur), 1.06);
-      g.add(body);
-      g.add(head);
-      g.add(snout);
-      g.add(earL);
-      g.add(earR);
-      g.add(tail);
-      return g;
-    }
+    /* --- santo estevo ------------------------------------------------- */
+    var eirexa = new THREE.Group();
+    var nave = lined(box(1.85, 1.45, 2.55, M_HOUSE), 18);
+    nave.position.y = 0.72;
+    eirexa.add(nave);
+    var camp = lined(box(0.62, 2.55, 0.62, M_TOWER), 16);
+    camp.position.set(-0.55, 1.28, -0.85);
+    eirexa.add(camp);
+    var tejE = lined(box(2.05, 0.12, 2.75, M_ROOF), 22);
+    tejE.position.set(0, 1.52, 0);
+    tejE.rotation.x = -0.12;
+    eirexa.add(tejE);
+    eirexa.position.set(3.15, 0, 2.85);
+    nave.userData.id = "nave";
+    camp.userData.id = "campanario";
+    tejE.userData.id = "tellado da eirexa";
+    parts.push(nave, camp, tejE);
+    world.add(eirexa);
 
-    var list = dcRoster();
-    var ROWS = tiny
-      ? [{ z: 0.34, n: 4, s: 1.00 }, { z: -0.62, n: 5, s: 0.84 }]
-      : [{ z: 0.40, n: 5, s: 1.00 }, { z: -0.52, n: 6, s: 0.84 }, { z: -1.46, n: 7, s: 0.70 }];
-    var pets = [];
-    var i, row, mesh, r, k, span, base;
-    var idx = 0;
-    for (r = 0; r < ROWS.length; r++) {
-      span = 1.06 + r * 0.34;
-      for (k = 0; k < ROWS[r].n; k++) {
-        row = list[idx % list.length];
-        mesh = row[1] === "gato" ? makeCat(PAL[idx % PAL.length]) : makeDog(PAL[idx % PAL.length]);
-        base = ROWS[r].n > 1 ? (k / (ROWS[r].n - 1) - 0.5) * 2 * span : 0;
-        mesh.userData.home = new THREE.Vector3(
-          base + ((idx % 3) - 1) * 0.05,
-          0.08,
-          ROWS[r].z + ((k % 2) ? 0.07 : -0.05)
-        );
-        mesh.userData.phase = idx * 0.47;
-        mesh.userData.amp = 0.022 + (idx % 4) * 0.008;
-        mesh.userData.rest = ROWS[r].s * (0.95 + (idx % 3) * 0.04);
-        mesh.userData.name = row[0];
-        mesh.userData.who = row[1] + " · " + row[2] + " años";
-        mesh.position.copy(mesh.userData.home);
-        /* Both meshes run along +X, so yaw 0 is a right-facing profile and
-           pi is a left-facing one. Anything near pi/2 shows only a back. */
-        mesh.userData.left = (idx % 3 === 0);
-        mesh.userData.face = (mesh.userData.left ? Math.PI : 0)
-          + ((idx % 5) - 2) * 0.11;
-        /* Yaw grows towards -Z, so turning to meet the camera is negative
-           for a right-facing animal and positive for a left-facing one. */
-        mesh.userData.turn = mesh.userData.left ? 0.55 : -0.55;
-        mesh.rotation.y = mesh.userData.face;
-        mesh.scale.setScalar(mesh.userData.rest);
-        contactShadow(mesh, 0.52);
-        world.add(mesh);
-        pets.push(mesh);
-        idx++;
+    /* --- a consulta --------------------------------------------------- */
+    var clinic = new THREE.Group();
+    var fachada = lined(box(2.15, 1.48, 0.16, M_HOUSE), 18);
+    fachada.position.set(0, 0.74, 0.62);
+    clinic.add(fachada);
+    var muro = lined(box(2.15, 1.48, 1.05, M_HOUSE), 22);
+    muro.position.set(0, 0.74, -0.02);
+    clinic.add(muro);
+    var alero = lined(box(2.40, 0.08, 0.38, M_ROOF), 26);
+    alero.position.set(0, 1.52, 0.68);
+    clinic.add(alero);
+    var tejC = lined(box(2.30, 0.11, 1.35, M_ROOF), 22);
+    tejC.position.set(0, 1.62, 0.02);
+    tejC.rotation.x = -0.14;
+    clinic.add(tejC);
+    var puerta = lined(box(0.48, 0.98, 0.06, M_DOOR), 20);
+    puerta.position.set(0, 0.52, 0.72);
+    clinic.add(puerta);
+    var peldano = lined(box(0.70, 0.08, 0.28, M_STONE), 28);
+    peldano.position.set(0, 0.04, 0.88);
+    clinic.add(peldano);
+    var placa = lined(box(0.38, 0.12, 0.03, M_STONE), 30);
+    placa.position.set(0.62, 1.18, 0.71);
+    clinic.add(placa);
+    var ventana = lined(box(0.40, 0.46, 0.04, M_STONE), 22);
+    ventana.position.set(-0.62, 0.88, 0.71);
+    clinic.add(ventana);
+    clinic.position.set(0.35, 0, 3.45);
+    fachada.userData.id = "fachada";
+    alero.userData.id = "alero";
+    puerta.userData.id = "porta";
+    peldano.userData.id = "peldaño";
+    placa.userData.id = "placa";
+    ventana.userData.id = "ventana";
+    parts.push(fachada, alero, puerta, peldano, placa, ventana);
+    world.add(clinic);
+
+    /* a ficha: the last object. One name, not thirty-six. */
+    var ficha = lined(box(0.72, 0.02, 0.48, M_STONE), 20);
+    ficha.position.set(0.95, 0.92, 4.05);
+    ficha.rotation.x = -0.55;
+    part(world, ficha, "ficha");
+    ficha.visible = false;
+
+    var M_SH = new THREE.MeshBasicMaterial({
+      color: INK, transparent: true, opacity: 0.14, depthWrite: false
+    });
+    var shTown = new THREE.Mesh(new THREE.CircleGeometry(7.4, 16), M_SH);
+    shTown.rotation.x = -Math.PI / 2;
+    shTown.position.y = 0.008;
+    world.add(shTown);
+
+    /* --- the walk: a closed town is walked inward --------------------- */
+    var WAY = [
+      [0.05, -5.15],
+      [0.15, -2.55],
+      [-0.55, -0.40],
+      [0.25,  1.55],
+      [0.35,  3.20]
+    ];
+    function wayLen() {
+      var t = 0;
+      for (var i = 0; i < WAY.length - 1; i++) {
+        var dx = WAY[i + 1][0] - WAY[i][0], dz = WAY[i + 1][1] - WAY[i][1];
+        t += Math.sqrt(dx * dx + dz * dz);
+      }
+      return t;
+    }
+    var WLEN = wayLen();
+    function along(t, out, fwd) {
+      t = Math.max(0, Math.min(1, t));
+      var need = t * WLEN, acc = 0;
+      for (var i = 0; i < WAY.length - 1; i++) {
+        var dx = WAY[i + 1][0] - WAY[i][0], dz = WAY[i + 1][1] - WAY[i][1];
+        var segL = Math.sqrt(dx * dx + dz * dz);
+        if (acc + segL >= need || i === WAY.length - 2) {
+          var u = segL < 1e-6 ? 0 : (need - acc) / segL;
+          u = Math.max(0, Math.min(1, u));
+          out.set(WAY[i][0] + dx * u, 0, WAY[i][1] + dz * u);
+          if (fwd) fwd.set(dx, 0, dz).normalize();
+          return;
+        }
+        acc += segL;
       }
     }
-    var count = pets.length;
 
-    var pointer = new THREE.Vector2(-9, -9);
-    var ray = new THREE.Raycaster();
-    var hot = -1;
-
-    field.addEventListener("pointermove", function (ev) {
-      var r = cv.getBoundingClientRect();
-      pointer.x = ((ev.clientX - r.left) / Math.max(r.width, 1)) * 2 - 1;
-      pointer.y = -((ev.clientY - r.top) / Math.max(r.height, 1)) * 2 + 1;
+    var svgNS = "http://www.w3.org/2000/svg";
+    var notesSvg = document.createElementNS(svgNS, "svg");
+    notesSvg.setAttribute("class", "dc-notes");
+    notesSvg.setAttribute("aria-hidden", "true");
+    panel.appendChild(notesSvg);
+    var NOTE_SPEC = [
+      { label: "A porta", a: 0.12, b: 0.28, y: 0.22, mesh: leaf },
+      { label: "O Arnoia", a: 0.28, b: 0.44, y: 0.18, mesh: ponte },
+      { label: "Santo Estevo", a: 0.48, b: 0.64, y: 0.20, mesh: camp },
+      { label: "A consulta", a: 0.74, b: 0.96, y: 0.70, mesh: puerta }
+    ];
+    var notes = NOTE_SPEC.map(function (spec) {
+      var lead = document.createElementNS(svgNS, "polyline");
+      lead.setAttribute("class", "dc-lead-line");
+      var dot = document.createElementNS(svgNS, "circle");
+      dot.setAttribute("class", "dc-note-dot");
+      dot.setAttribute("r", "2.5");
+      var text = document.createElementNS(svgNS, "text");
+      text.setAttribute("class", "dc-note");
+      text.textContent = spec.label;
+      notesSvg.appendChild(lead);
+      notesSvg.appendChild(dot);
+      notesSvg.appendChild(text);
+      return { spec: spec, lead: lead, dot: dot, text: text };
     });
-    field.addEventListener("pointerleave", function () {
-      pointer.x = -9;
-      pointer.y = -9;
-      if (ficha) ficha.hidden = true;
-      hot = -1;
-    });
 
-    function fitView() {
-      var w = field.clientWidth, h = field.clientHeight;
-      camera.aspect = w / Math.max(h, 1);
+    var LOG = [
+      ["00", "O recinto", "a muralla"],
+      ["01", "O paseo", "cara dentro"],
+      ["02", "Santo Estevo", "a rúa"],
+      ["03", "Os recordamos", "consulta"]
+    ];
+    var STOPS = [{ a: 0.155 }, { a: 0.255 }, { a: 0.355 }, { a: 0.445 }];
+
+    function seg(p, a, b) {
+      if (p <= a) return 0;
+      if (p >= b) return 1;
+      return (p - a) / (b - a);
+    }
+    function smooth(t) {
+      t = Math.max(0, Math.min(1, t));
+      return t * t * (3 - 2 * t);
+    }
+    function reveal(els, t, staggerT, dist) {
+      for (var i = 0; i < els.length; i++) {
+        var u = smooth(seg(t, i * staggerT, i * staggerT + 0.55));
+        els[i].style.opacity = String(u);
+        els[i].style.transform = "translateY(" + (1 - u) * dist + "px)";
+      }
+    }
+
+    var box2 = { w: 1, h: 1 };
+    var portraitK = 1, portraitLift = 0;
+    var lastGround = "", lastM = "", lastLog = -1, lastLogS = "";
+    var here = new THREE.Vector3(), proj = new THREE.Vector3();
+    var camPos = new THREE.Vector3(), camLook = new THREE.Vector3();
+    var walkAt = new THREE.Vector3(), walkFwd = new THREE.Vector3();
+    var lookPt = new THREE.Vector3(), tmpV = new THREE.Vector3();
+
+    function fit() {
+      box2.w = stage.clientWidth || 1;
+      box2.h = stage.clientHeight || 1;
+      notesSvg.setAttribute("viewBox", "0 0 " + box2.w + " " + box2.h);
+      notesSvg.setAttribute("width", String(box2.w));
+      notesSvg.setAttribute("height", String(box2.h));
+      gpu.setSize(box2.w, box2.h, false);
+      camera.aspect = box2.w / Math.max(box2.h, 1);
       camera.updateProjectionMatrix();
-      gpu.setSize(w, h, false);
+      var a = camera.aspect;
+      if (a < 0.95) { portraitK = 1.46; portraitLift = 1.50; }
+      else if (a < 1.4) { portraitK = 1.18; portraitLift = 0.40; }
+      else { portraitK = 1; portraitLift = 0; }
     }
-    fitView();
-    window.addEventListener("resize", fitView);
-
-    var onStage = true;
-    if (window.IntersectionObserver) {
-      onStage = false;
-      new IntersectionObserver(function (entries) {
-        onStage = entries[0].isIntersecting;
-      }, { rootMargin: "12% 0px" }).observe(field);
-    }
-
-    var hint = panel.querySelector(".dc-hint");
-    if (hint) hint.style.opacity = "1";
+    fit();
+    window.addEventListener("resize", fit);
 
     function frame() {
-      requestAnimationFrame(frame);
-      if (!onStage) return;
-      var now = performance.now() * 0.001;
-      var hit = -1;
-      if (pointer.x > -2) {
-        ray.setFromCamera(pointer, camera);
-        var hits = ray.intersectObjects(pets, true);
-        if (hits.length) {
-          var obj = hits[0].object;
-          while (obj && pets.indexOf(obj) < 0) obj = obj.parent;
-          hit = pets.indexOf(obj);
-        }
+      var p = state.p;
+      var walkT = smooth(seg(p, 0.14, 0.52));
+      var dropT = smooth(seg(p, 0.10, 0.22));
+      var doorT = smooth(seg(p, 0.70, 0.88));
+
+      along(walkT, walkAt, walkFwd);
+      if (walkFwd.lengthSq() < 1e-6) walkFwd.set(0, 0, 1);
+
+      /* --- camera: the whole town, then the walk in, then the door ---- */
+      var planPos = new THREE.Vector3(-1.2, 16.5, -11.5);
+      var planLook = new THREE.Vector3(0.0, 0.2, 0.2);
+      var side = portraitLift > 0 ? 0.25 : 2.4;
+      var streetPos = walkAt.clone()
+        .addScaledVector(walkFwd, -4.6)
+        .add(UP.clone().multiplyScalar(3.8))
+        .add(new THREE.Vector3().crossVectors(UP, walkFwd).normalize().multiplyScalar(side));
+      var streetLook = walkAt.clone().addScaledVector(walkFwd, 1.6);
+      streetLook.y = 0.45;
+
+      camPos.copy(planPos).lerp(streetPos, dropT);
+      camLook.copy(planLook).lerp(streetLook, dropT);
+
+      if (doorT > 0) {
+        puerta.getWorldPosition(lookPt);
+        lookPt.y += 0.18;
+        var frD = walkFwd.clone();
+        var doorPos = lookPt.clone()
+          .addScaledVector(frD, 2.6)
+          .add(UP.clone().multiplyScalar(1.35))
+          .add(new THREE.Vector3().crossVectors(UP, frD).normalize().multiplyScalar(0.4));
+        camPos.lerp(doorPos, doorT);
+        camLook.lerp(lookPt, doorT);
       }
-      hot = hit;
-      for (i = 0; i < pets.length; i++) {
-        var p = pets[i];
-        var lift = i === hot ? 1 : 0;
-        p.userData.k = (p.userData.k || 0) + (lift - (p.userData.k || 0)) * 0.14;
-        var breathe = Math.sin(now * 1.1 + p.userData.phase) * p.userData.amp;
-        var wx = p.userData.home.x + Math.sin(now * 0.5 + p.userData.phase) * p.userData.amp;
-        p.position.set(
-          wx * (1 - pack.k),
-          0.08 + breathe * 0.5 + p.userData.k * 0.10,
-          p.userData.home.z * (1 - pack.k)
-        );
-        /* Only the one under the pointer turns, and only to face you. */
-        p.rotation.y = p.userData.face + p.userData.turn * p.userData.k;
-        p.scale.setScalar(p.userData.rest * (1 + p.userData.k * 0.10));
+
+      camPos.y += Math.sin(state.idle) * 0.025;
+      if (portraitK !== 1) {
+        camera.position.copy(camPos);
+        camera.position.sub(camLook).multiplyScalar(portraitK).add(camLook);
+        camLook.y -= portraitLift;
+      } else {
+        camera.position.copy(camPos);
       }
-      if (hot >= 0 && ficha && nameEl && whoEl) {
-        ficha.hidden = false;
-        nameEl.textContent = pets[hot].userData.name;
-        whoEl.textContent = pets[hot].userData.who;
-        if (hint) hint.style.opacity = "0";
-      } else if (ficha && pointer.x < -2) {
-        ficha.hidden = true;
+      camera.lookAt(camLook);
+
+      /* linen dusk over the wall, gold at the door — written as hex */
+      var duskT = (1 - dropT) * (1 - doorT);
+      var goldT = doorT;
+      key.intensity = 1.18 - duskT * 0.10 + goldT * 0.10;
+      fill.intensity = 0.26 + duskT * 0.04;
+      var hex = lerpHex(lerpHex(HEX_GROUND, H_DUSK, duskT * 0.7), H_GOLD, goldT * 0.8);
+      var fgHex = HEX_INK;
+      var lnHex = lerpHex(HEX_LINE, H_LN_DUSK, duskT);
+      if (hex !== lastGround) {
+        lastGround = hex;
+        panel.style.setProperty("--dc-ground", hex);
+        panel.style.setProperty("--dc-fg", fgHex);
+        panel.style.setProperty("--dc-line", lnHex);
       }
-      camera.position.set(
-        Math.sin(now * 0.12) * 0.22,
-        0.86 + pack.k * 0.5,
-        (tiny ? 4.35 : 3.30) - pack.k * 0.6
+
+      ficha.visible = doorT > 0.15;
+      ficha.position.y = 0.55 + doorT * 0.42;
+      ficha.rotation.x = -1.15 + doorT * 0.72;
+
+      if (ch0) ch0.style.opacity = String(1 - smooth(seg(p, 0.07, 0.145)));
+      if (ch1) ch1.style.opacity = String(
+        smooth(seg(p, 0.125, 0.165)) * (1 - smooth(seg(p, 0.488, 0.545)))
       );
-      camera.lookAt(0, 0.10 - pack.k * 0.04, -0.34);
-      gpu.render(world, camera);
+      for (var s2 = 0; s2 < stepEls.length; s2++) {
+        var st = STOPS[s2];
+        var vis = smooth(seg(p, st.a - 0.04, st.a + 0.03));
+        if (s2 < 3) vis *= 1 - smooth(seg(p, STOPS[s2 + 1].a - 0.03, STOPS[s2 + 1].a + 0.028));
+        else vis *= 1 - smooth(seg(p, 0.495, 0.545));
+        stepEls[s2].style.opacity = String(vis);
+        stepEls[s2].style.transform = "translateY(" + (1 - vis) * 22 + "px)";
+      }
+      if (kicker2) kicker2.style.opacity = String(smooth(seg(p, 0.50, 0.545)));
+      reveal(h2Chars, seg(p, 0.51, 0.62), 0.006, 24);
+      reveal(serviceEls, seg(p, 0.53, 0.64), 0.055, 20);
+      if (ch2) ch2.style.opacity = String(1 - smooth(seg(p, 0.68, 0.76)));
+      reveal(deskEls, seg(p, 0.76, 0.92), 0.07, 22);
+
+      var metres = p >= 0.84 ? 0 : Math.round((1 - walkT) * METRES);
+      if (p < 0.14) metres = METRES;
+      var mTxt = String(metres);
+      var mKey = "M:" + mTxt;
+      if (mKey !== lastM) {
+        lastM = mKey;
+        if (mV) mV.textContent = mTxt;
+        if (mK) mK.textContent = "M";
+      }
+      var chap = p < 0.14 ? 0 : p < 0.50 ? 1 : p < 0.70 ? 2 : 3;
+      if (chap !== lastLog) {
+        lastLog = chap;
+        if (logN) logN.textContent = LOG[chap][0];
+        if (logT) logT.textContent = LOG[chap][1];
+      }
+      var logLine = "+" + metres + " m · " + LOG[chap][2];
+      if (logS && logLine !== lastLogS) { lastLogS = logLine; logS.textContent = logLine; }
+
+      for (var n = 0; n < notes.length; n++) {
+        var note = notes[n];
+        var nv = smooth(seg(p, note.spec.a, note.spec.a + 0.04))
+               * (1 - smooth(seg(p, note.spec.b, note.spec.b + 0.04)));
+        var target = note.spec.mesh;
+        if (!target || nv < 0.06) {
+          note.lead.style.opacity = "0";
+          note.text.style.opacity = "0";
+          note.dot.style.opacity = "0";
+          continue;
+        }
+        target.getWorldPosition(here);
+        proj.copy(here).project(camera);
+        var scrx = (proj.x * 0.5 + 0.5) * box2.w;
+        var scry = (-proj.y * 0.5 + 0.5) * box2.h;
+        var sd = (p > 0.16 && p < 0.50) ? -1 : (scrx < box2.w * 0.5 ? -1 : 1);
+        var edge = sd < 0 ? box2.w * 0.12 : box2.w * 0.90;
+        var ty = box2.h * (portraitLift > 0
+          ? (note.spec.y < 0.5 ? 0.12 : 0.82)
+          : note.spec.y);
+        var elbow = sd < 0 ? edge + box2.w * 0.05 : edge - box2.w * 0.05;
+        note.lead.setAttribute("points",
+          scrx + "," + scry + " " + elbow + "," + ty + " " + edge + "," + ty);
+        note.dot.setAttribute("cx", scrx);
+        note.dot.setAttribute("cy", scry);
+        note.text.setAttribute("x", edge);
+        note.text.setAttribute("y", ty - 8);
+        note.text.setAttribute("text-anchor", sd < 0 ? "start" : "end");
+        note.lead.style.opacity = String(nv * 0.55);
+        note.dot.style.opacity = String(nv * 0.8);
+        note.text.style.opacity = String(nv);
+      }
+
+      world.scale.setScalar(0.94 + state.settle * 0.06);
+      gpu.render(scene, camera);
+      requestAnimationFrame(frame);
     }
-    frame();
-  }).catch(function () { window.__staticB(panel); });
+    requestAnimationFrame(frame);
+  }).catch(function (err) {
+    console.error("da-costa scene failed", err);
+    window.__staticB(panel);
+  });
 };
 
 (function () {
