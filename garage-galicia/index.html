@@ -374,190 +374,356 @@ footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; le
   #dsgB .tb-live { display: none; }
   #dsgB .tb-brand { font-size: 13px; }
 }
-/* Garage Galicia — forge bay. This lead only. */
-#dsgB .tb-hero .tb-name {
-  font-size: clamp(32px, 5vw, 76px);
-  max-width: 9ch;
-  overflow: visible;
-}
-#dsgB .gg-bay {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  min-height: 340px;
-  max-height: 540px;
-  overflow: hidden;
+/* Garage Galicia — the bay on Zamora 96. This lead only.
+ *
+ * The page is a shop floor: a rule every 88px, because that is the
+ * paper a nave is drawn on. Nothing else paints a ground — the render
+ * loop writes --gg-ground, so the warmer key at the open door is a
+ * lighting change, not a section background. */
+
+#dsgB {
   background:
-    linear-gradient(180deg, #3e4248 0%, #1a1c1f 72%);
-  border: 1px solid color-mix(in srgb, var(--st-fg) 12%, transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent),
-    inset 0 -60px 90px -60px #000,
-    0 18px 40px -22px #000;
+    linear-gradient(var(--gg-line, var(--st-line)) 1px, transparent 1px) 0 0 / 100% 88px,
+    var(--gg-ground, var(--st-bg));
+  background-attachment: fixed, fixed;
+  color: var(--gg-fg, var(--st-fg));
+  font-family: "IBM Plex Sans", "DM Sans", system-ui, sans-serif;
+  overflow-x: clip;
 }
-#dsgB .gg-stripes {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 22%;
-  pointer-events: none;
-  opacity: .30;
-  background: repeating-linear-gradient(
-    -38deg,
-    #101010 0 13px,
-    #e6c200 13px 26px
-  );
-  -webkit-mask-image: linear-gradient(180deg, transparent, #000 62%);
-  mask-image: linear-gradient(180deg, transparent, #000 62%);
-}
-#dsgB .gg-view {
-  position: absolute;
+
+#dsgB .gg { position: relative; }
+
+#dsgB .gg-stage {
+  position: fixed;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
-#dsgB .gg-read {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 3;
+#dsgB .gg-view { display: block; width: 100%; height: 100%; }
+
+#dsgB .gg-rail {
+  background: transparent;
+  border: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px clamp(18px, 3.4vw, 52px);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gg-fg, var(--st-fg));
+}
+#dsgB .gg-brand {
+  font-family: "Oswald", var(--display);
+  font-size: 18px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+#dsgB .gg-place { opacity: .62; margin-right: auto; }
+
+/* The readout the whole page is built on: 32 g on the axis when you
+   enter, 0 g when you leave — then a la calle. */
+#dsgB .gg-m {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 5px 11px;
+  border: 1px solid color-mix(in srgb, var(--gg-fg, var(--st-fg)) 26%, transparent);
+}
+#dsgB .gg-m i { font-style: normal; opacity: .5; }
+#dsgB .gg-g {
+  min-width: 2.4ch;
+  text-align: right;
+  font-weight: 700;
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+#dsgB .gg .dsg-switch {
+  border-color: color-mix(in srgb, var(--gg-fg, var(--st-fg)) 30%, transparent);
+  background: transparent;
+}
+#dsgB .gg .dsg-btn { color: color-mix(in srgb, var(--gg-fg, var(--st-fg)) 64%, transparent); }
+#dsgB .gg .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .gg-log {
+  position: fixed;
+  left: clamp(18px, 3.4vw, 52px);
+  bottom: 22px;
+  z-index: 4;
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  padding: 8px 12px 9px;
-  background: #0c0d0e;
-  border: 1px solid color-mix(in srgb, #7dff9a 35%, transparent);
-  color: #8cffb0;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  gap: 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 10px;
-  box-shadow: 0 0 18px color-mix(in srgb, #3f6 28%, transparent);
-}
-#dsgB .gg-g {
-  font-size: clamp(28px, 5vw, 42px);
-  line-height: 1;
-  letter-spacing: 0;
-  text-shadow: 0 0 14px #3f6;
-  color: #b8ffd0;
-}
-#dsgB .gg-unit { font-size: 11px; color: #7dff9a; }
-#dsgB .gg-state {
-  font-style: normal;
-  margin-left: 6px;
-  color: color-mix(in srgb, #8cffb0 70%, transparent);
-}
-#dsgB .gg-drag {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  bottom: 44px;
-  height: 46px;
-  z-index: 4;
-  border: 1px solid color-mix(in srgb, var(--st-fg) 28%, transparent);
-  background: color-mix(in srgb, #0b0c0d 78%, transparent);
-}
-#dsgB .gg-handle {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 58px;
-  height: 38px;
-  display: block;
-  cursor: grab;
-  touch-action: none;
-  background:
-    repeating-linear-gradient(90deg, #d8c56a 0 5px, #8a7a32 5px 7px);
-  box-shadow: inset 0 1px 0 #f3e7a4;
-}
-#dsgB .gg-hint {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  z-index: 4;
-  margin: 0;
-  text-align: center;
-  font-size: 10px;
-  letter-spacing: .2em;
+  letter-spacing: .24em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--st-fg) 72%, transparent);
+  color: var(--gg-fg, var(--st-fg));
+  opacity: .92;
   pointer-events: none;
 }
-#dsgB .gg-split {
-  display: grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap: clamp(20px, 4vw, 56px);
-  align-items: start;
-  padding: clamp(40px, 7vw, 96px) var(--pad) clamp(56px, 9vw, 130px);
-  border-top: 1px solid var(--st-line);
-}
-#dsgB .gg-explode {
+#dsgB .gg-log-n { color: var(--st-accent); font-weight: 700; }
+#dsgB .gg-log-s { opacity: .82; font-variant-numeric: tabular-nums; }
+
+#dsgB .gg-scroll { position: relative; z-index: 2; }
+
+#dsgB .gg-ch { position: relative; }
+#dsgB .gg-ch-0 { height: 130vh; }
+#dsgB .gg-ch-1 { height: 400vh; }
+#dsgB .gg-ch-2 { height: 200vh; }
+#dsgB .gg-ch-3 { height: 150vh; }
+
+#dsgB .gg-in {
   position: sticky;
-  top: 72px;
-  width: 100%;
-  aspect-ratio: 720 / 440;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, #2c3036 0%, #141618 78%);
-  border: 1px solid color-mix(in srgb, var(--st-fg) 18%, transparent);
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: center;
+  padding: 0 clamp(20px, 5vw, 88px);
+  pointer-events: none;
 }
-#dsgB .gg-explode-view {
+#dsgB .gg-in > * { pointer-events: auto; position: relative; z-index: 1; }
+#dsgB .gg-in-left { justify-items: start; text-align: left; max-width: 48ch; }
+#dsgB .gg-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
+
+#dsgB .gg-word { display: inline-block; white-space: nowrap; }
+#dsgB .gg-c { display: inline-block; will-change: transform, opacity; }
+
+#dsgB .gg-h2 .gg-c,
+#dsgB .gg-service,
+#dsgB .gg-ch-2 .gg-kicker,
+#dsgB .gg-ch-3 .gg-in > * { opacity: 0; }
+
+#dsgB .gg-eyebrow,
+#dsgB .gg-kicker {
+  margin: 0 0 20px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+#dsgB .gg-name {
+  margin: 0;
+  font-family: "Oswald", var(--display);
+  font-weight: 500;
+  font-size: clamp(46px, 9vw, 118px);
+  line-height: .86;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+#dsgB .gg-claim {
+  margin: 22px 0 0;
+  font-family: "Oswald", var(--display);
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.12;
+  max-width: 18ch;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  opacity: .95;
+}
+#dsgB .gg-lead {
+  margin: 20px 0 0;
+  max-width: 44ch;
+  font-size: 13px;
+  line-height: 1.8;
+  opacity: .82;
+}
+#dsgB .gg-cue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 42px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+#dsgB .gg-cue i { display: block; width: 44px; height: 1px; background: currentColor; }
+
+#dsgB .gg-steps { display: grid; }
+#dsgB .gg-step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .gg-step em {
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .28em;
+  color: var(--st-accent);
+}
+#dsgB .gg-step h2 {
+  margin: 10px 0 0;
+  font-family: "Oswald", var(--display);
+  font-weight: 500;
+  font-size: clamp(34px, 5.4vw, 72px);
+  line-height: .96;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+#dsgB .gg-pk {
   display: block;
+  margin: 4px 0 14px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--st-second);
+  font-variant-numeric: tabular-nums;
+}
+#dsgB .gg-step p {
+  margin: 0 0 0 auto;
+  max-width: 32ch;
+  font-size: 13px;
+  line-height: 1.75;
+  opacity: .78;
+}
+
+#dsgB .gg-ch-2 .gg-in-left {
+  width: min(92vw, 940px);
+  max-width: none;
+  justify-items: stretch;
+}
+#dsgB .gg-h2 {
+  margin: 0 0 32px;
+  font-family: "Oswald", var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 3.2vw, 40px);
+  line-height: 1.08;
+  max-width: 24ch;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+#dsgB .gg-services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 40px;
+  width: 100%;
+}
+#dsgB .gg-service {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding-top: 15px;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+#dsgB .gg-service em {
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: var(--st-accent);
+}
+#dsgB .gg-service h3 {
+  margin: 0 0 5px;
+  font-family: "Oswald", var(--display);
+  font-weight: 500;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+#dsgB .gg-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .72; }
+
+#dsgB .gg-tel {
+  font-family: "Oswald", var(--display);
+  font-size: clamp(28px, 4.4vw, 56px);
+  text-decoration: none;
+  line-height: .96;
+  letter-spacing: .02em;
+  color: inherit;
+}
+#dsgB .gg-say { margin: 20px 0 0; max-width: 36ch; font-size: 13px; line-height: 1.7; opacity: .78; }
+#dsgB .gg-hours { margin: 18px 0 0; font-size: 12px; opacity: .72; }
+#dsgB .gg-addr {
+  margin: 8px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  opacity: .64;
+}
+
+#dsgB .gg-notes {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  overflow: visible;
 }
-#dsgB .gg-tag {
-  position: absolute;
-  z-index: 2;
-  color: var(--st-fg);
+#dsgB .gg-lead-line {
+  fill: none;
+  stroke: var(--gg-fg, var(--st-fg));
+  stroke-width: 1px;
+  stroke-opacity: .5;
+  vector-effect: non-scaling-stroke;
+}
+#dsgB .gg-note-dot { fill: var(--st-accent); }
+#dsgB .gg-note {
+  fill: var(--gg-fg, var(--st-fg));
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
-  pointer-events: none;
 }
-/* placeExTags() writes left/top every frame from the part's own position. */
-#dsgB .gg-tag-tire,
-#dsgB .gg-tag-disc,
-#dsgB .gg-tag-pad { left: 0; top: 0; transform: translate(-50%, -320%); }
-#dsgB .gg-steps {
-  list-style: none;
-  margin: 0;
-  padding: 8vh 0 12vh;
-  display: grid;
-  gap: 18vh;
-}
-#dsgB .gg-step { opacity: .28; }
-#dsgB .gg-step em {
-  font-style: normal;
-  font-size: 10px;
-  letter-spacing: .24em;
-  color: var(--st-accent);
-}
-#dsgB .gg-step h3 {
-  margin: 8px 0 10px;
-  font-size: clamp(24px, 3vw, 40px);
-  text-transform: uppercase;
-}
-#dsgB .gg-step p {
-  margin: 0;
-  max-width: 34ch;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--st-dim);
-}
-@media (max-width: 1080px) {
-  #dsgB .gg-bay { width: 100%; }
-  #dsgB .gg-split { grid-template-columns: 1fr; }
-  #dsgB .gg-explode { position: relative; top: 0; }
-  #dsgB .gg-steps { gap: 8vh; padding: 4vh 0; }
-}
-@media (max-width: 720px) {
-  #dsgB .gg-bay {
-    width: 100%;
-    max-height: none;
+
+@media (max-width: 900px) {
+  #dsgB { background-attachment: scroll, scroll; }
+  #dsgB .gg-rail {
+    background: linear-gradient(
+      180deg,
+      var(--gg-ground, var(--st-bg)) 0%,
+      color-mix(in srgb, var(--gg-ground, var(--st-bg)) 82%, transparent) 62%,
+      transparent
+    );
   }
+  #dsgB .gg-place { display: none; }
+  #dsgB .gg-name { font-size: clamp(34px, 12vw, 48px); }
+  #dsgB .gg-in {
+    padding: 0 20px 13vh;
+    align-content: end;
+  }
+  #dsgB .gg-in::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 74%;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--gg-ground, var(--st-bg)) 0%, transparent) 0%,
+      color-mix(in srgb, var(--gg-ground, var(--st-bg)) 94%, transparent) 16%,
+      var(--gg-ground, var(--st-bg)) 34%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  #dsgB .gg-in-right { text-align: left; justify-items: start; margin-left: 0; }
+  #dsgB .gg-step p { margin-left: 0; }
+  #dsgB .gg-services { grid-template-columns: 1fr; gap: 14px; }
+  #dsgB .gg-m { display: none; }
+  #dsgB .gg-lead { font-size: 15px; opacity: .9; }
+  #dsgB .gg-claim { opacity: 1; }
+  #dsgB .gg-cue { opacity: .78; }
+  #dsgB .gg-step p,
+  #dsgB .gg-service p,
+  #dsgB .gg-say { opacity: .9; }
+  #dsgB .gg-note { font-size: 9px; letter-spacing: .1em; }
+  #dsgB .gg-log {
+    font-size: 10px;
+    bottom: 12px;
+    gap: 8px;
+    opacity: 1;
+  }
+  #dsgB .gg-ch-1 { height: 420vh; }
 }
 
 </style>
@@ -606,91 +772,63 @@ footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; le
 
 </div>
 <div id="dsgB" hidden>
+<div class="gg gg-bay">
+  <div class="gg-stage" aria-hidden="true">
+    <canvas class="gg-view"></canvas>
+  </div>
 
-<div class="tb" data-rev="0">
-  <header class="tb-rail">
-    <span class="tb-brand">Garage Galicia</span>
-    <span class="tb-live"><b></b>Ourense · en taller</span>
+  <header class="gg-rail">
+    <span class="gg-brand">Garage Galicia</span>
+    <span class="gg-place">Ourense</span>
+    <span class="gg-m"><i class="gg-m-k">G</i><b class="gg-g">32</b></span>
     <div class="dsg-switch" role="group" aria-label="Elegir diseño">
     <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
     <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
   </div>
   </header>
 
-  <section class="tb-hero">
-    <div class="tb-copy">
-      <p class="tb-eyebrow">Avenida de Zamora 96 · Ourense</p>
-      <h1 class="tb-name" data-split>Garage Galicia</h1>
-      <p class="tb-claim">Lavado, engrase y a la calle.</p>
-      <p class="tb-lead">Garaje de Avenida de Zamora. Mano, neumático y pre-ITV sin mandarte al polígono.</p>
-      <div class="tb-meta">
-        <div><b class="tb-count" data-to="6">0</b><span>bancos de trabajo</span></div>
-        <div><b class="tb-count" data-to="24">0</b><span>h hasta diagnóstico</span></div>
-        <div><b class="tb-count" data-to="100">0</b><span>% presupuesto cerrado</span></div>
-      </div>
-      <a class="tb-cta" href="https://wa.me/34988224784">Pedir cita</a>
-    </div>
-
-    <!-- slot:hero-3d -->
-<div class="gg-bay">
-  <div class="gg-stripes" aria-hidden="true"></div>
-  <canvas class="gg-view"></canvas>
-  <div class="gg-read"><span>Desequilibrio</span><b class="gg-g">32</b><span class="gg-unit">g</span><em class="gg-state">en eje</em></div>
-</div>
-
-<!-- /slot:hero-3d -->
-  </section>
-
-  <div class="tb-band" aria-hidden="true"><div class="tb-band-track"><span>LAVADO A MANO</span><i>/</i><span>ENGRASE</span><i>/</i><span>NEUMÁTICOS</span><i>/</i><span>PRE-ITV</span><i>/</i><span>FRENOS</span><i>/</i><span>CITA</span><i>/</i></div></div>
-
-  <section class="tb-bay">
-    <p class="tb-kicker">Servicios</p>
-    <h2 class="tb-h2" data-split>Lavado a mano, engrase y mecánica de barrio en Zamora 96.</h2>
-    <div class="tb-grid"><article class="tb-tile"><span class="tb-code">P01</span><h3>Lavado a mano</h3><p>Por fuera y por los pasos de rueda. No es un túnel de dos minutos.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P02</span><h3>Engrase</h3><p>Puntos de engrase y revisión de niveles. El coche deja de quejarse.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P03</span><h3>Neumáticos</h3><p>Montaje, equilibrado y el dibujo que pide la ITV, no el más barato.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P04</span><h3>Pre-ITV</h3><p>Luces, frenos y humos. Si va a fallar, lo ves aquí.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P05</span><h3>Frenos</h3><p>Pastillas y líquido. Que pare en Zamora, no a medias.</p><span class="tb-tile-line"></span></article><article class="tb-tile"><span class="tb-code">P06</span><h3>Cita</h3><p>Entras por la mañana, sales a la tarde cuando se puede.</p><span class="tb-tile-line"></span></article></div>
-  </section>
-
-  <!-- slot:stage-3d -->
-<section class="gg-split">
-  <div class="gg-explode">
-    <canvas class="gg-explode-view"></canvas>
-    <span class="gg-tag gg-tag-tire">Cubierta</span>
-    <span class="gg-tag gg-tag-disc">Disco</span>
-    <span class="gg-tag gg-tag-pad">Pastillas</span>
+  <div class="gg-log" aria-hidden="true">
+    <b class="gg-log-n">00</b>
+    <span class="gg-log-t">A persiana</span>
+    <span class="gg-log-s">+32 g · Zamora 96</span>
   </div>
-  <ol class="gg-steps">
-    <li class="gg-step">
-      <em>01</em>
-      <h3>Neumáticos</h3>
-      <p>Montaje, equilibrado y el dibujo que pide la ITV. La rueda baja al eje y los tapones entran.</p>
-    </li>
-    <li class="gg-step">
-      <em>02</em>
-      <h3>Frenos</h3>
-      <p>Disco, pastilla y líquido. Si canta al frenar, se mira aquí, no en el polígono.</p>
-    </li>
-    <li class="gg-step">
-      <em>03</em>
-      <h3>Pre-ITV</h3>
-      <p>Luces, gases y lo que falla en la primera pasada. Sales con papeles, no con una cita a 40 km.</p>
-    </li>
-  </ol>
-</section>
 
-<!-- /slot:stage-3d -->
+  <div class="gg-scroll">
+    <section class="gg-ch gg-ch-0">
+      <div class="gg-in gg-in-left">
+        <p class="gg-eyebrow">Avenida de Zamora 96 · Ourense</p>
+        <h1 class="gg-name" data-gg-split>Garage Galicia</h1>
+        <p class="gg-claim" data-gg-split>Lavado, engrase y a la calle.</p>
+        <p class="gg-lead">Garaje de Avenida de Zamora. Mano, neumático y pre-ITV sin mandarte al polígono.</p>
+        <p class="gg-cue"><i></i>Entra</p>
+      </div>
+    </section>
 
-  <section class="tb-call">
-    <p class="tb-kicker">Contacto directo</p>
-    <a class="tb-tel" href="tel:34988224784">+34 988 22 47 84</a>
-    <div class="tb-call-row">
-      <a class="tb-wa" href="https://wa.me/34988224784">Pedir cita por WhatsApp</a>
-      <span>L–V 9:00–13:30 / 16:00–20:00</span>
-    </div>
-  </section>
+    <section class="gg-ch gg-ch-1">
+      <div class="gg-in gg-in-right">
+        <p class="gg-kicker">O turno</p>
+        <div class="gg-steps"><article class="gg-step" data-step="0"><em>01</em><h2>A persiana</h2><b class="gg-pk">+32 g</b><p>Entras por Zamora 96. El eje todavía habla.</p></article><article class="gg-step" data-step="1"><em>02</em><h2>O foso</h2><b class="gg-pk">+24 g</b><p>El coche sube. Se ve lo que el túnel no ve.</p></article><article class="gg-step" data-step="2"><em>03</em><h2>O eje</h2><b class="gg-pk">+12 g</b><p>Una rueda en la máquina. No es un giro de adorno.</p></article><article class="gg-step" data-step="3"><em>04</em><h2>A la calle</h2><b class="gg-pk">0 g</b><p>Equilibrada. Lavado, engrase y a la calle.</p></article></div>
+      </div>
+    </section>
 
-  <footer class="tb-foot">
-    <span>Avenida de Zamora 96, Ourense</span>
-    <span>L–V 9:00–13:30 / 16:00–20:00</span>
-  </footer>
+    <section class="gg-ch gg-ch-2">
+      <div class="gg-in gg-in-left">
+        <p class="gg-kicker">A nave</p>
+        <h2 class="gg-h2" data-gg-split>Lavado a mano, engrase y mecánica de barrio en Zamora 96.</h2>
+        <div class="gg-services"><article class="gg-service"><em>01</em><div><h3>Lavado a mano</h3><p>Por fuera y por los pasos de rueda. No es un túnel de dos minutos.</p></div></article><article class="gg-service"><em>02</em><div><h3>Engrase</h3><p>Puntos de engrase y revisión de niveles. El coche deja de quejarse.</p></div></article><article class="gg-service"><em>03</em><div><h3>Neumáticos</h3><p>Montaje, equilibrado y el dibujo que pide la ITV, no el más barato.</p></div></article><article class="gg-service"><em>04</em><div><h3>Pre-ITV</h3><p>Luces, frenos y humos. Si va a fallar, lo ves aquí.</p></div></article></div>
+      </div>
+    </section>
+
+    <section class="gg-ch gg-ch-3">
+      <div class="gg-in gg-in-right">
+        <p class="gg-kicker">A la calle</p>
+        <a class="gg-tel" href="tel:34988224784">+34 988 22 47 84</a>
+        <p class="gg-say">Lavado, engrase y a la calle.</p>
+        <p class="gg-hours">L–V 9:00–13:30 / 16:00–20:00</p>
+        <p class="gg-addr">Avenida de Zamora 96 · Ourense</p>
+      </div>
+    </section>
+  </div>
 </div>
 
 </div>
@@ -757,482 +895,659 @@ window.__splitB = function (panel) {
   });
   return out;
 };
+/* Garage Galicia — the bay on Zamora 96, in one scroll. This lead only.
+ *
+ * The page IS the drawing. One fixed canvas holds the nave; the markup
+ * is an overlay of sticky chapters with no ground of their own. A
+ * single damped progress p ∈ [0,1] drives everything, and the chapters
+ * are labelled sub-ranges of it.
+ *
+ *   00 · a persiana     the shutter from the street, 32 g still on the axis
+ *   01 · o foso         the camera walks in; the lift rises
+ *   02 · o eje          the balancer as a station — grams fall
+ *   03 · a la calle     the door is open, 0 g, back on Zamora
+ *
+ * This is a job walked through a nave. It is not Recambios Ochoa's
+ * exploded brake, it is not Autorodas Choco's GT, and it is not a
+ * wheel spinning in a slate box at the top of a brochure.
+ *
+ * 32 g is the figure the whole page is built on. The last readout is
+ * 0 g.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md and
+ * landings/heroes/FULL-PAGE-REPLAN.md.
+ */
+
 window.__staticB = function (panel) {
-  var hint = panel.querySelector(".gg-hint");
-  if (hint) hint.remove();
-  var grams = panel.querySelector(".gg-g");
-  if (grams) grams.textContent = "0";
-  var pose = panel.querySelector(".gg-state");
-  if (pose) pose.textContent = "equilibrada";
-  panel.querySelectorAll(".gg-step").forEach(function (s) { s.style.opacity = "1"; });
-  panel.querySelectorAll(".tb-tile-line").forEach(function (s) { s.style.transform = "scaleX(1)"; });
+  panel.querySelectorAll(".gg-step, .gg-service, .gg-in > *, .gg-h2 .gg-c, .gg-kicker").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  var cue = panel.querySelector(".gg-cue");
+  if (cue) cue.remove();
+  panel.querySelectorAll(".gg-step").forEach(function (el, i) {
+    el.style.position = "static";
+    el.style.marginBottom = i < 3 ? "40px" : "0";
+  });
+  var steps = panel.querySelector(".gg-steps");
+  if (steps) steps.style.display = "block";
+  var log = panel.querySelector(".gg-log");
+  if (log) log.remove();
+  var m = panel.querySelector(".gg-m");
+  if (m) m.remove();
+  panel.style.setProperty("--gg-ground", "");
+  panel.style.setProperty("--gg-fg", "");
 };
 
 window.__initB = function (A, panel) {
   var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
-      stagger = A.stagger, utils = A.utils;
+      stagger = A.stagger;
+
+  var stage = panel.querySelector(".gg-stage");
+  var view = panel.querySelector(".gg-view");
+  var scroller = panel.querySelector(".gg-scroll");
+  if (!stage || !view || !scroller) return;
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.__staticB(panel);
     return;
   }
 
-  var chars = window.__splitB(panel);
-  var intro = createTimeline({ defaults: { ease: "outExpo" } });
-  intro.add(panel.querySelectorAll(".tb-hero .tb-c"), {
-    y: [48, 0], opacity: [0, 1],
-    duration: 900, delay: stagger(15)
-  }, 0);
-  intro.add(panel.querySelectorAll(".tb-eyebrow, .tb-claim, .tb-lead, .tb-meta, .tb-cta"), {
-    y: [26, 0], opacity: [0, 1], duration: 760, delay: stagger(80)
-  }, 120);
-
-  var track = panel.querySelector(".tb-band-track");
-  if (track) {
-    track.innerHTML = track.innerHTML + track.innerHTML;
-    animate(track, {
-      x: [0, -track.scrollWidth / 2],
-      duration: track.scrollWidth * 11,
-      ease: "linear",
-      loop: true
-    });
-  }
-
-  panel.querySelectorAll(".tb-count").forEach(function (el) {
-    var o = { v: 0 }, to = Number(el.dataset.to);
-    animate(o, {
-      v: to, duration: 1500, delay: 1400, ease: "outExpo",
-      onUpdate: function () { el.textContent = utils.round(o.v, 0); }
-    });
-  });
-
-  var bay = panel.querySelector(".tb-bay");
-  if (bay) {
-    animate(panel.querySelectorAll(".tb-h2 .tb-c"), {
-      y: [40, 0], opacity: [0, 1], duration: 800, ease: "outExpo", delay: stagger(14),
-      autoplay: onScroll({ target: bay, enter: "bottom-=140 top" })
-    });
-    animate(panel.querySelectorAll(".tb-tile"), {
-      y: [34, 0], opacity: [0, 1], duration: 760, ease: "outExpo",
-      delay: stagger(70, { grid: "auto", from: "first" }),
-      autoplay: onScroll({ target: bay, enter: "bottom-=140 top" })
-    });
-    panel.querySelectorAll(".tb-tile").forEach(function (tile) {
-      var line = tile.querySelector(".tb-tile-line");
-      tile.addEventListener("mouseenter", function () {
-        animate(line, { scaleX: [0, 1], duration: 420, ease: "outExpo" });
-      });
-      tile.addEventListener("mouseleave", function () {
-        animate(line, { scaleX: 0, duration: 300, ease: "outQuad" });
-      });
-    });
-  }
-
-  panel.querySelectorAll(".tb-cta, .tb-wa").forEach(function (el) {
-    el.addEventListener("mousemove", function (ev) {
-      var r = el.getBoundingClientRect();
-      animate(el, {
-        x: (ev.clientX - r.left - r.width / 2) * 0.34,
-        y: (ev.clientY - r.top - r.height / 2) * 0.34,
-        duration: 220, ease: "outQuad"
-      });
-    });
-    el.addEventListener("mouseleave", function () {
-      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.6)" });
-    });
-  });
-
-  animate(panel.querySelectorAll(".tb-call .tb-kicker, .tb-tel, .tb-call-row"), {
-    y: [30, 0], opacity: [0, 1], duration: 780, ease: "outExpo", delay: stagger(90),
-    autoplay: onScroll({ target: panel.querySelector(".tb-call"), enter: "bottom-=120 top" })
-  });
-
-  var split = panel.querySelector(".gg-split");
-  var explode = { t: 0 };
-  if (split) {
-    animate(explode, {
-      t: [0, 1], duration: 1000, ease: "linear",
-      autoplay: onScroll({ target: split, enter: "top top", leave: "bottom bottom", sync: 0.18 })
-    });
-  }
-  panel.querySelectorAll(".gg-step").forEach(function (step, i) {
-    animate(step, {
-      opacity: [0.28, 1], x: [18, 0], duration: 600, ease: "outQuad",
-      autoplay: onScroll({
-        target: step,
-        enter: "bottom-=45% top",
-        leave: i === 2 ? "top+=90% bottom" : "top+=45% bottom"
-      })
-    });
-  });
-
-  var gEl = panel.querySelector(".gg-g");
-  var stateEl = panel.querySelector(".gg-state");
-  var grams = { n: 0 };
-  animate(grams, {
-    n: 32, duration: 900, delay: 400, ease: "outExpo",
-    onUpdate: function () { if (gEl) gEl.textContent = String(utils.round(grams.n, 0)); }
-  });
-
-  var state = { rpm: 1, drop: 1 };
-  var bay3d = panel.querySelector(".gg-bay");
-  if (bay3d) {
-    animate(state, {
-      rpm: [1, 0], duration: 4200, delay: 1100, ease: "outQuart",
-      loop: true, loopDelay: 2200,
-      onUpdate: function () {
-        grams.n = 32 * state.rpm;
-        if (gEl) gEl.textContent = String(utils.round(grams.n, 0));
-        if (stateEl) stateEl.textContent = state.rpm < 0.12 ? "equilibrada" : "en eje";
+  function splitText(el) {
+    if (!el || el.dataset.ggDone) return [];
+    el.dataset.ggDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var word = document.createElement("span");
+      word.className = "gg-word";
+      for (var i = 0; i < w.length; i++) {
+        var c = document.createElement("span");
+        c.className = "gg-c";
+        c.textContent = w[i];
+        word.appendChild(c);
+        out.push(c);
       }
+      frag.appendChild(word);
     });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
   }
+
+  var state = { p: 0, settle: 0, idle: 0 };
+  animate(state, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
+    })
+  });
+  animate(state, { settle: [0, 1], duration: 1400, delay: 220, ease: "outElastic(1, 0.78)" });
+  animate(state, { idle: [0, Math.PI * 2], duration: 16000, ease: "linear", loop: true });
+
+  var nameChars = splitText(panel.querySelector(".gg-name"));
+  var claimChars = splitText(panel.querySelector(".gg-claim"));
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".gg-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 700 }, 200);
+  intro.add(nameChars, { opacity: [0, 1], y: [64, 0], duration: 1100, delay: stagger(16) }, 300);
+  intro.add(claimChars, { opacity: [0, 1], y: [24, 0], duration: 760, delay: stagger(8) }, 820);
+  intro.add(panel.querySelectorAll(".gg-lead, .gg-cue"), {
+    opacity: [0, 1], y: [16, 0], duration: 740, delay: stagger(100)
+  }, 1080);
+
+  splitText(panel.querySelector(".gg-h2"));
+  var h2Chars = panel.querySelectorAll(".gg-h2 .gg-c");
+  var serviceEls = panel.querySelectorAll(".gg-service");
+  var deskEls = panel.querySelectorAll(".gg-ch-3 .gg-in > *");
+  var stepEls = panel.querySelectorAll(".gg-step");
+  var ch0 = panel.querySelector(".gg-ch-0 .gg-in");
+  var ch1 = panel.querySelector(".gg-ch-1 .gg-in");
+  var kicker2 = panel.querySelector(".gg-ch-2 .gg-kicker");
+  var ch2 = panel.querySelector(".gg-ch-2 .gg-in");
+  var logN = panel.querySelector(".gg-log-n");
+  var logT = panel.querySelector(".gg-log-t");
+  var logS = panel.querySelector(".gg-log-s");
+  var gramsEl = panel.querySelector(".gg-g");
 
   import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
-    var view = panel.querySelector(".gg-view");
-    var host = panel.querySelector(".gg-bay");
-    if (!view || !host) return;
-
-    var tiny = matchMedia("(max-width: 700px)").matches;
-    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
-    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
-    gpu.setClearColor(0x000000, 0);
-
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
-    var camFar = new THREE.Vector3(3.95, 1.85, 3.15);
-    var camNear = new THREE.Vector3(3.45, 1.55, 2.75);
-    camera.position.copy(camFar);
-    camera.lookAt(-0.12, 0.02, -0.30);
-
-    var data = new Uint8Array([0, 85, 170, 255]);
-    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
-    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
-    ramp.needsUpdate = true;
-
-    function toon(color, extra) {
-      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
-      if (extra) Object.assign(mat, extra);
-      return mat;
+    var css = getComputedStyle(panel);
+    function tok(name, fallback) {
+      var v = css.getPropertyValue(name).trim();
+      return new THREE.Color(v || fallback);
     }
-    var ink = new THREE.MeshBasicMaterial({ color: 0x0c0a08, side: THREE.BackSide });
-    function inked(mesh, s) {
-      var shell = new THREE.Mesh(mesh.geometry, ink);
-      shell.scale.setScalar(s || 1.05);
-      mesh.add(shell);
+    var GROUND = tok("--st-bg", "#161311");
+    var INK = tok("--st-fg", "#efe6d9");
+    var ACCENT = tok("--st-accent", "#e8c547");
+    var SECOND = tok("--st-second", "#c23b22");
+    var LINE = tok("--st-line", "#3a322c");
+
+    function mix(a, b, t) {
+      var A = a.clone().convertLinearToSRGB();
+      return A.lerp(b.clone().convertLinearToSRGB(), t).convertSRGBToLinear();
+    }
+    function parseHex(h) {
+      h = String(h || "").replace("#", "");
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [
+        parseInt(h.slice(0, 2), 16) / 255,
+        parseInt(h.slice(2, 4), 16) / 255,
+        parseInt(h.slice(4, 6), 16) / 255
+      ];
+    }
+    function toHex(rgb) {
+      return "#" + rgb.map(function (c) {
+        var n = Math.round(Math.min(1, Math.max(0, c)) * 255);
+        return (n + 256).toString(16).slice(1);
+      }).join("");
+    }
+    function mixHex(a, b, t) {
+      var A = parseHex(a), B = parseHex(b);
+      return toHex([
+        A[0] + (B[0] - A[0]) * t,
+        A[1] + (B[1] - A[1]) * t,
+        A[2] + (B[2] - A[2]) * t
+      ]);
+    }
+    function lerpHex(a, b, t) {
+      if (t <= 0) return a;
+      if (t >= 1) return b;
+      return mixHex(a, b, t);
+    }
+    var HEX_GROUND = css.getPropertyValue("--st-bg").trim() || "#161311";
+    var HEX_INK = css.getPropertyValue("--st-fg").trim() || "#efe6d9";
+    var HEX_ACCENT = css.getPropertyValue("--st-accent").trim() || "#e8c547";
+    var HEX_LINE = css.getPropertyValue("--st-line").trim() || "#3a322c";
+    var H_NAVE = mixHex(HEX_GROUND, HEX_INK, 0.06);
+    var H_STREET = mixHex(HEX_GROUND, HEX_ACCENT, 0.05);
+    var H_LN_NAVE = mixHex(HEX_LINE, HEX_INK, 0.18);
+
+    /* Two chromatics: the yellow of the bay paint (accent) and the
+       red of the extinguisher (second). The rest are rungs. */
+    var C_CONC   = mix(GROUND, INK, 0.10);
+    var C_WALL   = mix(GROUND, INK, 0.16);
+    var C_STEEL  = mix(GROUND, INK, 0.38);
+    var C_DARK   = mix(GROUND, INK, 0.08);
+    var C_VAN    = mix(INK, GROUND, 0.22);
+    var C_GLASS  = mix(INK, GROUND, 0.62);
+    var C_RUBBER = mix(GROUND, INK, 0.55);
+    var C_PAINT  = mix(ACCENT, GROUND, 0.18);
+    var C_RED    = mix(SECOND, GROUND, 0.12);
+    var C_LAMP   = mix(ACCENT, INK, 0.08);
+
+    function matte(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
+    }
+    var M_CONC = matte(C_CONC), M_WALL = matte(C_WALL), M_STEEL = matte(C_STEEL),
+        M_DARK = matte(C_DARK), M_VAN = matte(C_VAN), M_GLASS = matte(C_GLASS),
+        M_RUBBER = matte(C_RUBBER), M_PAINT = matte(C_PAINT), M_RED = matte(C_RED),
+        M_LAMP = matte(C_LAMP);
+
+    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.26 });
+    function lined(mesh, threshold) {
+      var seg = new THREE.LineSegments(
+        new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 24 : threshold),
+        EDGE
+      );
+      mesh.add(seg);
       return mesh;
     }
 
-    scene.add(new THREE.AmbientLight(0x4a4538, 0.95));
-    var key = new THREE.DirectionalLight(0xffd089, 2.4);
-    key.position.set(3.2, 4.4, 3.6);
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    gpu.setClearColor(0x000000, 0);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(30, 1, 0.12, 180);
+
+    /* law 4: one key you can name — the workshop fluorescent, high and
+       a little forward of the lift, cool-warm. It does not become a
+       second sun at the door: it only golds a little. The fill keeps
+       the inner face of a wall readable. */
+    var ambient = new THREE.AmbientLight(0xfff0e0, 0.16);
+    scene.add(ambient);
+    var key = new THREE.DirectionalLight(0xfff4e6, 1.12);
+    key.position.set(-3.8, 8.4, -2.2);
     scene.add(key);
-    var rim = new THREE.DirectionalLight(0x7aa0c8, 1.1);
-    rim.position.set(-4, 1.6, -2.4);
-    scene.add(rim);
+    var fill = new THREE.DirectionalLight(0xe8eef5, 0.24);
+    fill.position.set(4.2, 1.6, 3.6);
+    scene.add(fill);
 
-    var rig = new THREE.Group();
-    scene.add(rig);
+    /* =====================================================================
+       Las piezas. Law 2: things somebody on Zamora 96 could point at.
 
-    var rubber = toon(0x1c1c1e);
-    var steel = toon(0xb8b4ac);
-    var gold = toon(0xc4a056);
-    var housingMat = toon(0x4a4e56);
+       A CALLE — asfalto · bordillo · farola · letrero
 
-    var tire = inked(new THREE.Mesh(new THREE.TorusGeometry(0.78, 0.22, 18, 56), rubber), 1.04);
-    var rimPts = [
-      new THREE.Vector2(0.40, -0.12), new THREE.Vector2(0.50, -0.12),
-      new THREE.Vector2(0.54, -0.08), new THREE.Vector2(0.56, 0.00),
-      new THREE.Vector2(0.55, 0.08), new THREE.Vector2(0.50, 0.12),
-      new THREE.Vector2(0.44, 0.12), new THREE.Vector2(0.40, 0.06),
-      new THREE.Vector2(0.38, 0.00), new THREE.Vector2(0.40, -0.08)
-    ];
-    var rimMesh = inked(new THREE.Mesh(new THREE.LatheGeometry(rimPts, 48), gold), 1.035);
-    rimMesh.rotation.x = Math.PI / 2;
+       A PERSIANA — listón ×7 · guía izq · guía der · umbral
 
-    var hub = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.1, 24), steel), 1.05);
-    hub.rotation.x = Math.PI / 2;
+       A NAVE — muro izq · muro der · testero · viga · foso ·
+         rampa · marca de bahía · extintor
 
-    var wheel = new THREE.Group();
-    wheel.add(tire);
-    wheel.add(rimMesh);
-    wheel.add(hub);
+       O ELEVADOR — columna izq · columna der · brazo · plato ×2 ·
+         pasador
 
-    var nuts = [];
-    var n;
-    for (n = 0; n < 5; n++) {
-      var nut = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.045, 0.07, 8), steel), 1.08);
-      nut.rotation.x = Math.PI / 2;
-      var ang = (n / 5) * Math.PI * 2;
-      nut.userData.homeX = Math.cos(ang) * 0.22;
-      nut.userData.homeY = Math.sin(ang) * 0.22;
-      nut.userData.t = 0;
-      wheel.add(nut);
-      nuts.push(nut);
+       A FURGO — caja · techo · luna · morro · aleta · paragolpes
+
+       O EQUILIBRADOR — pedestal · eje · plato · cubierta ·
+         contrapeso · pantalla · ficha
+       ===================================================================== */
+
+    var UP = new THREE.Vector3(0, 1, 0);
+    var world = new THREE.Group();
+    scene.add(world);
+    var parts = [];
+    function part(host, mesh, id) {
+      mesh.userData.id = id || "";
+      host.add(mesh);
+      if (id) parts.push(mesh);
+      return mesh;
     }
-
-    var streaks = [];
-    for (n = 0; n < 3; n++) {
-      var ghost = new THREE.Mesh(
-        new THREE.TorusGeometry(0.78, 0.22, 12, 40),
-        new THREE.MeshBasicMaterial({ color: 0xe8c84a, transparent: true, opacity: 0, side: THREE.DoubleSide })
-      );
-      ghost.scale.setScalar(1.02 + n * 0.03);
-      wheel.add(ghost);
-      streaks.push(ghost);
+    function box(w, h, d, mat) {
+      return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
     }
+    function at(mesh, x, y, z) { mesh.position.set(x, y, z); return mesh; }
 
-    var spokes = [];
-    for (n = 0; n < 8; n++) {
-      var spoke = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.020, 0.80, 10), steel), 1.06);
-      spoke.rotation.z = (n / 8) * Math.PI * 2;
-      wheel.add(spoke);
-      spokes.push(spoke);
+    /* --- a calle ------------------------------------------------------ */
+    var asfalto = lined(box(14.0, 0.06, 4.2, M_DARK), 28);
+    at(asfalto, 0, -0.03, -7.6);
+    part(world, asfalto, "asfalto");
+    var bordillo = lined(box(14.0, 0.16, 0.28, M_CONC), 26);
+    at(bordillo, 0, 0.06, -5.55);
+    part(world, bordillo, "bordillo");
+    var farola = new THREE.Group();
+    var fPost = lined(box(0.12, 3.4, 0.12, M_STEEL), 22);
+    fPost.position.y = 1.7;
+    farola.add(fPost);
+    var fArm = lined(box(0.10, 0.10, 1.15, M_STEEL), 26);
+    fArm.position.set(0, 3.35, 0.45);
+    farola.add(fArm);
+    var fHead = lined(box(0.28, 0.10, 0.42, M_LAMP), 24);
+    fHead.position.set(0, 3.28, 0.95);
+    farola.add(fHead);
+    farola.position.set(-5.4, 0, -7.2);
+    fPost.userData.id = "farola";
+    parts.push(fPost);
+    world.add(farola);
+    var letrero = lined(box(1.85, 0.42, 0.06, M_STEEL), 22);
+    at(letrero, 3.4, 2.55, -5.28);
+    part(world, letrero, "letrero");
+
+    /* --- a persiana: seven slats, not a texture ----------------------- */
+    var shutter = new THREE.Group();
+    var slats = [];
+    for (var sl = 0; sl < 7; sl++) {
+      var slat = lined(box(7.6, 0.38, 0.10, M_STEEL), 26);
+      slat.position.set(0, 0.28 + sl * 0.40, 0);
+      shutter.add(slat);
+      slats.push(slat);
     }
+    slats[0].userData.id = "listón";
+    parts.push(slats[0]);
+    var guiaL = lined(box(0.16, 3.15, 0.16, M_STEEL), 22);
+    guiaL.position.set(-3.88, 1.55, 0);
+    shutter.add(guiaL);
+    var guiaR = lined(box(0.16, 3.15, 0.16, M_STEEL), 22);
+    guiaR.position.set(3.88, 1.55, 0);
+    shutter.add(guiaR);
+    guiaL.userData.id = "guía izq";
+    guiaR.userData.id = "guía der";
+    parts.push(guiaL, guiaR);
+    shutter.position.set(0, 0, -5.15);
+    world.add(shutter);
+    var umbral = lined(box(8.0, 0.10, 0.42, M_CONC), 26);
+    at(umbral, 0, 0.04, -5.05);
+    part(world, umbral, "umbral");
 
-    var shaft = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 1.85, 16), steel), 1.04);
-    shaft.rotation.x = Math.PI / 2;
-    shaft.position.z = -0.35;
+    /* --- a nave ------------------------------------------------------- */
+    var muroL = lined(box(0.28, 3.4, 11.4, M_WALL), 18);
+    at(muroL, -4.55, 1.70, 0.55);
+    part(world, muroL, "muro izq");
+    var muroR = lined(box(0.28, 3.4, 11.4, M_WALL), 18);
+    at(muroR, 4.55, 1.70, 0.55);
+    part(world, muroR, "muro der");
+    var testero = lined(box(9.2, 3.4, 0.28, M_WALL), 18);
+    at(testero, 0, 1.70, 6.15);
+    part(world, testero, "testero");
+    var viga = lined(box(9.0, 0.22, 0.22, M_STEEL), 24);
+    at(viga, 0, 3.28, 0.4);
+    part(world, viga, "viga");
+    var foso = lined(box(2.4, 0.22, 3.6, M_DARK), 24);
+    at(foso, 0, -0.08, 0.15);
+    part(world, foso, "foso");
+    var rampa = lined(box(2.2, 0.10, 1.15, M_CONC), 26);
+    at(rampa, 0, 0.04, -2.35);
+    rampa.rotation.x = -0.12;
+    part(world, rampa, "rampa");
+    var marca = lined(box(3.6, 0.02, 0.10, M_PAINT), 32);
+    at(marca, 0, 0.03, -2.85);
+    part(world, marca, "marca de bahía");
+    var ext = lined(box(0.22, 0.55, 0.16, M_RED), 22);
+    at(ext, 4.22, 0.85, 4.6);
+    part(world, ext, "extintor");
 
-    var housePts = [
-      new THREE.Vector2(0.12, 0.00), new THREE.Vector2(0.62, 0.00),
-      new THREE.Vector2(0.66, 0.14), new THREE.Vector2(0.48, 0.26),
-      new THREE.Vector2(0.44, 0.62), new THREE.Vector2(0.52, 0.78),
-      new THREE.Vector2(0.22, 0.86), new THREE.Vector2(0.00, 0.86)
+    /* --- o elevador --------------------------------------------------- */
+    var lift = new THREE.Group();
+    var colL = lined(box(0.22, 2.55, 0.22, M_STEEL), 20);
+    colL.position.set(-1.35, 1.28, 0.85);
+    lift.add(colL);
+    var colR = lined(box(0.22, 2.55, 0.22, M_STEEL), 20);
+    colR.position.set(1.35, 1.28, 0.85);
+    lift.add(colR);
+    var arms = new THREE.Group();
+    var brazo = lined(box(2.95, 0.10, 0.16, M_STEEL), 24);
+    brazo.position.set(0, 0, 0);
+    arms.add(brazo);
+    var platoA = lined(box(0.42, 0.08, 0.42, M_STEEL), 26);
+    platoA.position.set(-0.85, 0.08, 0.55);
+    arms.add(platoA);
+    var platoB = lined(box(0.42, 0.08, 0.42, M_STEEL), 26);
+    platoB.position.set(0.85, 0.08, -0.55);
+    arms.add(platoB);
+    var pasador = lined(box(0.10, 0.22, 0.10, M_PAINT), 28);
+    pasador.position.set(-1.35, 0.12, 0.85);
+    arms.add(pasador);
+    arms.position.set(0, 0.22, 0.15);
+    lift.add(arms);
+    lift.position.set(0, 0, 0.2);
+    colL.userData.id = "columna izq";
+    brazo.userData.id = "brazo";
+    platoA.userData.id = "plato";
+    pasador.userData.id = "pasador";
+    parts.push(colL, brazo, platoA, pasador);
+    world.add(lift);
+
+    /* --- a furgo: a tall neighborhood van, not a GT ------------------- */
+    var van = new THREE.Group();
+    var caja = lined(box(1.55, 1.15, 2.85, M_VAN), 16);
+    caja.position.set(0, 0.92, 0.05);
+    van.add(caja);
+    var techo = lined(box(1.58, 0.08, 2.90, M_VAN), 24);
+    techo.position.set(0, 1.54, 0.05);
+    van.add(techo);
+    var luna = lined(box(1.35, 0.48, 0.06, M_GLASS), 22);
+    luna.position.set(0, 1.22, 1.46);
+    van.add(luna);
+    var morro = lined(box(1.50, 0.55, 0.42, M_VAN), 18);
+    morro.position.set(0, 0.55, 1.55);
+    van.add(morro);
+    var aleta = lined(box(1.62, 0.28, 0.55, M_VAN), 22);
+    aleta.position.set(0, 0.38, 1.15);
+    van.add(aleta);
+    var paragolpes = lined(box(1.58, 0.16, 0.18, M_STEEL), 24);
+    paragolpes.position.set(0, 0.28, 1.78);
+    van.add(paragolpes);
+    van.position.set(0, 0.18, 0.15);
+    caja.userData.id = "caja";
+    techo.userData.id = "techo";
+    luna.userData.id = "luna";
+    morro.userData.id = "morro";
+    aleta.userData.id = "aleta";
+    paragolpes.userData.id = "paragolpes";
+    parts.push(caja, techo, luna, morro, aleta, paragolpes);
+    arms.add(van);
+
+    /* --- o equilibrador: a station, not the page ---------------------- */
+    var bal = new THREE.Group();
+    var pedestal = lined(box(0.72, 0.85, 0.72, M_STEEL), 18);
+    pedestal.position.y = 0.42;
+    bal.add(pedestal);
+    var eje = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.55, 10), M_STEEL), 28);
+    eje.rotation.z = Math.PI / 2;
+    eje.position.set(0.42, 0.95, 0);
+    bal.add(eje);
+    var platoE = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.08, 10), M_STEEL), 26);
+    platoE.rotation.z = Math.PI / 2;
+    platoE.position.set(0.62, 0.95, 0);
+    bal.add(platoE);
+    var cubierta = lined(new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.12, 8, 12), M_RUBBER), 22);
+    cubierta.rotation.y = Math.PI / 2;
+    cubierta.position.set(0.78, 0.95, 0);
+    bal.add(cubierta);
+    var peso = lined(box(0.10, 0.08, 0.16, M_PAINT), 28);
+    peso.position.set(0.78, 1.28, 0.22);
+    bal.add(peso);
+    var pantalla = lined(box(0.42, 0.28, 0.08, M_DARK), 24);
+    pantalla.position.set(-0.05, 1.28, 0.28);
+    bal.add(pantalla);
+    var ficha = lined(box(0.36, 0.02, 0.24, M_STEEL), 22);
+    ficha.position.set(0.15, 0.92, 0.55);
+    ficha.rotation.x = -0.55;
+    bal.add(ficha);
+    bal.position.set(3.15, 0, 2.05);
+    pedestal.userData.id = "pedestal";
+    eje.userData.id = "eje";
+    platoE.userData.id = "plato";
+    cubierta.userData.id = "cubierta";
+    peso.userData.id = "contrapeso";
+    pantalla.userData.id = "pantalla";
+    ficha.userData.id = "ficha";
+    parts.push(pedestal, eje, cubierta, peso, pantalla, ficha);
+    world.add(bal);
+
+    var M_SH = new THREE.MeshBasicMaterial({
+      color: INK, transparent: true, opacity: 0.10, depthWrite: false
+    });
+    var shBay = new THREE.Mesh(new THREE.CircleGeometry(4.6, 16), M_SH);
+    shBay.rotation.x = -Math.PI / 2;
+    shBay.position.set(0, 0.01, 0.2);
+    world.add(shBay);
+
+    var svgNS = "http://www.w3.org/2000/svg";
+    var notesSvg = document.createElementNS(svgNS, "svg");
+    notesSvg.setAttribute("class", "gg-notes");
+    notesSvg.setAttribute("aria-hidden", "true");
+    panel.appendChild(notesSvg);
+    var NOTE_SPEC = [
+      { label: "A persiana", a: 0.08, b: 0.24, y: 0.18, mesh: slats[3] },
+      { label: "O foso", a: 0.28, b: 0.46, y: 0.22, mesh: foso },
+      { label: "O eje", a: 0.50, b: 0.68, y: 0.20, mesh: cubierta },
+      { label: "A la calle", a: 0.76, b: 0.96, y: 0.72, mesh: umbral }
     ];
-    var housing = inked(new THREE.Mesh(new THREE.LatheGeometry(housePts, 40), housingMat), 1.03);
-    housing.rotation.x = Math.PI / 2;
-    housing.position.set(0, -0.22, -1.05);
-
-    var colPts = [
-      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.16, 0.00),
-      new THREE.Vector2(0.14, 0.06), new THREE.Vector2(0.11, 0.10),
-      new THREE.Vector2(0.11, 1.00), new THREE.Vector2(0.14, 1.06),
-      new THREE.Vector2(0.00, 1.06)
-    ];
-    var column = inked(new THREE.Mesh(new THREE.LatheGeometry(colPts, 24), housingMat), 1.03);
-    column.position.set(-0.85, -0.88, -0.7);
-    var footPts = [
-      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.85, 0.00),
-      new THREE.Vector2(0.82, 0.06), new THREE.Vector2(0.00, 0.06)
-    ];
-    var foot = inked(new THREE.Mesh(new THREE.LatheGeometry(footPts, 36), housingMat), 1.03);
-    foot.scale.set(1.15, 1, 0.55);
-    foot.position.set(-0.2, -0.95, -0.55);
-
-    function radialTex() {
-      var c = document.createElement("canvas");
-      c.width = c.height = 128;
-      var x = c.getContext("2d");
-      var g = x.createRadialGradient(64, 64, 4, 64, 64, 64);
-      g.addColorStop(0, "rgba(0,0,0,.55)");
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      x.fillStyle = g;
-      x.fillRect(0, 0, 128, 128);
-      return new THREE.CanvasTexture(c);
-    }
-    var shadow = new THREE.Mesh(
-      new THREE.CircleGeometry(1.15, 32),
-      new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide })
-    );
-    shadow.rotation.x = -Math.PI / 2;
-    shadow.position.y = -0.95;
-    shadow.scale.set(1.6, 0.55, 1);
-
-    rig.add(housing);
-    rig.add(column);
-    rig.add(foot);
-    rig.add(shaft);
-    rig.add(wheel);
-    rig.add(shadow);
-
-    animate(state, { drop: 0, duration: 1400, delay: 280, ease: "outElastic(1.1, 0.6)" });
-    animate(nuts.map(function (el) { return el.userData; }), {
-      t: 1, duration: 720, delay: stagger(90, { start: 520 }), ease: "outBack"
+    var notes = NOTE_SPEC.map(function (spec) {
+      var lead = document.createElementNS(svgNS, "polyline");
+      lead.setAttribute("class", "gg-lead-line");
+      var dot = document.createElementNS(svgNS, "circle");
+      dot.setAttribute("class", "gg-note-dot");
+      dot.setAttribute("r", "2.5");
+      var text = document.createElementNS(svgNS, "text");
+      text.setAttribute("class", "gg-note");
+      text.textContent = spec.label;
+      notesSvg.appendChild(lead);
+      notesSvg.appendChild(dot);
+      notesSvg.appendChild(text);
+      return { spec: spec, lead: lead, dot: dot, text: text };
     });
 
-    function fitView() {
-      var w = host.clientWidth, h = host.clientHeight;
-      camera.aspect = w / Math.max(h, 1);
-      camera.updateProjectionMatrix();
-      gpu.setSize(w, h, false);
-    }
-    fitView();
-    window.addEventListener("resize", fitView);
+    var LOG = [
+      ["00", "A persiana", "Zamora 96"],
+      ["01", "O foso", "o elevador"],
+      ["02", "O eje", "equilibrado"],
+      ["03", "A la calle", "equilibrada"]
+    ];
+    var STOPS = [{ a: 0.155 }, { a: 0.255 }, { a: 0.355 }, { a: 0.445 }];
 
-    var onStage = true;
-    if (window.IntersectionObserver) {
-      onStage = false;
-      new IntersectionObserver(function (entries) {
-        onStage = entries[0].isIntersecting;
-      }, { rootMargin: "12% 0px" }).observe(host);
+    function seg(p, a, b) {
+      if (p <= a) return 0;
+      if (p >= b) return 1;
+      return (p - a) / (b - a);
     }
+    function smooth(t) {
+      t = Math.max(0, Math.min(1, t));
+      return t * t * (3 - 2 * t);
+    }
+    function reveal(els, t, staggerT, dist) {
+      for (var i = 0; i < els.length; i++) {
+        var u = smooth(seg(t, i * staggerT, i * staggerT + 0.55));
+        els[i].style.opacity = String(u);
+        els[i].style.transform = "translateY(" + (1 - u) * dist + "px)";
+      }
+    }
+
+    var box2 = { w: 1, h: 1 };
+    var portraitK = 1, portraitLift = 0;
+    var lastGround = "", lastG = "", lastLog = -1, lastLogS = "";
+    var here = new THREE.Vector3(), proj = new THREE.Vector3();
+    var camPos = new THREE.Vector3(), camLook = new THREE.Vector3();
+    var lookPt = new THREE.Vector3();
+
+    function fit() {
+      box2.w = stage.clientWidth || 1;
+      box2.h = stage.clientHeight || 1;
+      notesSvg.setAttribute("viewBox", "0 0 " + box2.w + " " + box2.h);
+      notesSvg.setAttribute("width", String(box2.w));
+      notesSvg.setAttribute("height", String(box2.h));
+      gpu.setSize(box2.w, box2.h, false);
+      camera.aspect = box2.w / Math.max(box2.h, 1);
+      camera.updateProjectionMatrix();
+      var a = camera.aspect;
+      if (a < 0.95) { portraitK = 1.42; portraitLift = 1.35; }
+      else if (a < 1.4) { portraitK = 1.16; portraitLift = 0.35; }
+      else { portraitK = 1; portraitLift = 0; }
+    }
+    fit();
+    window.addEventListener("resize", fit);
 
     function frame() {
-      requestAnimationFrame(frame);
-      if (!onStage) return;
-      var k;
-      for (k = 0; k < nuts.length; k++) {
-        nuts[k].position.set(
-          nuts[k].userData.homeX,
-          nuts[k].userData.homeY,
-          0.06 + (1 - nuts[k].userData.t) * 0.34
-        );
-        nuts[k].rotation.z = (1 - nuts[k].userData.t) * 4.2;
+      var p = state.p;
+      var openT = smooth(seg(p, 0.10, 0.22));
+      var walkT = smooth(seg(p, 0.14, 0.50));
+      var liftT = smooth(seg(p, 0.28, 0.46));
+      var balT = smooth(seg(p, 0.50, 0.68));
+      var outT = smooth(seg(p, 0.72, 0.90));
+
+      for (var s = 0; s < slats.length; s++) {
+        slats[s].position.y = 0.28 + s * 0.40 + openT * (2.55 + s * 0.04);
       }
-      wheel.position.y = state.drop * 1.45;
-      wheel.rotation.z += state.rpm * 0.5;
-      for (k = 0; k < streaks.length; k++) {
-        streaks[k].material.opacity = state.rpm * (0.18 - k * 0.04);
-        streaks[k].rotation.z = wheel.rotation.z - (k + 1) * 0.08 * state.rpm;
+      arms.position.y = 0.22 + liftT * 1.45;
+      cubierta.rotation.x = state.idle * (0.15 + balT * 1.6);
+      ficha.visible = balT > 0.12 || outT > 0;
+      ficha.rotation.x = -1.10 + Math.max(balT, outT) * 0.70;
+      ficha.position.y = 0.72 + Math.max(balT, outT) * 0.28;
+
+      /* --- camera: the facade, the nave with the van, the machine,
+         then looking out the open shutter — never inside a slab ------ */
+      var streetPos = new THREE.Vector3(-5.2, 5.2, -14.8);
+      var streetLook = new THREE.Vector3(0.15, 1.35, -4.6);
+      var side = portraitLift > 0 ? 0.2 : 1.85;
+      var bayPos = new THREE.Vector3(-3.4 + side * 0.2, 2.55 + liftT * 0.35, -4.4 + walkT * 2.6);
+      var bayLook = new THREE.Vector3(0.05, 0.75 + liftT * 0.85, 0.25);
+
+      camPos.copy(streetPos).lerp(bayPos, Math.max(openT, walkT));
+      camLook.copy(streetLook).lerp(bayLook, Math.max(openT, walkT));
+
+      if (balT > 0) {
+        lookPt.set(3.15, 0.95, 2.05);
+        var balPos = new THREE.Vector3(0.35, 1.85, 4.15);
+        camPos.lerp(balPos, balT);
+        camLook.lerp(lookPt, balT);
       }
-      camera.position.lerpVectors(camFar, camNear, 1 - state.rpm);
-      camera.lookAt(-0.12, 0.02, -0.30);
-      shadow.material.opacity = 0.85 - state.drop * 0.45;
-      gpu.render(scene, camera);
-    }
-    frame();
-
-    var exView = panel.querySelector(".gg-explode-view");
-    var exHost = panel.querySelector(".gg-explode");
-    if (exView && exHost) {
-      var exGpu = new THREE.WebGLRenderer({ canvas: exView, alpha: true, antialias: true });
-      exGpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
-      exGpu.setClearColor(0x000000, 0);
-      var exWorld = new THREE.Scene();
-      var exCam = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
-      exCam.position.set(3.30, 1.85, 4.60);
-      exCam.lookAt(0.05, 0.02, 0);
-      exWorld.add(new THREE.AmbientLight(0x4a4538, 0.95));
-      var exKey = new THREE.DirectionalLight(0xffd089, 2.3);
-      exKey.position.set(3, 4, 3.2);
-      exWorld.add(exKey);
-      var exRim = new THREE.DirectionalLight(0x7aa0c8, 1.1);
-      exRim.position.set(-3.4, 1.4, -2);
-      exWorld.add(exRim);
-
-      var rubber = toon(0x1c1c1e);
-      var steel = toon(0xb8b4ac);
-      var gold = toon(0xc4a056);
-      var graph = toon(0x2c2c2e);
-
-      var tireG = new THREE.Group();
-      tireG.add(inked(new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.18, 16, 48), rubber), 1.04));
-      var rimPts = [
-        new THREE.Vector2(0.32, -0.1), new THREE.Vector2(0.42, -0.1),
-        new THREE.Vector2(0.46, 0.0), new THREE.Vector2(0.42, 0.1),
-        new THREE.Vector2(0.32, 0.1), new THREE.Vector2(0.28, 0.0)
-      ];
-      var rimM = inked(new THREE.Mesh(new THREE.LatheGeometry(rimPts, 40), gold), 1.035);
-      rimM.rotation.x = Math.PI / 2;
-      tireG.add(rimM);
-      tireG.rotation.set(0.18, -0.62, 0.05);
-      tireG.position.set(-1.05, 0.12, 0);
-      exWorld.add(tireG);
-
-      var discG = new THREE.Group();
-      var discPts = [
-        new THREE.Vector2(0.08, -0.06), new THREE.Vector2(0.18, -0.06),
-        new THREE.Vector2(0.48, -0.03), new THREE.Vector2(0.48, 0.03),
-        new THREE.Vector2(0.18, 0.06), new THREE.Vector2(0.08, 0.06)
-      ];
-      var discM = inked(new THREE.Mesh(new THREE.LatheGeometry(discPts, 48), toon(0x6a5a48)), 1.04);
-      discM.rotation.x = Math.PI / 2;
-      discG.add(discM);
-      discG.add(inked(new THREE.Mesh(new THREE.TorusGeometry(0.36, 0.012, 8, 40), toon(0x3a3228)), 1.06));
-      var hat = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.19, 0.09, 24), toon(0x8a7a62)), 1.05);
-      hat.rotation.x = Math.PI / 2;
-      discG.add(hat);
-      var holeGeo = new THREE.CylinderGeometry(0.026, 0.026, 0.09, 10);
-      var holeMat = toon(0x241f1a);
-      for (var dh = 0; dh < 10; dh++) {
-        var ang2 = (dh / 10) * Math.PI * 2;
-        var hole = new THREE.Mesh(holeGeo, holeMat);
-        hole.rotation.x = Math.PI / 2;
-        hole.position.set(Math.cos(ang2) * 0.33, Math.sin(ang2) * 0.33, 0);
-        discG.add(hole);
+      if (outT > 0) {
+        var doorPos = new THREE.Vector3(0.85, 1.95, 0.55);
+        var doorLook = new THREE.Vector3(-0.15, 0.55, -9.2);
+        camPos.lerp(doorPos, outT);
+        camLook.lerp(doorLook, outT);
       }
-      discG.rotation.set(0.16, -0.55, -0.06);
-      discG.position.set(0.85, 0.55, 0.1);
-      exWorld.add(discG);
 
-      var padShape = new THREE.Shape();
-      padShape.absellipse(0, 0, 0.17, 0.26, 0, Math.PI * 2, false, 0);
-      var padGeo = new THREE.ExtrudeGeometry(padShape, {
-        depth: 0.06, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01,
-        bevelSegments: 2, curveSegments: 18
-      });
-      var padG = new THREE.Group();
-      var padA = inked(new THREE.Mesh(padGeo, graph), 1.05);
-      var padB = inked(new THREE.Mesh(padGeo, graph), 1.05);
-      padA.position.z = 0.04;
-      padB.position.z = -0.05;
-      padG.add(padA);
-      padG.add(padB);
-      padG.rotation.set(0.14, -0.58, 0.10);
-      padG.position.set(0.95, -0.62, 0.15);
-      exWorld.add(padG);
+      camPos.y += Math.sin(state.idle) * 0.02;
+      if (portraitK !== 1) {
+        camera.position.copy(camPos);
+        camera.position.sub(camLook).multiplyScalar(portraitK).add(camLook);
+        camLook.y -= portraitLift;
+      } else {
+        camera.position.copy(camPos);
+      }
+      camera.lookAt(camLook);
 
-      var exTags = [
-        [panel.querySelector(".gg-tag-tire"), tireG],
-        [panel.querySelector(".gg-tag-disc"), discG],
-        [panel.querySelector(".gg-tag-pad"), padG]
-      ];
-      var _exProj = new THREE.Vector3();
-      function placeExTags() {
-        var w = exHost.clientWidth, h = Math.max(exHost.clientHeight, 1);
-        for (var a = 0; a < exTags.length; a++) {
-          var el = exTags[a][0];
-          if (!el) continue;
-          _exProj.copy(exTags[a][1].position).project(exCam);
-          el.style.left = ((_exProj.x * 0.5 + 0.5) * w).toFixed(1) + "px";
-          el.style.top = ((-_exProj.y * 0.5 + 0.5) * h).toFixed(1) + "px";
+      var naveT = (1 - outT) * Math.max(openT, walkT);
+      key.intensity = 1.12 - naveT * 0.08 + outT * 0.10;
+      fill.intensity = 0.24 + naveT * 0.04;
+      var hex = lerpHex(lerpHex(HEX_GROUND, H_NAVE, naveT * 0.7), H_STREET, outT * 0.75);
+      var lnHex = lerpHex(HEX_LINE, H_LN_NAVE, naveT);
+      if (hex !== lastGround) {
+        lastGround = hex;
+        panel.style.setProperty("--gg-ground", hex);
+        panel.style.setProperty("--gg-fg", HEX_INK);
+        panel.style.setProperty("--gg-line", lnHex);
+      }
+
+      if (ch0) ch0.style.opacity = String(1 - smooth(seg(p, 0.07, 0.145)));
+      if (ch1) ch1.style.opacity = String(
+        smooth(seg(p, 0.125, 0.165)) * (1 - smooth(seg(p, 0.488, 0.545)))
+      );
+      for (var s2 = 0; s2 < stepEls.length; s2++) {
+        var st = STOPS[s2];
+        var vis = smooth(seg(p, st.a - 0.04, st.a + 0.03));
+        if (s2 < 3) vis *= 1 - smooth(seg(p, STOPS[s2 + 1].a - 0.03, STOPS[s2 + 1].a + 0.028));
+        else vis *= 1 - smooth(seg(p, 0.495, 0.545));
+        stepEls[s2].style.opacity = String(vis);
+        stepEls[s2].style.transform = "translateY(" + (1 - vis) * 22 + "px)";
+      }
+      if (kicker2) kicker2.style.opacity = String(smooth(seg(p, 0.50, 0.545)));
+      reveal(h2Chars, seg(p, 0.51, 0.62), 0.006, 24);
+      reveal(serviceEls, seg(p, 0.53, 0.64), 0.055, 20);
+      if (ch2) ch2.style.opacity = String(1 - smooth(seg(p, 0.68, 0.76)));
+      reveal(deskEls, seg(p, 0.76, 0.92), 0.07, 22);
+
+      var grams = 32;
+      if (p >= 0.84) grams = 0;
+      else if (balT > 0) grams = Math.round(32 * (1 - balT));
+      else if (liftT > 0) grams = Math.round(32 - liftT * 8);
+      var gTxt = String(grams);
+      if (gTxt !== lastG) {
+        lastG = gTxt;
+        if (gramsEl) gramsEl.textContent = gTxt;
+      }
+      var chap = p < 0.14 ? 0 : p < 0.50 ? 1 : p < 0.70 ? 2 : 3;
+      if (chap !== lastLog) {
+        lastLog = chap;
+        if (logN) logN.textContent = LOG[chap][0];
+        if (logT) logT.textContent = LOG[chap][1];
+      }
+      var logLine = "+" + grams + " g · " + LOG[chap][2];
+      if (logS && logLine !== lastLogS) { lastLogS = logLine; logS.textContent = logLine; }
+
+      for (var n = 0; n < notes.length; n++) {
+        var note = notes[n];
+        var nv = smooth(seg(p, note.spec.a, note.spec.a + 0.04))
+               * (1 - smooth(seg(p, note.spec.b, note.spec.b + 0.04)));
+        var target = note.spec.mesh;
+        if (!target || nv < 0.06) {
+          note.lead.style.opacity = "0";
+          note.text.style.opacity = "0";
+          note.dot.style.opacity = "0";
+          continue;
         }
+        target.getWorldPosition(here);
+        proj.copy(here).project(camera);
+        var scrx = (proj.x * 0.5 + 0.5) * box2.w;
+        var scry = (-proj.y * 0.5 + 0.5) * box2.h;
+        var sd = (p > 0.16 && p < 0.50) ? -1 : (scrx < box2.w * 0.5 ? -1 : 1);
+        var edge = sd < 0 ? box2.w * 0.12 : box2.w * 0.90;
+        var ty = box2.h * (portraitLift > 0
+          ? (note.spec.y < 0.5 ? 0.12 : 0.82)
+          : note.spec.y);
+        var elbow = sd < 0 ? edge + box2.w * 0.05 : edge - box2.w * 0.05;
+        note.lead.setAttribute("points",
+          scrx + "," + scry + " " + elbow + "," + ty + " " + edge + "," + ty);
+        note.dot.setAttribute("cx", scrx);
+        note.dot.setAttribute("cy", scry);
+        note.text.setAttribute("x", edge);
+        note.text.setAttribute("y", ty - 8);
+        note.text.setAttribute("text-anchor", sd < 0 ? "start" : "end");
+        note.lead.style.opacity = String(nv * 0.55);
+        note.dot.style.opacity = String(nv * 0.8);
+        note.text.style.opacity = String(nv);
       }
 
-      var tireHome = tireG.position.clone();
-      var discHome = discG.position.clone();
-      var padHome = padG.position.clone();
-      var tireAway = new THREE.Vector3(-1.55, 0.22, -0.35);
-      var discAway = new THREE.Vector3(1.35, 0.85, 0.45);
-      var padAway = new THREE.Vector3(1.45, -0.85, 0.55);
-
-      function fitEx() {
-        var w = exHost.clientWidth, h = Math.max(exHost.clientHeight, 1);
-        exCam.aspect = w / h;
-        exCam.updateProjectionMatrix();
-        exGpu.setSize(w, h, false);
-      }
-      fitEx();
-      window.addEventListener("resize", fitEx);
-
-      var exOn = true;
-      if (window.IntersectionObserver) {
-        exOn = false;
-        new IntersectionObserver(function (entries) {
-          exOn = entries[0].isIntersecting;
-        }, { rootMargin: "12% 0px" }).observe(exHost);
-      }
-
-      function exFrame() {
-        requestAnimationFrame(exFrame);
-        if (!exOn) return;
-        var t = explode.t;
-        tireG.position.lerpVectors(tireAway, tireHome, t);
-        discG.position.lerpVectors(discAway, discHome, t);
-        padG.position.lerpVectors(padAway, padHome, t);
-        tireG.rotation.y = (1 - t) * 0.6;
-        discG.rotation.z += 0.01 + t * 0.02;
-        padG.rotation.y = (1 - t) * -0.4;
-        exCam.position.set(3.30 - t * 0.42, 1.85 - t * 0.16, 4.60 - t * 0.55);
-        exCam.lookAt(0.05, 0.02, 0);
-        exCam.updateMatrixWorld();
-        placeExTags();
-        exGpu.render(exWorld, exCam);
-      }
-      exFrame();
+      world.scale.setScalar(0.94 + state.settle * 0.06);
+      gpu.render(scene, camera);
+      requestAnimationFrame(frame);
     }
-  }).catch(function () { window.__staticB(panel); });
+    requestAnimationFrame(frame);
+  }).catch(function (err) {
+    console.error("garage-galicia scene failed", err);
+    window.__staticB(panel);
+  });
 };
 
 (function () {
