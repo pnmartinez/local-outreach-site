@@ -358,7 +358,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   letter-spacing: 0;
   text-transform: none;
 }
-#dsgB .cr-place { opacity: .55; margin-right: auto; }
+#dsgB .cr-place { opacity: .78; margin-right: auto; }
 
 /* The readout the whole page is built on: kilometres toward Ourense,
    then the kilometres you did not drive, then 0,0 at the door. */
@@ -398,11 +398,11 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   letter-spacing: .24em;
   text-transform: uppercase;
   color: var(--cr-fg, var(--st-fg));
-  opacity: .6;
+  opacity: .92;
   pointer-events: none;
 }
 #dsgB .cr-log-n { color: var(--st-accent); font-weight: 700; }
-#dsgB .cr-log-s { opacity: .55; font-variant-numeric: tabular-nums; }
+#dsgB .cr-log-s { opacity: .82; font-variant-numeric: tabular-nums; }
 
 #dsgB .cr-scroll { position: relative; z-index: 2; }
 
@@ -421,7 +421,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   padding: 0 clamp(20px, 5vw, 88px);
   pointer-events: none;
 }
-#dsgB .cr-in > * { pointer-events: auto; }
+#dsgB .cr-in > * { pointer-events: auto; position: relative; z-index: 1; }
 #dsgB .cr-in-left { justify-items: start; text-align: left; max-width: 48ch; }
 #dsgB .cr-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
 
@@ -458,14 +458,14 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   line-height: 1.12;
   letter-spacing: -.01em;
   max-width: 18ch;
-  opacity: .82;
+  opacity: .95;
 }
 #dsgB .cr-lead {
   margin: 20px 0 0;
   max-width: 44ch;
   font-size: 13px;
   line-height: 1.8;
-  opacity: .58;
+  opacity: .88;
 }
 #dsgB .cr-cue {
   display: flex;
@@ -517,7 +517,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   max-width: 32ch;
   font-size: 13px;
   line-height: 1.75;
-  opacity: .6;
+  opacity: .78;
 }
 
 #dsgB .cr-ch-2 .cr-in-left {
@@ -559,7 +559,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   font-weight: 500;
   font-size: 22px;
 }
-#dsgB .cr-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .58; }
+#dsgB .cr-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .78; }
 
 #dsgB .cr-tel {
   font-family: "Newsreader", var(--display);
@@ -570,15 +570,15 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   letter-spacing: -.01em;
   color: inherit;
 }
-#dsgB .cr-say { margin: 20px 0 0; max-width: 36ch; font-size: 13px; line-height: 1.7; opacity: .62; }
-#dsgB .cr-hours { margin: 18px 0 0; font-size: 12px; opacity: .6; }
+#dsgB .cr-say { margin: 20px 0 0; max-width: 36ch; font-size: 13px; line-height: 1.7; opacity: .82; }
+#dsgB .cr-hours { margin: 18px 0 0; font-size: 12px; opacity: .78; }
 #dsgB .cr-addr {
   margin: 8px 0 0;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: .24em;
   text-transform: uppercase;
-  opacity: .48;
+  opacity: .72;
 }
 
 /* Law 6: leaders out of the drawing into the margin. Created in JS so
@@ -612,13 +612,55 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 
 @media (max-width: 900px) {
   #dsgB { background-attachment: scroll, scroll, scroll; }
-  #dsgB .cr-in { padding: 0 20px 10vh; align-content: end; }
+  #dsgB .cr-rail {
+    background: linear-gradient(
+      180deg,
+      var(--cr-ground, var(--st-bg)) 0%,
+      color-mix(in srgb, var(--cr-ground, var(--st-bg)) 82%, transparent) 62%,
+      transparent
+    );
+  }
+  #dsgB .cr-place { display: none; }
+  #dsgB .cr-name {
+    font-size: clamp(34px, 11vw, 48px);
+  }
+  #dsgB .cr-in {
+    padding: 0 20px 13vh;
+    align-content: end;
+  }
+  /* The copy sits on the page's own ground, not on the tarmac. */
+  #dsgB .cr-in::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 74%;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--cr-ground, var(--st-bg)) 0%, transparent) 0%,
+      color-mix(in srgb, var(--cr-ground, var(--st-bg)) 94%, transparent) 16%,
+      var(--cr-ground, var(--st-bg)) 34%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
   #dsgB .cr-in-right { text-align: left; justify-items: start; margin-left: 0; }
   #dsgB .cr-step p { margin-left: 0; }
   #dsgB .cr-services { grid-template-columns: 1fr; gap: 14px; }
   #dsgB .cr-km { display: none; }
+  #dsgB .cr-lead { font-size: 15px; opacity: .92; }
+  #dsgB .cr-claim { opacity: 1; }
+  #dsgB .cr-cue { opacity: .78; }
+  #dsgB .cr-step p,
+  #dsgB .cr-service p,
+  #dsgB .cr-say { opacity: .92; }
   #dsgB .cr-note { font-size: 9px; letter-spacing: .1em; }
-  #dsgB .cr-log { font-size: 9px; bottom: 14px; gap: 8px; }
+  #dsgB .cr-log {
+    font-size: 10px;
+    bottom: 12px;
+    gap: 8px;
+    opacity: 1;
+    padding: 6px 10px 6px 0;
+  }
   #dsgB .cr-ch-1 { height: 420vh; }
 }
 
@@ -960,12 +1002,15 @@ window.__initB = function (A, panel) {
     var H_LN_CITY = mixHex(HEX_LINE, HEX_INK, 0.28);
 
     /* A value ladder off the page's own two ends. Exactly two chromatic
-       materials: the wine door (accent) and the verge tree (second).
-       Everything else is a rung. */
-    var C_ROAD    = mix(GROUND, INK, 0.22);
+       materials: the wine door (accent) and the verge (second). The
+       tarmac is a dark rung; the lane paint is the pale end. Wine stays
+       a spot on the door — a stain in the asphalt read as mud. */
+    var C_ROAD    = mix(GROUND, INK, 0.64);
+    var C_PAINT   = mix(GROUND, INK, 0.03);
     var C_EDGE    = mix(GROUND, INK, 0.48);
-    var C_SHOULDER= mix(GROUND, INK, 0.14);
-    var C_DITCH   = mix(GROUND, INK, 0.30);
+    var C_SHOULDER= mix(mix(GROUND, INK, 0.24), SECOND, 0.20);
+    var C_VERGE   = mix(SECOND, GROUND, 0.14);
+    var C_DITCH   = mix(GROUND, INK, 0.40);
     var C_STONE   = mix(GROUND, INK, 0.36);
     var C_POST    = mix(GROUND, INK, 0.58);
     var C_RAIL    = mix(GROUND, INK, 0.64);
@@ -978,7 +1023,8 @@ window.__initB = function (A, panel) {
     function matte(color) {
       return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
     }
-    var M_ROAD = matte(C_ROAD), M_EDGE = matte(C_EDGE), M_SHOULDER = matte(C_SHOULDER),
+    var M_ROAD = matte(C_ROAD), M_PAINT = matte(C_PAINT), M_EDGE = matte(C_EDGE),
+        M_SHOULDER = matte(C_SHOULDER), M_VERGE = matte(C_VERGE),
         M_DITCH = matte(C_DITCH), M_STONE = matte(C_STONE), M_POST = matte(C_POST),
         M_RAIL = matte(C_RAIL), M_WALL = matte(C_WALL), M_ROOF = matte(C_ROOF),
         M_HOSP = matte(C_HOSP), M_DOOR = matte(C_DOOR), M_LEAF = matte(C_LEAF);
@@ -988,7 +1034,7 @@ window.__initB = function (A, panel) {
     });
 
     /* --- law 3: a hairline, not an outline ----------------------------- */
-    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.24 });
+    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.32 });
     function lined(mesh, threshold) {
       var seg = new THREE.LineSegments(
         new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 24 : threshold),
@@ -1011,7 +1057,7 @@ window.__initB = function (A, panel) {
        the shadow side of a cut slab readable. */
     var ambient = new THREE.AmbientLight(0xfff0e0, 0.18);
     scene.add(ambient);
-    var key = new THREE.DirectionalLight(0xfff4e6, 1.12);
+    var key = new THREE.DirectionalLight(0xfff4e6, 1.22);
     key.position.set(4.20, 6.40, 3.10);
     scene.add(key);
     var fill = new THREE.DirectionalLight(0xe8eef5, 0.28);
@@ -1137,7 +1183,7 @@ window.__initB = function (A, panel) {
     for (var d = 0; d < dashN; d++) {
       var td = (d + 0.35) / dashN;
       if ((d % 2) === 1) continue;
-      var dash = lined(box(0.07, 0.02, 0.32, M_EDGE), 40);
+      var dash = lined(box(0.13, 0.04, 0.42, M_PAINT), 40);
       var frd = alignRoad(dash, td);
       dash.position.copy(frd.at);
       dash.position.y = 0.078;
@@ -1169,13 +1215,13 @@ window.__initB = function (A, panel) {
       if ((t0 + t1) * 0.5 >= HINGE) ahead.attach(g);
       return g;
     }
-    ribbon("línea de borde", 0.88, 0.06, 0.02, 0.076, M_EDGE, 0, HINGE, 8);
-    ribbon("", 0.88, 0.06, 0.02, 0.076, M_EDGE, HINGE, 1, 8);
+    ribbon("línea de borde", 0.90, 0.09, 0.03, 0.082, M_PAINT, 0, HINGE, 8);
+    ribbon("", 0.90, 0.09, 0.03, 0.082, M_PAINT, HINGE, 1, 8);
     ribbon("arcén", 1.12, 0.36, 0.05, 0.02, M_SHOULDER, 0, HINGE, 8);
     ribbon("", 1.12, 0.36, 0.05, 0.02, M_SHOULDER, HINGE, 1, 8);
     ribbon("cuneta", 1.42, 0.22, 0.04, -0.01, M_DITCH, 0, HINGE, 7);
     ribbon("", 1.42, 0.22, 0.04, -0.01, M_DITCH, HINGE, 1, 7);
-    ribbon("berma", -1.28, 0.44, 0.04, 0.01, M_SHOULDER, 0, 0.48, 8);
+    ribbon("berma", -1.28, 0.48, 0.05, 0.015, M_VERGE, 0, 0.48, 8);
 
     /* --- os hitos ----------------------------------------------------- */
     function hito(t, km, id) {
@@ -1216,7 +1262,7 @@ window.__initB = function (A, panel) {
     part(home, shield, "escudo OU-536");
 
     /* cruce: a diamond on the asphalt */
-    var cruce = lined(box(0.55, 0.03, 0.55, M_EDGE), 20);
+    var cruce = lined(box(0.55, 0.03, 0.55, M_PAINT), 20);
     var frC = alignRoad(cruce, 0.155);
     cruce.position.copy(frC.at);
     cruce.position.y = 0.08;
@@ -1315,8 +1361,8 @@ window.__initB = function (A, panel) {
     var copa = lined(box(0.85, 0.70, 0.80, M_LEAF), 18);
     copa.position.set(0.06, 1.12, 0);
     tree.add(copa);
-    var frT = roadFrame(0.085);
-    tree.position.copy(frT.at).addScaledVector(frT.right, 2.15);
+    var frT = roadFrame(0.16);
+    tree.position.copy(frT.at).addScaledVector(frT.right, 2.7);
     tree.rotation.z = (h1(3) - 0.5) * 0.08;
     trunk.userData.id = "castaño";
     copa.userData.id = "copa";
@@ -1475,7 +1521,7 @@ window.__initB = function (A, panel) {
       camera.aspect = box2.w / Math.max(box2.h, 1);
       camera.updateProjectionMatrix();
       var a = camera.aspect;
-      if (a < 0.95) { portraitK = 1.42; portraitLift = 1.25; }
+      if (a < 0.95) { portraitK = 1.48; portraitLift = 1.55; }
       else if (a < 1.4) { portraitK = 1.18; portraitLift = 0.40; }
       else { portraitK = 1; portraitLift = 0; }
     }
@@ -1497,14 +1543,16 @@ window.__initB = function (A, panel) {
       estacion.quaternion.setFromRotationMatrix(_mat.makeBasis(frM.right, frM.up, frM.fwd));
       estacion.rotateX(Math.PI / 2);
       estacion.visible = p < 0.72;
+      tree.visible = p > 0.14;
 
       /* --- camera: follow the traverse, watch the fold, settle on the door */
       var frCam = roadFrame(travelT);
       var startLook = roadAt(Math.min(1, travelT + 0.11), tmpV);
+      var side = portraitLift > 0 ? 0.35 : 2.55;
       camPos.copy(frCam.at)
         .addScaledVector(frCam.fwd, -6.4)
         .addScaledVector(frCam.up, 5.8)
-        .addScaledVector(frCam.right, 1.7);
+        .addScaledVector(frCam.right, side);
       camLook.copy(startLook);
       camLook.y = 0.28;
 
@@ -1554,7 +1602,7 @@ window.__initB = function (A, panel) {
       var cityT = smooth(seg(p, 0.22, 0.48)) * (1 - smooth(seg(p, 0.66, 0.80)));
       var foldFlash = foldT * (1 - backT);
       ambient.intensity = 0.18 - cityT * 0.03 + backT * 0.04;
-      key.intensity = 1.12 - cityT * 0.12 + backT * 0.08;
+      key.intensity = 1.22 - cityT * 0.12 + backT * 0.08;
       fill.intensity = 0.28 + cityT * 0.04;
       var hex = lerpHex(lerpHex(HEX_GROUND, H_CITY, cityT), H_FOLD, foldFlash * 0.85);
       var fgHex = lerpHex(HEX_INK, mixHex(HEX_INK, HEX_GROUND, 0.12), cityT * 0.35);
