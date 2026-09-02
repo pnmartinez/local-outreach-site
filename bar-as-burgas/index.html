@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
 :root {
@@ -230,180 +230,367 @@ footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; le
   #dsgB .bb-grid { grid-template-columns: 1fr; }
   #dsgB .bb-call { flex-direction: column; }
 }
-/* Bar As Burgas — alcove and a tap you pull. This lead only. */
-#dsgB .bb-name { perspective: 900px; }
-#dsgB .bb-eyebrow, #dsgB .bb-claim, #dsgB .bb-lead, #dsgB .bb-cta { opacity: 0; }
+/* Bar As Burgas — Ourense en sección. This lead only.
+ *
+ * The page carries no grid: it carries a *depth scale*. Horizontal rules
+ * every 88px, because that is what the drawing behind them is measured
+ * in. Nothing else paints a ground — the render loop writes --bu-ground,
+ * so the day breaking over the burga is a lighting change, not a section
+ * background. */
 
-#dsgB .bu-alcove {
-  --pour: 0;
-  position: relative;
-  justify-self: center;
-  width: min(100%, 440px);
-  padding: 14px 14px 12px;
+#dsgB {
   background:
-    radial-gradient(70% 48% at 50% 0%, #5a1438 0%, transparent 62%),
-    radial-gradient(42% 38% at 82% 82%, #4a2a08 0%, transparent 55%),
-    #0a0508;
-  box-shadow:
-    0 0 48px #ff2d6a44,
-    inset 0 0 80px #ffd16618,
-    inset 0 1px 0 #ff4d9a55;
-  border: 1px solid #3a1424;
+    linear-gradient(var(--bu-line, var(--st-line)) 1px, transparent 1px) 0 0 / 100% 88px,
+    var(--bu-ground, var(--st-bg));
+  background-attachment: fixed, fixed;
+  color: var(--bu-fg, var(--st-fg));
+  font-family: "DM Sans", system-ui, sans-serif;
+  overflow-x: clip;
 }
-#dsgB .bu-caption {
-  display: none;
-  margin: 0 0 8px;
-  text-align: center;
-  font-family: "Bebas Neue", var(--display);
-  letter-spacing: .22em;
-  font-size: 22px;
-  color: #ff4d9a;
-  text-shadow:
-    0 0 8px #ff4d9a,
-    0 0 22px #ff2d6a;
+
+#dsgB .bu { position: relative; }
+
+#dsgB .bu-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
-#dsgB .bu-view {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  min-height: 360px;
-  height: auto;
-}
-#dsgB .bu-meter {
-  position: absolute;
-  right: 18px;
-  top: 18%;
-  z-index: 3;
-  pointer-events: none;
-}
-#dsgB .bu-gauge {
-  position: relative;
-  width: 12px;
-  height: 148px;
-  border: 1px solid #ff4d9a;
-  background: color-mix(in srgb, var(--st-fg) 8%, transparent);
-}
-#dsgB .bu-band {
-  position: absolute;
-  left: 1px;
-  right: 1px;
-  bottom: 72%;
-  height: 16%;
-  background: #3dff8a;
-  opacity: .8;
-}
-#dsgB .bu-level {
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  height: calc(var(--pour) * 100%);
-  max-height: calc(100% - 4px);
-  background: #ffd166;
-  box-shadow: 0 0 10px #ffd16688;
-}
-#dsgB .bu-drag {
-  position: absolute;
-  left: 16px;
-  top: 18%;
-  width: 38px;
-  height: 42%;
+#dsgB .bu-view { display: block; width: 100%; height: 100%; }
+
+#dsgB .bu-rail {
+  /* The family sheet styles bare `header`: a translucent near-black bar
+     with a rule under it. On a page whose ground goes to daylight that is
+     a black stripe across the top of the drawing. */
+  background: transparent;
+  border: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 4;
-  border: 1px solid color-mix(in srgb, #ffd166 40%, #3a1424);
-  background: color-mix(in srgb, #0a0508 78%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px clamp(18px, 3.4vw, 52px);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--bu-fg, var(--st-fg));
 }
-#dsgB .bu-handle {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 28px;
-  height: 46px;
+#dsgB .bu-brand {
+  font-family: "Bebas Neue", var(--display);
+  font-size: 19px;
+  letter-spacing: .1em;
+}
+#dsgB .bu-place { opacity: .55; margin-right: auto; }
+
+/* The readout the whole page is built on: 17° in the square, 67° at the
+   bottom of the fault, 4° in the glass. It is the only number that never
+   leaves the screen. */
+#dsgB .bu-temp {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 5px 11px;
+  border: 1px solid color-mix(in srgb, var(--bu-fg, var(--st-fg)) 26%, transparent);
+}
+#dsgB .bu-temp i { font-style: normal; opacity: .5; }
+#dsgB .bu-temp-v {
+  min-width: 3.4ch;
+  text-align: right;
+  font-weight: 700;
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+#dsgB .bu .dsg-switch {
+  border-color: color-mix(in srgb, var(--bu-fg, var(--st-fg)) 30%, transparent);
+  background: transparent;
+}
+#dsgB .bu .dsg-btn { color: color-mix(in srgb, var(--bu-fg, var(--st-fg)) 64%, transparent); }
+#dsgB .bu .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .bu-log {
+  position: fixed;
+  left: clamp(18px, 3.4vw, 52px);
+  bottom: 22px;
+  z-index: 4;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--bu-fg, var(--st-fg));
+  opacity: .6;
+  pointer-events: none;
+}
+#dsgB .bu-log-n { color: var(--st-accent); font-weight: 700; }
+#dsgB .bu-log-s { opacity: .55; font-variant-numeric: tabular-nums; }
+
+/* The drill log down the right margin: the whole section at a glance,
+   with a marker riding the depth the camera is actually at. */
+#dsgB .bu-scale {
+  position: fixed;
+  top: 0; right: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+#dsgB .bu-scale-axis,
+#dsgB .bu-scale-tick {
+  stroke: var(--bu-fg, var(--st-fg));
+  stroke-width: 1px;
+  stroke-opacity: .26;
+  vector-effect: non-scaling-stroke;
+}
+#dsgB .bu-scale-lab {
+  fill: var(--bu-fg, var(--st-fg));
+  fill-opacity: .42;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+}
+#dsgB .bu-scale-run { stroke: var(--st-accent); stroke-width: 2px; stroke-opacity: .75; }
+#dsgB .bu-scale-head { fill: var(--st-accent); }
+
+#dsgB .bu-scroll { position: relative; z-index: 2; }
+
+#dsgB .bu-ch { position: relative; }
+#dsgB .bu-ch-0 { height: 130vh; }
+#dsgB .bu-ch-1 { height: 460vh; }
+#dsgB .bu-ch-2 { height: 230vh; }
+#dsgB .bu-ch-3 { height: 150vh; }
+
+#dsgB .bu-in {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: center;
+  padding: 0 clamp(20px, 5vw, 88px);
+  pointer-events: none;
+}
+#dsgB .bu-in > * { pointer-events: auto; }
+#dsgB .bu-in-left { justify-items: start; text-align: left; max-width: 48ch; }
+#dsgB .bu-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
+
+#dsgB .bu-word { display: inline-block; white-space: nowrap; }
+#dsgB .bu-c { display: inline-block; will-change: transform, opacity; }
+
+#dsgB .bu-h2 .bu-c,
+#dsgB .bu-service,
+#dsgB .bu-ch-2 .bu-kicker,
+#dsgB .bu-ch-3 .bu-in > * { opacity: 0; }
+
+#dsgB .bu-eyebrow,
+#dsgB .bu-kicker {
+  margin: 0 0 20px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--st-accent);
+}
+#dsgB .bu-name {
+  margin: 0;
+  font-family: "Bebas Neue", var(--display);
+  font-weight: 400;
+  font-size: clamp(56px, 11vw, 158px);
+  line-height: .84;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+#dsgB .bu-claim {
+  margin: 22px 0 0;
+  font-family: "Bebas Neue", var(--display);
+  font-size: clamp(22px, 3vw, 42px);
+  line-height: 1.06;
+  letter-spacing: .04em;
+  max-width: 18ch;
+  opacity: .82;
+}
+#dsgB .bu-lead {
+  margin: 20px 0 0;
+  max-width: 44ch;
+  font-size: 13px;
+  line-height: 1.8;
+  opacity: .58;
+}
+#dsgB .bu-cue {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 42px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  opacity: .5;
+}
+#dsgB .bu-cue i { display: block; width: 44px; height: 1px; background: currentColor; }
+
+#dsgB .bu-steps { display: grid; }
+#dsgB .bu-step {
+  grid-area: 1 / 1;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .bu-step em {
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .28em;
+  color: var(--st-accent);
+}
+#dsgB .bu-step h2 {
+  margin: 10px 0 0;
+  font-family: "Bebas Neue", var(--display);
+  font-weight: 400;
+  font-size: clamp(38px, 6vw, 84px);
+  line-height: .92;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+/* The depth is set like a survey figure, not like a subtitle: it is the
+   same number the log and the drill rail are showing. */
+#dsgB .bu-depth {
   display: block;
-  cursor: grab;
-  touch-action: none;
-  background:
-    radial-gradient(circle at 50% 18%, #ffe9a8 0 28%, #ffd166 29% 100%);
-  box-shadow:
-    inset 0 1px 0 #fff3c4,
-    0 0 12px #ffd16666;
+  margin: 4px 0 14px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--st-second);
+  font-variant-numeric: tabular-nums;
 }
-#dsgB .bu-verdict {
-  margin: 12px 4px 0;
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 999px;
+#dsgB .bu-step p {
+  margin: 0 0 0 auto;
+  max-width: 32ch;
+  font-size: 13px;
+  line-height: 1.75;
+  opacity: .6;
+}
+
+#dsgB .bu-ch-2 .bu-in-left {
+  width: min(92vw, 940px);
+  max-width: none;
+  justify-items: stretch;
+}
+#dsgB .bu-h2 {
+  margin: 0 0 32px;
+  font-family: "Bebas Neue", var(--display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.4vw, 50px);
+  line-height: 1.02;
+  letter-spacing: .03em;
+  max-width: 22ch;
+}
+#dsgB .bu-services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 40px;
+  width: 100%;
+}
+#dsgB .bu-service {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding-top: 15px;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+#dsgB .bu-service em {
+  font-style: normal;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: var(--st-accent);
+}
+#dsgB .bu-service h3 {
+  margin: 0 0 5px;
+  font-family: "Bebas Neue", var(--display);
+  font-weight: 400;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+#dsgB .bu-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .58; }
+
+#dsgB .bu-tel {
+  font-family: "Bebas Neue", var(--display);
+  font-size: clamp(30px, 4.6vw, 64px);
+  text-decoration: none;
+  line-height: .96;
+  letter-spacing: .03em;
+}
+#dsgB .bu-say { margin: 20px 0 0; max-width: 36ch; font-size: 13px; line-height: 1.7; opacity: .62; }
+#dsgB .bu-hours { margin: 18px 0 0; font-size: 12px; opacity: .6; }
+#dsgB .bu-addr {
+  margin: 8px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  opacity: .48;
+}
+
+/* Law 6: leaders out of the drawing into the margin, never a tooltip
+   floating over it. */
+#dsgB .bu-notes {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+#dsgB .bu-lead-line {
+  fill: none;
+  stroke: var(--bu-fg, var(--st-fg));
+  stroke-width: 1px;
+  stroke-opacity: .5;
+  vector-effect: non-scaling-stroke;
+}
+#dsgB .bu-note-dot { fill: var(--st-accent); }
+#dsgB .bu-note {
+  fill: var(--bu-fg, var(--st-fg));
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
-  font-size: 11px;
-  color: #ffd166;
-  border: 1px solid #ff4d9a;
-  background: color-mix(in srgb, #ff4d9a 16%, transparent);
 }
-#dsgB .bu-verdict.is-ok {
-  color: #0a0508;
-  background: #3dff8a;
-  border-color: #3dff8a;
+/* The broken-scale symbol of the last frame, and its caption. */
+#dsgB .bu-break {
+  fill: none;
+  stroke: var(--bu-fg, var(--st-fg));
+  stroke-width: 1.5px;
+  stroke-opacity: .55;
+  vector-effect: non-scaling-stroke;
 }
-#dsgB .bu-verdict.is-bad {
-  color: #fff;
-  background: #ff2d6a;
-  border-color: #ff2d6a;
-}
-#dsgB .bu-hint {
-  margin: 10px 4px 0;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--st-fg) 50%, #ff4d9a);
+#dsgB .bu-break-lab {
+  fill: var(--bu-fg, var(--st-fg));
+  fill-opacity: .5;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: .24em;
 }
 
-#dsgB .bu-rail { padding: clamp(36px, 6vw, 72px) 22px; overflow: hidden; }
-#dsgB .bu-rail-k {
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  font-size: 11px;
-  color: var(--st-accent);
-  margin: 0 0 18px;
-}
-#dsgB .bu-rail-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-#dsgB .bu-slide {
-  border-top: 1px solid var(--st-line);
-  padding-top: 14px;
-  opacity: 0;
-}
-#dsgB .bu-chip {
-  display: block;
-  width: 48px;
-  height: 8px;
-  margin-bottom: 10px;
-}
-#dsgB .bu-chip-vermu {
-  background: #ff4d9a;
-  box-shadow: 0 0 12px #ff4d9a;
-}
-#dsgB .bu-chip-tapeo {
-  background: #ffd166;
-  box-shadow: 0 0 12px #ffd166;
-}
-#dsgB .bu-chip-partido {
-  background: #3dff8a;
-  box-shadow: 0 0 12px #3dff8a;
-}
-#dsgB .bu-slide b {
-  display: block;
-  font-family: "Bebas Neue", var(--display);
-  font-size: 32px;
-  margin: 8px 0 4px;
-}
-#dsgB .bu-slide span { color: var(--st-dim); font-size: 13px; line-height: 1.5; }
-
-@media (max-width: 860px) {
-  #dsgB .bu-rail-row { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  #dsgB { background-attachment: scroll, scroll; }
+  #dsgB .bu-in { padding: 0 20px 10vh; align-content: end; }
+  #dsgB .bu-in-right { text-align: left; justify-items: start; margin-left: 0; }
+  #dsgB .bu-step p { margin-left: 0; }
+  #dsgB .bu-services { grid-template-columns: 1fr; gap: 14px; }
+  #dsgB .bu-temp { display: none; }
+  #dsgB .bu-scale { display: none; }
+  #dsgB .bu-note { font-size: 9px; letter-spacing: .1em; }
+  #dsgB .bu-log { font-size: 9px; bottom: 14px; gap: 8px; }
+  #dsgB .bu-ch-1 { height: 500vh; }
 }
 
 </style>
@@ -442,78 +629,63 @@ footer { padding: 20px var(--pad) 48px; color: var(--muted); font-size: 12px; le
 
 </div>
 <div id="dsgB" hidden>
+<div class="bu">
+  <div class="bu-stage" aria-hidden="true">
+    <canvas class="bu-view"></canvas>
+  </div>
 
-<div class="bb" style="--pour: 0">
-  <header class="bb-rail">
-    <span class="bb-brand">Bar As Burgas</span>
-    <span class="bb-open">Abierto · Ourense</span>
+  <header class="bu-rail">
+    <span class="bu-brand">Bar As Burgas</span>
+    <span class="bu-place">Ourense</span>
+    <span class="bu-temp"><i>TEMP</i><b class="bu-temp-v">17°</b></span>
     <div class="dsg-switch" role="group" aria-label="Elegir diseño">
     <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
     <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
   </div>
   </header>
 
-  <section class="bb-hero">
-    <div class="bb-copy">
-      <p class="bb-eyebrow">Rúa das Burgas · Ourense</p>
-      <h1 class="bb-name" data-split>Bar As Burgas</h1>
-      <p class="bb-claim">La caña bien tirada. El resto, después.</p>
-      <p class="bb-lead">Barra de barrio junto a las termas. Caña corta, tapeo que se acaba y un teléfono que coge quien está detrás.</p>
-      <a class="bb-cta" href="https://wa.me/34988221044">Pedir mesa en barra</a>
-    </div>
-    <!-- slot:hero-3d -->
-<div class="bu-alcove bu-tap">
-  <p class="bu-caption">AS BURGAS</p>
-  <canvas class="bu-view"></canvas>
-  <div class="bu-meter" aria-hidden="true">
-    <div class="bu-gauge">
-      <i class="bu-band"></i>
-      <i class="bu-level"></i>
-    </div>
+  <div class="bu-log" aria-hidden="true">
+    <b class="bu-log-n">00</b>
+    <span class="bu-log-t">A praza</span>
+    <span class="bu-log-s">+0 m · granito de Ourense</span>
   </div>
-  <p class="bu-verdict">Tírala tú</p>
-</div>
 
-<!-- /slot:hero-3d -->
-  </section>
+  <div class="bu-scroll">
+    <section class="bu-ch bu-ch-0">
+      <div class="bu-in bu-in-left">
+        <p class="bu-eyebrow">Rúa das Burgas · Ourense</p>
+        <h1 class="bu-name" data-bu-split>Bar As Burgas</h1>
+        <p class="bu-claim" data-bu-split>La caña bien tirada. El resto, después.</p>
+        <p class="bu-lead">Barra de barrio junto a las termas. Caña corta, tapeo que se acaba y un teléfono que coge quien está detrás.</p>
+        <p class="bu-cue"><i></i>Baja</p>
+      </div>
+    </section>
 
-  <div class="bb-band" aria-hidden="true"><div class="bb-band-track"><span>CAÑA</span><i>/</i><span>TAPEO</span><i>/</i><span>VERMÚ</span><i>/</i><span>PARTIDO</span><i>/</i><span>COMBINADOS</span><i>/</i><span>CIERRE</span><i>/</i><span>CAÑA</span><i>/</i><span>TAPEO</span><i>/</i><span>VERMÚ</span><i>/</i><span>PARTIDO</span><i>/</i><span>COMBINADOS</span><i>/</i><span>CIERRE</span><i>/</i></div></div>
+    <section class="bu-ch bu-ch-1">
+      <div class="bu-in bu-in-right">
+        <p class="bu-kicker">O descenso</p>
+        <div class="bu-steps"><article class="bu-step" data-step="0"><em>01</em><h2>Diaclasa</h2><b class="bu-depth">−40 m</b><p>La lluvia se cuela por la grieta del granito y empieza a bajar. Tarda años en llegar al fondo. La caña, dos minutos.</p></article><article class="bu-step" data-step="1"><em>02</em><h2>Granito</h2><b class="bu-depth">−1.600 m</b><p>Kilómetro y medio de roca. Cada cien metros, grado y medio más. Nadie la calienta: la calienta el planeta.</p></article><article class="bu-step" data-step="2"><em>03</em><h2>A cámara</h2><b class="bu-depth">−3.200 m</b><p>Aquí abajo el agua llega a 67°. Se queda apretada contra la roca hasta que encuentra por dónde salir.</p></article><article class="bu-step" data-step="3"><em>04</em><h2>A falla</h2><b class="bu-depth">O ascenso</b><p>Sube sola por la fractura, sin bomba y sin que nadie se lo pida. Tarda mucho menos en subir que en bajar.</p></article></div>
+      </div>
+    </section>
 
-  <section class="bb-grid-sec">
-    <p class="bb-kicker">La barra</p>
-    <h2 class="bb-h2" data-split>Cañas, tapeo y partidos sin carta plastificada de centro comercial.</h2>
-    <div class="bb-grid"><article class="bb-tile"><em>01</em><h3>Caña</h3><p>Corta, con collarín. Si no está bien, se tira otra. Sin discusión.</p></article><article class="bb-tile"><em>02</em><h3>Tapeo</h3><p>Lo que hay hoy, no un menú de 40 tapas congeladas.</p></article><article class="bb-tile"><em>03</em><h3>Vermú</h3><p>El de siempre, con aceituna. Sábados a mediodía.</p></article><article class="bb-tile"><em>04</em><h3>Partido</h3><p>Cuando juega el Ourense, se oye. Cuando no, se habla.</p></article><article class="bb-tile"><em>05</em><h3>Combinados</h3><p>Sin espectáculo. El cubata que pediste, no un cóctel de feria.</p></article><article class="bb-tile"><em>06</em><h3>Cierre</h3><p>Hasta tarde los viernes. La última no se niega si hay gente.</p></article></div>
-  </section>
+    <section class="bu-ch bu-ch-2">
+      <div class="bu-in bu-in-left">
+        <p class="bu-kicker">A burga</p>
+        <h2 class="bu-h2" data-bu-split>Cañas, tapeo y partidos sin carta plastificada de centro comercial.</h2>
+        <div class="bu-services"><article class="bu-service"><em>01</em><div><h3>Caña</h3><p>Corta, con collarín. Si no está bien, se tira otra. Sin discusión.</p></div></article><article class="bu-service"><em>02</em><div><h3>Tapeo</h3><p>Lo que hay hoy, no un menú de 40 tapas congeladas.</p></div></article><article class="bu-service"><em>03</em><div><h3>Vermú</h3><p>El de siempre, con aceituna. Sábados a mediodía.</p></div></article><article class="bu-service"><em>04</em><div><h3>Partido</h3><p>Cuando juega el Ourense, se oye. Cuando no, se habla.</p></div></article></div>
+      </div>
+    </section>
 
-  <!-- slot:stage-3d -->
-<section class="bu-rail">
-  <p class="bu-rail-k">Lo que hay hoy</p>
-  <div class="bu-rail-row">
-    <article class="bu-slide">
-      <i class="bu-chip bu-chip-vermu"></i>
-      <b>Vermú</b>
-      <span>El de siempre, con aceituna. Sábados a mediodía.</span>
-    </article>
-    <article class="bu-slide">
-      <i class="bu-chip bu-chip-tapeo"></i>
-      <b>Tapeo</b>
-      <span>Lo que hay hoy, no un menú de 40 tapas congeladas.</span>
-    </article>
-    <article class="bu-slide">
-      <i class="bu-chip bu-chip-partido"></i>
-      <b>Partido</b>
-      <span>Cuando juega el Ourense, se oye. Cuando no, se habla.</span>
-    </article>
+    <section class="bu-ch bu-ch-3">
+      <div class="bu-in bu-in-right">
+        <p class="bu-kicker">A barra</p>
+        <a class="bu-tel" href="tel:34988221044">+34 988 22 10 44</a>
+        <p class="bu-say">El agua de la plaza sale a 67°. Nosotros estamos a veinte metros, y aquí sale a cuatro.</p>
+        <p class="bu-hours">L–J 12:00–01:00 · V–S 12:00–02:30 · D 12:00–16:00</p>
+        <p class="bu-addr">Rúa das Burgas · Ourense</p>
+      </div>
+    </section>
   </div>
-</section>
-
-<!-- /slot:stage-3d -->
-
-  <section class="bb-call">
-    <a class="bb-tel" href="tel:34988221044">+34 988 22 10 44</a>
-    <span>L–J 12:00–01:00 · V–S 12:00–02:30 · D 12:00–16:00</span>
-  </section>
-  <footer class="bb-foot">Rúa das Burgas, Ourense</footer>
 </div>
 
 </div>
@@ -571,458 +743,1293 @@ window.__splitB = function (panel) {
   });
   return out;
 };
+/* Bar As Burgas — Ourense en sección, en un solo scroll. This lead only.
+ *
+ * The page IS the drawing. One fixed canvas holds a vertical section
+ * through the city for the whole document; the markup is an overlay of
+ * sticky chapters with no ground of their own. A single damped progress
+ * p ∈ [0,1] drives everything, and the chapters are labelled sub-ranges
+ * of it — not four independent animations.
+ *
+ *   00 · a praza     the spout, the basin and the steam, at night
+ *   01 · o descenso  the camera goes under the paving and falls 3.200 m
+ *                    of granite, naming the rock it passes; the readout
+ *                    counts metres and degrees the whole way
+ *   02 · a burga     the water surges back up the fault and breaks out
+ *                    of the spout at 67°; the square fills with light
+ *   03 · a barra     the counter arrives twenty metres to the left, the
+ *                    coil goes down into it like the fault goes down
+ *                    into the rock, and the last readout says 4°
+ *
+ * The convention is the one a survey would use: everything above the
+ * ground is drawn in elevation, everything below it in section, and the
+ * last frame breaks the scale so 3.200 m of rock and a 250 ml glass fit
+ * in one drawing.
+ *
+ * Day breaking over the square is a lighting change *inside* the scene,
+ * animated on p. No section paints a background; the only ground is
+ * #dsgB itself and the render loop writes its colour.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md (the seven laws) and
+ * landings/heroes/FULL-PAGE-REPLAN.md (the layer model).
+ */
+
 window.__staticB = function (panel) {
-  window.__splitB(panel);
-  panel.querySelectorAll(".bb-c, .bb-eyebrow, .bb-claim, .bb-lead, .bb-cta").forEach(function (el) {
+  panel.querySelectorAll(".bu-step, .bu-service, .bu-in > *, .bu-h2 .bu-c, .bu-kicker").forEach(function (el) {
     el.style.opacity = "1";
     el.style.transform = "none";
   });
-  var alcove = panel.querySelector(".bu-alcove");
-  if (alcove) alcove.style.setProperty("--pour", "0.78");
-  var v = panel.querySelector(".bu-verdict");
-  if (v) { v.textContent = "Bien tirada"; v.classList.add("is-ok"); }
-  var hint = panel.querySelector(".bu-hint");
-  if (hint) hint.remove();
-  panel.querySelectorAll(".bu-slide").forEach(function (el) { el.style.opacity = "1"; });
+  var cue = panel.querySelector(".bu-cue");
+  if (cue) cue.remove();
+  panel.querySelectorAll(".bu-step").forEach(function (el, i) {
+    el.style.position = "static";
+    el.style.marginBottom = i < 3 ? "40px" : "0";
+  });
+  var steps = panel.querySelector(".bu-steps");
+  if (steps) steps.style.display = "block";
+  var log = panel.querySelector(".bu-log");
+  if (log) log.remove();
+  var temp = panel.querySelector(".bu-temp");
+  if (temp) temp.remove();
+  panel.style.setProperty("--bu-ground", "");
+  panel.style.setProperty("--bu-fg", "");
 };
 
 window.__initB = function (A, panel) {
-  var animate = A.animate;
-  var createTimeline = A.createTimeline;
+  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
+      stagger = A.stagger, utils = A.utils;
+
+  var stage = panel.querySelector(".bu-stage");
+  var view = panel.querySelector(".bu-view");
+  var scroller = panel.querySelector(".bu-scroll");
+  if (!stage || !view || !scroller) return;
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.__staticB(panel);
     return;
   }
 
-  var alcove = panel.querySelector(".bu-alcove");
-  var verdict = panel.querySelector(".bu-verdict");
-  var state = { pour: 0 };
-  var handle3d = null;
-
-  window.__splitB(panel);
-  var intro = createTimeline({ defaults: { ease: "outExpo" } });
-  intro.add(panel.querySelectorAll(".bb-hero .bb-c"), {
-    y: [70, 0], rotateX: [-84, 0], opacity: [0, 1], duration: 900, delay: A.stagger(15)
-  }, 0);
-  intro.add(panel.querySelectorAll(".bb-eyebrow, .bb-claim, .bb-lead, .bb-cta"), {
-    y: [26, 0], opacity: [0, 1], duration: 760, delay: A.stagger(80)
-  }, 180);
-
-  var track = panel.querySelector(".bb-band-track");
-  if (track) {
-    track.innerHTML = track.innerHTML + track.innerHTML;
-    animate(track, {
-      x: [0, -track.scrollWidth / 2],
-      duration: track.scrollWidth * 12,
-      ease: "linear",
-      loop: true
+  /* The panel owns its splitter: the family one keys its class prefix off
+     the family body class, which this panel does not have. */
+  function splitText(el) {
+    if (!el || el.dataset.buDone) return [];
+    el.dataset.buDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (w) {
+      if (!w) return;
+      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var word = document.createElement("span");
+      word.className = "bu-word";
+      for (var i = 0; i < w.length; i++) {
+        var c = document.createElement("span");
+        c.className = "bu-c";
+        c.textContent = w[i];
+        word.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(word);
     });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
   }
 
-  panel.querySelectorAll(".bb-cta").forEach(function (el) {
-    el.addEventListener("mousemove", function (ev) {
-      var r = el.getBoundingClientRect();
-      animate(el, {
-        x: (ev.clientX - r.left - r.width / 2) * 0.3,
-        y: (ev.clientY - r.top - r.height / 2) * 0.3,
-        duration: 220, ease: "outQuad"
-      });
-    });
-    el.addEventListener("mouseleave", function () {
-      animate(el, { x: 0, y: 0, duration: 700, ease: "outElastic(1.1, 0.6)" });
-    });
+  /* --- the master progress ---------------------------------------------
+     One scrub over the whole document. `sync` is v4's own smoothing, so
+     the damping is the library's rather than a hand-rolled lerp. */
+  var state = { p: 0, settle: 0, idle: 0, rise: 0 };
+  animate(state, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
+    })
   });
+  animate(state, { settle: [0, 1], duration: 1500, delay: 240, ease: "outElastic(1, 0.72)" });
+  animate(state, { idle: [0, Math.PI * 2], duration: 15000, ease: "linear", loop: true });
+  /* The bubbles and the steam need a clock of their own: the water keeps
+     rising while the reader is not scrolling. */
+  animate(state, { rise: [0, 1], duration: 4200, ease: "linear", loop: true });
 
-  var rail = panel.querySelector(".bu-rail");
-  if (rail) {
-    animate(panel.querySelectorAll(".bu-slide"), {
-      x: [48, 0], opacity: [0, 1], duration: 780, ease: "outExpo", delay: A.stagger(90),
-      autoplay: A.onScroll({ target: rail, enter: "bottom-=120 top" })
-    });
-  }
+  var nameChars = splitText(panel.querySelector(".bu-name"));
+  var claimChars = splitText(panel.querySelector(".bu-claim"));
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".bu-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 700 }, 200);
+  intro.add(nameChars, { opacity: [0, 1], y: [72, 0], duration: 1150, delay: stagger(20) }, 300);
+  intro.add(claimChars, { opacity: [0, 1], y: [26, 0], duration: 780, delay: stagger(9) }, 840);
+  intro.add(panel.querySelectorAll(".bu-lead, .bu-cue"), {
+    opacity: [0, 1], y: [18, 0], duration: 760, delay: stagger(110)
+  }, 1100);
 
-  function paintPour(v) {
-    v = A.utils.clamp(v, 0, 1);
-    state.pour = v;
-    if (handle3d) handle3d.userData.pour = v;
-    if (alcove) alcove.style.setProperty("--pour", String(v));
-    return v;
-  }
-
-  function buJudge(v) {
-    if (!verdict) return;
-    verdict.classList.remove("is-ok", "is-bad");
-    if (v >= 0.72 && v <= 0.88) {
-      verdict.textContent = "Bien tirada";
-      verdict.classList.add("is-ok");
-    } else if (v > 0.92) {
-      verdict.textContent = "Si no está bien, se tira otra";
-      verdict.classList.add("is-bad");
-    } else {
-      verdict.textContent = "Tírala tú";
-    }
-  }
-
-  if (alcove) {
-    /* It pours itself: fill, let the head settle, hold the good caña, start
-       again. A scroll scrub left the glass empty for anyone who just landed. */
-    A.createTimeline({ loop: true, defaults: { ease: "linear" } })
-      .add(state, {
-        pour: [0, 0.96], duration: 2600, ease: "inOutSine",
-        onUpdate: function () { buJudge(paintPour(state.pour)); }
-      }, 700)
-      .add(state, {
-        pour: 0.80, duration: 1500, ease: "outQuad",
-        onUpdate: function () { buJudge(paintPour(state.pour)); }
-      }, 3400)
-      .add(state, {
-        pour: 0, duration: 520, ease: "inQuad",
-        onUpdate: function () { buJudge(paintPour(state.pour)); }
-      }, 7200);
-  }
+  /* Everything after chapter 00 is revealed from the master progress, not
+     from per-section observers: one clock, labelled ranges. */
+  splitText(panel.querySelector(".bu-h2"));
+  var h2Chars = panel.querySelectorAll(".bu-h2 .bu-c");
+  var serviceEls = panel.querySelectorAll(".bu-service");
+  var deskEls = panel.querySelectorAll(".bu-ch-3 .bu-in > *");
+  var stepEls = panel.querySelectorAll(".bu-step");
+  var ch0 = panel.querySelector(".bu-ch-0 .bu-in");
+  var kicker2 = panel.querySelector(".bu-ch-2 .bu-kicker");
+  var ch2 = panel.querySelector(".bu-ch-2 .bu-in");
+  var logN = panel.querySelector(".bu-log-n");
+  var logT = panel.querySelector(".bu-log-t");
+  var logS = panel.querySelector(".bu-log-s");
+  var tempV = panel.querySelector(".bu-temp-v");
 
   import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
-    var view = panel.querySelector(".bu-view");
-    var host = panel.querySelector(".bu-tap");
-    if (!view || !host) return;
-
-    var tiny = matchMedia("(max-width: 700px)").matches;
-    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
-    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, tiny ? 1.5 : 2));
-    gpu.setClearColor(0x000000, 0);
-
-    var world = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
-    var camFar = new THREE.Vector3(1.86, 1.52, 3.18);
-    var camNear = new THREE.Vector3(1.70, 1.38, 2.92);
-    camera.position.copy(camFar);
-    camera.lookAt(0.02, 0.50, 0.08);
-
-    var data = new Uint8Array([0, 85, 170, 255]);
-    var ramp = new THREE.DataTexture(data, 4, 1, THREE.RedFormat);
-    ramp.minFilter = ramp.magFilter = THREE.NearestFilter;
-    ramp.needsUpdate = true;
-
-    function toon(color, extra) {
-      var mat = new THREE.MeshToonMaterial({ color: color, gradientMap: ramp });
-      if (extra) Object.assign(mat, extra);
-      return mat;
+    /* --- law 1: the palette is the page's ------------------------------ */
+    var css = getComputedStyle(panel);
+    function tok(name, fallback) {
+      var v = css.getPropertyValue(name).trim();
+      return new THREE.Color(v || fallback);
     }
-    var ink = new THREE.MeshBasicMaterial({ color: 0x0c0a08, side: THREE.BackSide });
-    function inked(mesh, s) {
-      var shell = new THREE.Mesh(mesh.geometry, ink);
-      shell.scale.setScalar(s || 1.04);
-      mesh.add(shell);
+    var GROUND = tok("--st-bg", "#0b0507");
+    var INK = tok("--st-fg", "#f9efe1");
+    var ACCENT = tok("--st-accent", "#ff4d6d");
+    var SECOND = tok("--st-second", "#ffd166");
+    var LINE = tok("--st-line", "#362f2e");
+
+    /* Three keeps colours in linear working space, so `a.lerp(b, t)` is a
+       *physical* blend: 7% of an amber into a near-black ground comes out
+       olive, and a "10% rung" off the page's ink lands at 35% on screen.
+       Every value in this drawing is authored as a share of the page's own
+       two ends, which is an sRGB judgement, so the mix has to be one. */
+    var _sa = new THREE.Color(), _sb = new THREE.Color();
+    function mix(a, b, t) {
+      var A = a.clone().convertLinearToSRGB();
+      return A.lerp(b.clone().convertLinearToSRGB(), t).convertSRGBToLinear();
+    }
+    /* The same, in place and without allocating, for the render loop. */
+    function lerpS(out, target, t) {
+      if (t <= 0) return out;
+      if (t >= 1) return out.copy(target);
+      _sa.copy(out).convertLinearToSRGB();
+      _sb.copy(target).convertLinearToSRGB();
+      return out.copy(_sa.lerp(_sb, t).convertSRGBToLinear());
+    }
+    /* The page ground is a CSS colour. Three's working space is linear
+       and getHexString() does not always come back the way it went in,
+       so the four environment states are mixed here, in the tokens'
+       own sRGB, and written as hex. */
+    function parseHex(h) {
+      h = String(h || "").replace("#", "");
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [
+        parseInt(h.slice(0, 2), 16) / 255,
+        parseInt(h.slice(2, 4), 16) / 255,
+        parseInt(h.slice(4, 6), 16) / 255
+      ];
+    }
+    function toHex(rgb) {
+      return "#" + rgb.map(function (c) {
+        var n = Math.round(Math.min(1, Math.max(0, c)) * 255);
+        return (n + 256).toString(16).slice(1);
+      }).join("");
+    }
+    function mixHex(a, b, t) {
+      var A = parseHex(a), B = parseHex(b);
+      return toHex([
+        A[0] + (B[0] - A[0]) * t,
+        A[1] + (B[1] - A[1]) * t,
+        A[2] + (B[2] - A[2]) * t
+      ]);
+    }
+    function lerpHex(a, b, t) {
+      if (t <= 0) return a;
+      if (t >= 1) return b;
+      return mixHex(a, b, t);
+    }
+    var HEX_GROUND = css.getPropertyValue("--st-bg").trim() || "#0b0507";
+    var HEX_INK = css.getPropertyValue("--st-fg").trim() || "#f9efe1";
+    var HEX_ACCENT = css.getPropertyValue("--st-accent").trim() || "#ff4d6d";
+    var HEX_SECOND = css.getPropertyValue("--st-second").trim() || "#ffd166";
+    var HEX_LINE = css.getPropertyValue("--st-line").trim() || "#362f2e";
+    var H_HOT = mixHex(HEX_GROUND, HEX_ACCENT, 0.07);
+    var H_LIT = mixHex(HEX_GROUND, HEX_INK, 0.86);
+    var H_BAR = mixHex(HEX_GROUND, HEX_SECOND, 0.08);
+    var H_LN_LIT = mixHex(HEX_LINE, HEX_INK, 0.42);
+
+    /* A value ladder off the page's own two ends. On a near-black page the
+       rock is nothing but rungs between the ground and the ink, separated
+       by value and not by hue — a section drawn in six browns has no rock
+       in it. Exactly two chromatic materials: the hot water (accent) and
+       the beer (second). Everything else is a rung. */
+    var C_DEEP    = mix(GROUND, INK, 0.10);   // granito profundo
+    var C_ROCK    = mix(GROUND, INK, 0.16);   // granito
+    var C_SCHIST  = mix(GROUND, INK, 0.30);   // xisto
+    var C_SAPRO   = mix(GROUND, INK, 0.38);   // xabre
+    var C_SAND    = mix(GROUND, INK, 0.52);   // lente de area
+    var C_FILL    = mix(GROUND, INK, 0.20);   // recheo
+    var C_QUARTZ  = mix(GROUND, INK, 0.72);   // veta de cuarzo
+    var C_GRANITE = mix(GROUND, INK, 0.46);   // sillería de la fuente
+    var C_STONE   = mix(GROUND, INK, 0.32);   // losa de la plaza
+    var C_STEEL   = mix(GROUND, INK, 0.70);   // torre de tiraje, latón pulido
+    var C_ZINC    = mix(GROUND, INK, 0.56);   // canto de cinc
+    var C_DARKWD  = mix(GROUND, INK, 0.21);   // frente del mostrador
+    var C_VOID    = mix(GROUND, INK, 0.03);   // el hueco de la cámara
+    var C_COLD    = mix(GROUND, INK, 0.50);   // el agua arriba, fría
+    var C_HOT     = mix(ACCENT, INK, 0.10);   // el agua abajo, a 67°
+    var C_FOAM    = mix(INK, GROUND, 0.07);   // el collarín
+    var C_BEER    = mix(SECOND, INK, 0.04);   // la caña
+
+    function matte(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
+    }
+    /* Turned or poured things are smooth: a tap tower, a glass and a
+       column of water read as themselves only if their facets average.
+       Everything quarried, cut or built keeps flat shading, which is
+       where the drafting look comes from. */
+    function turned(color) {
+      return new THREE.MeshLambertMaterial({ color: color, flatShading: false });
+    }
+
+    var M_DEEP = matte(C_DEEP), M_ROCK = matte(C_ROCK), M_SCHIST = matte(C_SCHIST),
+        M_SAPRO = matte(C_SAPRO), M_SAND = matte(C_SAND), M_FILL = matte(C_FILL),
+        M_QUARTZ = matte(C_QUARTZ), M_GRANITE = matte(C_GRANITE),
+        M_STONE = matte(C_STONE), M_VOID = matte(C_VOID),
+        M_STEEL = turned(C_STEEL), M_ZINC = matte(C_ZINC), M_WOOD = matte(C_DARKWD),
+        M_FOAM = turned(C_FOAM), M_BEER = turned(C_BEER),
+        M_GLASS = new THREE.MeshLambertMaterial({
+          color: mix(GROUND, INK, 0.30), flatShading: false,
+          transparent: true, opacity: 0.34, depthWrite: false
+        });
+    /* The column is one mesh with a baked geothermal gradient: cold at the
+       paving, 67° at the chamber. The gradient is the drawing's whole
+       argument, so it is in the geometry, not in a second material. */
+    var M_WATER = new THREE.MeshBasicMaterial({ vertexColors: true });
+    var M_STEAM = new THREE.MeshBasicMaterial({
+      color: mix(GROUND, INK, 0.88), transparent: true, opacity: 0.13, depthWrite: false
+    });
+
+    /* --- law 3: a hairline, not an outline ----------------------------- */
+    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.30 });
+    /* Liquids and vapour are the exception and the only one: an edge pass
+       on a tube of water draws its longitudinal seams, which is noise, not
+       a hairline. Everything quarried, cut or built gets the line. */
+    function lined(mesh, threshold) {
+      var seg = new THREE.LineSegments(
+        new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 24 : threshold),
+        EDGE
+      );
+      mesh.add(seg);
       return mesh;
     }
 
-    world.add(new THREE.AmbientLight(0x4a2838, 0.92));
-    var key = new THREE.DirectionalLight(0xffd089, 2.35);
-    key.position.set(2.8, 4.2, 3.4);
-    world.add(key);
-    var rim = new THREE.DirectionalLight(0xff4d9a, 1.35);
-    rim.position.set(-3.2, 1.8, -2.2);
-    world.add(rim);
-    var fill = new THREE.DirectionalLight(0xffd166, 0.55);
-    fill.position.set(-1.2, 2.4, 4);
-    world.add(fill);
-    var neonLamp = new THREE.PointLight(0xff2d6a, 0.85, 2.4);
-    neonLamp.position.set(0.08, 1.10, -0.42);
-    world.add(neonLamp);
+    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
+    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    gpu.setClearColor(0x000000, 0);
 
-    var steel = toon(0xcfa65f);
-    var gold = toon(0xffd166);
-    var wood = toon(0x3a2418);
-    var wallMat = toon(0x1a0a12);
-    var amber = toon(0xf0a41c, { transparent: true, opacity: 0.96 });
-    var foamMat = toon(0xf7efe2, { transparent: true, opacity: 0 });
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(26, 1, 0.1, 220);
 
-    var rig = new THREE.Group();
-    world.add(rig);
+    /* law 4: one key you can name — the farol on the square, upper front
+       right, warm. Going under the paving it does not switch off and it
+       does not turn into a second lamp: it dims to what falls down the
+       fissure from the mouth above, and it comes back up as the morning
+       when the water breaks out. The fill only keeps the cut face's
+       shadow side readable. */
+    var ambient = new THREE.AmbientLight(0xfff0e0, 0.15);
+    scene.add(ambient);
+    var key = new THREE.DirectionalLight(0xfff4e6, 1.05);
+    key.position.set(3.40, 5.20, 2.20);
+    scene.add(key);
+    var fill = new THREE.DirectionalLight(0xe8eef5, 0.32);
+    fill.position.set(-3.00, 1.20, 4.00);
+    scene.add(fill);
 
-    var wall = inked(new THREE.Mesh(new THREE.BoxGeometry(1.85, 1.45, 0.07), wallMat), 1.02);
-    wall.position.set(0.05, 0.62, -0.68);
-    rig.add(wall);
+    /* law 7: deterministic. Nothing in this drawing is different between
+       two loads, so two captures can be compared. */
+    function h1(i) { var s = Math.sin(i * 12.9898) * 43758.5453; return s - Math.floor(s); }
+    function h2(i) { var s = Math.sin(i * 78.233 + 4.1) * 24634.6345; return s - Math.floor(s); }
 
-    function signTex() {
-      var c = document.createElement("canvas");
-      c.width = 1024;
-      c.height = 256;
-      var x = c.getContext("2d");
-      x.clearRect(0, 0, 1024, 256);
-      x.shadowColor = "#ff4d9a";
-      x.shadowBlur = 32;
-      x.fillStyle = "#ff4d9a";
-      x.font = "700 132px Impact, Arial Black, sans-serif";
-      x.textAlign = "center";
-      x.textBaseline = "middle";
-      x.fillText("AS BURGAS", 512, 128);
-      x.shadowBlur = 6;
-      x.fillStyle = "#ffd0e6";
-      x.fillText("AS BURGAS", 512, 128);
-      var tex = new THREE.CanvasTexture(c);
-      tex.needsUpdate = true;
-      return tex;
+    /* =====================================================================
+       Las piezas. Law 2: things somebody in Ourense could point at.
+
+       A PRAZA — losa ×7 · bordillo · reixa de desagüe ·
+         farol (fuste · brazo · farol) · sillar de la burga ·
+         escudo · caño · pilón · brocal del pilón · chorro · vapor ×10
+
+       A SECCIÓN — recheo · xabre · granito de dúas micas ·
+         veta de cuarzo · granito ·xisto · lente de area ·
+         granito profundo · rocha nai · feldespato ×24 ·
+         falla (traza) · diaclasa · columna de auga ·
+         burbulla ×26 · cámara térmica · sondaxe · testigo de sondeo ×7
+
+       A BARRA — mostrador · canto de cinc · frente ·
+         torre de tiraxe · grifo · maneta · pomo · compensador ·
+         serpentín · reixa escurridora · vaso · caña · collarín ·
+         posavasos · aceituna · palillo
+       ===================================================================== */
+
+    var SHAFT = 21.50;          // world units from the paving to the chamber
+    var METRES = 3200;          // what those units are worth
+    var Y_PER_M = SHAFT / METRES;
+    var BREAK_Y = -3.31;        // where the last frame breaks the scale
+    var CUT_Z = 0.00;           // the plane the section is cut on
+    var BACK_Z = -1.55;         // how far the block of earth recedes
+
+    /* The fault the water rises through: a straight plane that reaches the
+       surface exactly where the spout is. Everything to the right of it is
+       the upthrown block, lifted 0.55 — which is why the strata do not
+       line up across the drawing. */
+    function faultX(y) { return 0.55 + (y / SHAFT) * 0.90; }
+    var THROW = 0.55;
+    /* Everything below the break line is authored in world y and placed in
+       the deep group, which is offset by the break: one conversion, in one
+       place, instead of a sign to get wrong at every part. */
+    function dY(y) { return y - BREAK_Y; }
+
+    var world = new THREE.Group();
+    scene.add(world);
+    /* Two groups, split at the break line, because the last frame folds
+       the deep one and leaves the square alone. */
+    var surface = new THREE.Group();
+    var deep = new THREE.Group();
+    deep.position.y = BREAK_Y;
+    world.add(surface);
+    world.add(deep);
+
+    var parts = [];
+    function part(host, mesh, id) {
+      mesh.userData.id = id || "";
+      host.add(mesh);
+      if (id) parts.push(mesh);
+      return mesh;
     }
-    var neonBody = inked(new THREE.Mesh(new THREE.BoxGeometry(1.18, 0.32, 0.08), toon(0x2a0814)), 1.03);
-    neonBody.position.set(-0.06, 1.08, -0.58);
-    rig.add(neonBody);
-    var glow = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.55, 0.42),
-      new THREE.MeshBasicMaterial({ color: 0xff2d6a, transparent: true, opacity: 0.28 })
-    );
-    glow.position.set(0.08, 1.08, -0.52);
-    rig.add(glow);
-    var sign = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.42, 0.36),
-      new THREE.MeshBasicMaterial({ map: signTex(), transparent: true, depthWrite: false })
-    );
-    sign.position.set(-0.06, 1.08, -0.51);
-    rig.add(sign);
+    function box(w, h, d, mat) {
+      return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    }
+    function lathe(points, seg, mat) {
+      var pts = points.map(function (q) { return new THREE.Vector2(q[0], q[1]); });
+      return new THREE.Mesh(new THREE.LatheGeometry(pts, seg || 18), mat);
+    }
+    function at(mesh, x, y, z) { mesh.position.set(x, y, z); return mesh; }
 
-    rig.rotation.y = -0.32;
-
-    var trayPts = [
-      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.62, 0.00),
-      new THREE.Vector2(0.64, 0.03), new THREE.Vector2(0.58, 0.06),
-      new THREE.Vector2(0.00, 0.06)
+    /* --- a sección: los estratos --------------------------------------
+       Each layer is cut in two by the fault and the two halves sit at
+       slightly different depths, so the cut face is a relief of ledges
+       the key can rake instead of one flat wall. */
+    var STRATA = [
+      /*  top,  thick, rung, name,        relief, symbol
+         The break line at −3.31 is a bed boundary on purpose: the last
+         frame folds the drawing there and a fold through the middle of a
+         bed would read as a mistake. */
+      [ -0.16, 0.55, 0.17, "recheo",     0.10, "dot"],
+      [ -0.71, 1.05, 0.44, "xabre",      0.02, "dot"],
+      [ -1.76, 1.55, 0.15, "granito",   -0.06, "cross"],
+      [ -3.31, 2.35, 0.27, "granito2",  -0.04, "cross"],
+      [ -5.66, 1.25, 0.41, "xisto",      0.06, "dash"],
+      [ -6.91, 1.44, 0.15, "granito3",  -0.08, "cross"],
+      [ -8.35, 0.30, 0.82, "cuarzo",     0.13, null],
+      [ -8.65, 1.16, 0.16, "granito3b", -0.08, "cross"],
+      [ -9.81, 0.42, 0.64, "area",       0.11, "dot"],
+      [-10.23, 3.10, 0.28, "granito4",  -0.03, "cross"],
+      [-13.33, 1.70, 0.48, "xisto2",     0.07, "dash"],
+      [-15.03, 3.90, 0.10, "profundo",  -0.09, "cross"],
+      [-18.93, 7.00, 0.21, "nai",        0.01, "cross"]
     ];
-    var tray = inked(new THREE.Mesh(new THREE.LatheGeometry(trayPts, 40), wood), 1.03);
-    tray.scale.set(1.15, 1, 0.72);
-    tray.position.set(0.04, -0.04, 0.06);
-    rig.add(tray);
-    var g;
-    for (g = 0; g < 5; g++) {
-      var slat = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.02, 10), steel), 1.06);
-      slat.rotation.z = Math.PI / 2;
-      slat.position.set(0.04, 0.028, -0.16 + g * 0.09);
-      rig.add(slat);
+    var X_LEFT = -11.20, X_RIGHT = 11.20;
+
+    var strata = [];
+    STRATA.forEach(function (row, i) {
+      var top = row[0], thick = row[1], name = row[3], relief = row[4];
+      var mat = matte(mix(GROUND, INK, row[2]));
+      var mid = top - thick / 2;
+      var host = mid > BREAK_Y ? surface : deep;
+      var hostY = mid > BREAK_Y ? 0 : dY(0);
+      var split = faultX(mid);
+      var depth = BACK_Z;
+      /* left, downthrown */
+      var wl = split - X_LEFT;
+      var bl = lined(box(wl, thick, -depth + relief, mat), 30);
+      at(bl, X_LEFT + wl / 2, mid + hostY, (depth + relief) / 2);
+      bl.rotation.z = (h1(i) - 0.5) * 0.018;
+      part(host, bl, name);
+      /* right, upthrown by the fault */
+      var wr = X_RIGHT - split;
+      var relief2 = -relief * 0.7;
+      var br = lined(box(wr, thick, -depth + relief2, mat), 30);
+      at(br, split + wr / 2, mid + THROW + hostY, (depth + relief2) / 2);
+      br.rotation.z = (h2(i) - 0.5) * 0.018;
+      part(host, br, "");
+      strata.push(bl, br);
+    });
+
+    /* Feldspar: the flecks that stop granite reading as a grey slab. Tiny
+       boxes proud of the cut, deterministic, keyed to the same light. */
+    var M_FELD = matte(mix(GROUND, INK, 0.44));
+    var feldGeom = new THREE.BoxGeometry(0.085, 0.055, 0.03);
+    for (var f = 0; f < 26; f++) {
+      var fy = -0.9 - h1(f * 3 + 1) * 20.2;
+      var fx = X_LEFT + 0.4 + h2(f * 5 + 2) * 8.6;
+      if (Math.abs(fx - faultX(fy)) < 0.42) fx += 0.9;
+      var fl = new THREE.Mesh(feldGeom, M_FELD);
+      var host2 = fy > BREAK_Y ? surface : deep;
+      at(fl, fx, fy > BREAK_Y ? fy : dY(fy), 0.145);
+      fl.rotation.z = h1(f + 9) * 1.2;
+      part(host2, fl, f === 7 ? "feldespato" : "");
     }
 
-    var colPts = [
-      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.18, 0.00),
-      new THREE.Vector2(0.16, 0.05), new THREE.Vector2(0.11, 0.10),
-      new THREE.Vector2(0.11, 0.96), new THREE.Vector2(0.14, 1.02),
-      new THREE.Vector2(0.17, 1.08), new THREE.Vector2(0.00, 1.08)
-    ];
-    var column = inked(new THREE.Mesh(new THREE.LatheGeometry(colPts, 36), steel), 1.03);
-    column.position.set(-0.38, 0.02, 0);
-    rig.add(column);
-    var collar = inked(new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.028, 10, 28), steel), 1.05);
-    collar.rotation.x = Math.PI / 2;
-    collar.position.set(-0.38, 1.10, 0);
-    rig.add(collar);
-    var badge = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.04, 24), gold), 1.06);
-    badge.rotation.x = Math.PI / 2;
-    badge.position.set(-0.38, 0.62, 0.12);
-    rig.add(badge);
+    /* --- the hatching: what tells one bed from the next ----------------
+       A section drawn as flat bands of value is a stack of cards. Every
+       survey answers this the same way, and it is the most legible piece
+       of drafting there is: a lithology gets a symbol. Granite is crossed,
+       schist is dashed, the sand lens and the saprolite are stippled, and
+       the quartz vein is left blank because it is the one bed that carries
+       its own value. Deterministic, merged into one mesh per symbol so the
+       whole drawing costs three draw calls instead of six hundred.
 
-    var tapHead = new THREE.Group();
-    tapHead.position.set(-0.38, 1.18, 0);
-    rig.add(tapHead);
+       They are drawn marks, not objects, so they take a basic material:
+       hatching that takes the key light stops being hatching. */
+    /* The symbol is the bed's, declared beside its value in STRATA. */
+    function pushQuad(pos, cx, cy, hw, hh, ang) {
+      var ca = Math.cos(ang), sa = Math.sin(ang), Z = 0.155;
+      var ax = -hw * ca - -hh * sa, ay = -hw * sa + -hh * ca;
+      var bx = hw * ca - -hh * sa, by = hw * sa + -hh * ca;
+      var cx2 = hw * ca - hh * sa, cy2 = hw * sa + hh * ca;
+      var dx = -hw * ca - hh * sa, dy = -hw * sa + hh * ca;
+      pos.push(cx + ax, cy + ay, Z, cx + bx, cy + by, Z, cx + cx2, cy + cy2, Z);
+      pos.push(cx + ax, cy + ay, Z, cx + cx2, cy + cy2, Z, cx + dx, cy + dy, Z);
+    }
+    var hatchBuf = { cross: { top: [], bot: [] }, dash: { top: [], bot: [] }, dot: { top: [], bot: [] } };
+    var STEP = 0.62;
+    STRATA.forEach(function (row, i) {
+      var kind = row[5];
+      if (!kind) return;
+      var top = row[0], bottom = row[0] - row[1];
+      var n = 0;
+      for (var y = top - 0.30; y > bottom + 0.16; y -= STEP) {
+        for (var x = X_LEFT + 0.5; x < X_RIGHT - 0.5; x += STEP) {
+          n++;
+          var jx = x + (h1(n + i * 91) - 0.5) * 0.55;
+          var jy = y + (h2(n + i * 57) - 0.5) * 0.42;
+          if (jy > top - 0.10 || jy < bottom + 0.10) continue;
+          /* the joint is a void, not a bed: nothing is hatched inside it */
+          if (Math.abs(jx - faultX(jy)) < 0.20) continue;
+          var wy = jx > faultX(jy) ? jy + THROW : jy;
+          if (wy > -0.20) continue;
+          var buf = wy > BREAK_Y ? "top" : "bot";
+          var oy = wy > BREAK_Y ? wy : dY(wy);
+          var arr = hatchBuf[kind][buf];
+          if (kind === "cross") {
+            pushQuad(arr, jx, oy, 0.046, 0.006, 0);
+            pushQuad(arr, jx, oy, 0.006, 0.046, 0);
+          } else if (kind === "dash") {
+            pushQuad(arr, jx, oy, 0.062, 0.007, 0.20 + h1(n + i) * 0.10);
+          } else {
+            pushQuad(arr, jx, oy, 0.016, 0.016, 0);
+          }
+        }
+      }
+    });
+    var M_HATCH = new THREE.MeshBasicMaterial({
+      color: mix(GROUND, INK, 0.52), transparent: true, opacity: 0.42
+    });
+    Object.keys(hatchBuf).forEach(function (kind) {
+      ["top", "bot"].forEach(function (where) {
+        var arr = hatchBuf[kind][where];
+        if (!arr.length) return;
+        var g = new THREE.BufferGeometry();
+        g.setAttribute("position", new THREE.Float32BufferAttribute(arr, 3));
+        var m = new THREE.Mesh(g, M_HATCH);
+        m.renderOrder = 2;
+        (where === "top" ? surface : deep).add(m);
+      });
+    });
 
-    handle3d = new THREE.Group();
-    handle3d.userData.pour = state.pour;
-    var shaft = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.024, 0.028, 0.36, 16), steel), 1.05);
-    shaft.position.y = 0.18;
-    var knob = inked(new THREE.Mesh(new THREE.SphereGeometry(0.078, 24, 18), gold), 1.05);
-    knob.position.y = 0.38;
-    var knobIn = new THREE.Mesh(new THREE.SphereGeometry(0.03, 14, 12), toon(0x1a0a10));
-    knobIn.position.y = 0.4;
-    handle3d.add(shaft);
-    handle3d.add(knob);
-    handle3d.add(knobIn);
-    tapHead.add(handle3d);
+    /* --- a falla: the trace of the fracture on the cut face ------------
+       A quad strip down the section face, drawn dark, because that is how
+       the drawing would show a plane you are looking at edge-on. */
+    var faultPts = [], faultIdx = [];
+    var FN = 34;
+    for (var q = 0; q <= FN; q++) {
+      var fy2 = -(q / FN) * SHAFT;
+      var fx2 = faultX(fy2);
+      faultPts.push(fx2 - 0.185, fy2, 0.02, fx2 + 0.185, fy2, 0.02);
+      if (q < FN) {
+        var b0 = q * 2;
+        faultIdx.push(b0, b0 + 1, b0 + 2, b0 + 1, b0 + 3, b0 + 2);
+      }
+    }
+    var faultGeom = new THREE.BufferGeometry();
+    faultGeom.setAttribute("position", new THREE.Float32BufferAttribute(faultPts, 3));
+    faultGeom.setIndex(faultIdx);
+    faultGeom.computeVertexNormals();
+    var falla = new THREE.Mesh(faultGeom, matte(mix(GROUND, INK, 0.05)));
+    falla.position.y = dY(0);
+    part(deep, falla, "falla");
+    /* The joint the rain gets in by: the same trace, above the break. */
+    var diaclasa = lined(box(0.09, 3.15, 0.10, matte(mix(GROUND, INK, 0.05))), 40);
+    at(diaclasa, -1.55, -1.735, 0.06);
+    diaclasa.rotation.z = 0.05;
+    part(surface, diaclasa, "diaclasa");
 
-    var spout = new THREE.Group();
-    var armCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0.02, 0.00, 0.00),
-      new THREE.Vector3(0.28, 0.02, 0.06),
-      new THREE.Vector3(0.52, 0.00, 0.14),
-      new THREE.Vector3(0.60, -0.08, 0.16)
-    ]);
-    var arm = inked(new THREE.Mesh(new THREE.TubeGeometry(armCurve, 24, 0.032, 12, false), steel), 1.04);
-    var down = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.036, 0.18, 16), steel), 1.04);
-    down.position.set(0.6, -0.16, 0.16);
-    var nozzle = inked(new THREE.Mesh(new THREE.LatheGeometry([
-      new THREE.Vector2(0.00, 0.00), new THREE.Vector2(0.042, 0.00),
-      new THREE.Vector2(0.038, 0.03), new THREE.Vector2(0.028, 0.05),
-      new THREE.Vector2(0.00, 0.05)
-    ], 20), steel), 1.05);
-    nozzle.position.set(0.6, -0.28, 0.16);
-    spout.add(arm);
-    spout.add(down);
-    spout.add(nozzle);
-    tapHead.add(spout);
+    /* --- a columna de auga: the object that never leaves ---------------
+       One curve from the chamber to the spout, cut in two at the break
+       line so the last frame can fold the deep half. The colour is baked
+       per vertex from the depth: 17° at the paving, 67° at the bottom. */
+    function columnCurve(y0, y1, n) {
+      var pts = [];
+      for (var i = 0; i <= n; i++) {
+        var t = i / n;
+        var y = y0 + (y1 - y0) * t;
+        /* the water wanders inside the fracture instead of falling down a
+           drilled pipe: a deterministic sway, biggest in the middle */
+        var sway = Math.sin(y * 0.62) * 0.085 + Math.sin(y * 1.83 + 1.2) * 0.038;
+        pts.push(new THREE.Vector3(faultX(y) + sway, y, 0.095));
+      }
+      return new THREE.CatmullRomCurve3(pts);
+    }
+    function tempAtY(y) { return 17 + (-y / SHAFT) * 50; }
+    function waterTube(curve, seg, radius, yOffset) {
+      var geom = new THREE.TubeGeometry(curve, seg, radius, 7, false);
+      var pos = geom.attributes.position;
+      var col = [];
+      var c = new THREE.Color();
+      for (var i = 0; i < pos.count; i++) {
+        var t = utils.clamp((-pos.getY(i)) / SHAFT, 0, 1);
+        c.copy(C_COLD).lerp(C_HOT, t * t * t * 0.86 + t * 0.14);
+        col.push(c.r, c.g, c.b);
+      }
+      geom.setAttribute("color", new THREE.Float32BufferAttribute(col, 3));
+      var m = new THREE.Mesh(geom, M_WATER);
+      m.position.y = yOffset;
+      return m;
+    }
+    /* Above the break the water keeps climbing through the pillar of the
+       fountain and out of the spout, so this half runs past y=0. */
+    var upperCurvePts = [];
+    for (var u = 0; u <= 16; u++) {
+      var uy = BREAK_Y + (0 - BREAK_Y) * (u / 16);
+      upperCurvePts.push(new THREE.Vector3(faultX(uy) + Math.sin(uy * 0.62) * 0.085, uy, 0.095));
+    }
+    upperCurvePts.push(new THREE.Vector3(0.55, 0.34, 0.095));
+    upperCurvePts.push(new THREE.Vector3(0.55, 0.62, 0.095));
+    var upperCurve = new THREE.CatmullRomCurve3(upperCurvePts);
+    var colAlta = waterTube(upperCurve, 34, 0.058, 0);
+    part(surface, colAlta, "columna");
 
-    var glassPts = [
-      new THREE.Vector2(0.14, 0.00), new THREE.Vector2(0.14, 0.03),
-      new THREE.Vector2(0.06, 0.05), new THREE.Vector2(0.055, 0.1),
-      new THREE.Vector2(0.11, 0.18), new THREE.Vector2(0.175, 0.34),
-      new THREE.Vector2(0.15, 0.48), new THREE.Vector2(0.17, 0.62),
-      new THREE.Vector2(0.168, 0.62), new THREE.Vector2(0.148, 0.48),
-      new THREE.Vector2(0.172, 0.34), new THREE.Vector2(0.108, 0.18),
-      new THREE.Vector2(0.058, 0.1), new THREE.Vector2(0.062, 0.05),
-      new THREE.Vector2(0.00, 0.05)
-    ];
-    /* Do not ink the glass. The outline shell is an opaque black BackSide
-       mesh, and through a transparent wall you simply see the black: the
-       caña read as an empty tar cup. Glass gets a rim highlight instead. */
-    var glass = new THREE.Mesh(
-      new THREE.LatheGeometry(glassPts, 48),
-      toon(0xf2ece2, { transparent: true, opacity: 0.18, depthWrite: false })
-    );
-    glass.renderOrder = 3;
-    var pint = new THREE.Group();
-    pint.position.set(0.22, 0.02, 0.16);
-    pint.add(glass);
-    var coaster = inked(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.028, 28), wood), 1.05);
-    coaster.position.y = -0.01;
-    pint.add(coaster);
+    var lowerCurve = columnCurve(-SHAFT + 0.35, BREAK_Y, 30);
+    var colBaixa = waterTube(lowerCurve, 40, 0.058, dY(0));
+    part(deep, colBaixa, "");
 
-    var beerH = 0.46;
-    /* Unlit, so the beer never falls into the dark band of the toon ramp
-       inside the glass. */
-    var beer = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.125, 0.095, 1, 32),
-      new THREE.MeshBasicMaterial({ color: 0xe8981a })
-    );
-    beer.renderOrder = 1;
-    beer.position.y = 0.12;
-    pint.add(beer);
-    var foam = new THREE.Mesh(new THREE.TorusGeometry(0.118, 0.038, 12, 28), foamMat);
-    foam.renderOrder = 2;
-    foam.rotation.x = Math.PI / 2;
-    pint.add(foam);
-    var foamCap = new THREE.Mesh(new THREE.SphereGeometry(0.13, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.45), foamMat);
-    foamCap.renderOrder = 2;
-    pint.add(foamCap);
-    rig.add(pint);
-
-    var stream = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.016, 0.026, 1, 12),
-      toon(0xd4922a, { transparent: true, opacity: 0.78 })
-    );
-    stream.visible = false;
-    rig.add(stream);
-
+    /* --- as burbullas: the same gas, all the way up --------------------
+       Twenty-six of them on one loop, deterministic phase per index. They
+       are the carbonation of the last chapter before they are anything
+       else: the drawing does not get a second particle system for beer. */
+    var bubbleGeom = new THREE.IcosahedronGeometry(1, 0);
+    var M_BUBBLE = new THREE.MeshBasicMaterial({
+      color: mix(ACCENT, INK, 0.62), transparent: true, opacity: 0.7
+    });
+    /* Counter-scaled against the fold so they stay round when the scale
+       breaks; a squashed bubble reads as a mistake, not as a broken axis. */
+    var bubbleHost = new THREE.Group();
+    bubbleHost.position.y = dY(0);
+    deep.add(bubbleHost);
     var bubbles = [];
-    var bi;
-    for (bi = 0; bi < 16; bi++) {
-      var bub = new THREE.Mesh(
-        new THREE.SphereGeometry(0.007 + (bi % 4) * 0.003, 8, 6),
-        toon(0xf7efe2, { transparent: true, opacity: 0.5 })
+    for (var b = 0; b < 26; b++) {
+      var bm = new THREE.Mesh(bubbleGeom, M_BUBBLE);
+      var r = 0.019 + h1(b * 7 + 3) * 0.026;
+      bm.scale.setScalar(r);
+      bubbleHost.add(bm);
+      bubbles.push({ mesh: bm, phase: h2(b * 11 + 5), speed: 0.62 + h1(b * 13) * 0.55, r: r });
+
+    }
+
+    /* --- a cámara térmica: the bottom of the drawing -------------------- */
+    var camaraHost = new THREE.Group();
+    camaraHost.position.set(faultX(-SHAFT + 0.5), dY(-SHAFT + 0.5), 0.06);
+    deep.add(camaraHost);
+    var camara = new THREE.Mesh(new THREE.IcosahedronGeometry(0.70, 1), M_VOID);
+    camara.scale.set(2.30, 0.50, 0.16);
+    camara.position.z = 0.02;
+    lined(camara, 40);
+    part(camaraHost, camara, "camara");
+    /* What is in the cavity is the only thing in the drawing lit by its own
+       material: 67° is not a colour a lamp on a square can produce. It is
+       drawn in front of the cavity, the way a section shows a fill. */
+    var brasa = new THREE.Mesh(new THREE.IcosahedronGeometry(0.62, 1),
+      new THREE.MeshBasicMaterial({ color: C_HOT }));
+    brasa.scale.set(2.15, 0.40, 0.10);
+    brasa.position.z = 0.16;
+    part(camaraHost, brasa, "");
+
+    /* --- a sondaxe: the borehole that measured all this ----------------- */
+    var sonda = lined(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.045, 0.045, SHAFT - 4.2, 8, 1, true), matte(mix(GROUND, INK, 0.36))
+    ), 40);
+    at(sonda, -4.35, dY(0.10 - (SHAFT - 4.2) / 2), 0.06);
+    part(deep, sonda, "sonda");
+    var ringGeom = new THREE.BoxGeometry(0.17, 0.028, 0.05);
+    for (var rr = 0; rr < 7; rr++) {
+      var ring = lined(new THREE.Mesh(ringGeom, matte(mix(GROUND, INK, 0.52))), 40);
+      at(ring, -4.35, dY(-1.9 - rr * 2.45), 0.09);
+      part(deep, ring, rr === 2 ? "testigo" : "");
+    }
+
+    /* --- a praza: everything above the ground is drawn in elevation ----- */
+    var praza = new THREE.Group();
+    surface.add(praza);
+
+    var slabGeom = new THREE.BoxGeometry(1.28, 0.16, 1.15);
+    for (var s = 0; s < 7; s++) {
+      var slab = lined(new THREE.Mesh(slabGeom, M_STONE), 40);
+      at(slab, -4.15 + s * 1.32, -0.08, -0.42);
+      slab.position.y += (h1(s * 3) - 0.5) * 0.012;
+      part(praza, slab, s === 3 ? "losa" : "");
+    }
+    var bordillo = lined(box(9.30, 0.22, 0.20, M_GRANITE), 40);
+    at(bordillo, -0.20, -0.05, 0.10);
+    part(praza, bordillo, "bordillo");
+    /* the drain: five bars, because a grille with no bars is a hole */
+    for (var g = 0; g < 5; g++) {
+      var bar = lined(box(0.055, 0.05, 0.62, M_ZINC), 40);
+      at(bar, -1.72 + g * 0.10, 0.005, -0.62);
+      part(praza, bar, g === 0 ? "reixa" : "");
+    }
+
+    /* the lamp: the reason the key is where it is */
+    var farol = new THREE.Group();
+    at(farol, 2.42, 0, -0.22);
+    praza.add(farol);
+    part(farol, at(lined(new THREE.Mesh(
+      new THREE.CylinderGeometry(0.038, 0.062, 2.05, 8), matte(mix(GROUND, INK, 0.34))
+    ), 40), 0, 1.02, 0), "fuste");
+    part(farol, at(lined(box(0.42, 0.038, 0.038, matte(mix(GROUND, INK, 0.34))), 40), -0.20, 2.03, 0), "");
+    var M_LANTERN = new THREE.MeshLambertMaterial({
+      color: mix(SECOND, INK, 0.25), emissive: mix(SECOND, GROUND, 0.62), flatShading: true
+    });
+    var LANTERN_ON = M_LANTERN.emissive.clone();
+    var lantern = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.115, 0.19, 4), M_LANTERN);
+    lantern.rotation.y = Math.PI / 4;
+    part(farol, at(lined(lantern, 40), -0.39, 1.93, 0), "farol");
+
+    /* the burga itself: the wall, the spout and the basin */
+    var fonte = new THREE.Group();
+    at(fonte, 0.55, 0, 0);
+    praza.add(fonte);
+    part(fonte, at(lined(box(1.02, 1.06, 0.54, M_GRANITE), 40), 0, 0.53, -0.10), "sillar");
+    part(fonte, at(lined(box(1.16, 0.11, 0.64, matte(mix(GROUND, INK, 0.52))), 40), 0, 1.11, -0.10), "cornixa");
+    part(fonte, at(lined(box(1.14, 0.13, 0.62, matte(mix(GROUND, INK, 0.36))), 40), 0, 0.065, -0.10), "zocalo");
+    part(fonte, at(lined(box(0.52, 0.40, 0.028, matte(mix(GROUND, INK, 0.34))), 40), 0, 0.78, 0.18), "escudo");
+    part(fonte, at(lined(box(0.62, 0.50, 0.022, matte(mix(GROUND, INK, 0.56))), 40), 0, 0.78, 0.165), "moldura");
+    var cano = lathe([[0.00, 0], [0.075, 0], [0.075, 0.30], [0.055, 0.34], [0.055, 0.40]], 12, M_ZINC);
+    cano.rotation.z = Math.PI / 2;
+    part(fonte, at(lined(cano, 40), -0.30, 0.62, 0.10), "cano");
+    /* the basin: a lathe cut open, not a bowl — the pilón of a burga is a
+       long trough and it is what the water is measured against */
+    var pilon = lined(lathe([
+      [0.00, 0.00], [0.46, 0.00], [0.46, 0.30], [0.41, 0.30], [0.41, 0.07], [0.00, 0.07]
+    ], 20, M_GRANITE), 34);
+    pilon.scale.set(1.60, 1.0, 0.66);
+    part(fonte, at(pilon, -1.02, 0.02, -0.06), "pilon");
+    var brocal = lined(lathe([[0.41, 0.30], [0.48, 0.30], [0.48, 0.35], [0.41, 0.35]], 20, M_GRANITE), 34);
+    brocal.scale.set(1.60, 1.0, 0.66);
+    part(fonte, at(brocal, -1.02, 0.02, -0.06), "");
+
+    /* the jet: an arc from the spout into the basin, thickened when the
+       surge arrives. It is the same water as the column, so it is the
+       same material. */
+    var jetCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.16, 0.605, 0.10),
+      new THREE.Vector3(-0.23, 0.520, 0.07),
+      new THREE.Vector3(-0.28, 0.430, 0.04),
+      new THREE.Vector3(-0.31, 0.330, 0.01)
+    ]);
+    var chorro = waterTube(jetCurve, 20, 0.046, 0);
+    part(praza, chorro, "");
+    /* The jet and the steam are built from absolute coordinates, so their
+       own origin sits at the square's origin and a leader aimed at them
+       lands under the paving. Both get a marker on the thing itself. */
+    anchor(praza, -0.245, 0.485, 0.10, "a_chorro");
+    anchor(praza, -0.34, 1.28, -0.10, "a_vapor");
+
+    /* the steam: the thing you actually see from the street at 67° */
+    var steamGeom = new THREE.IcosahedronGeometry(1, 1);
+    var vapor = [];
+    for (var v = 0; v < 30; v++) {
+      var pf = new THREE.Mesh(steamGeom, M_STEAM.clone());
+      praza.add(pf);
+      vapor.push({ mesh: pf, phase: h1(v * 17 + 2), x: -0.62 + h2(v * 5) * 0.62, z: -0.26 + h1(v * 9) * 0.34 });
+
+    }
+
+    /* --- a barra: twenty metres to the left ---------------------------- */
+    var barra = new THREE.Group();
+    at(barra, -3.35, 0, 0);
+    praza.add(barra);
+    var BAR_Y = 1.02;
+    part(barra, at(lined(box(2.55, 0.10, 1.05, M_ZINC), 40), 0, BAR_Y, -0.34), "mostrador");
+    part(barra, at(lined(box(2.55, 0.055, 0.075, matte(mix(GROUND, INK, 0.58))), 40), 0, BAR_Y - 0.01, 0.22), "canto");
+    part(barra, at(lined(box(2.42, 0.94, 0.70, M_WOOD), 40), 0, 0.50, -0.34), "frente");
+    /* Three stiles and a kickboard: a bar front is joinery, and one slab
+       of dark reads as a hole cut in the drawing. */
+    for (var st = 0; st < 3; st++) {
+      part(barra, at(lined(box(0.07, 0.86, 0.03, matte(mix(GROUND, INK, 0.34))), 40),
+        -0.86 + st * 0.86, 0.52, 0.02), st === 0 ? "montante" : "");
+    }
+    part(barra, at(lined(box(2.44, 0.13, 0.06, matte(mix(GROUND, INK, 0.15))), 40), 0, 0.075, 0.01), "rodape");
+    /* the tower, its lever and the compensator */
+    var torre = lined(lathe([
+      [0.00, 0.00], [0.115, 0.00], [0.115, 0.06], [0.075, 0.09],
+      [0.075, 0.52], [0.098, 0.55], [0.098, 0.62], [0.00, 0.62]
+    ], 16, M_STEEL), 34);
+    part(barra, at(torre, 0.30, BAR_Y + 0.05, -0.44), "torre");
+    var grifo = lathe([[0.00, 0], [0.052, 0], [0.052, 0.26], [0.036, 0.30], [0.036, 0.34]], 12, M_STEEL);
+    grifo.rotation.z = Math.PI / 2 + 0.12;
+    part(barra, at(lined(grifo, 40), 0.30, BAR_Y + 0.50, -0.20), "grifo");
+    var maneta = lined(box(0.035, 0.30, 0.035, M_STEEL), 40);
+    maneta.rotation.z = -0.30;
+    part(barra, at(maneta, 0.30, BAR_Y + 0.78, -0.44), "maneta");
+    part(barra, at(lined(new THREE.Mesh(new THREE.IcosahedronGeometry(0.058, 1), matte(mix(GROUND, INK, 0.20))), 40),
+      0.21, BAR_Y + 0.92, -0.44), "pomo");
+    var comp = lined(new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.16, 8), M_STEEL), 40);
+    comp.rotation.z = Math.PI / 2;
+    part(barra, at(comp, 0.47, BAR_Y + 0.30, -0.44), "compensador");
+    /* the coil: it goes down into the counter the way the fault goes down
+       into the rock, and that rhyme is the point of the last frame */
+    var coilPts = [];
+    for (var ci = 0; ci <= 44; ci++) {
+      var ct = ci / 44;
+      coilPts.push(new THREE.Vector3(
+        0.30 + Math.cos(ct * Math.PI * 5.2) * 0.20,
+        BAR_Y + 0.02 - ct * 0.86,
+        -0.44 + Math.sin(ct * Math.PI * 5.2) * 0.20
+      ));
+    }
+    var serpentin = new THREE.Mesh(
+      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(coilPts), 56, 0.022, 5, false), M_STEEL
+    );
+    part(barra, serpentin, "");
+    anchor(barra, 0.30, BAR_Y - 0.44, -0.24, "a_serpentin");
+    anchor(barra, -0.02, BAR_Y + 0.24, -0.16, "a_glass");
+    /* the drip grille under the tap */
+    for (var dg = 0; dg < 6; dg++) {
+      part(barra, at(lined(box(0.28, 0.016, 0.024, M_ZINC), 40), 0.05, BAR_Y + 0.065, -0.40 + dg * 0.055), dg === 0 ? "escurridor" : "");
+    }
+    /* the glass, the beer and the collar */
+    var vaso = lathe([
+      [0.00, 0.00], [0.082, 0.00], [0.082, 0.035], [0.036, 0.05],
+      [0.052, 0.09], [0.062, 0.30], [0.068, 0.34], [0.064, 0.345], [0.058, 0.30], [0.048, 0.09], [0.036, 0.05], [0.00, 0.05]
+    ], 16, M_GLASS);
+    vaso.renderOrder = 4;
+    part(barra, at(vaso, -0.02, BAR_Y + 0.055, -0.16), "vaso");
+    var cana = lathe([[0.00, 0.00], [0.050, 0.00], [0.058, 0.24], [0.00, 0.24]], 16, M_BEER);
+    part(barra, at(cana, -0.02, BAR_Y + 0.105, -0.16), "cana");
+    var collar = lathe([[0.00, 0.00], [0.060, 0.005], [0.060, 0.045], [0.030, 0.062], [0.00, 0.064]], 16, M_FOAM);
+    part(barra, at(collar, -0.02, BAR_Y + 0.345, -0.16), "collarin");
+    part(barra, at(lined(new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.012, 12), matte(mix(GROUND, INK, 0.24))), 40),
+      -0.02, BAR_Y + 0.055, -0.16), "posavasos");
+    /* the vermut, because service 03 says so */
+    part(barra, at(lined(new THREE.Mesh(new THREE.IcosahedronGeometry(0.036, 1), matte(mix(SECOND, GROUND, 0.42))), 40),
+      -0.42, BAR_Y + 0.09, -0.02), "aceituna");
+    var palillo = lined(box(0.006, 0.14, 0.006, matte(mix(GROUND, INK, 0.52))), 40);
+    palillo.rotation.z = 0.42;
+    part(barra, at(palillo, -0.42, BAR_Y + 0.14, -0.02), "palillo");
+
+    /* --- law 5: the object lives in the page ---------------------------
+       No backdrop, no card, no frame: the section's own bedding planes
+       continue the page's 88px depth rules, and the only thing under the
+       fountain and the counter is a contact shadow. Without it they float
+       on the paving instead of standing on it. */
+    var shadowCv = document.createElement("canvas");
+    shadowCv.width = shadowCv.height = 128;
+    var sctx = shadowCv.getContext("2d");
+    var grad = sctx.createRadialGradient(64, 64, 4, 64, 64, 62);
+    grad.addColorStop(0, "rgba(0,0,0,0.6)");
+    grad.addColorStop(0.5, "rgba(0,0,0,0.24)");
+    grad.addColorStop(1, "rgba(0,0,0,0)");
+    sctx.fillStyle = grad;
+    sctx.fillRect(0, 0, 128, 128);
+    var shadowTex = new THREE.CanvasTexture(shadowCv);
+    function contactShadow(w, d) {
+      var sh = new THREE.Mesh(
+        new THREE.PlaneGeometry(w, d),
+        new THREE.MeshBasicMaterial({
+          map: shadowTex, color: GROUND, transparent: true, depthWrite: false, opacity: 0.5
+        })
       );
-      bub.userData.seed = bi * 0.41;
-      pint.add(bub);
-      bubbles.push(bub);
+      sh.rotation.x = -Math.PI / 2;
+      sh.renderOrder = 1;
+      return sh;
     }
+    var shFonte = contactShadow(2.5, 1.5);
+    at(shFonte, 0.30, 0.012, -0.20);
+    praza.add(shFonte);
+    var shBarra = contactShadow(3.4, 1.9);
+    at(shBarra, -3.35, 0.014, -0.30);
+    praza.add(shBarra);
 
-    var drip = new THREE.Mesh(
-      new THREE.SphereGeometry(0.022, 12, 10),
-      toon(0xd4922a, { transparent: true, opacity: 0.9 })
-    );
-    drip.visible = false;
-    drip.position.set(0.22, 0.92, 0.16);
-    rig.add(drip);
-
-    function radialTex() {
-      var c = document.createElement("canvas");
-      c.width = c.height = 128;
-      var x = c.getContext("2d");
-      var g = x.createRadialGradient(64, 64, 4, 64, 64, 64);
-      g.addColorStop(0, "rgba(0,0,0,.55)");
-      g.addColorStop(1, "rgba(0,0,0,0)");
-      x.fillStyle = g;
-      x.fillRect(0, 0, 128, 128);
-      return new THREE.CanvasTexture(c);
+    /* Anchors: a leader must land on the part, and the centre of a
+       stratum that spans the whole drawing is nowhere near it. These sit
+       on the fault, which is where the drawing is actually looking. */
+    function anchor(host, x, y, z, id) {
+      var a = new THREE.Object3D();
+      a.position.set(x, y, z);
+      a.userData.id = id;
+      host.add(a);
+      parts.push(a);
+      return a;
     }
-    var shadow = new THREE.Mesh(
-      new THREE.CircleGeometry(0.85, 28),
-      new THREE.MeshBasicMaterial({ map: radialTex(), transparent: true, depthWrite: false, side: THREE.DoubleSide })
-    );
-    shadow.rotation.x = -Math.PI / 2;
-    shadow.position.set(0.02, -0.085, 0.04);
-    shadow.scale.set(1.4, 0.55, 1);
-    rig.add(shadow);
+    anchor(surface, -3.90, -1.18, 0.12, "a_xabre");
+    anchor(deep, faultX(-8.50) - 1.85, dY(-8.50), 0.16, "a_cuarzo");
+    anchor(deep, faultX(-11.6) + 0.24, dY(-11.6), 0.16, "a_falla");
+    anchor(deep, faultX(-20.9) + 0.86, dY(-20.9), 0.18, "a_camara");
+    anchor(deep, -4.35, dY(-16.5), 0.16, "a_sonda");
+    /* These two ride the camera: during the ascent the reader is moving
+       past 3.000 m of column, and a leader nailed to one depth points off
+       the top of the frame within half a chapter. */
+    var aColumna = anchor(deep, 0, 0, 0.17, "a_columna");
+    var aBurbulla = anchor(deep, 0, 0, 0.17, "a_burbulla");
 
+    /* --- law 6: the technical caption, on the fixed overlay -------------
+       Two at a time, top and bottom margin only: the chapter copy owns the
+       middle band and a label at mid-height lands on it. */
+    var NS = "http://www.w3.org/2000/svg";
+    var LABELS = [
+      { a: 0.02, b: 0.11, id: "cano",       text: "caño · 67°",        y: 0.16 },
+      { a: 0.02, b: 0.11, id: "pilon",      text: "pilón",             y: 0.87 },
+      { a: 0.17, b: 0.27, id: "diaclasa",   text: "diaclasa",          y: 0.16 },
+      { a: 0.17, b: 0.27, id: "a_xabre",    text: "xabre",             y: 0.87 },
+      { a: 0.29, b: 0.39, id: "a_cuarzo",   text: "veta de cuarzo",    y: 0.16 },
+      { a: 0.29, b: 0.39, id: "a_falla",    text: "falla · salto 82 m", y: 0.87 },
+      { a: 0.41, b: 0.51, id: "a_camara",   text: "cámara térmica",    y: 0.16 },
+      { a: 0.41, b: 0.51, id: "a_sonda",    text: "testigo de sondeo", y: 0.87 },
+      { a: 0.54, b: 0.66, id: "a_columna",  text: "columna · 67°",     y: 0.16 },
+      { a: 0.54, b: 0.66, id: "a_burbulla", text: "burbulla",          y: 0.87 },
+      { a: 0.74, b: 0.85, id: "a_vapor",    text: "vapor",             y: 0.16 },
+      { a: 0.74, b: 0.85, id: "a_chorro",   text: "chorro · 67°",      y: 0.87 },
+      { a: 0.885, b: 0.945, id: "a_serpentin", text: "serpentín · 4°",     y: 0.16 },
+      { a: 0.885, b: 0.945, id: "collarin",    text: "collarín · dos dedos", y: 0.87 },
+      /* The last two are the page's argument, said once, in one frame:
+         the same street, 3.200 m apart, 63 degrees apart. */
+      { a: 0.962, b: 1.20,  id: "a_glass",     text: "+0 m · 4°",           y: 0.16 },
+      { a: 0.962, b: 1.20,  id: "a_camara",    text: "−3.200 m · 67°",      y: 0.87 }
+    ];
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "bu-notes");
+    svg.setAttribute("aria-hidden", "true");
+    /* Above the stage, below the copy. Inside .bu-stage it would be
+       trapped in that element's stacking context and the leaders would run
+       under the chapter text. */
+    (panel.querySelector(".bu") || stage).appendChild(svg);
+    var byId = {};
+    parts.forEach(function (m) { if (m.userData.id) byId[m.userData.id] = m; });
+    var notes = LABELS.map(function (spec) {
+      var lead = document.createElementNS(NS, "polyline");
+      lead.setAttribute("class", "bu-lead-line");
+      var dot = document.createElementNS(NS, "circle");
+      dot.setAttribute("class", "bu-note-dot");
+      dot.setAttribute("r", "2.5");
+      var text = document.createElementNS(NS, "text");
+      text.setAttribute("class", "bu-note");
+      text.textContent = spec.text;
+      svg.appendChild(lead);
+      svg.appendChild(dot);
+      svg.appendChild(text);
+      return { spec: spec, target: byId[spec.id] || null, lead: lead, dot: dot, text: text };
+    });
+
+    /* The broken-scale symbol of the last frame. A survey that has to show
+       3.200 m and a 250 ml glass in one drawing breaks the axis and says
+       so — this is that zigzag, and it only exists while the fold does. */
+    var brk = document.createElementNS(NS, "polyline");
+    brk.setAttribute("class", "bu-break");
+    var brkLab = document.createElementNS(NS, "text");
+    brkLab.setAttribute("class", "bu-break-lab");
+    brkLab.textContent = "ESCALA INTERROMPIDA";
+    svg.appendChild(brk);
+    svg.appendChild(brkLab);
+
+    /* --- the drill log down the left margin -----------------------------
+       The whole section at a glance with a head riding the depth the
+       camera is actually at. It is the page's scrollbar, told in metres. */
+    var rail = document.createElementNS(NS, "svg");
+    rail.setAttribute("class", "bu-scale");
+    rail.setAttribute("aria-hidden", "true");
+    (panel.querySelector(".bu") || stage).appendChild(rail);
+    var railAxis = document.createElementNS(NS, "line");
+    railAxis.setAttribute("class", "bu-scale-axis");
+    rail.appendChild(railAxis);
+    var RAIL_X = 34, RAIL_T = 0.20, RAIL_B = 0.80;
+    var railTicks = [0, 800, 1600, 2400, 3200].map(function (m) {
+      var tick = document.createElementNS(NS, "line");
+      tick.setAttribute("class", "bu-scale-tick");
+      var lab = document.createElementNS(NS, "text");
+      lab.setAttribute("class", "bu-scale-lab");
+      lab.textContent = m === 0 ? "0" : String(m).replace(/(\d)(\d{3})$/, "$1.$2");
+      rail.appendChild(tick);
+      rail.appendChild(lab);
+      return { m: m, tick: tick, lab: lab };
+    });
+    var railRun = document.createElementNS(NS, "line");
+    railRun.setAttribute("class", "bu-scale-run");
+    var railHead = document.createElementNS(NS, "polygon");
+    railHead.setAttribute("class", "bu-scale-head");
+    rail.appendChild(railRun);
+    rail.appendChild(railHead);
+
+    var box2 = { w: 1, h: 1 };
+    var portraitK = 1, portraitLift = 0;
     function fitView() {
-      var w = view.clientWidth, h = view.clientHeight;
-      camera.aspect = w / Math.max(h, 1);
+      box2.w = stage.clientWidth;
+      box2.h = stage.clientHeight;
+      camera.aspect = box2.w / Math.max(box2.h, 1);
+      /* Portrait is a 3D problem, not a CSS one: the same station that
+         frames the section on a 16:10 desktop crops it at 390px. Dolly out
+         along the look axis instead of reflowing. */
+      portraitK = camera.aspect < 0.8 ? 1.52 : camera.aspect < 1.1 ? 1.22 : 1;
+      /* and the copy is a full-width column there, so drop the look target
+         and let the drawing ride into the top half */
+      portraitLift = camera.aspect < 0.8 ? 0.55 : camera.aspect < 1.1 ? 0.24 : 0;
       camera.updateProjectionMatrix();
-      gpu.setSize(w, h, false);
+      gpu.setSize(box2.w, box2.h, false);
+      svg.setAttribute("viewBox", "0 0 " + box2.w + " " + box2.h);
+      rail.setAttribute("viewBox", "0 0 " + box2.w + " " + box2.h);
+      var y0 = box2.h * RAIL_T, y1 = box2.h * RAIL_B;
+      railAxis.setAttribute("x1", RAIL_X); railAxis.setAttribute("y1", y0);
+      railAxis.setAttribute("x2", RAIL_X); railAxis.setAttribute("y2", y1);
+      railTicks.forEach(function (t) {
+        var y = y0 + (y1 - y0) * (t.m / METRES);
+        t.tick.setAttribute("x1", RAIL_X - 5); t.tick.setAttribute("y1", y);
+        t.tick.setAttribute("x2", RAIL_X + 5); t.tick.setAttribute("y2", y);
+        t.lab.setAttribute("x", RAIL_X + 11); t.lab.setAttribute("y", y + 3);
+      });
+      railRun.setAttribute("x1", RAIL_X); railRun.setAttribute("y1", y0);
+      railRun.setAttribute("x2", RAIL_X);
     }
     fitView();
     window.addEventListener("resize", fitView);
 
-    var onStage = true;
-    if (window.IntersectionObserver) {
-      onStage = false;
-      new IntersectionObserver(function (entries) {
-        onStage = entries[0].isIntersecting;
-      }, { rootMargin: "12% 0px" }).observe(host);
+    /* --- the journey: depth is keyed to the copy, not to a curve --------
+       Chapter 01 names four depths out loud. The readout, the drill rail,
+       the camera and the water all read this one function, so the number
+       on screen is the number the paragraph beside it claims. */
+    var DEPTH_KEYS = [
+      [0.000, 0], [0.130, 0], [0.215, 40], [0.335, 1600],
+      [0.455, 3200], [0.520, 3200], [0.700, 0], [1.000, 0]
+    ];
+    function seg(x, a, b) { return utils.clamp((x - a) / (b - a), 0, 1); }
+    function smooth(t) { return t * t * (3 - 2 * t); }
+    function depthAt(p) {
+      for (var i = 0; i < DEPTH_KEYS.length - 1; i++) {
+        var k0 = DEPTH_KEYS[i], k1 = DEPTH_KEYS[i + 1];
+        if (p <= k1[0]) return k0[1] + (k1[1] - k0[1]) * smooth(seg(p, k0[0], k1[0]));
+      }
+      return 0;
     }
 
-    var look = new THREE.Vector3();
+    /* The camera reads that same depth for its height and keyframes only
+       what a drawing's viewpoint actually chooses: how far along the
+       section it stands, how far back, and what it looks at. */
+    var CAM = [
+      /*  p      x      z     lookX   yOff   lookYOff
+         The distances are set by how much of the section has to be in the
+         frame, not by how big the object looks: three beds and the offset
+         across the fault, or it is a wall and not a drawing. */
+      [0.000, -1.05,  9.00, -0.45,   2.35,  1.30],   // the square, at night
+      [0.130,  0.40, 14.00,  1.50,   0.70, -1.10],   // under the paving
+      [0.215,  0.85, 17.00,  2.05,   0.60, -1.95],   // −40 m · diaclasa
+      [0.335,  0.55, 20.50,  1.85,   0.40, -1.10],   // −1.600 m
+      [0.455, -0.30, 19.00,  1.05,   1.60,  2.10],   // −3.200 m · a cámara
+      [0.560,  0.20, 19.50,  1.60,   0.60, -0.70],   // o ascenso
+      [0.700, -0.55, 10.00,  0.05,   1.30,  0.70],   // out at the spout
+      [0.800, -1.35,  9.00,  -0.80,  1.60,  0.90],   // a burga
+      [0.880, -3.15,  6.60,  -2.60,  1.95,  1.30],   // the counter arrives
+      [0.935, -3.40,  2.30,  -3.12,  1.40,  1.30],   // the pour, close
+      [1.000, -0.30, 21.00,   0.20,  -0.40, -1.35]   // the poster: both ends
+    ];
+    function camAtP(p, out) {
+      var i = 0;
+      while (i < CAM.length - 2 && p > CAM[i + 1][0]) i++;
+      var k = smooth(seg(p, CAM[i][0], CAM[i + 1][0]));
+      for (var j = 1; j < 6; j++) out[j - 1] = CAM[i][j] + (CAM[i + 1][j] - CAM[i][j]) * k;
+      return out;
+    }
+
+    /* A stagger expressed as a function of progress instead of time, so it
+       scrubs both ways with the scroll. */
+    function reveal(els, t, spread, rise) {
+      var n = els.length || 1;
+      var span = 1 - spread * (n - 1);
+      for (var i = 0; i < n; i++) {
+        var e = smooth(utils.clamp((t - i * spread) / Math.max(span, 0.05), 0, 1));
+        els[i].style.opacity = String(e);
+        els[i].style.transform = "translateY(" + ((1 - e) * (rise || 26)) + "px)";
+      }
+    }
+
+    /* Chapter 01's four stations, in the same order as STEPS. */
+    var STOPS = [
+      { a: 0.160, b: 0.275 },
+      { a: 0.275, b: 0.390 },
+      { a: 0.390, b: 0.505 },
+      { a: 0.505, b: 0.640 }
+    ];
+    var LOG = [
+      ["00", "A praza", "granito de Ourense"],
+      ["01", "O descenso", "columna de auga"],
+      ["02", "A burga", "caudal 300 l/min"],
+      ["03", "A barra", "caña · 250 ml"]
+    ];
+
+    /* The four states the environment moves between. Built once: a lerp
+       target allocated inside the render loop is a new Color every frame. */
+    var G_HOT = mix(GROUND, ACCENT, 0.07);
+    var G_LIT = mix(GROUND, INK, 0.90);
+    var G_BAR = mix(GROUND, SECOND, 0.09);
+    var FG_LIT = GROUND.clone();
+    var LN_LIT = mix(LINE, INK, 0.55);
+    var STEAM_NIGHT = mix(GROUND, INK, 0.88);
+    var STEAM_DAY = mix(INK, GROUND, 0.10);
+
+    var camv = [0, 0, 0, 0, 0, 0];
+    var camPos = new THREE.Vector3(), camLook = new THREE.Vector3();
+    var groundCol = new THREE.Color(), fgCol = new THREE.Color(), lineCol = new THREE.Color();
+    var here = new THREE.Vector3(), proj = new THREE.Vector3(), scr = [0, 0];
+    var lastGround = "", lastLog = -1, lastTemp = "", lastLogS = "";
+    var tmpV = new THREE.Vector3();
+
     function frame() {
       requestAnimationFrame(frame);
-      if (!onStage) return;
-      var p = state.pour;
-      var now = performance.now();
-      if (handle3d) {
-        handle3d.userData.pour = p;
-        handle3d.rotation.x = handle3d.userData.pour * 1.08;
+      var p = state.p;
+      var depth = depthAt(p);
+      var baseY = -depth * Y_PER_M;
+
+      /* --- the fold: the last frame breaks the scale ------------------- */
+      var foldT = smooth(seg(p, 0.945, 0.998));
+      var foldK = 1 - 0.886 * foldT;
+      deep.scale.y = foldK;
+      /* Hatching squashed to 11% is a smear, and a symbol that means "this
+         bed is granite" cannot survive a broken axis anyway. */
+      M_HATCH.opacity = 0.42 * (1 - foldT);
+      deep.position.y = BREAK_Y - 0.42 * foldT;
+      bubbleHost.scale.y = 1 / foldK;
+      camaraHost.scale.y = 1 / foldK;
+
+      /* --- camera ------------------------------------------------------ */
+      camAtP(p, camv);
+      camPos.set(camv[0], baseY + camv[3], camv[1]);
+      camLook.set(camv[2], baseY + camv[4], 0);
+      /* On the way down the drawing is on the left because chapter 01's
+         copy owns the right column; that is what the lookX keys do, and
+         the fold at the end pulls the look target with the rock. */
+      if (foldT > 0) camLook.y += -1.05 * foldT;
+      camera.position.copy(camPos);
+      camera.position.y += Math.sin(state.idle) * 0.035;
+      if (portraitK !== 1) {
+        camera.position.sub(camLook).multiplyScalar(portraitK).add(camLook);
+        camLook.y -= portraitLift;
       }
-      beer.scale.y = Math.max(0.02, p * beerH);
-      beer.position.y = 0.12 + beer.scale.y * 0.5;
-      var foamY = beer.position.y + beer.scale.y * 0.5;
-      foam.position.y = foamY;
-      foamCap.position.y = foamY + 0.01;
-      foam.material.opacity = Math.min(1, p * 1.25) * 0.95;
-      foamCap.material.opacity = foam.material.opacity * 0.85;
-      foam.scale.setScalar(0.72 + p * 0.32);
-      foamCap.scale.setScalar(0.78 + p * 0.22);
+      camera.lookAt(camLook);
 
-      var nozzleY = 0.90;
-      var len = Math.max(0.04, nozzleY - foamY);
-      stream.visible = p > 0.06;
-      stream.position.set(0.22, (nozzleY + foamY) * 0.5, 0.16);
-      stream.scale.set(0.7 + p * 0.5, len, 0.7 + p * 0.5);
-      stream.material.opacity = Math.min(0.85, p * 1.4);
+      /* --- the light: night, the shaft, the morning, the counter -------
+         One key, four reasons, one direction. Never a second lamp. */
+      var down = smooth(seg(p, 0.13, 0.28)) * (1 - smooth(seg(p, 0.60, 0.72)));
+      var dayT = smooth(seg(p, 0.66, 0.80));
+      var nightT = smooth(seg(p, 0.86, 0.95));
+      var lit = dayT * (1 - nightT);
+      ambient.intensity = 0.15 - down * 0.03 + lit * 0.09;
+      key.intensity = 1.05 - down * 0.18 + lit * 0.55;
+      fill.intensity = 0.32 - down * 0.05 + lit * 0.03;
 
-      var i, u, h;
-      h = beer.scale.y;
-      for (i = 0; i < bubbles.length; i++) {
-        u = ((now * 0.00032 + bubbles[i].userData.seed) % 1);
-        bubbles[i].visible = p > 0.18;
-        bubbles[i].position.set(
-          Math.sin(bubbles[i].userData.seed * 9) * 0.07,
-          0.14 + u * h * 0.92,
-          Math.cos(bubbles[i].userData.seed * 7) * 0.07
-        );
-        bubbles[i].material.opacity = (1 - u) * p * 0.55;
+      /* the page's own ground is the environment, animated on p: the
+         square at night, a red cast at the bottom of the fault, the steam
+         whiting the whole page out when the water breaks, then the bar */
+      var litG = lit * lit;
+      var hotAmt = smooth(seg(p, 0.30, 0.47)) * (1 - smooth(seg(p, 0.52, 0.64)));
+      groundCol.copy(GROUND);
+      lerpS(groundCol, G_HOT, hotAmt);
+      lerpS(groundCol, G_LIT, litG);
+      lerpS(groundCol, G_BAR, nightT);
+      lerpS(fgCol.copy(INK), FG_LIT, litG);
+      lerpS(lineCol.copy(LINE), LN_LIT, litG);
+      var hex = lerpHex(lerpHex(lerpHex(HEX_GROUND, H_HOT, hotAmt), H_LIT, litG), H_BAR, nightT);
+      var fgHex = lerpHex(HEX_INK, HEX_GROUND, litG);
+      var lnHex = lerpHex(HEX_LINE, H_LN_LIT, litG);
+      if (hex !== lastGround) {
+        lastGround = hex;
+        panel.style.setProperty("--bu-ground", hex);
+        panel.style.setProperty("--bu-fg", fgHex);
+        panel.style.setProperty("--bu-line", lnHex);
+      }
+      EDGE.color.copy(fgCol);
+      EDGE.opacity = 0.30 + lit * 0.06;
+      /* The water carries its own value, so daylight cannot brighten it —
+         it has to be *dimmed* or the jet disappears into a white page. */
+      M_WATER.color.setScalar(1 - litG * 0.52);
+      lerpS(M_STEAM.color.copy(STEAM_NIGHT), STEAM_DAY, litG);
+      /* A street lamp burning at midday is the detail that says nobody
+         looked at this frame. */
+      M_LANTERN.emissive.copy(LANTERN_ON).multiplyScalar(1 - lit * 0.94);
+      shFonte.material.opacity = 0.28 + litG * 0.34;
+      shBarra.material.opacity = (0.28 + litG * 0.34) * smooth(seg(p, 0.815, 0.885));
+
+      /* --- the water ---------------------------------------------------
+         A surge runs the whole column from the chamber to the spout across
+         the ascent; the jet at the spout is thin until it arrives. */
+      var surge = smooth(seg(p, 0.50, 0.70));
+      var jet = 0.66 + surge * 0.52;
+      chorro.scale.set(jet, 1, jet);
+      chorro.visible = true;
+      /* the bubbles: slow while the water is trapped, fast on the ascent,
+         and after the counter arrives they are the carbonation */
+      var bspeed = 0.35 + surge * 1.9;
+      for (var i = 0; i < bubbles.length; i++) {
+        var bu = bubbles[i];
+        var t = (state.rise * bu.speed * bspeed + bu.phase) % 1;
+        var y = -SHAFT + 0.5 + t * (SHAFT - 0.5 + BREAK_Y);
+        tmpV.set(faultX(y) + Math.sin(y * 0.62) * 0.085 + Math.sin(y * 1.83 + 1.2) * 0.038
+          + (h1(i) - 0.5) * 0.030, dY(y), 0.15);
+        bu.mesh.position.copy(tmpV);
+        var f = Math.sin(t * Math.PI);
+        bu.mesh.scale.setScalar(bu.r * (0.5 + f * 0.9));
+        bu.mesh.visible = f > 0.06;
+      }
+      M_BUBBLE.opacity = 0.46 + surge * 0.42;
+
+      var steamA = (0.30 + surge * 0.22) * (0.85 + litG * 0.5);
+
+      /* the two leaders that ride with the reader */
+      aColumna.position.set(faultX(baseY) + Math.sin(baseY * 0.62) * 0.085 + 0.16, dY(baseY + 0.55), 0.17);
+      aBurbulla.position.set(faultX(baseY) + Math.sin(baseY * 0.62) * 0.085 - 0.16, dY(baseY - 1.35), 0.17);
+
+      /* the steam: always there — it is a 67° spring — but it is what you
+         see from the street when the light comes up */
+      for (var w = 0; w < vapor.length; w++) {
+        var vp = vapor[w];
+        var vt = (state.rise * 0.55 + vp.phase) % 1;
+        vp.mesh.position.set(vp.x + Math.sin(vt * 3.4 + vp.phase * 6.28) * 0.10, 0.38 + vt * 1.35, vp.z);
+        var vs = 0.026 + vt * 0.072;
+        vp.mesh.scale.set(vs, vs * 0.72, vs);
+        vp.mesh.rotation.y = vp.phase * 6.28 + vt * 1.4;
+        /* Each puff fades on its own way up. One shared opacity makes the
+           column switch on and off as a block, which reads as a cloud. */
+        vp.mesh.material.color.copy(M_STEAM.color);
+        vp.mesh.material.opacity = steamA * Math.sin(vt * Math.PI) * (1 - vt * 0.35);
       }
 
-      if (p > 0.28) {
-        drip.visible = true;
-        drip.position.y = 0.92 - ((now * 0.0018) % 0.42);
-        drip.material.opacity = Math.min(1, (p - 0.28) * 2);
+      /* --- the counter arrives ---------------------------------------- */
+      var barT = smooth(seg(p, 0.795, 0.895));
+      barra.visible = barT > 0.02;
+      barra.position.x = -3.35 - (1 - barT) * 3.4;
+      /* the pour: the glass fills, then the collar settles on it */
+      var pour = smooth(seg(p, 0.90, 0.975));
+      cana.scale.y = 0.06 + pour * 0.94;
+      collar.position.y = BAR_Y + 0.105 + (0.06 + pour * 0.94) * 0.24;
+      collar.scale.setScalar(0.25 + smooth(seg(p, 0.94, 1.0)) * 0.75);
+      maneta.rotation.z = -0.30 + smooth(seg(p, 0.88, 0.93)) * 0.62 - smooth(seg(p, 0.96, 1.0)) * 0.62;
+
+      /* --- the copy: labelled ranges of the one clock ------------------ */
+      if (ch0) ch0.style.opacity = String(1 - smooth(seg(p, 0.06, 0.13)));
+      for (var s2 = 0; s2 < stepEls.length; s2++) {
+        var st = STOPS[s2];
+        var vis = smooth(seg(p, st.a - 0.045, st.a + 0.035));
+        if (s2 < 3) vis *= 1 - smooth(seg(p, STOPS[s2 + 1].a - 0.035, STOPS[s2 + 1].a + 0.030));
+        else vis *= 1 - smooth(seg(p, 0.640, 0.700));
+        stepEls[s2].style.opacity = String(vis);
+        stepEls[s2].style.transform = "translateY(" + (1 - vis) * 24 + "px)";
+      }
+      if (kicker2) kicker2.style.opacity = String(smooth(seg(p, 0.66, 0.71)));
+      reveal(h2Chars, seg(p, 0.68, 0.80), 0.006, 26);
+      reveal(serviceEls, seg(p, 0.73, 0.86), 0.07, 22);
+      /* The bar camera arrives while chapter 02 is still leaving the
+         sticky slot. Fade that copy off before the counter is close. */
+      if (ch2) ch2.style.opacity = String(1 - smooth(seg(p, 0.805, 0.875)));
+      reveal(deskEls, seg(p, 0.88, 0.97), 0.08, 24);
+
+      /* --- the readouts ------------------------------------------------ */
+      var shown = Math.round(depth / 10) * 10;
+      var temp = p < 0.72
+        ? Math.round(17 + (depth / METRES) * 50)
+        : Math.round(67 - smooth(seg(p, 0.86, 0.965)) * 63);
+      var tempTxt = temp + "°";
+      if (tempTxt !== lastTemp && tempV) { lastTemp = tempTxt; tempV.textContent = tempTxt; }
+      var chap = p < 0.14 ? 0 : p < 0.66 ? 1 : p < 0.84 ? 2 : 3;
+      if (chap !== lastLog) {
+        lastLog = chap;
+        if (logN) logN.textContent = LOG[chap][0];
+        if (logT) logT.textContent = LOG[chap][1];
+      }
+      var logLine = (chap === 1 ? "−" + String(shown).replace(/(\d)(\d{3})$/, "$1.$2") + " m" : "+0 m")
+        + " · " + LOG[chap][2];
+      if (logS && logLine !== lastLogS) { lastLogS = logLine; logS.textContent = logLine; }
+
+      /* the drill rail: it only exists while there is a depth to show */
+      var railT = smooth(seg(p, 0.11, 0.17)) * (1 - smooth(seg(p, 0.70, 0.78)));
+      rail.style.opacity = String(railT * 0.95);
+      if (railT > 0.02) {
+        var y0 = box2.h * RAIL_T, y1 = box2.h * RAIL_B;
+        var yd = y0 + (y1 - y0) * (depth / METRES);
+        railRun.setAttribute("y2", yd);
+        railHead.setAttribute("points",
+          (RAIL_X - 5) + "," + (yd - 4.5) + " " + (RAIL_X - 5) + "," + (yd + 4.5) + " " + (RAIL_X + 3) + "," + yd);
+      }
+
+      /* --- leaders ----------------------------------------------------- */
+      for (var m = 0; m < notes.length; m++) {
+        var note = notes[m];
+        var nv = smooth(seg(p, note.spec.a, note.spec.a + 0.035))
+               * (1 - smooth(seg(p, note.spec.b, note.spec.b + 0.035)));
+        if (!note.target || nv < 0.06 || !note.target.visible) {
+          note.lead.style.opacity = "0";
+          note.text.style.opacity = "0";
+          note.dot.style.opacity = "0";
+          continue;
+        }
+        note.target.getWorldPosition(here);
+        proj.copy(here).project(camera);
+        scr[0] = (proj.x * 0.5 + 0.5) * box2.w;
+        scr[1] = (-proj.y * 0.5 + 0.5) * box2.h;
+        /* chapter 01's copy owns the right column and the drill rail owns
+           the far left, so leaders land between them */
+        var side = (p > 0.15 && p < 0.68) ? -1 : (scr[0] < box2.w * 0.5 ? -1 : 1);
+        var edge = side < 0 ? box2.w * 0.115 : box2.w * 0.905;
+        var ty = box2.h * (portraitLift > 0
+          ? (note.spec.y < 0.5 ? 0.12 : 0.82)
+          : note.spec.y);
+        var elbow = side < 0 ? edge + box2.w * 0.05 : edge - box2.w * 0.05;
+        note.lead.setAttribute("points",
+          scr[0] + "," + scr[1] + " " + elbow + "," + ty + " " + edge + "," + ty);
+        note.dot.setAttribute("cx", scr[0]);
+        note.dot.setAttribute("cy", scr[1]);
+        note.text.setAttribute("x", edge);
+        note.text.setAttribute("y", ty - 8);
+        note.text.setAttribute("text-anchor", side < 0 ? "start" : "end");
+        note.lead.style.opacity = String(nv * 0.55);
+        note.dot.style.opacity = String(nv * 0.8);
+        note.text.style.opacity = String(nv);
+      }
+
+      /* the break symbol, drawn where the axis actually breaks */
+      if (foldT > 0.03) {
+        tmpV.set(X_LEFT, BREAK_Y - 0.20 * foldT, 0.2).project(camera);
+        var bx0 = (tmpV.x * 0.5 + 0.5) * box2.w, by0 = (-tmpV.y * 0.5 + 0.5) * box2.h;
+        tmpV.set(X_RIGHT, BREAK_Y - 0.20 * foldT, 0.2).project(camera);
+        var bx1 = (tmpV.x * 0.5 + 0.5) * box2.w, by1 = (-tmpV.y * 0.5 + 0.5) * box2.h;
+        var zig = [], NZ = 16;
+        for (var z = 0; z <= NZ; z++) {
+          var zt = z / NZ;
+          zig.push((bx0 + (bx1 - bx0) * zt) + "," + ((by0 + (by1 - by0) * zt) + (z % 2 ? 6 : -6)));
+        }
+        brk.setAttribute("points", zig.join(" "));
+        brk.style.opacity = String(foldT * 0.8);
+        brkLab.setAttribute("x", bx0 + (bx1 - bx0) * 0.5);
+        brkLab.setAttribute("y", by0 + (by1 - by0) * 0.5 - 14);
+        brkLab.setAttribute("text-anchor", "middle");
+        brkLab.style.opacity = String(foldT * 0.75);
       } else {
-        drip.visible = false;
+        brk.style.opacity = "0";
+        brkLab.style.opacity = "0";
       }
 
-      buJudge(p);
-      camera.position.lerpVectors(camFar, camNear, p);
-      look.set(0.08 + p * 0.12, 0.36 + p * 0.1, 0.08);
-      camera.lookAt(look);
-      rig.rotation.y = -0.32 + p * 0.14;
-      neonLamp.intensity = 1.15 + Math.sin(now * 0.006) * 0.25;
-      glow.material.opacity = 0.22 + Math.sin(now * 0.006) * 0.06;
-      gpu.render(world, camera);
+      world.scale.setScalar(0.94 + state.settle * 0.06);
+      gpu.render(scene, camera);
     }
-    frame();
-  }).catch(function () { window.__staticB(panel); });
+    requestAnimationFrame(frame);
+  }).catch(function (err) {
+    console.error("bar-as-burgas scene failed", err);
+    window.__staticB(panel);
+  });
 };
 
 (function () {
