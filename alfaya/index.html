@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inmobiliaria Alfaya · Redondela</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2314181a%22%2F%3E%3Cpath%20d%3D%22M7%2014.5%2016%207l9%207.5%22%20fill%3D%22none%22%20stroke%3D%22%23e3e6e1%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M10%2015v10h12V15%22%20fill%3D%22none%22%20stroke%3D%22%23e3e6e1%22%20stroke-width%3D%222.2%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M14.6%2025v-5.4h2.8V25%22%20fill%3D%22none%22%20stroke%3D%22%23b4532a%22%20stroke-width%3D%222.2%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk&family=Archivo&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Archivo:wdth,wght@75..100,400..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #eceee9;
+  --ink: #14181a;
+  --muted: #697370;
+  --accent: #b4532a;
+  --accent2: #3d5a52;
+  --line: #d4d8d2;
+  --display: "Familjen Grotesk", serif;
+  --body: "Archivo", system-ui, sans-serif;
+  --radius: 28px;
+  --pad: 28px; --gap: 28px; --hero: clamp(56px, 12vw, 128px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); }
+body { min-height: 100vh; }
+a { color: inherit; }
+.grain {
+  pointer-events: none; position: fixed; inset: 0; z-index: 50; opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.chip {
+  position: fixed; right: 14px; bottom: 14px; z-index: 40;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: 6px 8px; background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+
+header {
+  display: flex; align-items: center; gap: 16px;
+  padding: 26px var(--pad) 12px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+}
+.mark { font-family: var(--display); letter-spacing: -.02em; text-transform: none; font-size: 22px; font-weight: 600; }
+.where { color: var(--muted); margin-right: auto; }
+.plot {
+  display: grid; grid-template-columns: 1.02fr .98fr; gap: 44px;
+  padding: 12px var(--pad) 60px; align-items: end; min-height: 74vh;
+}
+.kicker { letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--accent2); }
+h1 {
+  font-family: var(--display); font-weight: 600; font-size: clamp(40px, 6vw, 82px);
+  line-height: .96; letter-spacing: -.025em; margin: 10px 0 18px; max-width: 13ch;
+}
+.lead { font-size: 18px; line-height: 1.55; max-width: 40ch; color: var(--muted); }
+.cta-line {
+  display: inline-block; margin-top: 26px; text-decoration: none;
+  border-bottom: 1px solid var(--accent); padding-bottom: 4px;
+  letter-spacing: .12em; text-transform: uppercase; font-size: 12px;
+}
+.shot {
+  min-height: 62vh; border: 1px solid var(--line); border-radius: var(--radius);
+  background-image: linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--ink) 42%, transparent)), url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&amp;fit=crop&amp;w=1600&amp;q=80");
+  background-size: cover; background-position: center;
+}
+.lots { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.lot { padding: 24px var(--pad); border-right: 1px solid var(--line); min-height: 176px; }
+.lot:nth-child(3n) { border-right: 0; }
+.lot em { font-style: normal; font-size: 11px; letter-spacing: .16em; color: var(--accent); }
+.lot h3 { font-family: var(--display); font-size: 24px; margin: 10px 0 8px; font-weight: 500; }
+.lot p { margin: 0; color: var(--muted); }
+.deal {
+  padding: 64px var(--pad); display: flex; justify-content: space-between;
+  align-items: flex-end; gap: 24px; border-top: 1px solid var(--line);
+}
+.deal h2 { font-family: var(--display); font-size: clamp(30px, 5vw, 54px); margin: 0; max-width: 17ch; font-weight: 500; }
+.deal a {
+  background: var(--accent); color: #fdf7f2; text-decoration: none;
+  padding: 16px 20px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; font-size: 12px;
+}
+footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+@media (max-width: 860px) {
+  .plot { grid-template-columns: 1fr; min-height: auto; }
+  .shot { min-height: 40vh; }
+  .lots { grid-template-columns: 1fr; }
+  .lot { border-right: 0; border-bottom: 1px solid var(--line); min-height: 0; }
+  .deal { flex-direction: column; align-items: flex-start; }
+}
+
+
+#dsgB {
+  --st-bg: #f8f9f7;
+  --st-fg: #0f1214;
+  --st-accent: #b4532a;
+  --st-second: #3d5a52;
+  --st-glow: #b4532a;
+  --st-line: #cecfce;
+  --st-dim: color-mix(in srgb, var(--st-fg) 62%, transparent);
+  background: var(--st-bg); color: var(--st-fg);
+}
+
+.dsg-switch {
+  display: flex; gap: 2px; padding: 3px; flex-shrink: 0; margin-left: 14px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+}
+.dsg-btn {
+  font: 700 11px/1 ui-monospace, monospace; letter-spacing: .08em;
+  border: 0; border-radius: 999px; padding: 7px 12px; cursor: pointer;
+  background: transparent; color: var(--muted);
+}
+.dsg-btn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+#dsgB { display: block; }
+#dsgB[hidden] { display: none; }
+#dsgB * { box-sizing: border-box; }
+
+/* __splitB wraps every word, because a line may otherwise break between
+   any two of the per-character spans. */
+#dsgB .tb-word, #dsgB .vb-word, #dsgB .ob-word, #dsgB .iq-word,
+#dsgB .bb-word, #dsgB .rb-word, #dsgB .cb-word { display: inline-block; white-space: nowrap; }
+#dsgB .tb-c, #dsgB .vb-c, #dsgB .ob-c, #dsgB .iq-c,
+#dsgB .bb-c, #dsgB .rb-c, #dsgB .cb-c {
+  display: inline-block; will-change: transform; transform-style: preserve-3d;
+}
+
+#dsgB .dsg-switch { border-color: var(--st-line); background: transparent; }
+#dsgB .dsg-btn { color: var(--st-dim); font-family: inherit; }
+#dsgB .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+
+#dsgB .im { min-height: 100vh; }
+#dsgB .im-rail {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px clamp(20px, 4vw, 56px);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+}
+#dsgB .im-brand { font-weight: 700; }
+#dsgB .im-place { opacity: .6; margin-right: auto; }
+#dsgB .im-hero {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 32px;
+  padding: 24px clamp(20px, 4vw, 56px) 64px; align-items: end;
+}
+#dsgB .im-eyebrow, #dsgB .im-kicker {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: .2em; text-transform: uppercase; font-size: 11px; color: var(--st-second);
+}
+#dsgB .im-name {
+  font-family: "Familjen Grotesk", system-ui, sans-serif; font-weight: 600;
+  font-size: clamp(36px, 5vw, 66px); line-height: .98; margin: 8px 0 14px;
+  letter-spacing: -.02em;
+}
+#dsgB .im-lead { max-width: 40ch; color: var(--st-dim); }
+#dsgB .im-cta {
+  display: inline-block; margin-top: 20px; color: inherit;
+  border-bottom: 1px solid var(--st-accent); text-decoration: none;
+  letter-spacing: .12em; text-transform: uppercase; font-size: 12px; padding-bottom: 4px;
+}
+#dsgB .im-list { padding: 0 clamp(20px, 4vw, 56px) 72px; }
+#dsgB .im-rows { border-top: 1px solid var(--st-line); }
+#dsgB .im-row {
+  display: grid; grid-template-columns: 48px 200px 1fr; gap: 18px;
+  align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--st-line);
+}
+#dsgB .im-row em {
+  font-style: normal; font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .14em; color: var(--st-accent);
+}
+#dsgB .im-row h3 {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-size: 21px; margin: 0; font-weight: 500;
+}
+#dsgB .im-row p { margin: 0; color: var(--st-dim); }
+@media (max-width: 860px) {
+  #dsgB .im-hero { grid-template-columns: 1fr; }
+  #dsgB .im-row { grid-template-columns: 40px 1fr; }
+  #dsgB .im-row p { grid-column: 2; }
+}
+/* Inmobiliaria Alfaya — el plano que se levanta. This lead only.
+ *
+ * The page is a working drawing sheet. Every stroke is a hairline in
+ * the page's own ink, scaled by --af-u so it stays 1px at any zoom,
+ * and no section paints a ground of its own. */
+
+#dsgB {
+  background: var(--st-bg);
+  color: var(--st-fg);
+}
+
+#dsgB .af { position: relative; }
+
+/* ---- the sheet --------------------------------------------------- */
+
+#dsgB .af-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#dsgB .af-sheet { position: absolute; inset: 0; }
+#dsgB .af-svg { width: 100%; height: 100%; display: block; }
+
+#dsgB .af-svg path { fill: none; stroke: var(--st-fg); stroke-linecap: round; }
+#dsgB .af-grid path { stroke-width: 1; stroke-opacity: .17; }
+#dsgB .af-plan path { stroke-width: calc(var(--af-u, 1) * 1); }
+
+#dsgB .k-wall  { stroke-width: calc(var(--af-u, 1) * 1.5) !important; stroke-opacity: .9; }
+#dsgB .k-part  { stroke-opacity: .78; }
+#dsgB .k-jamb  { stroke-opacity: .6; }
+#dsgB .k-door  { stroke-opacity: .5; }
+#dsgB .k-win   { stroke-opacity: .72; }
+#dsgB .k-furn  { stroke-opacity: .5; }
+#dsgB .k-soft  { stroke-opacity: .3; }
+#dsgB .k-floor { stroke-opacity: .17; }
+#dsgB .k-dim   { stroke-opacity: .42; }
+#dsgB .k-elev  { stroke-opacity: .55; }
+#dsgB .k-accent{ stroke: var(--st-accent) !important; stroke-opacity: .85; }
+#dsgB .af-svg path.k-fill {
+  fill: color-mix(in srgb, var(--st-fg) 22%, transparent);
+  stroke: none;
+}
+#dsgB .af-svg path.k-fill-a {
+  fill: color-mix(in srgb, var(--st-accent) 16%, transparent);
+  stroke: none;
+}
+
+#dsgB .af-svg text {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  fill: var(--st-fg);
+  stroke: none;
+  letter-spacing: .1em;
+}
+#dsgB .t-room  { font-size: 23px; letter-spacing: .16em; fill-opacity: .8; }
+#dsgB .t-area  { font-size: 19px; fill: var(--st-accent); fill-opacity: .92; }
+#dsgB .t-dim   { font-size: 19px; fill-opacity: .58; }
+#dsgB .t-tiny  { font-size: 15px; fill-opacity: .5; }
+#dsgB .t-block { font-size: 19px; fill-opacity: .74; }
+#dsgB .t-blockb{ font-size: 20px; fill-opacity: .9; letter-spacing: .06em; }
+
+/* ---- the rail ---------------------------------------------------- */
+
+#dsgB .af-rail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px clamp(18px, 4vw, 46px);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+#dsgB .af-rail .dsg-switch { pointer-events: auto; margin-left: 22px; }
+#dsgB .af-brand { font-weight: 700; }
+#dsgB .af-place { opacity: .45; }
+#dsgB .af-meter {
+  margin-left: auto;
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- the copy ---------------------------------------------------- */
+
+#dsgB .af-type {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+#dsgB .af-in {
+  position: absolute;
+  left: clamp(20px, 5vw, 82px);
+  top: 50%;
+  width: min(35vw, 430px);
+  transform: translateY(-50%);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .af-in a { pointer-events: auto; }
+
+#dsgB .af-eyebrow,
+#dsgB .af-kicker {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .55;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#dsgB .af-kicker b { color: var(--st-accent); font-weight: 700; }
+
+#dsgB .af-name {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(36px, 4.6vw, 66px);
+  line-height: .96;
+  letter-spacing: -.03em;
+  margin: 0 0 20px;
+}
+#dsgB .af-name .af-c { display: inline-block; will-change: transform, opacity; }
+
+#dsgB .af-claim {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, 1.9vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -.015em;
+  margin: 0 0 18px;
+  max-width: 18ch;
+}
+#dsgB .af-lead,
+#dsgB .af-note {
+  font-size: 15px;
+  line-height: 1.62;
+  margin: 0;
+  max-width: 44ch;
+  opacity: .72;
+}
+#dsgB .af-h2 {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(24px, 2.5vw, 38px);
+  line-height: 1.14;
+  letter-spacing: -.02em;
+  margin: 0 0 22px;
+  max-width: 18ch;
+}
+
+#dsgB .af-cue {
+  margin: 32px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#dsgB .af-cue i { width: 44px; height: 1px; background: currentColor; display: block; }
+
+/* rooms and services: the same small two-column rhythm as the sheet */
+#dsgB .af-rooms, #dsgB .af-svcs { display: grid; gap: 16px; }
+#dsgB .af-room, #dsgB .af-svc {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 0 16px;
+  align-items: baseline;
+  border-top: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  padding-top: 11px;
+  will-change: opacity, transform;
+}
+#dsgB .af-room em, #dsgB .af-svc em {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
+}
+#dsgB .af-room h3, #dsgB .af-svc h3 {
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  margin: 0 0 3px;
+}
+#dsgB .af-room p, #dsgB .af-svc p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  opacity: .66;
+  max-width: 32ch;
+}
+
+#dsgB .af-tel {
+  display: block;
+  font-family: "Familjen Grotesk", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 56px);
+  line-height: 1;
+  letter-spacing: -.035em;
+  color: inherit;
+  text-decoration: none;
+  margin: 0 0 18px;
+  white-space: nowrap;
+}
+#dsgB .af-tel:hover { color: var(--st-accent); }
+#dsgB .af-hours,
+#dsgB .af-addr {
+  margin: 0 0 6px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .55;
+}
+
+/* ---- the legend chips -------------------------------------------- */
+
+#dsgB .af-chips {
+  position: fixed;
+  left: clamp(20px, 5vw, 82px);
+  bottom: clamp(26px, 5vh, 48px);
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: min(36vw, 470px);
+  pointer-events: none;
+}
+#dsgB .af-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--st-fg) 20%, transparent);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+#dsgB .af-chip span { opacity: .5; }
+#dsgB .af-chip b { color: var(--st-accent); font-variant-numeric: tabular-nums; }
+
+/* ---- the scroll column ------------------------------------------- */
+
+#dsgB .af-scroll { position: relative; z-index: 1; pointer-events: none; }
+#dsgB .af-scroll i { display: block; height: 100vh; }
+
+/* ---- portrait ---------------------------------------------------- */
+
+@media (max-width: 880px) {
+  #dsgB .af-in {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    transform: none;
+    padding: 66px clamp(18px, 6vw, 32px) clamp(66px, 12vh, 92px);
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--st-bg) 0%, transparent) 0,
+      color-mix(in srgb, var(--st-bg) 84%, transparent) 30%,
+      var(--st-bg) 58%
+    );
+  }
+  #dsgB .af-name { font-size: clamp(34px, 11vw, 52px); }
+  #dsgB .af-claim { font-size: clamp(19px, 5.2vw, 26px); max-width: none; }
+  #dsgB .af-h2 { font-size: clamp(22px, 6.6vw, 32px); max-width: none; }
+  #dsgB .af-lead, #dsgB .af-note { font-size: 14px; max-width: none; }
+  #dsgB .af-rooms, #dsgB .af-svcs { gap: 11px; }
+  #dsgB .af-room, #dsgB .af-svc { grid-template-columns: 62px 1fr; padding-top: 8px; }
+  #dsgB .af-room h3, #dsgB .af-svc h3 { font-size: 18px; }
+  #dsgB .af-room p, #dsgB .af-svc p { font-size: 12.5px; max-width: none; }
+  #dsgB .af-tel { font-size: clamp(26px, 8.6vw, 42px); }
+  /* Portrait has no band between the drawing and the copy: the chips
+     would land on the chapter. The metres are already on the plan and
+     in the rail, so they sit this one out. */
+  #dsgB .af-chips { display: none; }
+  #dsgB .af-rail { font-size: 9px; gap: 10px; padding: 14px clamp(14px, 4vw, 24px); }
+  #dsgB .af-place { display: none; }
+  #dsgB .af-brand { max-width: 44vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #dsgB .t-room { font-size: 28px; }
+  #dsgB .t-area, #dsgB .t-dim { font-size: 30px; }
+  #dsgB .t-tiny { font-size: 24px; }
+  #dsgB .t-block { font-size: 30px; }
+}
+
+/* ---- reduced motion / no JS: the sheet becomes a ficha ----------- */
+
+#dsgB .af-static .af-stage,
+#dsgB .af-static .af-scroll { display: none; }
+#dsgB .af-static .af-type { position: static; }
+#dsgB .af-static .af-in {
+  position: static;
+  opacity: 1;
+  transform: none;
+  width: auto;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 5vw, 40px) 68px;
+  background: none;
+}
+#dsgB .af-static .af-in-0 { padding-top: 104px; }
+#dsgB .af-static .af-chips {
+  display: flex;
+  position: static;
+  width: auto;
+  max-width: 720px;
+  margin: 0 auto 72px;
+  padding: 0 clamp(18px, 5vw, 40px);
+}
+#dsgB .af-static .af-chip { opacity: 1; }
+#dsgB .af-static .af-rail { position: static; }
+
+</style>
+</head>
+<body data-motion="animejs" data-layout="plano" data-mode="catastro">
+<div class="grain"></div>
+<div id="dsgA">
+
+<header>
+  <span class="mark">Inmobiliaria Alfaya</span>
+  <span class="where">Redondela · Cita previa</span>
+  <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+</header>
+<section class="plot">
+  <div>
+    <p class="kicker">Rúa Alfonso XII · Redondela</p>
+    <h1>Un piso se enseña entero.</h1>
+    <p class="lead">Inmobiliaria en Alfonso XII. Vivienda en Redondela y la ría: la casa se ve entera antes de ir a verla.</p>
+    <a class="cta-line" href="tel:34986400181">+34 986 40 01 81</a>
+  </div>
+  <div class="shot" role="img" aria-label="Vivienda en Redondela"></div>
+</section>
+<section class="lots"><article class="lot"><em>01</em><h3>Venta</h3><p>Ponemos precio con lo que se vende de verdad en la villa, no con lo que pide el vecino.</p></article><article class="lot"><em>02</em><h3>Alquiler</h3><p>Buscamos inquilino y lo miramos antes de darle la llave.</p></article><article class="lot"><em>03</em><h3>Tasación</h3><p>Os decimos lo que vale y por qué. Sin compromiso de firmar nada.</p></article><article class="lot"><em>04</em><h3>Herencias</h3><p>Repartos, notaría y papeles cuando la casa es de cuatro hermanos.</p></article><article class="lot"><em>05</em><h3>Reformas</h3><p>Qué hay que tocar antes de comprar, con presupuesto de gente de aquí.</p></article><article class="lot"><em>06</em><h3>Visitas</h3><p>Vamos con vosotros. A la luz del día y con la calle andada.</p></article></section>
+<section class="deal">
+  <h2>El plano, los metros y la llave. En Redondela, no en un portal de anuncios.</h2>
+  <a href="https://wa.me/34986400181">Pedir una visita</a>
+</section>
+<footer>Rúa Alfonso XII · Redondela · +34 986 40 01 81</footer>
+
+</div>
+<div id="dsgB" hidden>
+<div class="af">
+  <div class="af-stage" aria-hidden="true">
+    <div class="af-sheet"></div>
+  </div>
+
+  <header class="af-rail">
+    <span class="af-brand">Inmobiliaria Alfaya</span>
+    <span class="af-place">Rúa Alfonso XII · Redondela</span>
+    <span class="af-meter" data-af-meter>—— m²</span>
+    <div class="dsg-switch" role="group" aria-label="Elegir diseño">
+    <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
+    <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
+  </div>
+  </header>
+
+  <div class="af-type">
+    <section class="af-in af-in-0">
+      <p class="af-eyebrow">Ficha 01 · Vivienda en Redondela</p>
+      <h1 class="af-name" data-af-split>Inmobiliaria Alfaya</h1>
+      <p class="af-claim">Un piso se enseña entero.</p>
+      <p class="af-lead">Inmobiliaria en Alfonso XII. Vivienda en Redondela y la ría: la casa se ve entera antes de ir a verla.</p>
+      <p class="af-cue"><i></i>Levantar el plano</p>
+    </section>
+
+    <section class="af-in af-in-1">
+      <p class="af-kicker"><b>01</b>El portal</p>
+      <h2 class="af-h2">Once metros con ochenta de fachada en Alfonso XII.</h2>
+      <p class="af-note">Antes de subir ya sabéis lo que hay: la planta, a dónde da cada ventana y cuánto mide de verdad cada cuarto. Sin ir a verlo para descartarlo.</p>
+    </section>
+
+    <section class="af-in af-in-2">
+      <p class="af-kicker"><b>02</b>Las estancias</p>
+      <div class="af-rooms"><article class="af-room" data-room="0"><em>11,6 m²</em><div><h3>Salón</h3><p>Da al patio y al sur. Puerta corredera de dos hojas.</p></div></article><article class="af-room" data-room="1"><em>10,2 m²</em><div><h3>Cocina</h3><p>Office con mesa. Salida propia al patio.</p></div></article><article class="af-room" data-room="2"><em>11,4 m²</em><div><h3>Dormitorio 1</h3><p>Cama de 150, armario empotrado de dos metros.</p></div></article><article class="af-room" data-room="3"><em>12,9 m²</em><div><h3>Dormitorio 2</h3><p>El más grande. Cabe escritorio sin quitar la cama.</p></div></article></div>
+    </section>
+
+    <section class="af-in af-in-3">
+      <p class="af-kicker"><b>03</b>Lo que se vive</p>
+      <h2 class="af-h2">El plano, los metros y la llave. En Redondela, no en un portal de anuncios.</h2>
+      <div class="af-svcs"><article class="af-svc"><em>01</em><div><h3>Venta</h3><p>Ponemos precio con lo que se vende de verdad en la villa, no con lo que pide el vecino.</p></div></article><article class="af-svc"><em>02</em><div><h3>Alquiler</h3><p>Buscamos inquilino y lo miramos antes de darle la llave.</p></div></article><article class="af-svc"><em>03</em><div><h3>Tasación</h3><p>Os decimos lo que vale y por qué. Sin compromiso de firmar nada.</p></div></article></div>
+    </section>
+
+    <section class="af-in af-in-4">
+      <p class="af-kicker"><b>04</b>La llave</p>
+      <a class="af-tel" href="tel:34986400181">+34 986 40 01 81</a>
+      <p class="af-hours">Visitas con cita</p>
+      <p class="af-addr">Rúa Alfonso XII · Redondela</p>
+    </section>
+  </div>
+
+  <ul class="af-chips" aria-hidden="true"><li class="af-chip" data-chip="0"><span>Útiles</span><b>68 m²</b></li><li class="af-chip" data-chip="1"><span>Construidos</span><b>82 m²</b></li><li class="af-chip" data-chip="2"><span>Patio</span><b>21 m²</b></li><li class="af-chip" data-chip="3"><span>Planta</span><b>2ª</b></li><li class="af-chip" data-chip="4"><span>Año</span><b>1974</b></li><li class="af-chip" data-chip="5"><span>Orientación</span><b>Sur</b></li><li class="af-chip" data-chip="6"><span>Ascensor</span><b>Sí</b></li></ul>
+
+  <div class="af-scroll" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
+
+</div>
+<script>
+
+</script>
+<script>
+
+/* Per-character spans are inline-block and a line may break between any
+   two of them, so every word needs its own no-wrap wrapper. */
+window.__splitB = function (panel) {
+  var prefix = panel.querySelector(".tb") ? "tb"
+    : panel.querySelector(".vb") ? "vb"
+    : panel.querySelector(".bb") ? "bb"
+    : panel.querySelector(".rb") ? "rb"
+    : panel.querySelector(".cb") ? "cb"
+    : panel.querySelector(".iq") ? "iq"
+    : "ob";
+  var out = [];
+  panel.querySelectorAll("[data-split]").forEach(function (el) {
+    if (el.dataset.done) return;
+    el.dataset.done = "1";
+    var frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span");
+      w.className = prefix + "-word";
+      for (var i = 0; i < word.length; i++) {
+        var c = document.createElement("span");
+        c.className = prefix + "-c";
+        c.textContent = word[i];
+        w.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(w);
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+  });
+  return out;
+};
+/* Inmobiliaria Alfaya — el plano que se levanta. This lead only.
+ *
+ * Design B is a working drawing sheet for the flat on Alfonso XII, and
+ * it is deliberately NOT one big object doing a trick. It is about a
+ * thousand small marks, each with its own window on a single damped
+ * progress p ∈ [0,1], so at any point in the scroll dozens of little
+ * things are moving and none of them is the whole page.
+ *
+ *   00 · la hoja       the tick grid, the north, the scale, the cajetín
+ *   01 · el portal     the envelope draws, the front door swings, the
+ *                      exterior cotas extend and count to 11,80 / 7,60
+ *   02 · las estancias partitions, jambs, seven door leaves, windows,
+ *                      room names and their metres
+ *   03 · lo que se vive furniture piece by piece, parquet, the patio
+ *                      paving, the elevations, the legend chips
+ *   04 · la llave      the key at the door and the number
+ *
+ * What it is not: Rustican's road, Da Costa's walled town, Bóuzas's
+ * reader, Garage Galicia's nave, Mesa do Miño's plate, Burgas's
+ * section, Ochoa's brake, Choco's GT, Ponte's cup — and above all not
+ * Luis Orge's expediente. There is no 3D projector and no camera dolly
+ * here at all: it is a flat sheet, drawn.
+ *
+ * Marks, by group (ART-DIRECTION.md law 2 — count the parts):
+ *
+ *   hoja       retícula de puntos · norte · escala gráfica ·
+ *              cajetín (seis campos) · marca de doblado
+ *   muros      envolvente · seis tabiques · jambas de cada hueco
+ *   huecos     siete hojas de puerta con su barrido · corredera de dos
+ *              hojas · seis ventanas de tres líneas
+ *   cotas      cuatro parciales arriba · tres a la izquierda · dos
+ *              totales · sus flechas y sus números
+ *   mobiliario sofá · mesa baja · mueble de tv · dos camas · dos
+ *              mesillas · dos armarios · escritorio · silla · encimera
+ *              en L · fregadero · placa de cuatro fuegos · nevera ·
+ *              mesa de office con dos sillas · bañera · lavabo ·
+ *              inodoro · mueble de entrada · espejo · felpudo ·
+ *              armario de pasillo · lámpara
+ *   patio      solado de puntos · mesa y dos sillas · tres plantas ·
+ *              tendedero de tres cuerdas
+ *   suelos     parquet del salón · alicatado de cocina y baño
+ *   alzados    fachada con doce ventanas · sección con escalera ·
+ *              alzado del patio con su sol
+ *   final      llave con su etiqueta
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md, landings/heroes/FULL-PAGE-REPLAN.md.
+ */
+
+window.__staticB = function (panel) {
+  var root = panel.querySelector(".af");
+  if (root) root.classList.add("af-static");
+  panel.querySelectorAll(".af-in, .af-room, .af-svc, .af-chip").forEach(function (el) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+  });
+  var cue = panel.querySelector(".af-cue");
+  if (cue) cue.remove();
+  var meter = panel.querySelector("[data-af-meter]");
+  if (meter) meter.textContent = "89 m² · 8 estancias";
+};
+
+window.__initB = function (A, panel) {
+  var animate = A.animate, createTimeline = A.createTimeline,
+      onScroll = A.onScroll, stagger = A.stagger;
+
+  var root = panel.querySelector(".af");
+  var sheetHost = panel.querySelector(".af-sheet");
+  var scroller = panel.querySelector(".af-scroll");
+  if (!root || !sheetHost || !scroller) return;
+
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.__staticB(panel);
+    return;
+  }
+
+  /* ---- scalars ---------------------------------------------------- */
+
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function span(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function ease(t) { return t * t * (3 - 2 * t); }
+  function seg(p, a, b) { return ease(span(p, a, b)); }
+  function mix(a, b, t) { return a + (b - a) * t; }
+
+  /* ---- the sheet -------------------------------------------------- */
+
+  var NS = "http://www.w3.org/2000/svg";
+  function node(tag, cls, parent) {
+    var el = document.createElementNS(NS, tag);
+    if (cls) el.setAttribute("class", cls);
+    if (parent) parent.appendChild(el);
+    return el;
+  }
+
+  var svg = node("svg", "af-svg");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  var gGrid = node("g", "af-grid", svg);
+  var gPlan = node("g", "af-plan", svg);
+  /* Three layers inside the sheet so they can drift at their own rate:
+     nothing on this page moves as one block. */
+  var gRoom = node("g", null, gPlan);
+  var gElev = node("g", null, gPlan);
+  var gBlock = node("g", null, gPlan);
+  var LAYER = gRoom;
+  sheetHost.appendChild(svg);
+
+  var SHEET_W = 1930, SHEET_H = 1130;
+  var PX = 210, PY = 210;        /* the plan's origin inside the sheet */
+  var PW = 1180, PH = 760;       /* 11,80 m × 7,60 m */
+
+  /* Every mark is registered with its own window on p. Nothing is
+     animated by a timeline: the scroll is the only clock. */
+  var marks = [];
+  var PRE = false;   /* while true, marks are laid down on load, not on scroll */
+  function reg(el, a, b, kind, extra) {
+    var it = { el: el, a: a, b: b, k: kind, t: -1, pre: PRE };
+    if (extra) for (var key in extra) it[key] = extra[key];
+    marks.push(it);
+    return it;
+  }
+
+  function stag(base, spread, i, n, dur) {
+    return [base + spread * (n > 1 ? i / (n - 1) : 0), 0].map(function (v, j) {
+      return j === 0 ? v : 0;
+    })[0];
+  }
+  function winFor(base, spread, i, n, dur) {
+    var a = base + (n > 1 ? spread * i / (n - 1) : 0);
+    return [a, a + dur];
+  }
+
+  /* --- primitives, all of them <path> so one code path draws them --- */
+
+  function put(d, len, cls, w, kind, parent) {
+    var el = node("path", cls, parent || LAYER);
+    el.setAttribute("d", d);
+    if (kind === "draw") {
+      el.setAttribute("stroke-dasharray", len.toFixed(1));
+      el.setAttribute("stroke-dashoffset", len.toFixed(1));
+    } else {
+      el.setAttribute("opacity", "0");
+    }
+    return reg(el, w[0], w[1], kind || "draw", { len: len });
+  }
+
+  function L(x1, y1, x2, y2, cls, w, parent) {
+    var len = Math.hypot(x2 - x1, y2 - y1);
+    return put("M" + x1 + " " + y1 + "L" + x2 + " " + y2, len, cls, w, "draw", parent);
+  }
+  function R(x, y, ww, hh, cls, w, parent) {
+    var d = "M" + x + " " + y + "h" + ww + "v" + hh + "h" + (-ww) + "Z";
+    return put(d, 2 * (ww + hh), cls, w, "draw", parent);
+  }
+  function C(cx, cy, r, cls, w, parent) {
+    var d = "M" + (cx - r) + " " + cy +
+            "a" + r + " " + r + " 0 1 0 " + (2 * r) + " 0" +
+            "a" + r + " " + r + " 0 1 0 " + (-2 * r) + " 0";
+    return put(d, 2 * Math.PI * r, cls, w, "draw", parent);
+  }
+  function ARC(cx, cy, r, a0, a1, cls, w, parent) {
+    var x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+    var x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+    var big = Math.abs(a1 - a0) > Math.PI ? 1 : 0;
+    var sweep = a1 > a0 ? 1 : 0;
+    var d = "M" + x0.toFixed(1) + " " + y0.toFixed(1) +
+            "A" + r + " " + r + " 0 " + big + " " + sweep + " " +
+            x1.toFixed(1) + " " + y1.toFixed(1);
+    return put(d, r * Math.abs(a1 - a0), cls, w, "draw", parent);
+  }
+  function FILL(d, cls, w, parent) {
+    var el = node("path", cls, parent || LAYER);
+    el.setAttribute("d", d);
+    el.setAttribute("opacity", "0");
+    return reg(el, w[0], w[1], "fade");
+  }
+  function T(x, y, str, cls, w, parent, opts) {
+    var el = node("text", cls, parent || LAYER);
+    el.setAttribute("x", x);
+    el.setAttribute("y", y);
+    el.setAttribute("opacity", "0");
+    if (opts && opts.anchor) el.setAttribute("text-anchor", opts.anchor);
+    if (opts && opts.rot) {
+      el.setAttribute("transform", "rotate(" + opts.rot + " " + x + " " + y + ")");
+    }
+    el.textContent = str;
+    return reg(el, w[0], w[1], (opts && opts.count) ? "count" : "fade",
+      opts && opts.count ? { from: opts.count[0], to: opts.count[1], fmt: opts.count[2] } : null);
+  }
+
+  /* a swinging leaf: the arc draws, the leaf rotates */
+  function DOOR(hx, hy, cx, cy, sweepDeg, cls, w) {
+    var r = Math.hypot(cx - hx, cy - hy);
+    var a0 = Math.atan2(cy - hy, cx - hx);
+    var a1 = a0 + sweepDeg * Math.PI / 180;
+    ARC(hx, hy, r, a0, a1, cls + " k-door", [w[0] + 0.004, w[1] + 0.004]);
+    var g = node("g", null, LAYER);
+    var leaf = L(hx, hy, cx, cy, cls, w, g);
+    reg(g, w[0], w[1], "swing", { hx: hx, hy: hy, deg: sweepDeg });
+    return leaf;
+  }
+
+  /* --- 1 · la retícula (screen space, rebuilt on resize) ----------- */
+
+  var gridNodes = [];
+  function buildGrid(W, H) {
+    gridNodes.forEach(function (it) {
+      if (it.el.parentNode) it.el.parentNode.removeChild(it.el);
+      var k = marks.indexOf(it);
+      if (k >= 0) marks.splice(k, 1);
+    });
+    gridNodes.length = 0;
+    var step = W < 880 ? 44 : 56, i = 0;
+    var cols = Math.ceil(W / step), rows = Math.ceil(H / step);
+    var total = cols * rows;
+    for (var cx = 0; cx <= cols; cx++) {
+      for (var cy = 0; cy <= rows; cy++) {
+        var x = cx * step + step / 2, y = cy * step + step / 2;
+        var el = node("path", null, gGrid);
+        el.setAttribute("d", "M" + (x - 2.5) + " " + y + "h5M" + x + " " + (y - 2.5) + "v5");
+        el.setAttribute("opacity", "0");
+        /* a diagonal wipe: the sheet fills from the corner the plan
+           starts in, so the grid reads as paper being laid down */
+        var d = (cx / (cols || 1)) * 0.6 + (cy / (rows || 1)) * 0.4;
+        var was = PRE; PRE = true;
+        var it = reg(el, d * 0.52, d * 0.52 + 0.44, "fade");
+        PRE = was;
+        gridNodes.push(it);
+        i++;
+      }
+    }
+    return total;
+  }
+
+  /* --- 2 · muros ---------------------------------------------------
+     A run is two parallel lines with the openings cut out of both, plus
+     a jamb across the thickness at every cut. Each piece is its own
+     mark, which is why a wall does not arrive as one gesture. */
+
+  function run(axis, fixed, from, to, th, openings, base, spread, dur, cls) {
+    var half = th / 2, i, k = 0;
+    var cuts = [from];
+    openings.forEach(function (o) { cuts.push(o[0], o[1]); });
+    cuts.push(to);
+    var pieces = [];
+    for (i = 0; i < cuts.length; i += 2) {
+      if (cuts[i + 1] - cuts[i] > 1) pieces.push([cuts[i], cuts[i + 1]]);
+    }
+    var n = pieces.length * 2 + openings.length;
+    pieces.forEach(function (pc) {
+      /* split every long piece in two so the run staggers along itself */
+      var mid = (pc[0] + pc[1]) / 2;
+      [[pc[0], mid], [mid, pc[1]]].forEach(function (sub) {
+        [-half, half].forEach(function (off) {
+          var w = winFor(base, spread, k, n, dur);
+          if (axis === "h") L(PX + sub[0], PY + fixed + off, PX + sub[1], PY + fixed + off, cls, w);
+          else L(PX + fixed + off, PY + sub[0], PX + fixed + off, PY + sub[1], cls, w);
+        });
+        k++;
+      });
+    });
+    openings.forEach(function (o, j) {
+      var w = winFor(base + 0.01, spread, j, Math.max(1, openings.length), dur);
+      [o[0], o[1]].forEach(function (at) {
+        if (axis === "h") L(PX + at, PY + fixed - half, PX + at, PY + fixed + half, "k-jamb", w);
+        else L(PX + fixed - half, PY + at, PX + fixed + half, PY + at, "k-jamb", w);
+      });
+    });
+  }
+
+  /* three lines across a hole: that is a window in plan */
+  function WIN(axis, fixed, from, to, th, w) {
+    var half = th / 2;
+    [-half, 0, half].forEach(function (off, i) {
+      var ww = [w[0] + i * 0.006, w[1] + i * 0.006];
+      if (axis === "h") L(PX + from, PY + fixed + off, PX + to, PY + fixed + off, "k-win", ww);
+      else L(PX + fixed + off, PY + from, PX + fixed + off, PY + to, "k-win", ww);
+    });
+  }
+
+  /* --- 3 · cotas ---------------------------------------------------- */
+
+  function metres(cm) {
+    var m = cm / 100;
+    return (m.toFixed(2) + "").replace(".", ",");
+  }
+  function dim(axis, at, from, to, label, w, flip) {
+    var s = 9;
+    if (axis === "h") {
+      L(PX + from, PY + at + s, PX + from, PY + at - s, "k-dim", w);
+      L(PX + to, PY + at + s, PX + to, PY + at - s, "k-dim", w);
+      L(PX + from, PY + at, PX + to, PY + at, "k-dim", [w[0] + 0.004, w[1] + 0.006]);
+      T(PX + (from + to) / 2, PY + at - 12, label, "t-dim",
+        [w[0] + 0.012, w[1] + 0.012], null, { anchor: "middle" });
+    } else {
+      L(PX + at - s, PY + from, PX + at + s, PY + from, "k-dim", w);
+      L(PX + at - s, PY + to, PX + at + s, PY + to, "k-dim", w);
+      L(PX + at, PY + from, PX + at, PY + to, "k-dim", [w[0] + 0.004, w[1] + 0.006]);
+      T(PX + at - 12, PY + (from + to) / 2, label, "t-dim",
+        [w[0] + 0.012, w[1] + 0.012], null, { anchor: "middle", rot: -90 });
+    }
+  }
+
+  /* --- the plan ----------------------------------------------------- */
+
+  var ROOMS = [
+    { n: "DORMITORIO 1", x: 0, y: 0, w: 380, h: 300, m: "11,4" },
+    { n: "BAÑO", x: 380, y: 0, w: 180, h: 300, m: "5,4" },
+    { n: "COCINA", x: 560, y: 0, w: 340, h: 300, m: "10,2" },
+    { n: "PASILLO", x: 0, y: 300, w: 900, h: 120, m: "10,8" },
+    { n: "DORMITORIO 2", x: 0, y: 420, w: 380, h: 340, m: "12,9" },
+    { n: "RECIBIDOR", x: 380, y: 420, w: 180, h: 340, m: "6,1" },
+    { n: "SALÓN", x: 560, y: 420, w: 340, h: 340, m: "11,6" },
+    { n: "PATIO", x: 900, y: 0, w: 280, h: 760, m: "21,3" }
+  ];
+
+  /* 01 · la envolvente y el portal */
+  run("h", 0, 0, 1180, 24, [[90, 250], [430, 510], [640, 820]], 0.150, 0.075, 0.055, "k-wall");
+  run("h", 760, 0, 1180, 24, [[80, 260], [430, 520], [640, 820]], 0.165, 0.075, 0.055, "k-wall");
+  run("v", 0, 0, 760, 24, [[500, 680]], 0.180, 0.055, 0.055, "k-wall");
+  run("v", 1180, 0, 760, 24, [], 0.195, 0.055, 0.055, "k-wall");
+
+  WIN("h", 0, 90, 250, 24, [0.245, 0.290]);
+  WIN("h", 0, 430, 510, 24, [0.255, 0.300]);
+  WIN("h", 0, 640, 820, 24, [0.265, 0.310]);
+  WIN("h", 760, 80, 260, 24, [0.275, 0.320]);
+  WIN("h", 760, 640, 820, 24, [0.285, 0.330]);
+  WIN("v", 0, 500, 680, 24, [0.295, 0.340]);
+
+  /* la puerta de la calle: la única en color */
+  DOOR(PX + 430, PY + 760, PX + 520, PY + 760, -78, "k-accent", [0.225, 0.300]);
+  T(PX + 475, PY + 800, "ENTRADA", "t-tiny", [0.265, 0.320], null, { anchor: "middle" });
+
+  dim("h", -74, 0, 380, metres(380), [0.215, 0.265]);
+  dim("h", -74, 380, 560, metres(180), [0.230, 0.280]);
+  dim("h", -74, 560, 900, metres(340), [0.245, 0.295]);
+  dim("h", -74, 900, 1180, metres(280), [0.260, 0.310]);
+  dim("h", -132, 0, 1180, metres(1180), [0.285, 0.340]);
+  dim("v", -74, 0, 300, metres(300), [0.225, 0.275]);
+  dim("v", -74, 300, 420, metres(120), [0.240, 0.290]);
+  dim("v", -74, 420, 760, metres(340), [0.255, 0.305]);
+  dim("v", -132, 0, 760, metres(760), [0.295, 0.350]);
+
+  /* 02 · los tabiques y las hojas */
+  run("v", 900, 0, 760, 24, [[60, 180], [500, 720]], 0.348, 0.040, 0.045, "k-wall");
+  run("h", 300, 0, 900, 10, [[120, 210], [420, 500], [640, 730]], 0.362, 0.048, 0.045, "k-part");
+  run("h", 420, 0, 900, 10, [[120, 210], [420, 510]], 0.378, 0.044, 0.045, "k-part");
+  run("v", 380, 0, 300, 10, [], 0.392, 0.026, 0.045, "k-part");
+  run("v", 560, 0, 300, 10, [], 0.401, 0.026, 0.045, "k-part");
+  run("v", 380, 420, 760, 10, [], 0.410, 0.026, 0.045, "k-part");
+  run("v", 560, 420, 760, 10, [[470, 560]], 0.419, 0.026, 0.045, "k-part");
+
+  DOOR(PX + 120, PY + 300, PX + 210, PY + 300, -78, "k-part", [0.418, 0.470]);
+  DOOR(PX + 500, PY + 300, PX + 420, PY + 300, 78, "k-part", [0.428, 0.480]);
+  DOOR(PX + 640, PY + 300, PX + 730, PY + 300, -78, "k-part", [0.438, 0.490]);
+  DOOR(PX + 120, PY + 420, PX + 210, PY + 420, 78, "k-part", [0.448, 0.500]);
+  DOOR(PX + 510, PY + 420, PX + 420, PY + 420, -78, "k-part", [0.458, 0.510]);
+  DOOR(PX + 560, PY + 470, PX + 560, PY + 560, 78, "k-part", [0.468, 0.520]);
+  DOOR(PX + 900, PY + 60, PX + 900, PY + 180, -78, "k-part", [0.478, 0.530]);
+
+  /* la corredera del salón: dos hojas que se abren */
+  var slideA = L(PX + 894, PY + 500, PX + 894, PY + 610, "k-part", [0.488, 0.536]);
+  var slideB = L(PX + 906, PY + 610, PX + 906, PY + 720, "k-part", [0.496, 0.544]);
+  reg(slideA.el, 0.500, 0.560, "slideY", { d: 54 });
+  reg(slideB.el, 0.508, 0.568, "slideY", { d: -54 });
+
+  /* los nombres y los metros */
+  ROOMS.forEach(function (r, i) {
+    var w = winFor(0.428, 0.080, i, ROOMS.length, 0.05);
+    var cx = PX + r.x + r.w / 2, cy = PY + r.y + r.h / 2;
+    T(cx, cy - 6, r.n, "t-room", w, null, { anchor: "middle" });
+    T(cx, cy + 26, r.m + " m²", "t-area", [w[0] + 0.014, w[1] + 0.014], null, { anchor: "middle" });
+  });
+
+  /* --- 4 · lo que se vive ------------------------------------------- */
+
+  var FURN = [
+    ["sofá", [["r", 585, 690, 250, 58], ["l", 668, 690, 668, 748], ["l", 752, 690, 752, 748]]],
+    ["mesa baja", [["r", 650, 596, 150, 66]]],
+    ["mueble de tv", [["r", 575, 470, 34, 150], ["l", 575, 520, 609, 520]]],
+    ["planta del salón", [["c", 862, 452, 26], ["l", 862, 452, 862, 426], ["l", 862, 452, 886, 462]]],
+    ["encimera", [["r", 572, 12, 318, 58], ["r", 572, 70, 58, 180]]],
+    ["fregadero", [["c", 694, 41, 17], ["c", 730, 41, 17]]],
+    ["placa", [["c", 806, 26, 13], ["c", 844, 26, 13], ["c", 806, 58, 13], ["c", 844, 58, 13]]],
+    ["nevera", [["r", 572, 228, 58, 58], ["l", 572, 257, 630, 257]]],
+    ["office", [["c", 770, 196, 54], ["c", 700, 196, 22], ["c", 840, 196, 22]]],
+    ["bañera", [["r", 392, 12, 152, 70], ["a", 520, 47, 20, -1.57, 1.57]]],
+    ["lavabo", [["r", 392, 110, 58, 44], ["c", 421, 132, 17]]],
+    ["inodoro", [["r", 396, 214, 50, 72], ["c", 421, 232, 20]]],
+    ["cama de 150", [["r", 96, 12, 150, 196], ["l", 96, 52, 246, 52], ["l", 171, 12, 171, 52]]],
+    ["mesillas", [["r", 64, 12, 26, 26], ["r", 252, 12, 26, 26]]],
+    ["armario del 1", [["r", 300, 12, 64, 200], ["l", 300, 78, 364, 78], ["l", 300, 146, 364, 146]]],
+    ["cama de 135", [["r", 78, 556, 135, 192], ["l", 78, 596, 213, 596], ["l", 145, 556, 145, 596]]],
+    ["mesilla del 2", [["r", 46, 556, 26, 26]]],
+    ["escritorio", [["r", 248, 436, 112, 52]]],
+    ["silla", [["c", 304, 508, 22]]],
+    ["armario del 2", [["r", 248, 624, 112, 58], ["l", 248, 653, 360, 653]]],
+    ["mueble de entrada", [["r", 390, 438, 34, 116]]],
+    ["espejo", [["l", 388, 596, 388, 684], ["l", 393, 596, 393, 684]]],
+    ["felpudo", [["r", 432, 716, 86, 30]]],
+    ["armario del pasillo", [["r", 700, 308, 180, 44], ["l", 760, 308, 760, 352], ["l", 820, 308, 820, 352]]],
+    ["lámpara", [["c", 430, 360, 15]]],
+    ["mesa del patio", [["c", 1038, 556, 52], ["c", 966, 556, 23], ["c", 1110, 556, 23]]],
+    ["plantas del patio", [["c", 942, 86, 30], ["c", 1132, 158, 24], ["c", 952, 300, 20]]],
+    ["tendedero", [["l", 920, 412, 1160, 412], ["l", 920, 430, 1160, 430], ["l", 920, 448, 1160, 448]]]
+  ];
+
+  FURN.forEach(function (piece, i) {
+    var w = winFor(0.578, 0.150, i, FURN.length, 0.05);
+    piece[1].forEach(function (pr, j) {
+      var ww = [w[0] + j * 0.004, w[1] + j * 0.004];
+      if (pr[0] === "r") R(PX + pr[1], PY + pr[2], pr[3], pr[4], "k-furn", ww);
+      else if (pr[0] === "l") L(PX + pr[1], PY + pr[2], PX + pr[3], PY + pr[4], "k-furn", ww);
+      else if (pr[0] === "c") C(PX + pr[1], PY + pr[2], pr[3], "k-furn", ww);
+      else if (pr[0] === "a") ARC(PX + pr[1], PY + pr[2], pr[3], pr[4], pr[5], "k-furn", ww);
+    });
+  });
+
+  /* el parquet del salón */
+  for (var q = 0; q < 15; q++) {
+    var qx = 570 + q * 22;
+    L(PX + qx, PY + 428, PX + qx, PY + 752, "k-floor",
+      winFor(0.600, 0.070, q, 15, 0.05));
+  }
+  /* el alicatado de cocina y baño: 45° recortado al cuarto, no a la hoja */
+  function hatch45(rx, ry, rw, rh, step, base, spread, dur) {
+    var kmin = ry - (rx + rw), kmax = ry + rh - rx, k, i = 0, rows = [];
+    for (k = Math.ceil(kmin / step) * step; k <= kmax; k += step) {
+      var x0 = Math.max(rx, ry - k), x1 = Math.min(rx + rw, ry + rh - k);
+      if (x1 - x0 < 8) continue;
+      rows.push([x0, x0 + k, x1, x1 + k]);
+    }
+    rows.forEach(function (r, idx) {
+      L(PX + r[0], PY + r[1], PX + r[2], PY + r[3], "k-floor",
+        winFor(base, spread, idx, rows.length, dur));
+    });
+  }
+  hatch45(386, 6, 168, 288, 30, 0.610, 0.055, 0.05);
+  hatch45(566, 6, 328, 288, 30, 0.620, 0.060, 0.05);
+  /* el solado del patio: cien puntos */
+  var dot = 0;
+  for (var dx = 918; dx < 1170; dx += 44) {
+    for (var dy = 18; dy < 750; dy += 44) {
+      C(PX + dx, PY + dy, 2.4, "k-soft",
+        winFor(0.640, 0.110, (dot * 7) % 34, 34, 0.05));
+      dot++;
+    }
+  }
+
+  /* --- 5 · norte, escala y cajetín ----------------------------------
+     These belong to the sheet, not to the flat, so they arrive with the
+     paper: at p = 0 there is already a drawing sheet to scroll into. */
+
+  LAYER = gBlock;
+  PRE = true;
+  var BX = 1470;
+
+  /* marcas de esquina y de doblado */
+  [[60, 60, 1, 1], [1870, 60, -1, 1], [60, 1070, 1, -1], [1870, 1070, -1, -1]]
+    .forEach(function (m, i) {
+      L(m[0], m[1], m[0] + 46 * m[2], m[1], "k-dim", [0.30 + i * 0.05, 0.74 + i * 0.05]);
+      L(m[0], m[1], m[0], m[1] + 46 * m[3], "k-dim", [0.32 + i * 0.05, 0.76 + i * 0.05]);
+    });
+  L(52, 565, 78, 565, "k-dim", [0.52, 0.94]);
+  C(BX + 36, 118, 30, "k-dim", [0.34, 0.78]);
+  L(BX + 36, 146, BX + 36, 84, "k-dim", [0.38, 0.82]);
+  L(BX + 36, 84, BX + 27, 100, "k-dim", [0.41, 0.84]);
+  L(BX + 36, 84, BX + 45, 100, "k-dim", [0.41, 0.84]);
+  T(BX + 36, 176, "N", "t-tiny", [0.44, 0.86], null, { anchor: "middle" });
+
+  for (var sb = 0; sb < 5; sb++) {
+    var sx = BX + 130 + sb * 50;
+    if (sb % 2 === 0) FILL("M" + sx + " 106h50v16h-50Z", "k-fill", [0.40 + sb * 0.04, 0.82 + sb * 0.04]);
+    L(sx, 106, sx, 130, "k-dim", [0.40 + sb * 0.04, 0.82 + sb * 0.04]);
+    T(sx, 152, String(sb), "t-tiny", [0.46 + sb * 0.04, 0.88 + sb * 0.04], null, { anchor: "middle" });
+  }
+  L(BX + 130, 122, BX + 380, 122, "k-dim", [0.40, 0.84]);
+  L(BX + 380, 106, BX + 380, 130, "k-dim", [0.56, 0.94]);
+  T(BX + 380, 152, "5 m", "t-tiny", [0.60, 0.96], null, { anchor: "middle" });
+
+  var BLOCK = [
+    ["PROMOTOR", "ALFAYA"],
+    ["SITUACIÓN", "RÚA ALFONSO XII"],
+    ["MUNICIPIO", "REDONDELA"],
+    ["ESCALA", "1:100"],
+    ["PLANTA", "2ª"],
+    ["PLANO", "01 · REV. A"]
+  ];
+  R(BX, 950, 430, 150, "k-dim", [0.30, 0.76]);
+  L(BX, 1000, BX + 430, 1000, "k-dim", [0.38, 0.82]);
+  L(BX, 1050, BX + 430, 1050, "k-dim", [0.42, 0.86]);
+  L(BX + 268, 950, BX + 268, 1100, "k-dim", [0.46, 0.90]);
+  BLOCK.forEach(function (row, i) {
+    var w = winFor(0.50, 0.30, i, BLOCK.length, 0.42);
+    var ry = 972 + (i % 3) * 50;
+    var rx = BX + 12 + (i < 3 ? 0 : 268);
+    T(rx, ry, row[0], "t-tiny", w);
+    T(rx, ry + 24, row[1], "t-block", [w[0] + 0.008, w[1] + 0.008]);
+  });
+
+  /* --- 6 · los alzados ---------------------------------------------- */
+
+  PRE = false;
+  LAYER = gElev;
+  /* fachada: doce ventanas, la de la 2ª planta en color */
+  T(BX, 214, "ALZADO · ALFONSO XII", "t-tiny", [0.596, 0.646]);
+  R(BX, 270, 390, 200, "k-elev", [0.600, 0.652]);
+  L(BX - 14, 270, BX + 404, 270, "k-elev", [0.606, 0.658]);
+  L(BX - 14, 270, BX + 40, 242, "k-elev", [0.610, 0.662]);
+  L(BX + 404, 270, BX + 350, 242, "k-elev", [0.610, 0.662]);
+  L(BX + 40, 242, BX + 350, 242, "k-elev", [0.614, 0.666]);
+  R(BX + 60, 220, 22, 24, "k-elev", [0.618, 0.668]);
+  R(BX + 300, 220, 22, 24, "k-elev", [0.620, 0.670]);
+  for (var fw = 0; fw < 12; fw++) {
+    var fc = fw % 4, fr = (fw / 4) | 0;
+    var fx = BX + 34 + fc * 88, fy = 294 + fr * 56;
+    R(fx, fy, 52, 36, fr === 1 ? "k-accent" : "k-elev",
+      winFor(0.624, 0.055, fw, 12, 0.05));
+    L(fx + 26, fy, fx + 26, fy + 36, "k-soft", winFor(0.630, 0.055, fw, 12, 0.05));
+  }
+  R(BX + 172, 420, 46, 50, "k-elev", [0.688, 0.738]);
+  L(BX + 195, 420, BX + 195, 470, "k-soft", [0.692, 0.742]);
+  T(BX + 396, 326, "2ª", "t-tiny", [0.694, 0.744], null, { anchor: "end" });
+
+  /* sección: cuatro forjados y la escalera */
+  T(BX, 496, "SECCIÓN · ESCALERA", "t-tiny", [0.660, 0.710]);
+  for (var fl = 0; fl < 4; fl++) {
+    L(BX, 520 + fl * 52, BX + 390, 520 + fl * 52, "k-elev",
+      winFor(0.664, 0.040, fl, 4, 0.05));
+  }
+  L(BX, 520, BX, 676, "k-elev", [0.676, 0.726]);
+  L(BX + 390, 520, BX + 390, 676, "k-elev", [0.678, 0.728]);
+  for (var st = 0; st < 9; st++) {
+    var stx = BX + 150 + st * 14, sty = 676 - st * 5.8;
+    L(stx, sty, stx + 14, sty, "k-soft", winFor(0.682, 0.045, st, 9, 0.05));
+    L(stx + 14, sty, stx + 14, sty - 5.8, "k-soft", winFor(0.684, 0.045, st, 9, 0.05));
+  }
+  FILL("M" + BX + " 572h390v52h-390Z", "k-fill-a", [0.700, 0.752]);
+  T(BX + 380, 606, "LA CASA", "t-tiny", [0.706, 0.756], null, { anchor: "end" });
+
+  /* alzado del patio, con su sol */
+  T(BX, 712, "ALZADO · PATIO", "t-tiny", [0.716, 0.766]);
+  L(BX, 900, BX + 390, 900, "k-elev", [0.720, 0.770]);
+  L(BX, 900, BX, 846, "k-elev", [0.724, 0.774]);
+  L(BX + 390, 900, BX + 390, 846, "k-elev", [0.724, 0.774]);
+  L(BX, 846, BX + 390, 846, "k-elev", [0.728, 0.778]);
+  for (var pl = 0; pl < 6; pl++) {
+    L(BX + 30 + pl * 66, 846, BX + 30 + pl * 66, 900, "k-soft",
+      winFor(0.730, 0.045, pl, 6, 0.05));
+  }
+  C(BX + 320, 796, 28, "k-accent", [0.742, 0.796]);
+  for (var ry2 = 0; ry2 < 8; ry2++) {
+    var ang = ry2 * Math.PI / 4;
+    L(BX + 320 + Math.cos(ang) * 38, 796 + Math.sin(ang) * 38,
+      BX + 320 + Math.cos(ang) * 50, 796 + Math.sin(ang) * 50, "k-accent",
+      winFor(0.748, 0.045, ry2, 8, 0.05));
+  }
+  C(BX + 90, 872, 26, "k-elev", [0.752, 0.802]);
+  C(BX + 210, 880, 18, "k-elev", [0.756, 0.806]);
+  L(BX + 90, 872, BX + 90, 900, "k-soft", [0.758, 0.808]);
+  L(BX + 210, 880, BX + 210, 900, "k-soft", [0.760, 0.810]);
+  for (var td = 0; td < 3; td++) {
+    L(BX + 250, 812 + td * 12, BX + 380, 812 + td * 12, "k-soft",
+      winFor(0.762, 0.030, td, 3, 0.05));
+  }
+  R(BX + 262, 862, 70, 38, "k-elev", [0.770, 0.818]);
+  L(BX + 297, 862, BX + 297, 900, "k-soft", [0.774, 0.822]);
+
+  /* --- 7 · la llave ------------------------------------------------- */
+
+  LAYER = gRoom;
+  var KX = PX + 475, KY = PY + 928;
+  C(KX - 46, KY, 22, "k-accent", [0.868, 0.912]);
+  C(KX - 46, KY, 10, "k-accent", [0.874, 0.918]);
+  L(KX - 24, KY, KX + 54, KY, "k-accent", [0.880, 0.924]);
+  L(KX + 30, KY, KX + 30, KY + 18, "k-accent", [0.890, 0.930]);
+  L(KX + 48, KY, KX + 48, KY + 14, "k-accent", [0.894, 0.934]);
+  L(KX - 46, KY - 22, KX - 22, KY - 52, "k-dim", [0.900, 0.940]);
+  R(KX - 20, KY - 82, 200, 38, "k-dim", [0.904, 0.944]);
+  T(KX - 8, KY - 57, "ALFONSO XII · 2ª", "t-tiny", [0.914, 0.952]);
+
+  /* ---- the copy ----------------------------------------------------- */
+
+  function splitChars(el) {
+    if (!el || el.dataset.afDone) return [];
+    el.dataset.afDone = "1";
+    var out = [], frag = document.createDocumentFragment();
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var wrap = document.createElement("span");
+      wrap.style.display = "inline-block";
+      wrap.style.whiteSpace = "nowrap";
+      for (var j = 0; j < word.length; j++) {
+        var c = document.createElement("span");
+        c.className = "af-c";
+        c.textContent = word[j];
+        wrap.appendChild(c);
+        out.push(c);
+      }
+      frag.appendChild(wrap);
+      frag.appendChild(document.createTextNode(" "));
+    });
+    el.textContent = "";
+    el.appendChild(frag);
+    return out;
+  }
+
+  var ins = [0, 1, 2, 3, 4].map(function (n) { return panel.querySelector(".af-in-" + n); });
+  var roomRows = panel.querySelectorAll(".af-room");
+  var svcRows = panel.querySelectorAll(".af-svc");
+  var chips = panel.querySelectorAll(".af-chip");
+  var meter = panel.querySelector("[data-af-meter]");
+  var cue = panel.querySelector(".af-cue");
+  var nameChars = splitChars(panel.querySelector(".af-name"));
+
+  /* Strictly ordered, never two headlines at once. */
+  var WIN = [
+    [-0.20, 0.000, 0.112, 0.152],
+    [0.140, 0.196, 0.318, 0.358],
+    [0.346, 0.402, 0.556, 0.596],
+    [0.584, 0.640, 0.772, 0.812],
+    [0.836, 0.892, 1.400, 1.500]
+  ];
+
+  /* ---- fit ---------------------------------------------------------- */
+
+  var W = 0, H = 0, portrait = false, scale = 1, lastU = -1;
+  var view = { x: 0, y: 0, s: 1 };
+
+  function measure() {
+    var r = svg.getBoundingClientRect();
+    W = Math.max(320, r.width); H = Math.max(360, r.height);
+    svg.setAttribute("viewBox", "0 0 " + W.toFixed(0) + " " + H.toFixed(0));
+    portrait = W < 880;
+    buildGrid(W, H);
+  }
+
+  function frame(p) {
+    /* The sheet barely moves: a slow drift and a small push-in, so the
+       attention stays on the marks arriving rather than on a camera. */
+    var drift = seg(p, 0.10, 0.95);
+    if (portrait) {
+      /* portrait keeps the cotas on the sheet and the rail clear of the
+         overall dimension: the drawing is cropped, never clipped. */
+      scale = (W * 1.02) / (PW + 320);
+      view.s = scale * mix(1, 1.05, drift);
+      view.x = W * 0.03 - (PX - 130) * view.s;
+      view.y = 118 - (PY - 130) * view.s + mix(0, -28, drift);
+    } else {
+      scale = Math.min((W * 0.585) / SHEET_W, (H * 0.86) / SHEET_H);
+      view.s = scale * mix(1, 1.035, drift);
+      view.x = W * 0.395 - mix(0, 14, drift);
+      view.y = (H - SHEET_H * view.s) / 2 + mix(10, -10, drift);
+    }
+    gPlan.setAttribute("transform",
+      "translate(" + view.x.toFixed(1) + " " + view.y.toFixed(1) + ") scale(" + view.s.toFixed(4) + ")");
+    /* the three layers slide past each other by a few units */
+    gElev.setAttribute("transform", "translate(0 " + (-38 * drift).toFixed(1) + ")");
+    gBlock.setAttribute("transform", "translate(" + (-16 * drift).toFixed(1) + " 0)");
+    gGrid.setAttribute("transform", "translate(0 " + (14 * drift).toFixed(1) + ")");
+    var u = 1 / view.s;
+    if (Math.abs(u - lastU) > 0.002) {
+      svg.style.setProperty("--af-u", u.toFixed(3));
+      lastU = u;
+    }
+  }
+
+  measure();
+  addEventListener("resize", measure);
+
+  /* ---- the clock ----------------------------------------------------- */
+
+  var clock = { p: 0, intro: 0 };
+  animate(clock, {
+    p: [0, 1], duration: 1000, ease: "linear",
+    autoplay: onScroll({
+      target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
+    })
+  });
+  animate(clock, { intro: [0, 1], duration: 1500, delay: 140, ease: "outExpo" });
+
+  var intro = createTimeline({ defaults: { ease: "outExpo" } });
+  intro.add(panel.querySelector(".af-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 600 }, 160);
+  intro.add(nameChars, { opacity: [0, 1], y: [40, 0], duration: 880, delay: stagger(14) }, 240);
+  intro.add(panel.querySelectorAll(".af-claim, .af-lead, .af-cue"),
+    { opacity: [0, 1], y: [18, 0], duration: 700, delay: stagger(105) }, 660);
+
+  /* ---- the paint ------------------------------------------------------ */
+
+  function paint() {
+    var p = clock.p;
+    frame(p);
+
+    for (var i = 0; i < marks.length; i++) {
+      var it = marks[i];
+      var t = span(it.pre ? clock.intro : p, it.a, it.b);
+      if (it.k !== "draw") t = ease(t);
+      if (Math.abs(t - it.t) < 0.0035 && t !== 0 && t !== 1) continue;
+      if (t === it.t) continue;
+      it.t = t;
+      var el = it.el;
+      if (it.k === "draw") {
+        el.setAttribute("stroke-dashoffset", (it.len * (1 - t)).toFixed(1));
+        if (t <= 0 || t >= 1) el.setAttribute("opacity", t <= 0 ? "0" : "1");
+        else el.setAttribute("opacity", "1");
+      } else if (it.k === "fade") {
+        el.setAttribute("opacity", t.toFixed(3));
+      } else if (it.k === "count") {
+        el.setAttribute("opacity", t.toFixed(3));
+      } else if (it.k === "swing") {
+        el.setAttribute("transform",
+          "rotate(" + (it.deg * t).toFixed(2) + " " + it.hx + " " + it.hy + ")");
+      } else if (it.k === "slideY") {
+        el.setAttribute("transform", "translate(0 " + (it.d * t).toFixed(1) + ")");
+      }
+    }
+
+    /* copy */
+    for (i = 0; i < 5; i++) {
+      var w = WIN[i];
+      var ct = Math.min(span(p, w[0], w[1]), 1 - span(p, w[2], w[3]));
+      if (i === 0) ct = Math.min(ct, clock.intro);
+      var el2 = ins[i];
+      if (!el2) continue;
+      el2.style.opacity = ct.toFixed(3);
+      var dy = mix(24, 0, ease(clamp(ct, 0, 1)));
+      el2.style.transform = (portrait ? "" : "translateY(-50%)") +
+        " translateY(" + dy.toFixed(1) + "px)";
+      el2.style.visibility = ct < 0.004 ? "hidden" : "visible";
+    }
+
+    for (i = 0; i < roomRows.length; i++) {
+      var rt = seg(p, 0.412 + i * 0.026, 0.482 + i * 0.026);
+      roomRows[i].style.opacity = rt.toFixed(3);
+      roomRows[i].style.transform = "translateY(" + mix(16, 0, rt).toFixed(1) + "px)";
+    }
+    for (i = 0; i < svcRows.length; i++) {
+      var vt = seg(p, 0.648 + i * 0.026, 0.716 + i * 0.026);
+      svcRows[i].style.opacity = vt.toFixed(3);
+      svcRows[i].style.transform = "translateY(" + mix(14, 0, vt).toFixed(1) + "px)";
+    }
+    for (i = 0; i < chips.length; i++) {
+      var pt = seg(p, 0.596 + i * 0.018, 0.652 + i * 0.018) *
+        (1 - span(p, 0.828, 0.876));
+      chips[i].style.opacity = pt.toFixed(3);
+      chips[i].style.transform =
+        "translateY(" + mix(10, 0, pt).toFixed(1) + "px) scale(" + mix(0.94, 1, pt).toFixed(3) + ")";
+    }
+
+    if (meter) {
+      var mt = seg(p, 0.200, 0.700);
+      var rooms = Math.min(8, Math.round(seg(p, 0.360, 0.560) * 8));
+      meter.textContent = mt < 0.01
+        ? "—— m²"
+        : Math.round(mt * 89) + " m² · " + rooms + " estancia" + (rooms === 1 ? "" : "s");
+    }
+    if (cue) cue.style.opacity = String((1 - span(p, 0.02, 0.09)) * clock.intro);
+  }
+
+  var live = true;
+  (function loop() {
+    if (!live) return;
+    paint();
+    requestAnimationFrame(loop);
+  })();
+  panel.addEventListener("af:stop", function () { live = false; }, { once: true });
+};
+
+(function () {
+  var SRC = "https://cdn.jsdelivr.net/npm/animejs@4/+esm";
+  var panelA = document.getElementById("dsgA");
+  var panelB = document.getElementById("dsgB");
+  if (!panelA || !panelB) return;
+  if (typeof window.__initB !== "function") window.__initB = function () {};
+  if (typeof window.__staticB !== "function") window.__staticB = function () {};
+
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches
+    || new URLSearchParams(location.search).has("static");
+  var booted = false;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    if (reduced) { window.__staticB(panelB); return; }
+    /* dynamic import: a visitor who never opens B never pays for anime.js */
+    var fonts = (document.fonts && document.fonts.ready) || Promise.resolve();
+    Promise.all([import(SRC), fonts]).then(function (loaded) {
+      var A = loaded[0];
+      /* An occluded or backgrounded tab must not strand a hero mid-intro. */
+      A.engine.pauseOnDocumentHidden = false;
+      /* Two frames after the fonts resolve: starting the opening stagger
+         inside the load storm burns part of its duration before the engine
+         ticks, and it lands with residual transforms on the first
+         characters -- a headline that sags to the right. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.__initB(A, panelB);
+          } catch (err) {
+            /* A broken hero degrades to the static panel, but it says so. */
+            console.error("hero motion failed", err);
+            window.__staticB(panelB);
+          }
+        });
+      });
+    }, function () { window.__staticB(panelB); });
+  }
+
+  function show(which) {
+    var toB = which === "B";
+    panelA.hidden = toB;
+    panelB.hidden = !toB;
+    document.querySelectorAll(".dsg-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.target === which));
+    });
+    try {
+      history.replaceState(null, "", toB ? "#B" : location.pathname + location.search);
+    } catch (e) {}
+    if (toB) boot();
+  }
+
+  document.addEventListener("click", function (ev) {
+    if (!(ev.target instanceof Element)) return;
+    var btn = ev.target.closest(".dsg-btn");
+    if (btn) show(btn.dataset.target);
+  });
+
+  if (location.hash === "#B" || new URLSearchParams(location.search).get("design") === "B") {
+    show("B");
+  }
+})();
+
+</script>
+</body>
+</html>

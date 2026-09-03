@@ -1,0 +1,22 @@
+{
+  "category": "inmobiliaria",
+  "seed": "alfaya-v1",
+  "motion": "animejs",
+  "mode": "catastro",
+  "layout": "plano",
+  "display": "Familjen Grotesk",
+  "body": "Archivo",
+  "radius": "28px",
+  "density": "air",
+  "nav": "split",
+  "palette": {
+    "bg": "#eceee9",
+    "ink": "#14181a",
+    "muted": "#697370",
+    "accent": "#b4532a",
+    "accent2": "#3d5a52",
+    "line": "#d4d8d2",
+    "photo": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "inmobiliaria|animejs|catastro|plano|Familjen Grotesk|Archivo|28px|air|split"
+}
