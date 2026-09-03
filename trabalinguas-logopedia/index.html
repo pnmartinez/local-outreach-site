@@ -217,7 +217,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 }
 #dsgB .tl-grid path.k-dot {
   fill: var(--st-fg);
-  fill-opacity: .20;
+  fill-opacity: .12;
   stroke: none;
 }
 #dsgB .tl-plan path { stroke-width: calc(var(--tl-u, 1) * 1); }
@@ -428,6 +428,9 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 /* ---- portrait ---------------------------------------------------- */
 
 @media (max-width: 880px) {
+  /* Portrait gives the drawings the top half, so the longest chapter
+     loses its pull quote — the sheet already says it. */
+  #dsgB .tl-in-3 .tl-note { display: none; }
   #dsgB .tl-in {
     left: 0;
     right: 0;
@@ -1108,7 +1111,7 @@ window.__initB = function (A, panel) {
       if (k >= 0) marks.splice(k, 1);
     });
     gridNodes.length = 0;
-    var step = W < 880 ? 28 : 32, r = 2.2, cx, cy;
+    var step = W < 880 ? 32 : 38, r = 1.9, cx, cy;
     var cols = Math.ceil(W / step), rows = Math.ceil(H / step);
     for (cy = 0; cy <= rows; cy++) {
       for (cx = 0; cx <= cols; cx++) {
@@ -1202,13 +1205,19 @@ window.__initB = function (A, panel) {
     if (portrait) {
       var pad = Math.max(16, W * 0.045);
       var inner = W - pad * 2;
+      /* Four, not six. Praxias and pares mínimos are grids of small
+         type: squeezed into the band left over on a 390-wide screen
+         they were 7px and unreadable, and they read through the copy
+         scrim. They sit portrait out, the way Alfaya's bottom row
+         does. Everything above has to end before the chapter starts. */
       var half = (inner - 12) / 2;
-      place("vocales", pad, 78, half, 128);
-      place("sagital", pad + half + 12, 72, half, 142);
-      place("lugar", pad, 220, inner, 62);
-      place("cuadro", pad, 288, inner, H * 0.175);
-      place("silabas", pad, 288 + H * 0.175 + 10, half, 86);
-      place("pares", pad + half + 12, 288 + H * 0.175 + 8, half, 92);
+      var b1 = 76, h1 = H * 0.165;
+      var b2 = b1 + h1 + 12, h2 = H * 0.062;
+      var b3 = b2 + h2 + 12, h3 = H * 0.182;
+      place("vocales", pad, b1, half, h1);
+      place("sagital", pad + half + 12, b1, half, h1);
+      place("lugar", pad, b2, inner, h2);
+      place("cuadro", pad, b3, inner, h3);
     } else {
       var laneL = Math.min(82, Math.max(20, W * 0.05));
       var laneR = laneL + Math.min(W * 0.35, 430);
