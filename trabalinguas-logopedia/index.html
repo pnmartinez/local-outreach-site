@@ -215,7 +215,11 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
-#dsgB .tl-grid path { stroke-width: 1; stroke-opacity: .17; }
+#dsgB .tl-grid path.k-dot {
+  fill: var(--st-fg);
+  fill-opacity: .20;
+  stroke: none;
+}
 #dsgB .tl-plan path { stroke-width: calc(var(--tl-u, 1) * 1); }
 
 #dsgB .k-axis  { stroke-opacity: .42; }
@@ -612,7 +616,7 @@ window.__splitB = function (panel) {
  * So there is no single silhouette anywhere on the page: hundreds of
  * small marks in ten places, and the copy threads between them.
  *
- *   00 · las partes    the tick grid, the ficha, the vowel triangle
+ *   00 · las partes    the bullet field, the ficha, the vowel triangle
  *   01 · el lugar      sagittal tract, the five places, the marker
  *   02 · los fonemas   the chart fills, the pairs, the CV tiles
  *   03 · en casa       the waveform of /r/, the tigres, the cartilla
@@ -626,7 +630,7 @@ window.__splitB = function (panel) {
  *
  * Marks, by group (ART-DIRECTION.md law 2 — count the parts):
  *
- *   hoja       retícula de cruces · ficha de sesión (seis campos)
+ *   hoja       campo de bullets · ficha de sesión (seis campos)
  *   vocales    cinco vértices · pentágono · ejes F1/F2 · cuatro cotas
  *   sagital    perfil · nariz · labio alto · labio bajo · dos dientes ·
  *              reborde alveolar · paladar duro · velo · pared faríngea ·
@@ -1091,7 +1095,10 @@ window.__initB = function (A, panel) {
   });
   PRE = false;
 
-  /* ---- retícula --------------------------------------------------- */
+  /* ---- bullets ----------------------------------------------------
+     A dotted cartilla, not Alfaya's drafting crosses and not a
+     lawyer's folio. Each mark is a bullet. The field fills downward
+     like a list being typed, not from a corner like a sheet of plan. */
 
   var gridNodes = [];
   function buildGrid(W, H) {
@@ -1101,17 +1108,20 @@ window.__initB = function (A, panel) {
       if (k >= 0) marks.splice(k, 1);
     });
     gridNodes.length = 0;
-    var step = W < 880 ? 44 : 56, cx, cy;
+    var step = W < 880 ? 28 : 32, r = 2.2, cx, cy;
     var cols = Math.ceil(W / step), rows = Math.ceil(H / step);
-    for (cx = 0; cx <= cols; cx++) {
-      for (cy = 0; cy <= rows; cy++) {
+    for (cy = 0; cy <= rows; cy++) {
+      for (cx = 0; cx <= cols; cx++) {
         var x = cx * step + step / 2, y = cy * step + step / 2;
-        var el = node("path", null, gGrid);
-        el.setAttribute("d", "M" + (x - 2.5) + " " + y + "h5M" + x + " " + (y - 2.5) + "v5");
+        var el = node("path", "k-dot", gGrid);
+        el.setAttribute("d",
+          "M" + (x - r) + " " + y +
+          "a" + r + " " + r + " 0 1 0 " + (2 * r) + " 0" +
+          "a" + r + " " + r + " 0 1 0 " + (-2 * r) + " 0");
         el.setAttribute("opacity", "0");
-        var d = (cx / (cols || 1)) * 0.55 + (cy / (rows || 1)) * 0.45;
+        var d = cy / (rows || 1);
         var was = PRE; PRE = true;
-        var it = reg(el, d * 0.50, d * 0.50 + 0.44, "fade");
+        var it = reg(el, d * 0.42, d * 0.42 + 0.38, "fade");
         PRE = was;
         gridNodes.push(it);
       }
