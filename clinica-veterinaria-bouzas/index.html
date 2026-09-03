@@ -304,24 +304,20 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
     max-width: calc(100% - 96px);
   }
 }
-/* Clínica Veterinaria Bóuzas — quince cifras. This lead only.
+/* Clínica Veterinaria Bóuzas — las 24 horas de Tomás Paredes. This lead only.
  *
- * The page carries the house rule grid and nothing else. No section paints
- * a ground: the render loop writes --bz-ground, so three in the morning is
- * a lighting change inside the scene and not a dark section at the bottom
- * of a brochure. */
+ * Ten records of one day, each a hairline drawing in the page's own
+ * ink. The ground is a field of short rules, the way a day book is
+ * ruled — not Alfaya's drafting crosses and not Trabalinguas' bullets. */
 
 #dsgB {
-  background:
-    linear-gradient(var(--bz-line, var(--st-line)) 1px, transparent 1px) 0 0 / 100% 88px,
-    var(--bz-ground, var(--st-bg));
-  background-attachment: fixed, fixed;
-  color: var(--bz-fg, var(--st-fg));
-  font-family: "DM Sans", system-ui, sans-serif;
-  overflow-x: clip;
+  background: var(--st-bg);
+  color: var(--st-fg);
 }
 
 #dsgB .bz { position: relative; }
+
+/* ---- the day sheet ------------------------------------------------ */
 
 #dsgB .bz-stage {
   position: fixed;
@@ -329,341 +325,270 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   z-index: 0;
   pointer-events: none;
 }
-#dsgB .bz-view { display: block; width: 100%; height: 100%; }
+#dsgB .bz-sheet { position: absolute; inset: 0; }
+#dsgB .bz-svg { width: 100%; height: 100%; display: block; }
+
+#dsgB .bz-svg path { fill: none; stroke: var(--st-fg); stroke-linecap: round; }
+#dsgB .bz-grid path.k-rule { stroke-width: 1; stroke-opacity: .13; }
+#dsgB .bz-plan path { stroke-width: calc(var(--bz-u, 1) * 1); }
+
+#dsgB .k-box   { stroke-opacity: .38; }
+#dsgB .k-line  { stroke-opacity: .55; }
+#dsgB .k-thin  { stroke-opacity: .34; }
+#dsgB .k-faint { stroke-opacity: .18; }
+#dsgB .k-hand  { stroke-width: calc(var(--bz-u, 1) * 2) !important; stroke-opacity: .8; }
+/* One accent, two weights. `--st-second` in this palette is #2f4a3a,
+   a hair off the ink, so as a spot on a hairline drawing it read as
+   nothing at all. The day is the accent held back; the night is the
+   same accent at full, thicker, and with a fill behind it. */
+#dsgB .k-mark  { stroke: var(--st-accent) !important; stroke-opacity: .72; }
+#dsgB .k-night {
+  stroke: var(--st-accent) !important;
+  stroke-opacity: .95;
+  stroke-width: calc(var(--bz-u, 1) * 1.7) !important;
+}
+#dsgB .bz-svg path.k-fill  { fill: color-mix(in srgb, var(--st-fg) 16%, transparent); stroke: none; }
+#dsgB .bz-svg path.k-fill-n { fill: color-mix(in srgb, var(--st-accent) 20%, transparent); stroke: none; }
+
+#dsgB .bz-svg text {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  fill: var(--st-fg);
+  stroke: none;
+  letter-spacing: .1em;
+}
+#dsgB .t-cap   { font-size: 15px; fill-opacity: .5; }
+#dsgB .t-row   { font-size: 18px; fill-opacity: .72; }
+#dsgB .t-num   { font-size: 22px; fill: var(--st-accent); fill-opacity: .95; }
+#dsgB .t-big   { font-size: 30px; fill: var(--st-accent); fill-opacity: .95; }
+#dsgB .t-night { font-size: 22px; fill: var(--st-accent); fill-opacity: .95; }
+
+/* ---- the rail ----------------------------------------------------- */
 
 #dsgB .bz-rail {
-  /* The family sheet styles bare `header` with its own bar and rule. On a
-     page whose ground goes from daylight to three in the morning that is a
-     stripe across the top of the drawing. */
-  background: transparent;
-  border: 0;
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 4;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px clamp(18px, 3.4vw, 52px);
+  gap: 16px;
+  padding: 20px clamp(18px, 4vw, 46px);
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .24em;
+  font-size: 11px;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--bz-fg, var(--st-fg));
+  pointer-events: none;
 }
-#dsgB .bz-brand {
-  font-family: "Gabarito", var(--display);
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: .01em;
-  text-transform: none;
-}
-#dsgB .bz-place { opacity: .62; margin-right: auto; }
-
-/* The readout the whole page resolves: fifteen digits that arrive one at a
-   time as the coil charges. It is the only number that never leaves. */
-#dsgB .bz-m {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 9px;
-  padding: 5px 11px;
-  border: 1px solid color-mix(in srgb, var(--bz-fg, var(--st-fg)) 26%, transparent);
-}
-#dsgB .bz-m i { font-style: normal; opacity: .5; }
-#dsgB .bz-id {
-  font-weight: 700;
+#dsgB .bz-rail .dsg-switch { pointer-events: auto; margin-left: 22px; }
+#dsgB .bz-brand { font-weight: 700; }
+#dsgB .bz-place { opacity: .45; }
+#dsgB .bz-hour {
+  margin-left: auto;
   color: var(--st-accent);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-#dsgB .bz .dsg-switch {
-  border-color: color-mix(in srgb, var(--bz-fg, var(--st-fg)) 30%, transparent);
-  background: transparent;
-}
-#dsgB .bz .dsg-btn { color: color-mix(in srgb, var(--bz-fg, var(--st-fg)) 64%, transparent); }
-#dsgB .bz .dsg-btn[aria-pressed="true"] { background: var(--st-accent); color: var(--st-bg); }
+/* ---- the copy ----------------------------------------------------- */
 
-#dsgB .bz-log {
+#dsgB .bz-type {
   position: fixed;
-  left: clamp(18px, 3.4vw, 52px);
-  bottom: 22px;
-  z-index: 4;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  color: var(--bz-fg, var(--st-fg));
-  opacity: .92;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
 }
-#dsgB .bz-log-n { color: var(--st-accent); font-weight: 700; }
-#dsgB .bz-log-s { opacity: .82; font-variant-numeric: tabular-nums; }
-
-#dsgB .bz-scroll { position: relative; z-index: 2; }
-
-#dsgB .bz-ch { position: relative; }
-/* The heights are solved from the scroll, not picked. A sticky chapter is
-   pinned from its own top until its section has one viewport left, so two
-   consecutive pin windows are exactly 100vh apart. These four put the
-   traverse's four stops inside chapter 01's pinned window (p .16-.62), the
-   clinic inside chapter 02's (.72-.83) and the night inside chapter 03's
-   (.93-1). Total 1100vh, so one point of p is 10vh. */
-#dsgB .bz-ch-0 { height: 160vh; }
-#dsgB .bz-ch-1 { height: 560vh; }
-#dsgB .bz-ch-2 { height: 210vh; }
-#dsgB .bz-ch-3 { height: 170vh; }
-
 #dsgB .bz-in {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: grid;
-  align-content: center;
-  padding: 0 clamp(20px, 5vw, 88px);
-  pointer-events: none;
-}
-#dsgB .bz-in > * { pointer-events: auto; position: relative; z-index: 1; }
-#dsgB .bz-in-left { justify-items: start; text-align: left; max-width: 48ch; }
-#dsgB .bz-in-right { justify-items: end; text-align: right; margin-left: auto; max-width: 46ch; }
-
-#dsgB .bz-word { display: inline-block; white-space: nowrap; }
-#dsgB .bz-c { display: inline-block; will-change: transform, opacity; }
-
-#dsgB .bz-h2 .bz-c,
-#dsgB .bz-service,
-#dsgB .bz-ch-2 .bz-kicker,
-#dsgB .bz-ch-3 .bz-in > * { opacity: 0; }
-
-#dsgB .bz-eyebrow,
-#dsgB .bz-kicker {
-  margin: 0 0 20px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  color: var(--st-accent);
-}
-#dsgB .bz-name {
-  margin: 0;
-  font-family: "Gabarito", var(--display);
-  font-weight: 700;
-  font-size: clamp(42px, 7.6vw, 100px);
-  line-height: .92;
-  letter-spacing: -.025em;
-}
-#dsgB .bz-claim {
-  margin: 24px 0 0;
-  font-family: "Gabarito", var(--display);
-  font-weight: 500;
-  font-size: clamp(21px, 2.8vw, 34px);
-  line-height: 1.14;
-  max-width: 19ch;
-  letter-spacing: -.01em;
-  opacity: .95;
-}
-#dsgB .bz-lead {
-  margin: 20px 0 0;
-  max-width: 44ch;
-  font-size: 13px;
-  line-height: 1.8;
-  opacity: .82;
-}
-#dsgB .bz-cue {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 42px 0 0;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  opacity: .72;
-}
-#dsgB .bz-cue i { display: block; width: 44px; height: 1px; background: currentColor; }
-
-#dsgB .bz-steps { display: grid; }
-#dsgB .bz-step {
-  grid-area: 1 / 1;
+  position: absolute;
+  left: clamp(20px, 5vw, 82px);
+  top: 50%;
+  width: min(35vw, 430px);
+  transform: translateY(-50%);
   opacity: 0;
   will-change: opacity, transform;
 }
-#dsgB .bz-step em {
-  font-style: normal;
+#dsgB .bz-in a { pointer-events: auto; }
+
+#dsgB .bz-eyebrow,
+#dsgB .bz-kicker {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .28em;
-  color: var(--st-accent);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .55;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-#dsgB .bz-step h2 {
-  margin: 10px 0 0;
-  font-family: "Gabarito", var(--display);
-  font-weight: 700;
-  font-size: clamp(32px, 5vw, 64px);
+#dsgB .bz-kicker b { color: var(--st-accent); font-weight: 700; }
+
+#dsgB .bz-name {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(34px, 4.3vw, 60px);
   line-height: 1;
   letter-spacing: -.02em;
+  margin: 0 0 20px;
 }
-/* The badge is the same figure the log and the rail are showing: a
-   magnification the camera is actually at, not a subtitle. */
-#dsgB .bz-pk {
-  display: block;
-  margin: 5px 0 14px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-weight: 400;
-  font-size: 11px;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--st-second);
-  font-variant-numeric: tabular-nums;
-}
-#dsgB .bz-step p {
-  margin: 0 0 0 auto;
-  max-width: 32ch;
-  font-size: 13px;
-  line-height: 1.75;
-  opacity: .78;
-}
+#dsgB .bz-name .bz-c { display: inline-block; will-change: transform, opacity; }
 
-#dsgB .bz-ch-2 .bz-in-left {
-  width: min(92vw, 940px);
-  max-width: none;
-  justify-items: stretch;
+#dsgB .bz-claim {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(20px, 1.9vw, 28px);
+  line-height: 1.22;
+  margin: 0 0 18px;
+  max-width: 19ch;
+}
+#dsgB .bz-lead,
+#dsgB .bz-note {
+  font-size: 15px;
+  line-height: 1.62;
+  margin: 0;
+  max-width: 44ch;
+  opacity: .72;
 }
 #dsgB .bz-h2 {
-  margin: 0 0 32px;
-  font-family: "Gabarito", var(--display);
+  font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
-  font-size: clamp(22px, 3.1vw, 38px);
-  line-height: 1.12;
-  max-width: 24ch;
-  letter-spacing: -.015em;
-}
-#dsgB .bz-services {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px 40px;
-  width: 100%;
-}
-#dsgB .bz-service {
-  display: grid;
-  grid-template-columns: 30px 1fr;
-  gap: 14px;
-  padding-top: 15px;
-  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
-}
-#dsgB .bz-service em {
-  font-style: normal;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .18em;
-  color: var(--st-accent);
-}
-#dsgB .bz-service h3 {
-  margin: 0 0 5px;
-  font-family: "Gabarito", var(--display);
-  font-weight: 700;
-  font-size: 19px;
+  font-size: clamp(23px, 2.3vw, 34px);
+  line-height: 1.18;
   letter-spacing: -.01em;
+  margin: 0 0 22px;
+  max-width: 19ch;
 }
-#dsgB .bz-service p { margin: 0; font-size: 12px; line-height: 1.65; opacity: .72; }
+
+#dsgB .bz-cue {
+  margin: 32px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  opacity: .5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#dsgB .bz-cue i { width: 44px; height: 1px; background: currentColor; display: block; }
+
+#dsgB .bz-moments, #dsgB .bz-svcs { display: grid; gap: 15px; }
+#dsgB .bz-moment, #dsgB .bz-svc {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 0 16px;
+  align-items: baseline;
+  border-top: 1px solid color-mix(in srgb, var(--st-fg) 16%, transparent);
+  padding-top: 11px;
+  will-change: opacity, transform;
+}
+#dsgB .bz-moment em, #dsgB .bz-svc em {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--st-accent);
+  font-variant-numeric: tabular-nums;
+}
+#dsgB .bz-moment h3, #dsgB .bz-svc h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 3px;
+}
+#dsgB .bz-moment p, #dsgB .bz-svc p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  opacity: .66;
+  max-width: 33ch;
+}
 
 #dsgB .bz-tel {
-  font-family: "Gabarito", var(--display);
-  font-weight: 700;
-  font-size: clamp(28px, 4.4vw, 58px);
-  text-decoration: none;
-  line-height: .98;
-  letter-spacing: -.02em;
+  display: block;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 52px);
+  line-height: 1;
+  letter-spacing: -.025em;
   color: inherit;
+  text-decoration: none;
+  margin: 0 0 18px;
+  white-space: nowrap;
 }
-#dsgB .bz-say { margin: 20px 0 0; max-width: 34ch; font-size: 13px; line-height: 1.7; opacity: .78; }
-#dsgB .bz-hours { margin: 18px 0 0; font-size: 12px; opacity: .72; }
+#dsgB .bz-tel:hover { color: var(--st-accent); }
+#dsgB .bz-hours,
 #dsgB .bz-addr {
-  margin: 8px 0 0;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  opacity: .64;
-}
-
-#dsgB .bz-notes {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-}
-#dsgB .bz-lead-line {
-  fill: none;
-  stroke: var(--bz-fg, var(--st-fg));
-  stroke-width: 1px;
-  stroke-opacity: .5;
-  vector-effect: non-scaling-stroke;
-}
-#dsgB .bz-note-dot { fill: var(--st-accent); }
-#dsgB .bz-note {
-  fill: var(--bz-fg, var(--st-fg));
+  margin: 0 0 6px;
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
+  opacity: .55;
 }
 
-@media (max-width: 900px) {
-  #dsgB { background-attachment: scroll, scroll; }
-  #dsgB .bz-rail {
-    background: linear-gradient(
-      180deg,
-      var(--bz-ground, var(--st-bg)) 0%,
-      color-mix(in srgb, var(--bz-ground, var(--st-bg)) 82%, transparent) 62%,
-      transparent
-    );
-  }
-  #dsgB .bz-place { display: none; }
-  #dsgB .bz-m { display: none; }
-  #dsgB .bz-name { font-size: clamp(32px, 11vw, 46px); }
+/* ---- the scroll column -------------------------------------------- */
+
+#dsgB .bz-scroll { position: relative; z-index: 1; pointer-events: none; }
+#dsgB .bz-scroll i { display: block; height: 100vh; }
+
+/* ---- portrait ------------------------------------------------------ */
+
+@media (max-width: 880px) {
+  /* The longest chapter loses its tail; the sheet already says it. */
+  #dsgB .bz-moment:nth-of-type(n+4) { display: none; }
   #dsgB .bz-in {
-    padding: 0 20px 13vh;
-    align-content: end;
-  }
-  #dsgB .bz-ch-0 .bz-in { align-content: end; }
-  #dsgB .bz-in::before {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 74%;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    transform: none;
+    padding: 66px clamp(18px, 6vw, 32px) clamp(58px, 10vh, 84px);
     background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--bz-ground, var(--st-bg)) 0%, transparent) 0%,
-      color-mix(in srgb, var(--bz-ground, var(--st-bg)) 94%, transparent) 16%,
-      var(--bz-ground, var(--st-bg)) 34%
+      to bottom,
+      color-mix(in srgb, var(--st-bg) 0%, transparent) 0,
+      color-mix(in srgb, var(--st-bg) 84%, transparent) 30%,
+      var(--st-bg) 58%
     );
-    pointer-events: none;
-    z-index: 0;
   }
-  #dsgB .bz-in-right { text-align: left; justify-items: start; margin-left: 0; }
-  #dsgB .bz-step p { margin-left: 0; }
-  #dsgB .bz-services { grid-template-columns: 1fr; gap: 14px; }
-  #dsgB .bz-lead { font-size: 15px; opacity: .9; }
-  #dsgB .bz-claim { opacity: 1; }
-  #dsgB .bz-cue { opacity: .78; }
-  #dsgB .bz-step p,
-  #dsgB .bz-service p,
-  #dsgB .bz-say { opacity: .9; }
-  #dsgB .bz-note { font-size: 9px; letter-spacing: .1em; }
-  #dsgB .bz-log {
-    font-size: 10px;
-    bottom: 12px;
-    gap: 8px;
-    opacity: 1;
-  }
-  #dsgB .bz-ch-1 { height: 590vh; }
+  #dsgB .bz-name { font-size: clamp(30px, 9.4vw, 46px); }
+  #dsgB .bz-claim { font-size: clamp(18px, 5vw, 25px); max-width: none; }
+  #dsgB .bz-h2 { font-size: clamp(21px, 6.2vw, 30px); max-width: none; }
+  #dsgB .bz-lead, #dsgB .bz-note { font-size: 14px; max-width: none; }
+  #dsgB .bz-moments, #dsgB .bz-svcs { gap: 11px; }
+  #dsgB .bz-moment, #dsgB .bz-svc { grid-template-columns: 56px 1fr; padding-top: 8px; }
+  #dsgB .bz-moment h3, #dsgB .bz-svc h3 { font-size: 17px; }
+  #dsgB .bz-moment p, #dsgB .bz-svc p { font-size: 12.5px; max-width: none; }
+  #dsgB .bz-tel { font-size: clamp(24px, 8vw, 40px); }
+  #dsgB .bz-rail { font-size: 9px; gap: 10px; padding: 14px clamp(14px, 4vw, 24px); }
+  #dsgB .bz-place { display: none; }
+  #dsgB .bz-brand { max-width: 42vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #dsgB .t-cap { font-size: 22px; }
+  #dsgB .t-row { font-size: 26px; }
+  #dsgB .t-num { font-size: 30px; }
+  #dsgB .t-big { font-size: 40px; }
+  #dsgB .t-night { font-size: 30px; }
 }
+
+/* ---- reduced motion / no JS: the day becomes a page ---------------- */
+
+#dsgB .bz-static .bz-stage,
+#dsgB .bz-static .bz-scroll { display: none; }
+#dsgB .bz-static .bz-type { position: static; }
+#dsgB .bz-static .bz-in {
+  position: static;
+  opacity: 1;
+  transform: none;
+  width: auto;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 5vw, 40px) 68px;
+  background: none;
+}
+#dsgB .bz-static .bz-in-0 { padding-top: 104px; }
+#dsgB .bz-static .bz-moment:nth-of-type(n+4) { display: grid; }
+#dsgB .bz-static .bz-rail { position: static; }
 
 </style>
 </head>
@@ -694,7 +619,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
     <strong>L–V 10:00–20:00 · S 10:00–14:00 · Urgencias 24 h</strong>
     <div>Rúa Tomás Paredes, Vigo</div>
   </div>
-  <a href="https://wa.me/34986241024">+34986241024 · WhatsApp</a>
+  <a href="https://wa.me/34986241024">+34 986 241 024 · WhatsApp</a>
 </section>
 <footer>Clínica Veterinaria Bóuzas · propuesta de sitio</footer>
 
@@ -702,61 +627,54 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 <div id="dsgB" hidden>
 <div class="bz">
   <div class="bz-stage" aria-hidden="true">
-    <canvas class="bz-view"></canvas>
+    <div class="bz-sheet"></div>
   </div>
 
   <header class="bz-rail">
     <span class="bz-brand">Clínica Veterinaria Bóuzas</span>
-    <span class="bz-place">Vigo</span>
-    <span class="bz-m"><i class="bz-m-k">ID</i><b class="bz-id" data-id="724 098 100 234 561">···&nbsp;···&nbsp;···&nbsp;···&nbsp;···</b></span>
+    <span class="bz-place">Rúa Tomás Paredes · Vigo</span>
+    <span class="bz-hour" data-bz-hour>——:——</span>
     <div class="dsg-switch" role="group" aria-label="Elegir diseño">
     <button type="button" class="dsg-btn" data-target="A" aria-pressed="true">A</button>
     <button type="button" class="dsg-btn" data-target="B" aria-pressed="false">B</button>
   </div>
   </header>
 
-  <div class="bz-log" aria-hidden="true">
-    <b class="bz-log-n">00</b>
-    <span class="bz-log-t">A bandexa</span>
-    <span class="bz-log-s">×1 · 134,2 kHz</span>
-  </div>
-
-  <div class="bz-scroll">
-    <section class="bz-ch bz-ch-0">
-      <div class="bz-in bz-in-left">
-        <p class="bz-eyebrow">Rúa Tomás Paredes · Vigo</p>
-        <h1 class="bz-name" data-bz-split>Clínica Veterinaria Bóuzas</h1>
-        <p class="bz-claim" data-bz-split>Medicina para quien no puede contarlo.</p>
-        <p class="bz-lead">Consulta sin prisa en Tomás Paredes. Cirugía, analítica y un teléfono que coge alguien que ya os conoce.</p>
-        <p class="bz-cue"><i></i>Acerca el lector</p>
-      </div>
+  <div class="bz-type">
+    <section class="bz-in bz-in-0">
+      <p class="bz-eyebrow">Clínica de barrio · Vigo</p>
+      <h1 class="bz-name" data-bz-split>Clínica Veterinaria Bóuzas</h1>
+      <p class="bz-claim">Medicina para quien no puede contarlo.</p>
+      <p class="bz-lead">Consulta sin prisa en Tomás Paredes. Cirugía, analítica y un teléfono que coge alguien que ya os conoce.</p>
+      <p class="bz-cue"><i></i>Abrir el parte del día</p>
     </section>
 
-    <section class="bz-ch bz-ch-1">
-      <div class="bz-in bz-in-right">
-        <p class="bz-kicker">O que si pode dicir</p>
-        <div class="bz-steps"><article class="bz-step" data-step="0"><em>01</em><h2>O lector</h2><b class="bz-pk">134,2 kHz</b><p>Pasamos el lector por el lomo. No hay que sujetarlo, no le duele y no suena nada.</p></article><article class="bz-step" data-step="1"><em>02</em><h2>O aplicador</h2><b class="bz-pk">12 G · 2,1 mm</b><p>Viene precargado y precintado. Se pone una vez, aquí en la consulta, y ya está para siempre.</p></article><article class="bz-step" data-step="2"><em>03</em><h2>A bobina</h2><b class="bz-pk">1.100 espiras</b><p>Dentro no hay pila. El lector lo enciende con su propio campo: por eso dura toda la vida del animal.</p></article><article class="bz-step" data-step="3"><em>04</em><h2>O código</h2><b class="bz-pk">ISO 11784 · 15 cifras</b><p>Quince cifras. Las tres primeras dicen el país. Es lo único que puede deciros él solo.</p></article></div>
-      </div>
+    <section class="bz-in bz-in-1">
+      <p class="bz-kicker"><b>01</b>La consulta</p>
+      <h2 class="bz-h2">Las diez. La consulta dura lo que tiene que durar.</h2>
+      <p class="bz-note">Peso, temperatura y las preguntas de casa. Nada de esto cabe en los doce minutos que da una agenda apretada, así que la agenda no se aprieta.</p>
     </section>
 
-    <section class="bz-ch bz-ch-2">
-      <div class="bz-in bz-in-left">
-        <p class="bz-kicker">A clínica</p>
-        <h2 class="bz-h2" data-bz-split>Clínica de barrio con urgencias reales, no un mostrador de pienso.</h2>
-        <div class="bz-services"><article class="bz-service"><em>01</em><div><h3>Consulta</h3><p>Tiempo de verdad. Os sentamos y miramos al animal, no solo la pantalla.</p></div></article><article class="bz-service"><em>02</em><div><h3>Vacunas y chip</h3><p>Calendario claro. Os avisamos nosotros, no al revés.</p></div></article><article class="bz-service"><em>03</em><div><h3>Cirugía</h3><p>Quirofano propio. Os llamamos cuando despierta, no al día siguiente.</p></div></article><article class="bz-service"><em>04</em><div><h3>Analítica</h3><p>Resultados el mismo día en la mayoría de pruebas.</p></div></article></div>
-      </div>
+    <section class="bz-in bz-in-2">
+      <p class="bz-kicker"><b>02</b>El quirófano</p>
+      <div class="bz-moments"><article class="bz-moment" data-moment="0"><em>12:30</em><div><h3>Radiografía</h3><p>Se ve en el momento. No hay que volver el jueves.</p></div></article><article class="bz-moment" data-moment="1"><em>16:30</em><div><h3>Entra a quirófano</h3><p>Quirófano propio. Sin traslados ni esperas de sala.</p></div></article><article class="bz-moment" data-moment="2"><em>17:45</em><div><h3>Despierta</h3><p>Alguien se queda con él hasta que levanta la cabeza.</p></div></article><article class="bz-moment" data-moment="3"><em>18:00</em><div><h3>Llamada a casa</h3><p>Os llamamos nosotros. Ese mismo día, no al siguiente.</p></div></article></div>
     </section>
 
-    <section class="bz-ch bz-ch-3">
-      <div class="bz-in bz-in-right">
-        <p class="bz-kicker">Urxencias · 24 h</p>
-        <a class="bz-tel" href="tel:34986241024">+34986241024</a>
-        <p class="bz-say">Los vemos crecer. Eso no cabe en una ficha.</p>
-        <p class="bz-hours">L–V 10:00–20:00 · S 10:00–14:00 · Urgencias 24 h</p>
-        <p class="bz-addr">Rúa Tomás Paredes · Vigo</p>
-      </div>
+    <section class="bz-in bz-in-3">
+      <p class="bz-kicker"><b>03</b>El cierre</p>
+      <h2 class="bz-h2">Clínica de barrio con urgencias reales, no un mostrador de pienso.</h2>
+      <div class="bz-svcs"><article class="bz-svc"><em>01</em><div><h3>Consulta</h3><p>Tiempo de verdad. Os sentamos y miramos al animal, no solo la pantalla.</p></div></article><article class="bz-svc"><em>02</em><div><h3>Vacunas y chip</h3><p>Calendario claro. Os avisamos nosotros, no al revés.</p></div></article></div>
+    </section>
+
+    <section class="bz-in bz-in-4">
+      <p class="bz-kicker"><b>04</b>Las tres de la mañana</p>
+      <a class="bz-tel" href="tel:34986241024">+34 986 241 024</a>
+      <p class="bz-hours">L–V 10:00–20:00 · S 10:00–14:00 · Urgencias 24 h</p>
+      <p class="bz-addr">Rúa Tomás Paredes · Vigo</p>
     </section>
   </div>
+
+  <div class="bz-scroll" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 </div>
 
 </div>
@@ -821,809 +739,727 @@ window.__splitB = function (panel) {
   });
   return out;
 };
-/* Clínica Veterinaria Bóuzas — quince cifras, en un solo scroll.
- * This lead only.
+/* Clínica Veterinaria Bóuzas — las 24 horas de Tomás Paredes. This lead only.
  *
- * The page IS the drawing. One fixed canvas holds an instrument tray on
- * the page's own grid; the markup is an overlay of sticky chapters with
- * no ground of their own. A single damped progress p ∈ [0,1] drives
- * everything, and the chapters are labelled sub-ranges of it.
+ * The 1.1.7 panel was a chip reader walked from a tray at ×1 down to
+ * the coil at ×40. It was a spec sheet for a 12 mm capsule, which is
+ * not what a neighbourhood clinic sells, and it was rejected. This is
+ * the replacement, and it obeys the rule the last three were built to:
+ * **ten separate small records spread over the whole viewport**, not
+ * one instrument and not one big drawing.
  *
- *   00 · a bandexa   reader and applicator laid out, ×1
- *   01 · o que si    the camera closes without a cut — the read key, the
- *        pode dicir  cannula, the capsule out of the needle, the glass
- *                    turning clear, the coil lighting on the
- *                    reader's own field
- *   02 · a clínica   back out to the tray, everything named
- *   03 · urxencias   three in the morning: one lamp, the code on the
- *                    screen, and a number that answers
+ *   00 · la puerta      10:00. The day sheet is already ruled
+ *   01 · la consulta    the agenda fills, the scale settles, the
+ *                       constants land
+ *   02 · el quirófano   the surgery record runs 16:30 → 17:45, the
+ *                       blood work comes back the same day
+ *   03 · el cierre      20:00. Vaccines calendared, the table cleared
+ *   04 · las 03:00      the shutter, the lamp and a phone that rings
  *
- * The whole page is one magnification. Nothing is a place walked through
- * — Rustican keeps the road to Ourense, Da Costa keeps the walls of
- * Allariz, Garage Galicia keeps its nave — and nothing here is an
- * exploded assembly or a section. It is a traverse of scale, ×1 to ×20
- * and back, and the readout is the magnification the camera is actually
- * at, computed from the camera, so it cannot lie.
+ * Ten clusters: reloj de 24 h · agenda · constantes · báscula · parte
+ * de quirófano · analítica · calendario de vacunas · la mesa (ocho
+ * instrumentos con nombre) · la guardia · el parte de la clínica.
  *
- * The argument: *medicina para quien no puede contarlo*, and the fifteen
- * digits are the one thing the animal says by itself.
+ * No chip, no ECG, no 3D animal — those are the three things the note
+ * in TODO.md banned when this was parked. No projector and no camera
+ * either: every cluster is placed against the viewport and drifts on
+ * its own vector.
  *
- * Rules: landings/heroes/ART-DIRECTION.md and
- * landings/heroes/FULL-PAGE-REPLAN.md.
+ * Not Rustican's road, not Da Costa's walls, not Alfaya's plan sheet,
+ * not Trabalinguas' phonetics, not Orge's expediente.
+ *
+ * Rules: landings/heroes/ART-DIRECTION.md.
  */
 
 window.__staticB = function (panel) {
-  panel.querySelectorAll(".bz-step, .bz-service, .bz-in > *, .bz-h2 .bz-c, .bz-kicker").forEach(function (el) {
+  var root = panel.querySelector(".bz");
+  if (root) root.classList.add("bz-static");
+  panel.querySelectorAll(".bz-in, .bz-moment, .bz-svc").forEach(function (el) {
     el.style.opacity = "1";
     el.style.transform = "none";
   });
   var cue = panel.querySelector(".bz-cue");
   if (cue) cue.remove();
-  panel.querySelectorAll(".bz-step").forEach(function (el, i) {
-    el.style.position = "static";
-    el.style.marginBottom = i < 3 ? "40px" : "0";
-  });
-  var steps = panel.querySelector(".bz-steps");
-  if (steps) steps.style.display = "block";
-  var log = panel.querySelector(".bz-log");
-  if (log) log.remove();
-  var m = panel.querySelector(".bz-m");
-  if (m) m.remove();
-  panel.style.setProperty("--bz-ground", "");
-  panel.style.setProperty("--bz-fg", "");
+  var hour = panel.querySelector("[data-bz-hour]");
+  if (hour) hour.textContent = "24 h";
 };
 
 window.__initB = function (A, panel) {
-  var animate = A.animate, createTimeline = A.createTimeline, onScroll = A.onScroll,
-      stagger = A.stagger;
+  var animate = A.animate, createTimeline = A.createTimeline,
+      onScroll = A.onScroll, stagger = A.stagger;
 
-  var stage = panel.querySelector(".bz-stage");
-  var view = panel.querySelector(".bz-view");
+  var root = panel.querySelector(".bz");
+  var sheetHost = panel.querySelector(".bz-sheet");
   var scroller = panel.querySelector(".bz-scroll");
-  if (!stage || !view || !scroller) return;
+  if (!root || !sheetHost || !scroller) return;
 
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.__staticB(panel);
     return;
   }
 
-  /* The panel owns its splitter: the family one keys its class prefix off
-     the family body class, which this panel does not have. */
-  function splitText(el) {
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function span(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function ease(t) { return t * t * (3 - 2 * t); }
+  function seg(p, a, b) { return ease(span(p, a, b)); }
+  function mix(a, b, t) { return a + (b - a) * t; }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  var NS = "http://www.w3.org/2000/svg";
+  function node(tag, cls, parent) {
+    var el = document.createElementNS(NS, tag);
+    if (cls) el.setAttribute("class", cls);
+    if (parent) parent.appendChild(el);
+    return el;
+  }
+
+  var svg = node("svg", "bz-svg");
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  var gGrid = node("g", "bz-grid", svg);
+  var gPlan = node("g", "bz-plan", svg);
+  sheetHost.appendChild(svg);
+
+  var marks = [];
+  var PRE = false;
+  function reg(el, a, b, kind, extra) {
+    var it = { el: el, a: a, b: b, k: kind, t: -1, pre: PRE };
+    if (extra) for (var key in extra) it[key] = extra[key];
+    marks.push(it);
+    return it;
+  }
+  function winFor(base, spread, i, n, dur) {
+    var a = base + (n > 1 ? spread * i / (n - 1) : 0);
+    return [a, a + dur];
+  }
+
+  var CL = {}, ORDER = [];
+  function makeCluster(id, w, h, drift, focus) {
+    var g = node("g", null, gPlan);
+    CL[id] = { g: g, w: w, h: h, dx: drift[0], dy: drift[1],
+               fa: focus[0], fb: focus[1], s: 1, x: 0, y: 0, u: -1, op: -1, on: false };
+    ORDER.push(id);
+    return CL[id];
+  }
+  var LAYER = null;
+  function use(id) { LAYER = CL[id].g; return CL[id]; }
+
+  makeCluster("bascula", 320, 210, [10, -14], [-0.10, 0.34]);
+  makeCluster("reloj", 300, 320, [0, -12], [-0.10, 1.20]);
+  makeCluster("constantes", 380, 230, [-10, -8], [0.16, 0.40]);
+  makeCluster("agenda", 410, 560, [6, 8], [0.14, 0.62]);
+  makeCluster("quirofano", 420, 240, [0, -18], [0.36, 0.62]);
+  makeCluster("analitica", 440, 270, [-8, 10], [0.42, 0.66]);
+  makeCluster("calendario", 480, 230, [8, 12], [0.60, 0.82]);
+  makeCluster("mesa", 470, 210, [-12, 6], [0.64, 0.84]);
+  makeCluster("guardia", 400, 270, [0, 14], [0.84, 1.20]);
+  makeCluster("parte", 440, 170, [-14, 0], [-0.10, 0.16]);
+
+  /* ---- primitives -------------------------------------------------- */
+
+  function put(d, len, cls, w, kind, parent) {
+    var el = node("path", cls, parent || LAYER);
+    el.setAttribute("d", d);
+    if (kind === "draw") {
+      el.setAttribute("stroke-dasharray", len.toFixed(1));
+      el.setAttribute("stroke-dashoffset", len.toFixed(1));
+    } else {
+      el.setAttribute("opacity", "0");
+    }
+    return reg(el, w[0], w[1], kind || "draw", { len: len });
+  }
+  function L(x1, y1, x2, y2, cls, w, parent) {
+    return put("M" + x1 + " " + y1 + "L" + x2 + " " + y2,
+      Math.hypot(x2 - x1, y2 - y1), cls, w, "draw", parent);
+  }
+  function R(x, y, ww, hh, cls, w, parent) {
+    return put("M" + x + " " + y + "h" + ww + "v" + hh + "h" + (-ww) + "Z",
+      2 * (ww + hh), cls, w, "draw", parent);
+  }
+  function C(cx, cy, r, cls, w, parent) {
+    var d = "M" + (cx - r) + " " + cy +
+            "a" + r + " " + r + " 0 1 0 " + (2 * r) + " 0" +
+            "a" + r + " " + r + " 0 1 0 " + (-2 * r) + " 0";
+    return put(d, 2 * Math.PI * r, cls, w, "draw", parent);
+  }
+  function ARC(cx, cy, r, a0, a1, cls, w, parent) {
+    var x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+    var x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+    var big = Math.abs(a1 - a0) > Math.PI ? 1 : 0;
+    var sweep = a1 > a0 ? 1 : 0;
+    return put("M" + x0.toFixed(1) + " " + y0.toFixed(1) +
+      "A" + r + " " + r + " 0 " + big + " " + sweep + " " + x1.toFixed(1) + " " + y1.toFixed(1),
+      r * Math.abs(a1 - a0), cls, w, "draw", parent);
+  }
+  function FILL(d, cls, w, parent) {
+    var el = node("path", cls, parent || LAYER);
+    el.setAttribute("d", d);
+    el.setAttribute("opacity", "0");
+    return reg(el, w[0], w[1], "fade");
+  }
+  function T(x, y, str, cls, w, parent, opts) {
+    var el = node("text", cls, parent || LAYER);
+    el.setAttribute("x", x);
+    el.setAttribute("y", y);
+    el.setAttribute("opacity", "0");
+    if (opts && opts.anchor) el.setAttribute("text-anchor", opts.anchor);
+    if (opts && opts.rot) {
+      el.setAttribute("transform", "rotate(" + opts.rot + " " + x + " " + y + ")");
+    }
+    el.textContent = str;
+    return reg(el, w[0], w[1], "fade");
+  }
+
+  /* the hour hand of a 24 h dial: 00 at the top, clockwise */
+  function hourAngle(h) { return (h / 24) * Math.PI * 2 - Math.PI / 2; }
+
+  /* ---- the ruled ground -------------------------------------------- */
+
+  var gridNodes = [];
+  function buildGrid(W, H) {
+    gridNodes.forEach(function (it) {
+      if (it.el.parentNode) it.el.parentNode.removeChild(it.el);
+      var k = marks.indexOf(it);
+      if (k >= 0) marks.splice(k, 1);
+    });
+    gridNodes.length = 0;
+    /* a day book is ruled, not squared: short rules, in rows */
+    var stepY = W < 880 ? 30 : 34, stepX = W < 880 ? 46 : 54;
+    var cols = Math.ceil(W / stepX), rows = Math.ceil(H / stepY);
+    for (var cy = 0; cy <= rows; cy++) {
+      for (var cx = 0; cx <= cols; cx++) {
+        var x = cx * stepX + 10, y = cy * stepY + stepY / 2;
+        var el = node("path", "k-rule", gGrid);
+        el.setAttribute("d", "M" + x + " " + y + "h" + (stepX * 0.42).toFixed(0));
+        el.setAttribute("opacity", "0");
+        var d = cy / (rows || 1);
+        var was = PRE; PRE = true;
+        var it = reg(el, d * 0.46, d * 0.46 + 0.40, "fade");
+        PRE = was;
+        gridNodes.push(it);
+      }
+    }
+  }
+
+  /* ---- 1 · el reloj de 24 h ---------------------------------------- */
+
+  use("reloj");
+  PRE = true;
+  var RCX = 150, RCY = 176, RR = 112;
+  T(0, 18, "24 H · TOMÁS PAREDES", "t-cap", [0.26, 0.72]);
+  C(RCX, RCY, RR, "k-box", [0.30, 0.78]);
+  for (var ht = 0; ht < 24; ht++) {
+    var ang = hourAngle(ht), major = ht % 6 === 0;
+    L(RCX + Math.cos(ang) * (major ? RR - 20 : RR - 10), RCY + Math.sin(ang) * (major ? RR - 20 : RR - 10),
+      RCX + Math.cos(ang) * RR, RCY + Math.sin(ang) * RR,
+      major ? "k-line" : "k-thin", winFor(0.34, 0.34, ht, 24, 0.34));
+  }
+  [[0, "00"], [6, "06"], [12, "12"], [18, "18"]].forEach(function (m, i) {
+    var a2 = hourAngle(m[0]);
+    T(RCX + Math.cos(a2) * (RR - 34), RCY + Math.sin(a2) * (RR - 34) + 6, m[1], "t-cap",
+      winFor(0.52, 0.24, i, 4, 0.34), null, { anchor: "middle" });
+  });
+  C(RCX, RCY, 4, "k-line", [0.70, 0.98]);
+  PRE = false;
+  /* consulta 10→20 in green, guardia 20→10 in the night colour */
+  ARC(RCX, RCY, RR - 26, hourAngle(10), hourAngle(20), "k-mark", [0.150, 0.230]);
+  T(RCX, RCY + RR + 30, "10–20 · GUARDIA 24 H", "t-cap", [0.180, 0.250], null, { anchor: "middle" });
+  ARC(RCX, RCY, RR - 38, hourAngle(20), hourAngle(24), "k-night", [0.840, 0.900]);
+  ARC(RCX, RCY, RR - 38, hourAngle(0), hourAngle(10), "k-night", [0.860, 0.920]);
+  var hand = L(RCX, RCY, RCX, RCY - (RR - 16), "k-hand k-mark", [0.100, 0.160]);
+  reg(hand.el, 0.10, 1.0, "spin", { cx: RCX, cy: RCY });
+
+  /* ---- 2 · la báscula ---------------------------------------------- */
+
+  use("bascula");
+  T(0, 18, "BÁSCULA · SALA 1", "t-cap", [0.120, 0.180]);
+  R(20, 150, 200, 22, "k-box", [0.126, 0.190]);
+  L(60, 172, 52, 196, "k-thin", [0.132, 0.196]);
+  L(180, 172, 188, 196, "k-thin", [0.132, 0.196]);
+  L(120, 150, 120, 104, "k-line", [0.138, 0.202]);
+  var BCX = 120, BCY = 78, BR = 46;
+  C(BCX, BCY, BR, "k-box", [0.144, 0.210]);
+  for (var bt = 0; bt < 20; bt++) {
+    var ba = -Math.PI * 1.15 + (Math.PI * 1.3) * bt / 19;
+    L(BCX + Math.cos(ba) * (BR - (bt % 5 ? 6 : 12)), BCY + Math.sin(ba) * (BR - (bt % 5 ? 6 : 12)),
+      BCX + Math.cos(ba) * BR, BCY + Math.sin(ba) * BR, "k-thin",
+      winFor(0.150, 0.055, bt, 20, 0.05));
+  }
+  var needle = L(BCX, BCY, BCX, BCY - (BR - 10), "k-mark", [0.156, 0.216]);
+  reg(needle.el, 0.16, 0.30, "swingTo", { cx: BCX, cy: BCY, deg: 118 });
+  C(BCX, BCY, 3.4, "k-line", [0.162, 0.222]);
+  T(250, 96, "6,4", "t-big", [0.210, 0.270], null, { anchor: "middle" });
+  T(250, 120, "kg", "t-cap", [0.216, 0.276], null, { anchor: "middle" });
+
+  /* ---- 3 · las constantes ------------------------------------------ */
+
+  use("constantes");
+  T(0, 18, "CONSTANTES", "t-cap", [0.196, 0.256]);
+  var VITALS = [
+    ["FREC.", "96", "lpm", 0.62],
+    ["RESP.", "24", "rpm", 0.44],
+    ["TEMP.", "38,4", "°C", 0.58],
+    ["PESO", "6,4", "kg", 0.36]
+  ];
+  VITALS.forEach(function (v, i) {
+    var vx = (i % 2) * 196, vy = 34 + ((i / 2) | 0) * 100;
+    var w = winFor(0.204, 0.070, i, VITALS.length, 0.05);
+    R(vx, vy, 176, 84, "k-box", w);
+    T(vx + 12, vy + 22, v[0], "t-cap", [w[0] + 0.006, w[1] + 0.006]);
+    T(vx + 12, vy + 54, v[1], "t-num", [w[0] + 0.012, w[1] + 0.012]);
+    T(vx + 160, vy + 54, v[2], "t-cap", [w[0] + 0.016, w[1] + 0.016], null, { anchor: "end" });
+    L(vx + 12, vy + 70, vx + 164, vy + 70, "k-faint", [w[0] + 0.018, w[1] + 0.018]);
+    L(vx + 12, vy + 70, vx + 12 + 152 * v[3], vy + 70, "k-mark",
+      [w[0] + 0.022, w[1] + 0.030]);
+  });
+
+  /* ---- 4 · la agenda ----------------------------------------------- */
+
+  use("agenda");
+  var DAY = [
+    ["10:00", "Vacuna · Lúa", 1],
+    ["10:30", "Revisión · Xoel", 0],
+    ["11:00", "Peso · Rita", 1],
+    ["11:30", "Curas · Mel", 0],
+    ["12:00", "Consulta · Fisga", 0],
+    ["12:30", "Radiografía · Nube", 1],
+    ["13:00", "Chip · Berro", 0],
+    ["16:30", "Cirugía · Coco", 1],
+    ["17:45", "Despierta · Coco", 1],
+    ["18:00", "Llamada a casa", 1],
+    ["18:30", "Analítica · Pinta", 0],
+    ["19:15", "Revisión · Uxía", 0],
+    ["20:00", "Cierra", 0]
+  ];
+  T(0, 18, "AGENDA · MIÉRCOLES", "t-cap", [0.150, 0.210]);
+  L(0, 30, 410, 30, "k-line", [0.156, 0.216]);
+  DAY.forEach(function (row, i) {
+    var w = winFor(0.164, 0.330, i, DAY.length, 0.05);
+    var ry = 58 + i * 38;
+    T(0, ry, row[0], "t-cap", w);
+    T(106, ry, row[1], "t-row", [w[0] + 0.006, w[1] + 0.006]);
+    L(0, ry + 12, 410, ry + 12, "k-faint", [w[0] + 0.010, w[1] + 0.010]);
+    if (row[2]) C(398, ry - 6, 4.4, "k-mark", [w[0] + 0.014, w[1] + 0.014]);
+  });
+
+  /* ---- 5 · el parte de quirófano ----------------------------------- */
+
+  use("quirofano");
+  T(0, 18, "PARTE DE QUIRÓFANO", "t-cap", [0.372, 0.428]);
+  R(0, 30, 420, 92, "k-box", [0.378, 0.436]);
+  [["PACIENTE", "COCO · 6,4 kg"], ["PROCED.", "ORQUIECTOMÍA"], ["ANESTESIA", "INHALAT."]]
+    .forEach(function (row, i) {
+      var w = winFor(0.386, 0.048, i, 3, 0.05);
+      T(12, 52 + i * 28, row[0], "t-cap", w);
+      T(408, 52 + i * 28, row[1], "t-cap", [w[0] + 0.006, w[1] + 0.006], null, { anchor: "end" });
+    });
+  L(0, 168, 420, 168, "k-line", [0.440, 0.496]);
+  [["16:30", 0, "ENTRA"], ["17:20", 0.62, "SALE"], ["17:45", 1, "DESPIERTA"]]
+    .forEach(function (m, i) {
+      var mx = m[1] * 420;
+      var w = winFor(0.446, 0.050, i, 3, 0.05);
+      L(mx, 158, mx, 178, "k-line", w);
+      T(mx, 150, m[0], "t-cap", [w[0] + 0.006, w[1] + 0.006], null,
+        { anchor: i === 2 ? "end" : (i ? "middle" : "start") });
+      T(mx, 196, m[2], "t-cap", [w[0] + 0.010, w[1] + 0.010], null,
+        { anchor: i === 2 ? "end" : (i ? "middle" : "start") });
+    });
+  var opBar = L(0, 168, 420, 168, "k-mark", [0.470, 0.560]);
+  T(0, 226, "Os llamamos cuando despierta.", "t-cap", [0.540, 0.596]);
+
+  /* ---- 6 · la analítica -------------------------------------------- */
+
+  use("analitica");
+  var LABS = [
+    ["HEMATÍES", "6,8", 0.52], ["LEUCOCITOS", "11,4", 0.68],
+    ["PLAQUETAS", "312", 0.44], ["UREA", "38", 0.36],
+    ["CREATININA", "1,1", 0.48], ["ALT", "56", 0.72]
+  ];
+  T(0, 18, "ANALÍTICA · MISMO DÍA", "t-cap", [0.432, 0.490]);
+  L(0, 30, 440, 30, "k-line", [0.438, 0.496]);
+  LABS.forEach(function (row, i) {
+    var w = winFor(0.446, 0.130, i, LABS.length, 0.05);
+    var ly = 58 + i * 36;
+    T(0, ly, row[0], "t-cap", w);
+    L(150, ly - 5, 340, ly - 5, "k-faint", [w[0] + 0.006, w[1] + 0.006]);
+    L(150, ly - 11, 150, ly + 1, "k-thin", [w[0] + 0.008, w[1] + 0.008]);
+    L(340, ly - 11, 340, ly + 1, "k-thin", [w[0] + 0.008, w[1] + 0.008]);
+    C(150 + 190 * row[2], ly - 5, 4.6, "k-mark", [w[0] + 0.014, w[1] + 0.020]);
+    T(440, ly, row[1], "t-cap", [w[0] + 0.016, w[1] + 0.016], null, { anchor: "end" });
+  });
+
+  /* ---- 7 · el calendario de vacunas -------------------------------- */
+
+  use("calendario");
+  var MONTHS = ["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+  var PLANS = [
+    ["POLIVALENTE", [1, 4, 10]],
+    ["RABIA", [4]],
+    ["LEISHMANIA", [3]],
+    ["DESPARASITACIÓN", [0, 3, 6, 9]]
+  ];
+  T(0, 18, "CALENDARIO DE VACUNAS", "t-cap", [0.612, 0.668]);
+  MONTHS.forEach(function (m, i) {
+    T(150 + i * 27, 42, m, "t-cap", winFor(0.618, 0.045, i, 12, 0.05), null, { anchor: "middle" });
+  });
+  L(0, 52, 480, 52, "k-line", [0.626, 0.682]);
+  PLANS.forEach(function (row, i) {
+    var w = winFor(0.634, 0.075, i, PLANS.length, 0.05);
+    var py = 78 + i * 36;
+    T(0, py, row[0], "t-cap", w);
+    L(140, py - 5, 470, py - 5, "k-faint", [w[0] + 0.006, w[1] + 0.006]);
+    row[1].forEach(function (mi, j) {
+      C(150 + mi * 27, py - 5, 5, "k-mark", [w[0] + 0.010 + j * 0.006, w[1] + 0.016 + j * 0.006]);
+    });
+  });
+  C(150 + 10 * 27, 78 - 5, 11, "k-night", [0.740, 0.800]);
+  T(480, 214, "Os avisamos nosotros.", "t-cap", [0.750, 0.806], null, { anchor: "end" });
+
+  /* ---- 8 · la mesa: ocho instrumentos con nombre -------------------- */
+
+  use("mesa");
+  T(0, 18, "LA MESA · 20:00", "t-cap", [0.652, 0.708]);
+  L(0, 150, 470, 150, "k-line", [0.658, 0.714]);
+  var TOOLS = [
+    ["FONENDO", function (x, w) {
+      C(x + 14, 118, 13, "k-line", w);
+      ARC(x + 14, 118, 30, -2.5, -0.6, "k-thin", [w[0] + 0.004, w[1] + 0.004]);
+      L(x + 4, 92, x + 4, 74, "k-thin", [w[0] + 0.006, w[1] + 0.006]);
+      L(x + 26, 92, x + 26, 74, "k-thin", [w[0] + 0.006, w[1] + 0.006]);
+    }],
+    ["OTOSCOPIO", function (x, w) {
+      R(x + 6, 96, 20, 44, "k-line", w);
+      L(x + 6, 96, x + 16, 74, "k-line", [w[0] + 0.004, w[1] + 0.004]);
+      L(x + 26, 96, x + 16, 74, "k-line", [w[0] + 0.004, w[1] + 0.004]);
+    }],
+    ["TERMÓMETRO", function (x, w) {
+      R(x + 10, 78, 10, 56, "k-line", w);
+      C(x + 15, 140, 7, "k-mark", [w[0] + 0.005, w[1] + 0.005]);
+    }],
+    ["JERINGA", function (x, w) {
+      R(x + 2, 96, 34, 18, "k-line", w);
+      L(x + 36, 105, x + 52, 105, "k-thin", [w[0] + 0.004, w[1] + 0.004]);
+      L(x - 4, 105, x + 2, 105, "k-thin", [w[0] + 0.006, w[1] + 0.006]);
+      L(x - 4, 96, x - 4, 114, "k-thin", [w[0] + 0.006, w[1] + 0.006]);
+    }],
+    ["PINZA", function (x, w) {
+      L(x + 2, 74, x + 30, 140, "k-line", w);
+      L(x + 30, 74, x + 2, 140, "k-line", [w[0] + 0.004, w[1] + 0.004]);
+      C(x + 4, 136, 5, "k-thin", [w[0] + 0.008, w[1] + 0.008]);
+      C(x + 28, 136, 5, "k-thin", [w[0] + 0.008, w[1] + 0.008]);
+    }],
+    ["TIJERA", function (x, w) {
+      L(x + 4, 76, x + 24, 122, "k-line", w);
+      L(x + 26, 76, x + 6, 122, "k-line", [w[0] + 0.004, w[1] + 0.004]);
+      C(x + 6, 134, 6, "k-thin", [w[0] + 0.008, w[1] + 0.008]);
+      C(x + 24, 134, 6, "k-thin", [w[0] + 0.008, w[1] + 0.008]);
+    }],
+    ["BISTURÍ", function (x, w) {
+      R(x + 8, 100, 12, 40, "k-line", w);
+      L(x + 8, 100, x + 26, 76, "k-line", [w[0] + 0.004, w[1] + 0.004]);
+      L(x + 20, 100, x + 26, 76, "k-line", [w[0] + 0.006, w[1] + 0.006]);
+    }],
+    ["ESPARADRAPO", function (x, w) {
+      C(x + 16, 112, 22, "k-line", w);
+      C(x + 16, 112, 9, "k-thin", [w[0] + 0.005, w[1] + 0.005]);
+    }]
+  ];
+  TOOLS.forEach(function (tool, i) {
+    var x = i * 58;
+    var w = winFor(0.664, 0.130, i, TOOLS.length, 0.05);
+    tool[1](x, w);
+    /* eight labels 58 units apart: lying down they were one grey band,
+       so they stand up, the way a tool tray is labelled */
+    T(x + 16, 164, tool[0], "t-cap", [w[0] + 0.014, w[1] + 0.014], null,
+      { anchor: "start", rot: 90 });
+  });
+
+  /* ---- 9 · la guardia: las 03:00 ----------------------------------- */
+
+  use("guardia");
+  T(0, 18, "03:14 · URGENCIAS", "t-night", [0.856, 0.906]);
+  /* la persiana, a medio subir */
+  R(40, 60, 200, 150, "k-box", [0.862, 0.914]);
+  for (var sl = 0; sl < 5; sl++) {
+    L(44, 66 + sl * 11, 236, 66 + sl * 11, "k-thin", winFor(0.868, 0.040, sl, 5, 0.05));
+  }
+  L(44, 128, 236, 128, "k-line", [0.884, 0.930]);
+  /* la luz de encima de la puerta */
+  L(120, 60, 160, 60, "k-night", [0.888, 0.934]);
+  FILL("M120 60h40l16 26h-72Z", "k-fill-n", [0.892, 0.940]);
+  for (var ry3 = 0; ry3 < 5; ry3++) {
+    var rx3 = 104 + ry3 * 18;
+    L(rx3, 96, rx3 - 8, 122, "k-night", winFor(0.896, 0.036, ry3, 5, 0.05));
+  }
+  /* el teléfono, sonando */
+  R(292, 150, 72, 26, "k-line", [0.906, 0.952]);
+  L(300, 150, 296, 136, "k-line", [0.910, 0.956]);
+  L(356, 150, 360, 136, "k-line", [0.910, 0.956]);
+  for (var rg = 0; rg < 3; rg++) {
+    ARC(328, 132, 34 + rg * 18, -2.5, -0.64, "k-night", winFor(0.916, 0.040, rg, 3, 0.05));
+  }
+  T(0, 250, "Un número que coge.", "t-cap", [0.930, 0.976]);
+
+  /* ---- 10 · el parte de la clínica --------------------------------- */
+
+  use("parte");
+  PRE = true;
+  var SHEET = [
+    ["CLÍNICA", "BÓUZAS"], ["CALLE", "TOMÁS PAREDES"], ["VILLA", "VIGO"],
+    ["CONSULTA", "10–20"], ["SÁBADO", "10–14"], ["URGENCIAS", "24 H"]
+  ];
+  R(0, 10, 440, 150, "k-box", [0.30, 0.76]);
+  L(0, 60, 440, 60, "k-box", [0.38, 0.82]);
+  L(0, 110, 440, 110, "k-box", [0.42, 0.86]);
+  L(272, 10, 272, 160, "k-box", [0.46, 0.90]);
+  SHEET.forEach(function (row, i) {
+    var w = winFor(0.50, 0.30, i, SHEET.length, 0.42);
+    var ry = 32 + (i % 3) * 50;
+    var rx = 12 + (i < 3 ? 0 : 272);
+    T(rx, ry, row[0], "t-cap", w);
+    T(rx, ry + 24, row[1], "t-row", [w[0] + 0.008, w[1] + 0.008]);
+  });
+  PRE = false;
+
+  /* ---- the copy ----------------------------------------------------- */
+
+  function splitChars(el) {
     if (!el || el.dataset.bzDone) return [];
     el.dataset.bzDone = "1";
     var out = [], frag = document.createDocumentFragment();
-    el.textContent.split(/(\s+)/).forEach(function (w) {
-      if (!w) return;
-      if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(" ")); return; }
-      var word = document.createElement("span");
-      word.className = "bz-word";
-      for (var i = 0; i < w.length; i++) {
+    el.textContent.split(/(\s+)/).forEach(function (word) {
+      if (!word) return;
+      if (/^\s+$/.test(word)) { frag.appendChild(document.createTextNode(" ")); return; }
+      var wrap = document.createElement("span");
+      wrap.style.display = "inline-block";
+      wrap.style.whiteSpace = "nowrap";
+      for (var j = 0; j < word.length; j++) {
         var c = document.createElement("span");
         c.className = "bz-c";
-        c.textContent = w[i];
-        word.appendChild(c);
+        c.textContent = word[j];
+        wrap.appendChild(c);
         out.push(c);
       }
-      frag.appendChild(word);
+      frag.appendChild(wrap);
+      frag.appendChild(document.createTextNode(" "));
     });
     el.textContent = "";
     el.appendChild(frag);
     return out;
   }
 
-  /* --- the master progress ---------------------------------------------
-     One scrub over the whole document. `sync` is v4's own smoothing, so
-     the damping is the library's rather than a hand-rolled lerp. */
-  var state = { p: 0, settle: 0, idle: 0, rise: 0 };
-  animate(state, {
+  var ins = [0, 1, 2, 3, 4].map(function (n) { return panel.querySelector(".bz-in-" + n); });
+  var moments = panel.querySelectorAll(".bz-moment");
+  var svcRows = panel.querySelectorAll(".bz-svc");
+  var hourEl = panel.querySelector("[data-bz-hour]");
+  var cue = panel.querySelector(".bz-cue");
+  var nameChars = splitChars(panel.querySelector(".bz-name"));
+
+  var WIN = [
+    [-0.20, 0.000, 0.112, 0.152],
+    [0.140, 0.196, 0.318, 0.358],
+    [0.346, 0.402, 0.556, 0.596],
+    [0.584, 0.640, 0.772, 0.812],
+    [0.836, 0.892, 1.400, 1.500]
+  ];
+
+  /* The day, as one number. 10:00 through the consulta, into surgery,
+     out at 20:00 and then the call at 03:14. */
+  function hourAt(p) {
+    if (p < 0.14) return 10;
+    if (p < 0.36) return mix(10, 14, span(p, 0.14, 0.36));
+    if (p < 0.60) return mix(16.5, 18, span(p, 0.36, 0.60));
+    if (p < 0.82) return mix(18, 20, span(p, 0.60, 0.82));
+    return mix(20, 27.233, span(p, 0.82, 1.0));
+  }
+
+  var W = 0, H = 0, portrait = false;
+
+  function measure() {
+    var r = svg.getBoundingClientRect();
+    W = Math.max(320, r.width); H = Math.max(360, r.height);
+    svg.setAttribute("viewBox", "0 0 " + W.toFixed(0) + " " + H.toFixed(0));
+    portrait = W < 880;
+    buildGrid(W, H);
+  }
+
+  function place(id, x, y, w, h) {
+    var c = CL[id];
+    c.s = Math.min(w / c.w, h / c.h);
+    c.x = x + (w - c.w * c.s) / 2;
+    c.y = y + (h - c.h * c.s) / 2;
+    c.on = true;
+  }
+
+  function frame(p) {
+    var drift = seg(p, 0.10, 0.95);
+    var i, id;
+    for (i = 0; i < ORDER.length; i++) CL[ORDER[i]].on = false;
+
+    if (portrait) {
+      /* Five. The agenda is the tall one and it earns the middle; the
+         rest of the day book is landscape-only, the way Alfaya's bottom
+         row and Trabalinguas' grids are. */
+      var pad = Math.max(16, W * 0.045);
+      var inner = W - pad * 2;
+      var third = (inner - 20) / 3;
+      place("reloj", pad, 84, third, H * 0.140);
+      place("bascula", pad + third + 10, 92, third, H * 0.115);
+      place("constantes", pad + (third + 10) * 2, 92, third, H * 0.118);
+      place("agenda", pad, 84 + H * 0.150, inner * 0.60, H * 0.330);
+      place("quirofano", pad + inner * 0.64, 84 + H * 0.170, inner * 0.36, H * 0.150);
+    } else {
+      var laneL = Math.min(82, Math.max(20, W * 0.05));
+      var laneR = laneL + Math.min(W * 0.35, 430);
+      var gap = W * 0.018;
+      var restL = laneR + gap;
+      var restR = W - Math.max(18, W * 0.024);
+      var cw = (restR - restL - gap * 2) / 3;
+      var top = 86;
+      var rh1 = H * 0.215, rh2 = H * 0.235, rh3 = H * 0.185;
+      var y2 = top + rh1 + 12;
+      var y3 = y2 + rh2 + 12;
+
+      /* the lane keeps a small record above and below the copy */
+      place("bascula", laneL, top, laneR - laneL, H * 0.112);
+      place("parte", laneL, H * 0.782, laneR - laneL, H * 0.170);
+
+      /* column one is the agenda, tall: it spans the first two rows */
+      place("agenda", restL, top, cw, rh1 + rh2 + 12);
+      place("calendario", restL, y3, cw, rh3);
+
+      place("reloj", restL + cw + gap, top, cw, rh1);
+      place("quirofano", restL + cw + gap, y2, cw, rh2);
+      place("mesa", restL + cw + gap, y3, cw, rh3);
+
+      place("constantes", restL + (cw + gap) * 2, top, cw, rh1);
+      place("analitica", restL + (cw + gap) * 2, y2, cw, rh2);
+      place("guardia", restL + (cw + gap) * 2, y3, cw, rh3);
+    }
+
+    for (i = 0; i < ORDER.length; i++) {
+      id = ORDER[i];
+      var c = CL[id];
+      if (!c.on) {
+        if (c.op !== 0) { c.g.setAttribute("opacity", "0"); c.op = 0; }
+        continue;
+      }
+      var tx = c.x + c.dx * drift, ty = c.y + c.dy * drift;
+      c.g.setAttribute("transform",
+        "translate(" + tx.toFixed(1) + " " + ty.toFixed(1) + ") scale(" + c.s.toFixed(4) + ")");
+      var u = 1 / c.s;
+      if (Math.abs(u - c.u) > 0.003) {
+        c.g.style.setProperty("--bz-u", u.toFixed(3));
+        c.u = u;
+      }
+      var f = Math.min(span(p, c.fa - 0.06, c.fa), 1 - span(p, c.fb, c.fb + 0.06));
+      var op = mix(0.52, 1, ease(clamp(f, 0, 1)));
+      if (Math.abs(op - c.op) > 0.004) {
+        c.g.setAttribute("opacity", op.toFixed(3));
+        c.op = op;
+      }
+    }
+    gGrid.setAttribute("transform", "translate(0 " + (12 * drift).toFixed(1) + ")");
+  }
+
+  measure();
+  addEventListener("resize", measure);
+
+  /* ---- the clock ----------------------------------------------------- */
+
+  var clock = { p: 0, intro: 0 };
+  animate(clock, {
     p: [0, 1], duration: 1000, ease: "linear",
     autoplay: onScroll({
       target: scroller, enter: "top top", leave: "bottom bottom", sync: 0.14
     })
   });
-  animate(state, { settle: [0, 1], duration: 1400, delay: 220, ease: "outElastic(1, 0.78)" });
-  animate(state, { idle: [0, Math.PI * 2], duration: 16000, ease: "linear", loop: true });
-  /* The field keeps pulsing while the reader is not scrolling. */
-  animate(state, { rise: [0, 1], duration: 2600, ease: "linear", loop: true });
+  animate(clock, { intro: [0, 1], duration: 1500, delay: 140, ease: "outExpo" });
 
-  var nameChars = splitText(panel.querySelector(".bz-name"));
-  var claimChars = splitText(panel.querySelector(".bz-claim"));
   var intro = createTimeline({ defaults: { ease: "outExpo" } });
-  intro.add(panel.querySelector(".bz-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 700 }, 200);
-  intro.add(nameChars, { opacity: [0, 1], y: [58, 0], duration: 1080, delay: stagger(16) }, 300);
-  intro.add(claimChars, { opacity: [0, 1], y: [24, 0], duration: 760, delay: stagger(8) }, 820);
-  intro.add(panel.querySelectorAll(".bz-lead, .bz-cue"), {
-    opacity: [0, 1], y: [16, 0], duration: 740, delay: stagger(100)
-  }, 1080);
+  intro.add(panel.querySelector(".bz-eyebrow"), { opacity: [0, 1], y: [14, 0], duration: 600 }, 160);
+  intro.add(nameChars, { opacity: [0, 1], y: [38, 0], duration: 860, delay: stagger(14) }, 240);
+  intro.add(panel.querySelectorAll(".bz-claim, .bz-lead, .bz-cue"),
+    { opacity: [0, 1], y: [18, 0], duration: 700, delay: stagger(105) }, 660);
 
-  /* Everything after chapter 00 is revealed from the master progress, not
-     from per-section observers: one clock, labelled ranges. */
-  splitText(panel.querySelector(".bz-h2"));
-  var h2Chars = panel.querySelectorAll(".bz-h2 .bz-c");
-  var serviceEls = panel.querySelectorAll(".bz-service");
-  var deskEls = panel.querySelectorAll(".bz-ch-3 .bz-in > *");
-  var stepEls = panel.querySelectorAll(".bz-step");
-  var ch0 = panel.querySelector(".bz-ch-0 .bz-in");
-  var ch1 = panel.querySelector(".bz-ch-1 .bz-in");
-  var ch2 = panel.querySelector(".bz-ch-2 .bz-in");
-  var kicker2 = panel.querySelector(".bz-ch-2 .bz-kicker");
-  var logN = panel.querySelector(".bz-log-n");
-  var logT = panel.querySelector(".bz-log-t");
-  var logS = panel.querySelector(".bz-log-s");
-  var idEl = panel.querySelector(".bz-id");
-  var CODE = (idEl && idEl.dataset.id) || "724 098 100 234 561";
+  /* ---- the paint ------------------------------------------------------ */
 
-  import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(function (THREE) {
-    /* --- law 1: the palette is the page's ------------------------------ */
-    var css = getComputedStyle(panel);
-    function tok(name, fallback) {
-      var v = css.getPropertyValue(name).trim();
-      return new THREE.Color(v || fallback);
-    }
-    var GROUND = tok("--st-bg", "#fcf9f6");
-    var INK = tok("--st-fg", "#15201a");
-    var ACCENT = tok("--st-accent", "#b25625");
-    var SECOND = tok("--st-second", "#2f4a3a");
-    var LINE = tok("--st-line", "#d2d2ce");
+  function paint() {
+    var p = clock.p;
+    frame(p);
 
-    /* Three keeps colours in linear working space, so `a.lerp(b, t)` is a
-       physical blend and a "10% rung" off the page's ink lands near 35% on
-       screen. Every value here is authored as a share of the page's own two
-       ends, which is an sRGB judgement, so the mix has to be one. */
-    function mix(a, b, t) {
-      var A2 = a.clone().convertLinearToSRGB();
-      return A2.lerp(b.clone().convertLinearToSRGB(), t).convertSRGBToLinear();
-    }
-    /* The page's own ground and ink are written back as CSS, so they are
-       kept as hex and mixed as hex — no round trip through the renderer. */
-    function parseHex(h) {
-      h = String(h || "").replace("#", "");
-      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
-      return [
-        parseInt(h.slice(0, 2), 16) / 255,
-        parseInt(h.slice(2, 4), 16) / 255,
-        parseInt(h.slice(4, 6), 16) / 255
-      ];
-    }
-    function toHex(rgb) {
-      return "#" + rgb.map(function (c) {
-        var n = Math.round(Math.min(1, Math.max(0, c)) * 255);
-        return (n + 256).toString(16).slice(1);
-      }).join("");
-    }
-    function mixHex(a, b, t) {
-      var A2 = parseHex(a), B2 = parseHex(b);
-      return toHex([
-        A2[0] + (B2[0] - A2[0]) * t,
-        A2[1] + (B2[1] - A2[1]) * t,
-        A2[2] + (B2[2] - A2[2]) * t
-      ]);
-    }
-    function lerpHex(a, b, t) {
-      if (t <= 0) return a;
-      if (t >= 1) return b;
-      return mixHex(a, b, t);
-    }
-    var HEX_GROUND = css.getPropertyValue("--st-bg").trim() || "#fcf9f6";
-    var HEX_INK = css.getPropertyValue("--st-fg").trim() || "#15201a";
-    var HEX_SECOND = css.getPropertyValue("--st-second").trim() || "#2f4a3a";
-    var HEX_LINE = css.getPropertyValue("--st-line").trim() || "#d2d2ce";
-    /* Three in the morning: the consulting room ground goes to the page's
-       own ink, warmed a step toward the clinic's green. */
-    var H_NIGHT = mixHex(mixHex(HEX_GROUND, HEX_INK, 0.955), HEX_SECOND, 0.30);
-    var H_FG_NIGHT = mixHex(HEX_GROUND, HEX_INK, 0.06);
-    var H_LN_NIGHT = mixHex(H_NIGHT, HEX_GROUND, 0.16);
-
-    /* Two chromatics and no more: the clinic's green on the instrument
-       shell, and the accent on the one thing that is energised — the read
-       key, the LED, the field and the copper. Everything else is a rung
-       between the page's ground and its ink. */
-    var C_SHELL   = mix(SECOND, GROUND, 0.12);   // carcasa del lector
-    var C_SHELL_D = mix(SECOND, INK, 0.30);      // cabeza y tapa
-    var C_BEVEL   = mix(GROUND, INK, 0.16);      // bisel y marco
-    var C_SCREEN  = mix(GROUND, INK, 0.82);      // el LCD apagado
-    var C_TRACE   = mix(GROUND, INK, 0.50);      // las dos líneas del display
-    var C_STEEL   = mix(GROUND, INK, 0.34);      // cánula, tornillos
-    var C_PLAST   = mix(GROUND, INK, 0.07);      // cuerpo del aplicador
-    var C_CAPTOP  = mix(GROUND, INK, 0.44);      // capuchón
-    var C_PAPER   = mix(GROUND, INK, 0.02);      // etiqueta
-    var C_BAR     = mix(GROUND, INK, 0.88);      // código de barras
-    var C_GLASS   = mix(GROUND, INK, 0.13);      // biovidrio
-    var C_FERRITE = mix(GROUND, INK, 0.74);      // núcleo de ferrita
-    var C_DIE     = mix(GROUND, INK, 0.60);      // el chip
-    var C_SOLDER  = mix(GROUND, INK, 0.38);      // soldadura
-    var C_COPPER  = mix(ACCENT, INK, 0.44);      // la bobina — es cobre
-    var C_KEY     = mix(ACCENT, GROUND, 0.08);   // la tecla de lectura
-
-    function matte(color) {
-      return new THREE.MeshLambertMaterial({ color: color, flatShading: true });
-    }
-    /* Turned parts are turned: a barrel, a cannula and a glass capsule
-       read as themselves only if their facets average. Everything moulded
-       or cut keeps flat shading, which is where the drafting look is. */
-    function turned(color) {
-      return new THREE.MeshLambertMaterial({ color: color, flatShading: false });
-    }
-
-    var M_SHELL = matte(C_SHELL), M_SHELL_D = matte(C_SHELL_D), M_BEVEL = matte(C_BEVEL),
-        M_SCREEN = matte(C_SCREEN), M_STEEL = turned(C_STEEL), M_PLAST = turned(C_PLAST),
-        M_CAPTOP = turned(C_CAPTOP), M_PAPER = matte(C_PAPER), M_BAR = matte(C_BAR),
-        M_FERRITE = turned(C_FERRITE), M_SOLDER = matte(C_SOLDER);
-    var M_KEY = matte(C_KEY);
-    var M_TRACE = new THREE.MeshBasicMaterial({ color: C_TRACE });
-    var M_LED = new THREE.MeshLambertMaterial({ color: C_KEY, emissive: ACCENT.clone(), flatShading: true });
-    M_LED.emissive.multiplyScalar(0);
-    /* The die and the coil are the only things lit by their own material:
-       what the field does to them is not something a lamp can do. */
-    var M_COIL = new THREE.MeshLambertMaterial({
-      color: C_COPPER, flatShading: false, emissive: ACCENT.clone()
-    });
-    M_COIL.emissive.multiplyScalar(0);
-    var M_DIE = new THREE.MeshLambertMaterial({
-      color: C_DIE, flatShading: true, emissive: ACCENT.clone()
-    });
-    M_DIE.emissive.multiplyScalar(0);
-    var M_GLASS = new THREE.MeshLambertMaterial({
-      color: C_GLASS, flatShading: false, transparent: true, opacity: 0.94
-    });
-    var M_FIELD = new THREE.MeshBasicMaterial({
-      color: ACCENT, transparent: true, opacity: 0, depthWrite: false
-    });
-
-    /* --- law 3: a hairline, not an outline ----------------------------- */
-    var EDGE = new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.26 });
-    /* The field rings are drawn furniture, not parts: an edge pass on a
-       torus of field draws its own seams, which is noise. */
-    function lined(mesh, threshold) {
-      var seg2 = new THREE.LineSegments(
-        new THREE.EdgesGeometry(mesh.geometry, threshold == null ? 24 : threshold),
-        EDGE
-      );
-      mesh.add(seg2);
-      return mesh;
-    }
-
-    var gpu = new THREE.WebGLRenderer({ canvas: view, alpha: true, antialias: true });
-    gpu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    gpu.setClearColor(0x000000, 0);
-
-    var scene = new THREE.Scene();
-    /* The traverse runs from 30 units away to 0.73, so the near plane has
-       to clear a 12 mm capsule at arm's length inside the same frustum
-       that holds a 30 cm tray. */
-    var camera = new THREE.PerspectiveCamera(26, 1, 0.05, 300);
-
-    /* law 4: one key you can name — the consulting-room ceiling panel,
-       high and a little front-left, which is why the tops of the shells
-       take the light and the cut of the tray goes quiet. At three in the
-       morning it does not switch off and it does not become a second
-       lamp: it drops to the desk lamp at the counter, same direction. */
-    var ambient = new THREE.AmbientLight(0xfff0e6, 0.17);
-    scene.add(ambient);
-    var key = new THREE.DirectionalLight(0xfff4e6, 1.10);
-    key.position.set(-3.40, 8.60, 5.20);
-    scene.add(key);
-    var fill = new THREE.DirectionalLight(0xe8eef5, 0.26);
-    fill.position.set(4.60, 1.40, 3.60);
-    scene.add(fill);
-
-    /* law 7: deterministic. Nothing here differs between two loads. */
-    function h1(i) { var s = Math.sin(i * 12.9898) * 43758.5453; return s - Math.floor(s); }
-
-    /* =====================================================================
-       Las piezas. Law 2: cosas que se pueden nombrar en el mostrador.
-
-       O LECTOR — carcasa · bisel · pantalla · marco · liña ×2 ·
-         tecla de lectura · tecla de menú · piloto · rótulo · tapa ·
-         tornillo ×2 · cabeza · bisel da cabeza · antena · cordón
-
-       O APLICADOR — cuerpo · aletas · émbolo · cabeza do émbolo ·
-         cono luer · cánula · bisel · capuchón · precinto ·
-         graduación ×4 · etiqueta · código de barras ×7
-
-       O TRANSPONDEDOR — cápsula de biovidrio · tapón ×2 · parileno ·
-         núcleo de ferrita · bobina · fío ×2 · condensador · chip ·
-         soldadura ×2
-
-       O CAMPO — anel de campo ×6 · acoplamento ×3
-       ===================================================================== */
-
-    var world = new THREE.Group();
-    scene.add(world);
-
-    var parts = [];
-    function part(host, mesh, id) {
-      mesh.userData.id = id || "";
-      host.add(mesh);
-      if (id) parts.push(mesh);
-      return mesh;
-    }
-    function box(w, h, d, mat) {
-      return new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-    }
-    /* A cylinder turned onto the X axis, which is the axis every
-       instrument on this tray is built along. */
-    function rod(r1, r2, len, seg2, mat) {
-      var m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, len, seg2 || 12), mat);
-      m.rotation.z = -Math.PI / 2;
-      return m;
-    }
-    function at(mesh, x, y, z) { mesh.position.set(x, y, z); return mesh; }
-
-    /* --- o lector ------------------------------------------------------ */
-    var lector = new THREE.Group();
-    lector.position.set(-3.60, 0, -3.40);
-    lector.rotation.y = -0.14;
-    world.add(lector);
-
-    /* A bevel is a frame around the face, not a lid over it: capping the
-       whole top turned the clinic's green into a grey slab and lost the one
-       chromatic the instrument is allowed. */
-    function bevel(host, w, d, cx, cz, y, id) {
-      var th = 0.30;
-      part(host, at(lined(box(w, 0.22, th, M_BEVEL), 30), cx, y, cz - d / 2 + th / 2), id);
-      part(host, at(lined(box(w, 0.22, th, M_BEVEL), 30), cx, y, cz + d / 2 - th / 2), "");
-      part(host, at(lined(box(th, 0.22, d - th * 2, M_BEVEL), 30), cx - w / 2 + th / 2, y, cz), "");
-      part(host, at(lined(box(th, 0.22, d - th * 2, M_BEVEL), 30), cx + w / 2 - th / 2, y, cz), "");
-    }
-
-    part(lector, at(lined(box(9.50, 1.75, 6.00, M_SHELL), 30), 0, 0.875, 0), "carcasa");
-    bevel(lector, 9.70, 6.20, 0, 0, 1.86, "bisel");
-    part(lector, at(lined(box(4.80, 0.10, 2.60, M_BEVEL), 30), -1.60, 1.80, -0.75), "marco");
-    var pantalla = part(lector, at(lined(box(4.20, 0.08, 2.00, M_SCREEN), 30), -1.60, 1.86, -0.75), "pantalla");
-    /* Two readout lines on the LCD. The digits themselves are the leader
-       label in the page margin — law 6 — not fake type on a texture. */
-    part(lector, at(box(3.10, 0.04, 0.17, M_TRACE), -1.90, 1.91, -1.18), "liña");
-    part(lector, at(box(1.90, 0.04, 0.15, M_TRACE), -2.50, 1.91, -0.52), "");
-    var tecla = part(lector, at(lined(box(1.80, 0.30, 1.10, M_KEY), 30), -1.60, 1.88, 1.50), "tecla");
-    part(lector, at(lined(box(0.90, 0.24, 0.90, M_BEVEL), 30), 0.90, 1.85, 1.50), "tecla de menú");
-    part(lector, at(box(0.42, 0.16, 0.42, M_LED), 2.40, 1.83, 1.50), "piloto");
-    part(lector, at(lined(box(2.40, 0.05, 0.70, M_PAPER), 30), 3.30, 1.78, 1.68), "rótulo");
-    part(lector, at(lined(box(3.20, 0.16, 2.60, M_SHELL_D), 30), -3.10, 1.83, -0.20), "tapa");
-    for (var t = 0; t < 2; t++) {
-      part(lector, at(lined(new THREE.Mesh(
-        new THREE.CylinderGeometry(0.13, 0.13, 0.12, 8), M_STEEL
-      ), 30), -3.10, 1.92, t ? 1.05 : -1.05), t ? "" : "tornillo");
-    }
-    part(lector, at(lined(box(4.40, 1.40, 6.40, M_SHELL), 30), 6.60, 0.70, 0), "cabeza");
-    bevel(lector, 4.60, 6.60, 6.60, 0, 1.50, "bisel da cabeza");
-    var antena = new THREE.Mesh(new THREE.TorusGeometry(1.95, 0.14, 6, 20), M_STEEL);
-    antena.rotation.x = -Math.PI / 2;
-    part(lector, at(lined(antena, 40), 6.60, 0.98, 0), "antena");
-    var cordon = new THREE.Mesh(new THREE.TorusGeometry(0.40, 0.10, 6, 12), M_SHELL_D);
-    cordon.rotation.x = -Math.PI / 2;
-    part(lector, at(lined(cordon, 40), -5.30, 0.85, 0), "cordón");
-
-    /* --- o aplicador --------------------------------------------------- */
-    var aplicador = new THREE.Group();
-    aplicador.position.set(0.60, 0.62, 4.20);
-    aplicador.rotation.y = 0.16;
-    world.add(aplicador);
-
-    part(aplicador, at(lined(rod(0.55, 0.55, 4.60, 16, M_PLAST), 40), 0, 0, 0), "cuerpo");
-    /* The finger flanges spread sideways, not up and down: a syringe lying
-       on a bench does not have half of itself under the bench. */
-    part(aplicador, at(lined(box(0.28, 0.44, 2.20, M_PLAST), 30), -2.20, 0, 0), "aletas");
-    part(aplicador, at(lined(rod(0.17, 0.17, 2.80, 10, M_PLAST), 40), -3.50, 0, 0), "émbolo");
-    part(aplicador, at(lined(rod(0.72, 0.72, 0.26, 14, M_CAPTOP), 40), -4.90, 0, 0), "cabeza do émbolo");
-    part(aplicador, at(lined(rod(0.36, 0.20, 0.70, 12, M_CAPTOP), 40), 2.65, 0, 0), "cono luer");
-    var canula = part(aplicador, at(lined(rod(0.145, 0.145, 2.10, 10, M_STEEL), 40), 4.05, 0, 0), "cánula");
-    part(aplicador, at(lined(rod(0.145, 0.02, 0.30, 10, M_STEEL), 40), 5.25, 0, 0), "bisel");
-    var capuchon = part(aplicador, at(lined(rod(0.30, 0.30, 2.50, 12, M_CAPTOP), 40), 4.25, 0, 0), "capuchón");
-    part(aplicador, at(lined(rod(0.60, 0.60, 0.12, 14, M_CAPTOP), 40), 2.05, 0, 0), "precinto");
-    for (var g = 0; g < 4; g++) {
-      part(aplicador, at(lined(rod(0.565, 0.565, 0.05, 14, M_CAPTOP), 40), -1.30 + g * 0.80, 0, 0),
-        g === 0 ? "graduación" : "");
-    }
-    part(aplicador, at(lined(box(1.80, 0.04, 0.75, M_PAPER), 30), -0.20, 0.57, 0), "etiqueta");
-    for (var b = 0; b < 7; b++) {
-      var bw = 0.040 + h1(b * 7 + 3) * 0.062;
-      part(aplicador, at(box(bw, 0.03, 0.50, M_BAR), -0.90 + b * 0.24, 0.60, 0),
-        b === 0 ? "código de barras" : "");
-    }
-
-    /* --- o transpondedor ISO 11784 · 12 × 2 mm -------------------------
-       Its own group in world space, not a child of the applicator: it
-       leaves the cannula and the camera follows it, and one writer per
-       position is the rule the replan sets. */
-    var capsula = new THREE.Group();
-    world.add(capsula);
-    var CAP_IN = new THREE.Vector3(4.55, 0.62, 3.55);
-    var CAP_OUT = new THREE.Vector3(6.40, 2.25, 3.20);
-
-    var vidrio = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.10, 1.10, 14), M_GLASS);
-    vidrio.rotation.z = -Math.PI / 2;
-    vidrio.renderOrder = 6;
-    part(capsula, vidrio, "cápsula");
-    for (var e = 0; e < 2; e++) {
-      var tapon = new THREE.Mesh(new THREE.SphereGeometry(0.10, 12, 8), M_GLASS);
-      tapon.renderOrder = 6;
-      part(capsula, at(tapon, e ? 0.55 : -0.55, 0, 0), e ? "" : "tapón");
-    }
-    part(capsula, at(lined(rod(0.118, 0.118, 0.20, 12, M_PLAST), 40), -0.40, 0, 0), "parileno");
-    part(capsula, at(lined(rod(0.045, 0.045, 0.62, 10, M_FERRITE), 40), 0.10, 0, 0), "núcleo de ferrita");
-
-    /* The coil is the one place where segments buy information: 26 turns
-       of a real helix say "no battery, it runs on the field" in a way no
-       cylinder can. 12 segments per turn, tube radius 0.011. */
-    var coilPts = [];
-    var TURNS = 26, COIL_LEN = 0.60, COIL_R = 0.064, COIL_SEG = TURNS * 12;
-    for (var c = 0; c <= COIL_SEG; c++) {
-      var ct = c / COIL_SEG;
-      var ca = ct * Math.PI * 2 * TURNS;
-      coilPts.push(new THREE.Vector3(
-        -COIL_LEN / 2 + 0.10 + ct * COIL_LEN,
-        Math.sin(ca) * COIL_R,
-        Math.cos(ca) * COIL_R
-      ));
-    }
-    var bobina = new THREE.Mesh(
-      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(coilPts), COIL_SEG, 0.011, 4, false),
-      M_COIL
-    );
-    part(capsula, bobina, "bobina");
-
-    var condensador = part(capsula, at(lined(box(0.11, 0.075, 0.075, M_SOLDER), 30), -0.30, 0, 0.03), "condensador");
-    var chip = part(capsula, at(lined(box(0.10, 0.035, 0.065, M_DIE), 30), -0.44, 0.01, -0.02), "chip");
-    for (var w2 = 0; w2 < 2; w2++) {
-      part(capsula, at(lined(rod(0.010, 0.010, 0.13, 6, M_SOLDER), 40), -0.22, 0, w2 ? 0.045 : -0.045),
-        w2 ? "" : "fío");
-      part(capsula, at(lined(box(0.035, 0.030, 0.030, M_SOLDER), 30), -0.375, 0, w2 ? 0.04 : -0.04),
-        w2 ? "" : "soldadura");
-    }
-
-    /* --- o campo: 134,2 kHz --------------------------------------------
-       Six rings off the antenna and three around the capsule. Same
-       phenomenon at the two scales the page actually visits — at ×40 a
-       ring 4 cm across is not in the frame at all. */
-    var aneis = [];
-    var ringGeom = new THREE.TorusGeometry(1, 0.028, 5, 26);
-    for (var r = 0; r < 6; r++) {
-      var anel = new THREE.Mesh(ringGeom, M_FIELD);
-      anel.rotation.x = -Math.PI / 2;
-      lector.add(anel);
-      anel.position.set(6.60, 1.00, 0);
-      aneis.push({ mesh: anel, phase: r / 6 });
-      if (r === 0) { anel.userData.id = "anel de campo"; parts.push(anel); }
-    }
-    var acoples = [];
-    var acopleGeom = new THREE.TorusGeometry(1, 0.010, 5, 22);
-    for (var k = 0; k < 3; k++) {
-      var ac = new THREE.Mesh(acopleGeom, M_FIELD);
-      ac.rotation.y = Math.PI / 2;
-      capsula.add(ac);
-      acoples.push({ mesh: ac, phase: k / 3 });
-      if (k === 0) { ac.userData.id = "acoplamento"; parts.push(ac); }
-    }
-
-    /* --- law 5: the object lives in the page ---------------------------
-       The bench continues the page's own rules as a 1 cm graph, and the
-       only thing under the instruments is a contact shadow. Both fade out
-       past ×6, because at that magnification you are inside the object and
-       a bench grid under a 12 mm capsule is a lie about scale. */
-    var gridPts = [];
-    for (var gi = -18; gi <= 18; gi++) {
-      gridPts.push(gi, 0, -13, gi, 0, 13);
-      gridPts.push(-18, 0, gi * 0.72, 18, 0, gi * 0.72);
-    }
-    var gridGeom = new THREE.BufferGeometry();
-    gridGeom.setAttribute("position", new THREE.Float32BufferAttribute(gridPts, 3));
-    var gridMat = new THREE.LineBasicMaterial({ color: LINE, transparent: true, opacity: 0.6 });
-    var bench = new THREE.LineSegments(gridGeom, gridMat);
-    world.add(bench);
-
-    var M_SH = new THREE.MeshBasicMaterial({
-      color: INK, transparent: true, opacity: 0.10, depthWrite: false
-    });
-    function shadow(w, d, x, z, rot) {
-      var s = new THREE.Mesh(new THREE.CircleGeometry(1, 22), M_SH);
-      s.rotation.x = -Math.PI / 2;
-      s.rotation.z = rot || 0;
-      s.scale.set(w, d, 1);
-      s.position.set(x, 0.012, z);
-      s.renderOrder = 1;
-      world.add(s);
-      return s;
-    }
-    shadow(8.8, 4.2, -3.0, -3.2, -0.14);
-    shadow(5.4, 1.3, 0.7, 4.2, 0.16);
-
-    /* --- law 6: the technical caption, on the fixed overlay ------------- */
-    var svgNS = "http://www.w3.org/2000/svg";
-    var notesSvg = document.createElementNS(svgNS, "svg");
-    notesSvg.setAttribute("class", "bz-notes");
-    notesSvg.setAttribute("aria-hidden", "true");
-    panel.appendChild(notesSvg);
-    var NOTE_SPEC = [
-      { label: "Antena · 134,2 kHz", a: 0.150, b: 0.290, y: 0.19, mesh: antena },
-      { label: "Tecla de lectura", a: 0.190, b: 0.290, y: 0.80, mesh: tecla },
-      { label: "Cánula 12 G", a: 0.310, b: 0.430, y: 0.19, mesh: canula },
-      { label: "Precintado", a: 0.340, b: 0.430, y: 0.80, mesh: capuchon },
-      { label: "Núcleo de ferrita", a: 0.470, b: 0.600, y: 0.19, mesh: bobina },
-      { label: "Sen pila", a: 0.520, b: 0.600, y: 0.80, mesh: condensador },
-      { label: "1.100 espiras", a: 0.605, b: 0.680, y: 0.19, mesh: bobina },
-      { label: CODE, a: 0.905, b: 1.30, y: 0.19, mesh: pantalla }
-    ];
-    var notes = NOTE_SPEC.map(function (spec) {
-      var lead = document.createElementNS(svgNS, "polyline");
-      lead.setAttribute("class", "bz-lead-line");
-      var dot = document.createElementNS(svgNS, "circle");
-      dot.setAttribute("class", "bz-note-dot");
-      dot.setAttribute("r", "2.5");
-      var text = document.createElementNS(svgNS, "text");
-      text.setAttribute("class", "bz-note");
-      text.textContent = spec.label;
-      notesSvg.appendChild(lead);
-      notesSvg.appendChild(dot);
-      notesSvg.appendChild(text);
-      return { spec: spec, lead: lead, dot: dot, text: text };
-    });
-
-    /* --- the traverse: nine stations, lerped along p --------------------
-       Distances are chosen by what has to be legible, and the readout is
-       derived from the distance the camera actually ends up at. */
-    var CAM = [
-      /*  p     camX   camY   camZ   lookX  lookY  lookZ */
-      [0.000, -5.40, 24.00, 17.00, -4.20,  5.20, -1.60],  // a bandexa · ×1
-      [0.185, -5.60,  8.20, 12.00, -5.40,  1.40, -3.40],  // o lector
-      [0.320,  3.40,  5.60,  9.20,  3.40,  0.80,  3.30],  // o aplicador
-      [0.420,  8.90,  3.30,  6.40,  8.80,  0.75,  3.90],  // a cánula
-      [0.500,  9.98,  3.05,  5.75,  9.90,  2.35,  3.70],  // ×13 · a cápsula
-      [0.590,  9.94,  2.78,  5.10,  9.90,  2.35,  3.70],  // ×20 · a bobina
-      [0.690, -5.30,  4.60,  1.20, -6.86,  1.94, -4.60],  // o código
-      [0.790, -6.60, 24.60, 18.00, -5.60,  5.20, -1.60],  // a clínica
-      [1.000, -5.70,  5.30,  1.90, -5.60,  2.00, -4.30]   // urxencias
-    ];
-    function seg(p, a, b) {
-      if (p <= a) return 0;
-      if (p >= b) return 1;
-      return (p - a) / (b - a);
-    }
-    function smooth(t) {
-      t = Math.max(0, Math.min(1, t));
-      return t * t * (3 - 2 * t);
-    }
-    var camv = [0, 0, 0, 0, 0, 0];
-    function camAtP(p, out) {
-      var i = 0;
-      while (i < CAM.length - 2 && p > CAM[i + 1][0]) i++;
-      var k = smooth(seg(p, CAM[i][0], CAM[i + 1][0]));
-      for (var j = 1; j < 7; j++) out[j - 1] = CAM[i][j] + (CAM[i + 1][j] - CAM[i][j]) * k;
-      return out;
-    }
-
-    /* A stagger expressed as a function of progress instead of time, so it
-       scrubs both ways with the scroll. */
-    function reveal(els, t, staggerT, dist) {
-      for (var i = 0; i < els.length; i++) {
-        var u = smooth(seg(t, i * staggerT, i * staggerT + 0.55));
-        els[i].style.opacity = String(u);
-        els[i].style.transform = "translateY(" + (1 - u) * dist + "px)";
+    var h = hourAt(p);
+    for (var i = 0; i < marks.length; i++) {
+      var it = marks[i];
+      var t = span(it.pre ? clock.intro : p, it.a, it.b);
+      if (it.k !== "draw") t = ease(t);
+      if (t === it.t) continue;
+      if (Math.abs(t - it.t) < 0.0035 && t !== 0 && t !== 1) continue;
+      it.t = t;
+      var el = it.el;
+      if (it.k === "draw") {
+        el.setAttribute("stroke-dashoffset", (it.len * (1 - t)).toFixed(1));
+        el.setAttribute("opacity", t <= 0 ? "0" : "1");
+      } else if (it.k === "fade") {
+        el.setAttribute("opacity", t.toFixed(3));
+      } else if (it.k === "swingTo") {
+        el.setAttribute("transform",
+          "rotate(" + (it.deg * t).toFixed(2) + " " + it.cx + " " + it.cy + ")");
       }
     }
 
-    var LOG = [
-      ["00", "A bandexa", "134,2 kHz"],
-      ["01", "O que si pode dicir", "134,2 kHz"],
-      ["02", "A clínica", "ISO 11784"],
-      ["03", "Urxencias", "24 h"]
-    ];
-    /* Each stop is where the camera actually is when that paragraph is
-       on screen: the reader, the cannula, the coil at depth, the code. */
-    var STOPS = [{ a: 0.200 }, { a: 0.320 }, { a: 0.460 }, { a: 0.580 }];
-
-    /* The code resolves left to right as the coil charges: fifteen digits,
-       in the ISO grouping the reader itself would show. */
-    var DIGITS = CODE.replace(/\s/g, "");
-    function codeAt(n) {
-      var out = "", shown = 0;
-      for (var i = 0; i < DIGITS.length; i++) {
-        out += i < n ? DIGITS[i] : "·";
-        shown++;
-        if (shown % 3 === 0 && i < DIGITS.length - 1) out += " ";
-      }
-      return out;
+    /* the hand is not on a window: it is on the hour */
+    if (hand) {
+      hand.el.setAttribute("transform",
+        "rotate(" + ((h / 24) * 360).toFixed(2) + " " + RCX + " " + RCY + ")");
+      hand.el.setAttribute("opacity", String(seg(p, 0.10, 0.16)));
+      hand.el.setAttribute("stroke-dashoffset",
+        (hand.len * (1 - seg(p, 0.10, 0.16))).toFixed(1));
+    }
+    if (opBar) {
+      var ob = seg(p, 0.470, 0.560);
+      opBar.el.setAttribute("stroke-dashoffset", (opBar.len * (1 - ob)).toFixed(1));
     }
 
-    var box2 = { w: 1, h: 1 };
-    var portraitK = 1, portraitLift = 0;
-    var lastGround = "", lastLog = -1, lastLogS = "", lastCode = "";
-    var here = new THREE.Vector3(), proj = new THREE.Vector3();
-    var camPos = new THREE.Vector3(), camLook = new THREE.Vector3();
-    var ACC_LIT = ACCENT.clone();
-
-    function fit() {
-      box2.w = stage.clientWidth || 1;
-      box2.h = stage.clientHeight || 1;
-      notesSvg.setAttribute("viewBox", "0 0 " + box2.w + " " + box2.h);
-      notesSvg.setAttribute("width", String(box2.w));
-      notesSvg.setAttribute("height", String(box2.h));
-      gpu.setSize(box2.w, box2.h, false);
-      camera.aspect = box2.w / Math.max(box2.h, 1);
-      camera.updateProjectionMatrix();
-      /* Portrait is a 3D problem, not a CSS one: the station that frames
-         the tray on a 16:10 desktop crops it at 390px. Dolly out along the
-         look axis and drop the target so the copy gets the bottom. */
-      var a = camera.aspect;
-      if (a < 0.95) { portraitK = 1.46; portraitLift = 1.10; }
-      else if (a < 1.4) { portraitK = 1.18; portraitLift = 0.32; }
-      else { portraitK = 1; portraitLift = 0; }
+    for (i = 0; i < 5; i++) {
+      var w = WIN[i];
+      var ct = Math.min(span(p, w[0], w[1]), 1 - span(p, w[2], w[3]));
+      if (i === 0) ct = Math.min(ct, clock.intro);
+      var el2 = ins[i];
+      if (!el2) continue;
+      el2.style.opacity = ct.toFixed(3);
+      el2.style.transform = (portrait ? "" : "translateY(-50%)") +
+        " translateY(" + mix(24, 0, ease(clamp(ct, 0, 1))).toFixed(1) + "px)";
+      el2.style.visibility = ct < 0.004 ? "hidden" : "visible";
     }
-    fit();
-    window.addEventListener("resize", fit);
 
-    function frame() {
-      var p = state.p;
-
-      /* --- the beats, all sub-ranges of the one clock ------------------ */
-      var pressT = smooth(seg(p, 0.165, 0.235));
-      var fieldT = smooth(seg(p, 0.190, 0.320));
-      var capT = smooth(seg(p, 0.300, 0.400));
-      var outT = smooth(seg(p, 0.390, 0.500));
-      var openT = smooth(seg(p, 0.460, 0.560));
-      var chargeT = smooth(seg(p, 0.520, 0.630));
-      var codeT = smooth(seg(p, 0.560, 0.690));
-      var nightT = smooth(seg(p, 0.855, 0.905));
-
-      /* --- camera ------------------------------------------------------ */
-      camAtP(p, camv);
-      camPos.set(camv[0], camv[1], camv[2]);
-      camLook.set(camv[3], camv[4], camv[5]);
-      camPos.y += Math.sin(state.idle) * 0.012 * camPos.distanceTo(camLook) * 0.05;
-      if (portraitK !== 1) {
-        camera.position.copy(camPos);
-        camera.position.sub(camLook).multiplyScalar(portraitK).add(camLook);
-        camLook.y -= portraitLift * (0.10 + 0.90 * smooth(seg(camPos.distanceTo(camLook), 1.5, 12)));
-      } else {
-        camera.position.copy(camPos);
-      }
-      camera.lookAt(camLook);
-
-      /* The magnification is measured, not declared: it is the ratio of
-         the establishing distance to the one the camera is at. */
-      var dist = camera.position.distanceTo(camLook);
-      var mag = Math.max(1, Math.round(29.6 / Math.max(dist, 0.2)));
-      var macroT = smooth(seg(mag, 4, 9));
-
-      /* --- o lector ---------------------------------------------------- */
-      tecla.position.y = 1.88 - pressT * 0.12;
-      M_LED.emissive.copy(ACC_LIT).multiplyScalar(
-        pressT * (0.55 + 0.45 * Math.sin(state.rise * Math.PI * 2))
-      );
-
-      /* the field: six rings off the antenna, deterministic phase */
-      for (var i = 0; i < aneis.length; i++) {
-        var a2 = aneis[i];
-        var tt = (state.rise + a2.phase) % 1;
-        var rad = 0.35 + tt * 4.6;
-        a2.mesh.scale.set(rad, rad, 1);
-        a2.mesh.visible = fieldT > 0.02;
-      }
-      M_FIELD.opacity = fieldT * 0.38 * (1 - macroT) + chargeT * 0.26 * macroT;
-      for (var j = 0; j < acoples.length; j++) {
-        var ac2 = acoples[j];
-        var at2 = (state.rise * 1.6 + ac2.phase) % 1;
-        var ar = 0.13 + at2 * 0.26;
-        ac2.mesh.scale.set(ar, ar, 1);
-        ac2.mesh.visible = chargeT > 0.04;
-      }
-
-      /* --- o aplicador ------------------------------------------------- */
-      capuchon.position.x = 4.25 + capT * 3.90;
-      capuchon.visible = capT < 0.98;
-
-      /* --- o transpondedor --------------------------------------------- */
-      capsula.position.lerpVectors(CAP_IN, CAP_OUT, outT);
-      capsula.rotation.y = 0.16 - outT * 0.46;
-      capsula.rotation.z = outT * 0.16 + Math.sin(state.idle) * 0.02;
-      M_GLASS.opacity = 0.94 - openT * 0.80;
-      M_GLASS.depthWrite = M_GLASS.opacity > 0.55;
-      M_COIL.emissive.copy(ACC_LIT).multiplyScalar(
-        chargeT * (0.30 + 0.20 * Math.sin(state.rise * Math.PI * 2))
-      );
-      M_DIE.emissive.copy(ACC_LIT).multiplyScalar(codeT * 0.55);
-
-      /* --- the room: one key, two reasons ------------------------------ */
-      key.intensity = 1.10 - nightT * 0.58;
-      fill.intensity = 0.26 - nightT * 0.17;
-      ambient.intensity = 0.17 - nightT * 0.07;
-      M_TRACE.color.copy(C_TRACE).lerp(ACC_LIT, codeT * 0.55 + nightT * 0.25);
-      gridMat.opacity = 0.6 * (1 - macroT) * (1 - nightT * 0.85);
-      bench.visible = gridMat.opacity > 0.02;
-      M_SH.opacity = 0.10 * (1 - macroT) * (1 - nightT);
-      EDGE.opacity = 0.26 + nightT * 0.16;
-
-      /* The page's own ground is the environment, animated on p: the
-         consulting room in daylight, then three in the morning. */
-      var hex = lerpHex(HEX_GROUND, H_NIGHT, nightT);
-      if (hex !== lastGround) {
-        lastGround = hex;
-        panel.style.setProperty("--bz-ground", hex);
-        panel.style.setProperty("--bz-fg", lerpHex(HEX_INK, H_FG_NIGHT, nightT));
-        panel.style.setProperty("--bz-line", lerpHex(HEX_LINE, H_LN_NIGHT, nightT));
-      }
-
-      /* --- the copy: labelled ranges of the one clock ------------------ */
-      if (ch0) ch0.style.opacity = String(1 - smooth(seg(p, 0.070, 0.140)));
-      if (ch1) ch1.style.opacity = String(
-        smooth(seg(p, 0.125, 0.165)) * (1 - smooth(seg(p, 0.655, 0.705)))
-      );
-      for (var s2 = 0; s2 < stepEls.length; s2++) {
-        var st = STOPS[s2];
-        var vis = smooth(seg(p, st.a - 0.042, st.a + 0.030));
-        if (s2 < 3) vis *= 1 - smooth(seg(p, STOPS[s2 + 1].a - 0.032, STOPS[s2 + 1].a + 0.028));
-        else vis *= 1 - smooth(seg(p, 0.650, 0.700));
-        stepEls[s2].style.opacity = String(vis);
-        stepEls[s2].style.transform = "translateY(" + (1 - vis) * 22 + "px)";
-      }
-      if (kicker2) kicker2.style.opacity = String(smooth(seg(p, 0.690, 0.730)));
-      reveal(h2Chars, seg(p, 0.700, 0.790), 0.006, 24);
-      reveal(serviceEls, seg(p, 0.718, 0.808), 0.055, 20);
-      if (ch2) ch2.style.opacity = String(1 - smooth(seg(p, 0.840, 0.880)));
-      reveal(deskEls, seg(p, 0.900, 0.985), 0.07, 22);
-
-      /* --- the readouts ------------------------------------------------ */
-      var shown = Math.round(codeT * DIGITS.length);
-      var codeTxt = codeAt(shown);
-      if (idEl && codeTxt !== lastCode) { lastCode = codeTxt; idEl.textContent = codeTxt; }
-      var chap = p < 0.130 ? 0 : p < 0.690 ? 1 : p < 0.855 ? 2 : 3;
-      if (chap !== lastLog) {
-        lastLog = chap;
-        if (logN) logN.textContent = LOG[chap][0];
-        if (logT) logT.textContent = LOG[chap][1];
-      }
-      var logLine = "×" + mag + " · " + LOG[chap][2];
-      if (logS && logLine !== lastLogS) { lastLogS = logLine; logS.textContent = logLine; }
-
-      /* --- leaders ------------------------------------------------------ */
-      for (var n = 0; n < notes.length; n++) {
-        var note = notes[n];
-        var nv = smooth(seg(p, note.spec.a, note.spec.a + 0.035))
-               * (1 - smooth(seg(p, note.spec.b, note.spec.b + 0.035)));
-        var target = note.spec.mesh;
-        if (!target || nv < 0.06) {
-          note.lead.style.opacity = "0";
-          note.text.style.opacity = "0";
-          note.dot.style.opacity = "0";
-          continue;
-        }
-        target.getWorldPosition(here);
-        proj.copy(here).project(camera);
-        var scrx = (proj.x * 0.5 + 0.5) * box2.w;
-        var scry = (-proj.y * 0.5 + 0.5) * box2.h;
-        /* Chapter 01's copy owns the right column, so its leaders stay
-           left; the closing one goes to whichever side it is nearer. */
-        var sd = (p > 0.14 && p < 0.70) ? -1 : (scrx < box2.w * 0.5 ? -1 : 1);
-        var edge = sd < 0 ? box2.w * 0.12 : box2.w * 0.90;
-        var ty = box2.h * (portraitLift > 0
-          ? (note.spec.y < 0.5 ? 0.12 : 0.80)
-          : note.spec.y);
-        var elbow = sd < 0 ? edge + box2.w * 0.05 : edge - box2.w * 0.05;
-        note.lead.setAttribute("points",
-          scrx + "," + scry + " " + elbow + "," + ty + " " + edge + "," + ty);
-        note.dot.setAttribute("cx", scrx);
-        note.dot.setAttribute("cy", scry);
-        note.text.setAttribute("x", edge);
-        note.text.setAttribute("y", ty - 8);
-        note.text.setAttribute("text-anchor", sd < 0 ? "start" : "end");
-        note.lead.style.opacity = String(nv * 0.55);
-        note.dot.style.opacity = String(nv * 0.8);
-        note.text.style.opacity = String(nv);
-      }
-
-      /* The settle is an entrance, and it only touches the establishing
-         chapter: a 5% world scale at ×40 would move the coil out of the
-         frame. */
-      world.scale.setScalar(1 - (1 - state.settle) * 0.05 * (1 - smooth(seg(p, 0.02, 0.10))));
-      gpu.render(scene, camera);
-      requestAnimationFrame(frame);
+    for (i = 0; i < moments.length; i++) {
+      var mt = seg(p, 0.418 + i * 0.026, 0.488 + i * 0.026);
+      moments[i].style.opacity = mt.toFixed(3);
+      moments[i].style.transform = "translateY(" + mix(16, 0, mt).toFixed(1) + "px)";
     }
-    requestAnimationFrame(frame);
-  }).catch(function (err) {
-    console.error("clinica-veterinaria-bouzas scene failed", err);
-    window.__staticB(panel);
-  });
+    for (i = 0; i < svcRows.length; i++) {
+      var vt = seg(p, 0.652 + i * 0.026, 0.720 + i * 0.026);
+      svcRows[i].style.opacity = vt.toFixed(3);
+      svcRows[i].style.transform = "translateY(" + mix(14, 0, vt).toFixed(1) + "px)";
+    }
+
+    if (hourEl) {
+      var hh = Math.floor(h) % 24, mm = Math.round((h - Math.floor(h)) * 60);
+      if (mm === 60) { mm = 0; hh = (hh + 1) % 24; }
+      hourEl.textContent = clock.intro < 0.15
+        ? "——:——"
+        : pad2(hh) + ":" + pad2(mm) + (p > 0.86 ? " · URGENCIAS" : "");
+    }
+    if (cue) cue.style.opacity = String((1 - span(p, 0.02, 0.09)) * clock.intro);
+  }
+
+  var live = true;
+  (function loop() {
+    if (!live) return;
+    paint();
+    requestAnimationFrame(loop);
+  })();
+  panel.addEventListener("bz:stop", function () { live = false; }, { once: true });
 };
 
 (function () {
