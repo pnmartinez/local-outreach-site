@@ -331,8 +331,8 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
 #dsgB .af-h2 {
   font-family: "Familjen Grotesk", system-ui, sans-serif;
   font-weight: 500;
-  font-size: clamp(24px, 2.5vw, 38px);
-  line-height: 1.14;
+  font-size: clamp(23px, 2.3vw, 34px);
+  line-height: 1.16;
   letter-spacing: -.02em;
   margin: 0 0 22px;
   max-width: 18ch;
@@ -408,38 +408,6 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   opacity: .55;
 }
 
-/* ---- the legend chips -------------------------------------------- */
-
-#dsgB .af-chips {
-  position: fixed;
-  left: clamp(20px, 5vw, 82px);
-  bottom: clamp(26px, 5vh, 48px);
-  z-index: 3;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  width: min(36vw, 470px);
-  pointer-events: none;
-}
-#dsgB .af-chip {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-  padding: 5px 10px;
-  border: 1px solid color-mix(in srgb, var(--st-fg) 20%, transparent);
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  opacity: 0;
-  will-change: opacity, transform;
-}
-#dsgB .af-chip span { opacity: .5; }
-#dsgB .af-chip b { color: var(--st-accent); font-variant-numeric: tabular-nums; }
-
 /* ---- the scroll column ------------------------------------------- */
 
 #dsgB .af-scroll { position: relative; z-index: 1; pointer-events: none; }
@@ -472,10 +440,6 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   #dsgB .af-room h3, #dsgB .af-svc h3 { font-size: 18px; }
   #dsgB .af-room p, #dsgB .af-svc p { font-size: 12.5px; max-width: none; }
   #dsgB .af-tel { font-size: clamp(26px, 8.6vw, 42px); }
-  /* Portrait has no band between the drawing and the copy: the chips
-     would land on the chapter. The metres are already on the plan and
-     in the rail, so they sit this one out. */
-  #dsgB .af-chips { display: none; }
   #dsgB .af-rail { font-size: 9px; gap: 10px; padding: 14px clamp(14px, 4vw, 24px); }
   #dsgB .af-place { display: none; }
   #dsgB .af-brand { max-width: 44vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -501,15 +465,6 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
   background: none;
 }
 #dsgB .af-static .af-in-0 { padding-top: 104px; }
-#dsgB .af-static .af-chips {
-  display: flex;
-  position: static;
-  width: auto;
-  max-width: 720px;
-  margin: 0 auto 72px;
-  padding: 0 clamp(18px, 5vw, 40px);
-}
-#dsgB .af-static .af-chip { opacity: 1; }
 #dsgB .af-static .af-rail { position: static; }
 
 </style>
@@ -582,7 +537,7 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
     <section class="af-in af-in-3">
       <p class="af-kicker"><b>03</b>Lo que se vive</p>
       <h2 class="af-h2">El plano, los metros y la llave. En Redondela, no en un portal de anuncios.</h2>
-      <div class="af-svcs"><article class="af-svc"><em>01</em><div><h3>Venta</h3><p>Ponemos precio con lo que se vende de verdad en la villa, no con lo que pide el vecino.</p></div></article><article class="af-svc"><em>02</em><div><h3>Alquiler</h3><p>Buscamos inquilino y lo miramos antes de darle la llave.</p></div></article><article class="af-svc"><em>03</em><div><h3>Tasación</h3><p>Os decimos lo que vale y por qué. Sin compromiso de firmar nada.</p></div></article></div>
+      <div class="af-svcs"><article class="af-svc"><em>01</em><div><h3>Venta</h3><p>Ponemos precio con lo que se vende de verdad en la villa, no con lo que pide el vecino.</p></div></article><article class="af-svc"><em>02</em><div><h3>Alquiler</h3><p>Buscamos inquilino y lo miramos antes de darle la llave.</p></div></article></div>
     </section>
 
     <section class="af-in af-in-4">
@@ -592,8 +547,6 @@ footer { padding: 0 var(--pad) 48px; color: var(--muted); font-size: 12px; lette
       <p class="af-addr">Rúa Alfonso XII · Redondela</p>
     </section>
   </div>
-
-  <ul class="af-chips" aria-hidden="true"><li class="af-chip" data-chip="0"><span>Útiles</span><b>68 m²</b></li><li class="af-chip" data-chip="1"><span>Construidos</span><b>82 m²</b></li><li class="af-chip" data-chip="2"><span>Patio</span><b>21 m²</b></li><li class="af-chip" data-chip="3"><span>Planta</span><b>2ª</b></li><li class="af-chip" data-chip="4"><span>Año</span><b>1974</b></li><li class="af-chip" data-chip="5"><span>Orientación</span><b>Sur</b></li><li class="af-chip" data-chip="6"><span>Ascensor</span><b>Sí</b></li></ul>
 
   <div class="af-scroll" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 </div>
@@ -638,13 +591,20 @@ window.__splitB = function (panel) {
   });
   return out;
 };
-/* Inmobiliaria Alfaya — el plano que se levanta. This lead only.
+/* Inmobiliaria Alfaya — la hoja, repartida. This lead only.
  *
- * Design B is a working drawing sheet for the flat on Alfonso XII, and
- * it is deliberately NOT one big object doing a trick. It is about a
- * thousand small marks, each with its own window on a single damped
- * progress p ∈ [0,1], so at any point in the scroll dozens of little
- * things are moving and none of them is the whole page.
+ * Design B is deliberately NOT one big object doing a trick, and after
+ * the first pass it is not one big *drawing* either: the sheet is cut
+ * into ten separate small drawings placed around the whole viewport —
+ * situación, norte y escala, la planta, tres alzados, el cuadro de
+ * superficies, la leyenda, un detalle de carpintería y el cajetín.
+ * Each is its own cluster with its own origin, its own scale, its own
+ * drift and its own moment of focus, and each is built from dozens of
+ * marks that arrive on their own windows of a single damped p ∈ [0,1].
+ *
+ * So there is no single silhouette anywhere on the page: about a
+ * thousand small marks in ten places, and the copy threads between
+ * them.
  *
  *   00 · la hoja       the tick grid, the north, the scale, the cajetín
  *   01 · el portal     the envelope draws, the front door swings, the
@@ -689,7 +649,7 @@ window.__splitB = function (panel) {
 window.__staticB = function (panel) {
   var root = panel.querySelector(".af");
   if (root) root.classList.add("af-static");
-  panel.querySelectorAll(".af-in, .af-room, .af-svc, .af-chip").forEach(function (el) {
+  panel.querySelectorAll(".af-in, .af-room, .af-svc").forEach(function (el) {
     el.style.opacity = "1";
     el.style.transform = "none";
   });
@@ -735,16 +695,33 @@ window.__initB = function (A, panel) {
   svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
   var gGrid = node("g", "af-grid", svg);
   var gPlan = node("g", "af-plan", svg);
-  /* Three layers inside the sheet so they can drift at their own rate:
-     nothing on this page moves as one block. */
-  var gRoom = node("g", null, gPlan);
-  var gElev = node("g", null, gPlan);
-  var gBlock = node("g", null, gPlan);
-  var LAYER = gRoom;
   sheetHost.appendChild(svg);
 
-  var SHEET_W = 1930, SHEET_H = 1130;
-  var PX = 210, PY = 210;        /* the plan's origin inside the sheet */
+  /* Ten drawings, not one. Each has a local box, its own placement in
+     the viewport, its own drift and its own window of focus. */
+  var CL = {}, ORDER = [];
+  function makeCluster(id, w, h, drift, focus) {
+    var g = node("g", null, gPlan);
+    CL[id] = { g: g, w: w, h: h, dx: drift[0], dy: drift[1],
+               fa: focus[0], fb: focus[1], s: 1, x: 0, y: 0, u: -1, op: -1 };
+    ORDER.push(id);
+    return CL[id];
+  }
+  var LAYER = null;
+  function use(id) { LAYER = CL[id].g; return CL[id]; }
+
+  makeCluster("situacion", 560, 176, [0, -20], [-0.10, 0.30]);
+  makeCluster("norte", 430, 128, [12, -8], [-0.10, 0.24]);
+  makeCluster("planta", 1420, 1130, [-8, 6], [0.14, 1.20]);
+  makeCluster("fachada", 420, 272, [0, -30], [0.56, 0.72]);
+  makeCluster("seccion", 420, 236, [0, -20], [0.62, 0.78]);
+  makeCluster("patioalz", 420, 236, [0, -10], [0.68, 0.84]);
+  makeCluster("tabla", 470, 306, [8, 12], [0.40, 0.64]);
+  makeCluster("leyenda", 300, 250, [-8, 10], [0.58, 0.74]);
+  makeCluster("detalle", 330, 260, [10, 8], [0.64, 0.80]);
+  makeCluster("cajetin", 440, 164, [-16, 0], [-0.10, 0.16]);
+
+  var PX = 170, PY = 160;        /* the plan's origin inside its cluster */
   var PW = 1180, PH = 760;       /* 11,80 m × 7,60 m */
 
   /* Every mark is registered with its own window on p. Nothing is
@@ -952,6 +929,8 @@ window.__initB = function (A, panel) {
     { n: "PATIO", x: 900, y: 0, w: 280, h: 760, m: "21,3" }
   ];
 
+  use("planta");
+
   /* 01 · la envolvente y el portal */
   run("h", 0, 0, 1180, 24, [[90, 250], [430, 510], [640, 820]], 0.150, 0.075, 0.055, "k-wall");
   run("h", 760, 0, 1180, 24, [[80, 260], [430, 520], [640, 820]], 0.165, 0.075, 0.055, "k-wall");
@@ -1089,32 +1068,26 @@ window.__initB = function (A, panel) {
      These belong to the sheet, not to the flat, so they arrive with the
      paper: at p = 0 there is already a drawing sheet to scroll into. */
 
-  LAYER = gBlock;
   PRE = true;
-  var BX = 1470;
-
-  /* marcas de esquina y de doblado */
-  [[60, 60, 1, 1], [1870, 60, -1, 1], [60, 1070, 1, -1], [1870, 1070, -1, -1]]
-    .forEach(function (m, i) {
-      L(m[0], m[1], m[0] + 46 * m[2], m[1], "k-dim", [0.30 + i * 0.05, 0.74 + i * 0.05]);
-      L(m[0], m[1], m[0], m[1] + 46 * m[3], "k-dim", [0.32 + i * 0.05, 0.76 + i * 0.05]);
-    });
-  L(52, 565, 78, 565, "k-dim", [0.52, 0.94]);
-  C(BX + 36, 118, 30, "k-dim", [0.34, 0.78]);
-  L(BX + 36, 146, BX + 36, 84, "k-dim", [0.38, 0.82]);
-  L(BX + 36, 84, BX + 27, 100, "k-dim", [0.41, 0.84]);
-  L(BX + 36, 84, BX + 45, 100, "k-dim", [0.41, 0.84]);
-  T(BX + 36, 176, "N", "t-tiny", [0.44, 0.86], null, { anchor: "middle" });
-
+  use("norte");
+  C(38, 62, 30, "k-dim", [0.34, 0.78]);
+  L(38, 90, 38, 28, "k-dim", [0.38, 0.82]);
+  L(38, 28, 29, 44, "k-dim", [0.41, 0.84]);
+  L(38, 28, 47, 44, "k-dim", [0.41, 0.84]);
+  T(38, 120, "N", "t-tiny", [0.44, 0.86], null, { anchor: "middle" });
   for (var sb = 0; sb < 5; sb++) {
-    var sx = BX + 130 + sb * 50;
-    if (sb % 2 === 0) FILL("M" + sx + " 106h50v16h-50Z", "k-fill", [0.40 + sb * 0.04, 0.82 + sb * 0.04]);
-    L(sx, 106, sx, 130, "k-dim", [0.40 + sb * 0.04, 0.82 + sb * 0.04]);
-    T(sx, 152, String(sb), "t-tiny", [0.46 + sb * 0.04, 0.88 + sb * 0.04], null, { anchor: "middle" });
+    var sx = 132 + sb * 50;
+    if (sb % 2 === 0) FILL("M" + sx + " 50h50v16h-50Z", "k-fill", [0.40 + sb * 0.04, 0.82 + sb * 0.04]);
+    L(sx, 50, sx, 74, "k-dim", [0.40 + sb * 0.04, 0.82 + sb * 0.04]);
+    T(sx, 96, String(sb), "t-tiny", [0.46 + sb * 0.04, 0.88 + sb * 0.04], null, { anchor: "middle" });
   }
-  L(BX + 130, 122, BX + 380, 122, "k-dim", [0.40, 0.84]);
-  L(BX + 380, 106, BX + 380, 130, "k-dim", [0.56, 0.94]);
-  T(BX + 380, 152, "5 m", "t-tiny", [0.60, 0.96], null, { anchor: "middle" });
+  L(132, 66, 382, 66, "k-dim", [0.40, 0.84]);
+  L(382, 50, 382, 74, "k-dim", [0.56, 0.94]);
+  T(382, 96, "5 m", "t-tiny", [0.60, 0.96], null, { anchor: "middle" });
+  T(0, 22, "ESCALA GRÁFICA · 1:100", "t-tiny", [0.30, 0.76]);
+
+  use("cajetin");
+  var BX = 0;
 
   var BLOCK = [
     ["PROMOTOR", "ALFAYA"],
@@ -1124,13 +1097,13 @@ window.__initB = function (A, panel) {
     ["PLANTA", "2ª"],
     ["PLANO", "01 · REV. A"]
   ];
-  R(BX, 950, 430, 150, "k-dim", [0.30, 0.76]);
-  L(BX, 1000, BX + 430, 1000, "k-dim", [0.38, 0.82]);
-  L(BX, 1050, BX + 430, 1050, "k-dim", [0.42, 0.86]);
-  L(BX + 268, 950, BX + 268, 1100, "k-dim", [0.46, 0.90]);
+  R(BX, 8, 430, 150, "k-dim", [0.30, 0.76]);
+  L(BX, 58, BX + 430, 58, "k-dim", [0.38, 0.82]);
+  L(BX, 108, BX + 430, 108, "k-dim", [0.42, 0.86]);
+  L(BX + 268, 8, BX + 268, 158, "k-dim", [0.46, 0.90]);
   BLOCK.forEach(function (row, i) {
     var w = winFor(0.50, 0.30, i, BLOCK.length, 0.42);
-    var ry = 972 + (i % 3) * 50;
+    var ry = 30 + (i % 3) * 50;
     var rx = BX + 12 + (i < 3 ? 0 : 268);
     T(rx, ry, row[0], "t-tiny", w);
     T(rx, ry + 24, row[1], "t-block", [w[0] + 0.008, w[1] + 0.008]);
@@ -1139,74 +1112,77 @@ window.__initB = function (A, panel) {
   /* --- 6 · los alzados ---------------------------------------------- */
 
   PRE = false;
-  LAYER = gElev;
+
   /* fachada: doce ventanas, la de la 2ª planta en color */
-  T(BX, 214, "ALZADO · ALFONSO XII", "t-tiny", [0.596, 0.646]);
-  R(BX, 270, 390, 200, "k-elev", [0.600, 0.652]);
-  L(BX - 14, 270, BX + 404, 270, "k-elev", [0.606, 0.658]);
-  L(BX - 14, 270, BX + 40, 242, "k-elev", [0.610, 0.662]);
-  L(BX + 404, 270, BX + 350, 242, "k-elev", [0.610, 0.662]);
-  L(BX + 40, 242, BX + 350, 242, "k-elev", [0.614, 0.666]);
-  R(BX + 60, 220, 22, 24, "k-elev", [0.618, 0.668]);
-  R(BX + 300, 220, 22, 24, "k-elev", [0.620, 0.670]);
+  use("fachada");
+  T(0, 16, "ALZADO · ALFONSO XII", "t-tiny", [0.566, 0.616]);
+  R(14, 72, 390, 190, "k-elev", [0.570, 0.622]);
+  L(0, 72, 418, 72, "k-elev", [0.576, 0.628]);
+  L(0, 72, 54, 44, "k-elev", [0.580, 0.632]);
+  L(418, 72, 364, 44, "k-elev", [0.580, 0.632]);
+  L(54, 44, 364, 44, "k-elev", [0.584, 0.636]);
+  R(74, 22, 22, 24, "k-elev", [0.588, 0.638]);
+  R(314, 22, 22, 24, "k-elev", [0.590, 0.640]);
   for (var fw = 0; fw < 12; fw++) {
     var fc = fw % 4, fr = (fw / 4) | 0;
-    var fx = BX + 34 + fc * 88, fy = 294 + fr * 56;
-    R(fx, fy, 52, 36, fr === 1 ? "k-accent" : "k-elev",
-      winFor(0.624, 0.055, fw, 12, 0.05));
-    L(fx + 26, fy, fx + 26, fy + 36, "k-soft", winFor(0.630, 0.055, fw, 12, 0.05));
+    var fx = 48 + fc * 88, fy = 92 + fr * 52;
+    R(fx, fy, 52, 34, fr === 1 ? "k-accent" : "k-elev",
+      winFor(0.594, 0.055, fw, 12, 0.05));
+    L(fx + 26, fy, fx + 26, fy + 34, "k-soft", winFor(0.600, 0.055, fw, 12, 0.05));
   }
-  R(BX + 172, 420, 46, 50, "k-elev", [0.688, 0.738]);
-  L(BX + 195, 420, BX + 195, 470, "k-soft", [0.692, 0.742]);
-  T(BX + 396, 326, "2ª", "t-tiny", [0.694, 0.744], null, { anchor: "end" });
+  R(186, 212, 46, 50, "k-elev", [0.658, 0.708]);
+  L(209, 212, 209, 262, "k-soft", [0.662, 0.712]);
+  T(410, 158, "2ª", "t-tiny", [0.664, 0.714], null, { anchor: "end" });
 
   /* sección: cuatro forjados y la escalera */
-  T(BX, 496, "SECCIÓN · ESCALERA", "t-tiny", [0.660, 0.710]);
+  use("seccion");
+  T(0, 16, "SECCIÓN · ESCALERA", "t-tiny", [0.630, 0.680]);
   for (var fl = 0; fl < 4; fl++) {
-    L(BX, 520 + fl * 52, BX + 390, 520 + fl * 52, "k-elev",
-      winFor(0.664, 0.040, fl, 4, 0.05));
+    L(10, 44 + fl * 52, 400, 44 + fl * 52, "k-elev",
+      winFor(0.634, 0.040, fl, 4, 0.05));
   }
-  L(BX, 520, BX, 676, "k-elev", [0.676, 0.726]);
-  L(BX + 390, 520, BX + 390, 676, "k-elev", [0.678, 0.728]);
+  L(10, 44, 10, 200, "k-elev", [0.646, 0.696]);
+  L(400, 44, 400, 200, "k-elev", [0.648, 0.698]);
   for (var st = 0; st < 9; st++) {
-    var stx = BX + 150 + st * 14, sty = 676 - st * 5.8;
-    L(stx, sty, stx + 14, sty, "k-soft", winFor(0.682, 0.045, st, 9, 0.05));
-    L(stx + 14, sty, stx + 14, sty - 5.8, "k-soft", winFor(0.684, 0.045, st, 9, 0.05));
+    var stx = 160 + st * 14, sty = 200 - st * 5.8;
+    L(stx, sty, stx + 14, sty, "k-soft", winFor(0.652, 0.045, st, 9, 0.05));
+    L(stx + 14, sty, stx + 14, sty - 5.8, "k-soft", winFor(0.654, 0.045, st, 9, 0.05));
   }
-  FILL("M" + BX + " 572h390v52h-390Z", "k-fill-a", [0.700, 0.752]);
-  T(BX + 380, 606, "LA CASA", "t-tiny", [0.706, 0.756], null, { anchor: "end" });
+  FILL("M10 96h390v52h-390Z", "k-fill-a", [0.668, 0.720]);
+  T(392, 130, "LA CASA", "t-tiny", [0.672, 0.722], null, { anchor: "end" });
 
   /* alzado del patio, con su sol */
-  T(BX, 712, "ALZADO · PATIO", "t-tiny", [0.716, 0.766]);
-  L(BX, 900, BX + 390, 900, "k-elev", [0.720, 0.770]);
-  L(BX, 900, BX, 846, "k-elev", [0.724, 0.774]);
-  L(BX + 390, 900, BX + 390, 846, "k-elev", [0.724, 0.774]);
-  L(BX, 846, BX + 390, 846, "k-elev", [0.728, 0.778]);
+  use("patioalz");
+  T(0, 16, "ALZADO · PATIO", "t-tiny", [0.690, 0.740]);
+  L(10, 214, 400, 214, "k-elev", [0.694, 0.744]);
+  L(10, 214, 10, 160, "k-elev", [0.698, 0.748]);
+  L(400, 214, 400, 160, "k-elev", [0.698, 0.748]);
+  L(10, 160, 400, 160, "k-elev", [0.702, 0.752]);
   for (var pl = 0; pl < 6; pl++) {
-    L(BX + 30 + pl * 66, 846, BX + 30 + pl * 66, 900, "k-soft",
-      winFor(0.730, 0.045, pl, 6, 0.05));
+    L(40 + pl * 66, 160, 40 + pl * 66, 214, "k-soft",
+      winFor(0.704, 0.045, pl, 6, 0.05));
   }
-  C(BX + 320, 796, 28, "k-accent", [0.742, 0.796]);
+  C(330, 62, 28, "k-accent", [0.716, 0.770]);
   for (var ry2 = 0; ry2 < 8; ry2++) {
     var ang = ry2 * Math.PI / 4;
-    L(BX + 320 + Math.cos(ang) * 38, 796 + Math.sin(ang) * 38,
-      BX + 320 + Math.cos(ang) * 50, 796 + Math.sin(ang) * 50, "k-accent",
-      winFor(0.748, 0.045, ry2, 8, 0.05));
+    L(330 + Math.cos(ang) * 38, 62 + Math.sin(ang) * 38,
+      330 + Math.cos(ang) * 50, 62 + Math.sin(ang) * 50, "k-accent",
+      winFor(0.722, 0.045, ry2, 8, 0.05));
   }
-  C(BX + 90, 872, 26, "k-elev", [0.752, 0.802]);
-  C(BX + 210, 880, 18, "k-elev", [0.756, 0.806]);
-  L(BX + 90, 872, BX + 90, 900, "k-soft", [0.758, 0.808]);
-  L(BX + 210, 880, BX + 210, 900, "k-soft", [0.760, 0.810]);
+  C(100, 186, 26, "k-elev", [0.726, 0.776]);
+  C(220, 194, 18, "k-elev", [0.730, 0.780]);
+  L(100, 186, 100, 214, "k-soft", [0.732, 0.782]);
+  L(220, 194, 220, 214, "k-soft", [0.734, 0.784]);
   for (var td = 0; td < 3; td++) {
-    L(BX + 250, 812 + td * 12, BX + 380, 812 + td * 12, "k-soft",
-      winFor(0.762, 0.030, td, 3, 0.05));
+    L(260, 126 + td * 12, 390, 126 + td * 12, "k-soft",
+      winFor(0.736, 0.030, td, 3, 0.05));
   }
-  R(BX + 262, 862, 70, 38, "k-elev", [0.770, 0.818]);
-  L(BX + 297, 862, BX + 297, 900, "k-soft", [0.774, 0.822]);
+  R(272, 176, 70, 38, "k-elev", [0.742, 0.790]);
+  L(307, 176, 307, 214, "k-soft", [0.746, 0.794]);
 
   /* --- 7 · la llave ------------------------------------------------- */
 
-  LAYER = gRoom;
+  use("planta");
   var KX = PX + 475, KY = PY + 928;
   C(KX - 46, KY, 22, "k-accent", [0.868, 0.912]);
   C(KX - 46, KY, 10, "k-accent", [0.874, 0.918]);
@@ -1216,6 +1192,128 @@ window.__initB = function (A, panel) {
   L(KX - 46, KY - 22, KX - 22, KY - 52, "k-dim", [0.900, 0.940]);
   R(KX - 20, KY - 82, 200, 38, "k-dim", [0.904, 0.944]);
   T(KX - 8, KY - 57, "ALFONSO XII · 2ª", "t-tiny", [0.914, 0.952]);
+
+
+  /* --- 8 · situación: la manzana en Alfonso XII --------------------- */
+
+  use("situacion");
+  PRE = true;
+  T(0, 14, "SITUACIÓN · 1:2000", "t-tiny", [0.26, 0.72]);
+  /* dos calles, cada una con sus dos bordillos */
+  [92, 112].forEach(function (yy, i) {
+    L(0, yy, 560, yy, "k-dim", [0.34 + i * 0.05, 0.80 + i * 0.05]);
+  });
+  [176, 196].forEach(function (xx, i) {
+    L(xx, 28, xx, 176, "k-dim", [0.40 + i * 0.05, 0.86 + i * 0.05]);
+  });
+  [430, 450].forEach(function (xx, i) {
+    L(xx, 28, xx, 176, "k-dim", [0.44 + i * 0.05, 0.90 + i * 0.05]);
+  });
+  /* cinco manzanas; la nuestra, marcada */
+  var BLOCKS = [
+    [16, 32, 152, 56], [212, 32, 202, 56], [466, 32, 90, 56],
+    [16, 128, 152, 44], [212, 128, 202, 44], [466, 128, 90, 44]
+  ];
+  BLOCKS.forEach(function (b, i) {
+    R(b[0], b[1], b[2], b[3], "k-elev", winFor(0.36, 0.34, i, BLOCKS.length, 0.40));
+    for (var hh = 0; hh < 4; hh++) {
+      L(b[0] + 8 + hh * (b[2] - 16) / 4, b[1], b[0] + 8 + hh * (b[2] - 16) / 4, b[1] + b[3],
+        "k-soft", winFor(0.44, 0.30, (i * 4 + hh) % 11, 11, 0.40));
+    }
+  });
+  FILL("M256 32h64v56h-64Z", "k-fill-a", [0.58, 0.96]);
+  R(256, 32, 64, 56, "k-accent", [0.60, 0.98]);
+  L(288, 88, 288, 106, "k-accent", [0.66, 1.00]);
+  T(298, 106, "AQUÍ", "t-tiny", [0.70, 1.02]);
+  T(6, 108, "RÚA ALFONSO XII", "t-tiny", [0.56, 0.98]);
+  PRE = false;
+
+  /* --- 9 · cuadro de superficies ------------------------------------ */
+
+  use("tabla");
+  T(0, 16, "CUADRO DE SUPERFICIES", "t-tiny", [0.402, 0.452]);
+  L(0, 34, 470, 34, "k-dim", [0.406, 0.458]);
+  T(0, 56, "ESTANCIA", "t-tiny", [0.410, 0.462]);
+  T(470, 56, "ÚTIL m²", "t-tiny", [0.414, 0.466], null, { anchor: "end" });
+  L(0, 68, 470, 68, "k-dim", [0.418, 0.470]);
+  ROOMS.forEach(function (r, i) {
+    var w = winFor(0.424, 0.110, i, ROOMS.length, 0.05);
+    var ty = 94 + i * 25;
+    T(0, ty, r.n, "t-block", w);
+    T(470, ty, r.m, "t-area", [w[0] + 0.006, w[1] + 0.006], null, { anchor: "end" });
+    L(0, ty + 8, 470, ty + 8, "k-floor", [w[0] + 0.010, w[1] + 0.010]);
+  });
+  L(0, 296, 470, 296, "k-dim", [0.556, 0.606]);
+  T(0, 288, "TOTAL ÚTIL · 68,4 · CONSTRUIDO 82,0", "t-tiny", [0.560, 0.612]);
+
+  /* --- 10 · leyenda -------------------------------------------------- */
+
+  use("leyenda");
+  T(0, 16, "LEYENDA", "t-tiny", [0.586, 0.636]);
+  L(0, 30, 300, 30, "k-dim", [0.590, 0.640]);
+  var KEYS = [
+    ["MURO DE CARGA", "wall"],
+    ["TABIQUE", "part"],
+    ["ALICATADO", "hatch"],
+    ["HUECO DE PASO", "door"],
+    ["SOLADO EXTERIOR", "dots"]
+  ];
+  KEYS.forEach(function (row, i) {
+    var w = winFor(0.596, 0.100, i, KEYS.length, 0.05);
+    var ky = 58 + i * 40;
+    if (row[1] === "wall") {
+      L(0, ky - 5, 54, ky - 5, "k-wall", w);
+      L(0, ky + 5, 54, ky + 5, "k-wall", [w[0] + 0.004, w[1] + 0.004]);
+    } else if (row[1] === "part") {
+      L(0, ky - 3, 54, ky - 3, "k-part", w);
+      L(0, ky + 3, 54, ky + 3, "k-part", [w[0] + 0.004, w[1] + 0.004]);
+    } else if (row[1] === "hatch") {
+      for (var hk = 0; hk < 4; hk++) {
+        L(hk * 14, ky + 10, hk * 14 + 20, ky - 10, "k-floor",
+          [w[0] + hk * 0.004, w[1] + hk * 0.004]);
+      }
+    } else if (row[1] === "door") {
+      L(0, ky + 8, 0, ky - 8, "k-jamb", w);
+      L(54, ky + 8, 54, ky - 8, "k-jamb", [w[0] + 0.004, w[1] + 0.004]);
+      ARC(0, ky + 8, 40, -1.5708, 0, "k-door", [w[0] + 0.008, w[1] + 0.008]);
+    } else {
+      for (var dk = 0; dk < 10; dk++) {
+        C((dk % 5) * 13, ky - 6 + ((dk / 5) | 0) * 13, 2.4, "k-soft",
+          [w[0] + dk * 0.003, w[1] + dk * 0.003]);
+      }
+    }
+    T(70, ky + 4, row[0], "t-tiny", [w[0] + 0.012, w[1] + 0.012]);
+  });
+
+  /* --- 11 · detalle de carpintería 1:20 ------------------------------ */
+
+  use("detalle");
+  T(0, 16, "DETALLE · CARPINTERÍA 1:20", "t-tiny", [0.648, 0.698]);
+  /* dos jambas de muro, con su alicatado a 45° */
+  [[10, 44, 58, 150], [262, 44, 58, 150]].forEach(function (jb, ji) {
+    R(jb[0], jb[1], jb[2], jb[3], "k-wall", [0.652 + ji * 0.006, 0.704 + ji * 0.006]);
+    for (var jh = 0; jh < 7; jh++) {
+      var jy = jb[1] + jh * 24;
+      L(jb[0], Math.min(jy + 24, jb[1] + jb[3]), Math.min(jb[0] + 24, jb[0] + jb[2]), jy,
+        "k-floor", winFor(0.658 + ji * 0.006, 0.040, jh, 7, 0.05));
+    }
+  });
+  /* el marco, el vidrio doble y la hoja */
+  R(68, 66, 32, 106, "k-part", [0.672, 0.722]);
+  R(230, 66, 32, 106, "k-part", [0.674, 0.724]);
+  L(100, 104, 230, 104, "k-elev", [0.680, 0.730]);
+  L(100, 116, 230, 116, "k-elev", [0.684, 0.734]);
+  L(100, 88, 230, 88, "k-soft", [0.688, 0.738]);
+  L(100, 132, 230, 132, "k-soft", [0.690, 0.740]);
+  /* vierteaguas y goterón */
+  L(60, 194, 270, 194, "k-elev", [0.694, 0.744]);
+  L(60, 202, 270, 202, "k-elev", [0.696, 0.746]);
+  L(266, 202, 258, 212, "k-soft", [0.700, 0.750]);
+  /* la cota del hueco */
+  L(68, 232, 68, 246, "k-dim", [0.706, 0.752]);
+  L(262, 232, 262, 246, "k-dim", [0.706, 0.752]);
+  L(68, 240, 262, 240, "k-dim", [0.710, 0.756]);
+  T(165, 228, "1,60", "t-dim", [0.716, 0.762], null, { anchor: "middle" });
 
   /* ---- the copy ----------------------------------------------------- */
 
@@ -1247,7 +1345,6 @@ window.__initB = function (A, panel) {
   var ins = [0, 1, 2, 3, 4].map(function (n) { return panel.querySelector(".af-in-" + n); });
   var roomRows = panel.querySelectorAll(".af-room");
   var svcRows = panel.querySelectorAll(".af-svc");
-  var chips = panel.querySelectorAll(".af-chip");
   var meter = panel.querySelector("[data-af-meter]");
   var cue = panel.querySelector(".af-cue");
   var nameChars = splitChars(panel.querySelector(".af-name"));
@@ -1274,34 +1371,87 @@ window.__initB = function (A, panel) {
     buildGrid(W, H);
   }
 
+  function place(id, x, y, w, h) {
+    var c = CL[id];
+    c.s = Math.min(w / c.w, h / c.h);
+    c.x = x + (w - c.w * c.s) / 2;
+    c.y = y + (h - c.h * c.s) / 2;
+    c.on = true;
+  }
+
   function frame(p) {
-    /* The sheet barely moves: a slow drift and a small push-in, so the
-       attention stays on the marks arriving rather than on a camera. */
+    /* Ten drawings, laid out against the viewport — not one sheet
+       scaled into a corner. The copy owns a lane; every cluster is
+       placed outside it, and the bottom row is distributed across
+       whatever is left, so nothing can land on the type. */
     var drift = seg(p, 0.10, 0.95);
+    var i, id;
+    for (i = 0; i < ORDER.length; i++) CL[ORDER[i]].on = false;
+
     if (portrait) {
-      /* portrait keeps the cotas on the sheet and the rail clear of the
-         overall dimension: the drawing is cropped, never clipped. */
-      scale = (W * 1.02) / (PW + 320);
-      view.s = scale * mix(1, 1.05, drift);
-      view.x = W * 0.03 - (PX - 130) * view.s;
-      view.y = 118 - (PY - 130) * view.s + mix(0, -28, drift);
+      var pad = Math.max(16, W * 0.045);
+      var inner = W - pad * 2;
+      place("situacion", pad, 88, inner * 0.56, 62);
+      place("norte", pad + inner * 0.62, 92, inner * 0.38, 54);
+      place("planta", pad, 158, inner, H * 0.255);
+      var third = (inner - 20) / 3;
+      var elevY = 158 + H * 0.255 + 14;
+      place("fachada", pad, elevY, third, 78);
+      place("seccion", pad + third + 10, elevY, third, 78);
+      place("patioalz", pad + (third + 10) * 2, elevY, third, 78);
     } else {
-      scale = Math.min((W * 0.585) / SHEET_W, (H * 0.86) / SHEET_H);
-      view.s = scale * mix(1, 1.035, drift);
-      view.x = W * 0.395 - mix(0, 14, drift);
-      view.y = (H - SHEET_H * view.s) / 2 + mix(10, -10, drift);
+      var laneL = Math.min(82, Math.max(20, W * 0.05));
+      var laneR = laneL + Math.min(W * 0.35, 430);
+      var gap = W * 0.026;
+      var colX = laneR + gap;
+      var elevW = W * 0.132;
+      var elevX = W - Math.max(20, W * 0.03) - elevW;
+
+      /* clear of the fixed rail, which owns the top 72px */
+      place("situacion", laneL, 84, laneR - laneL, H * 0.112);
+      place("norte", colX, 88, W * 0.185, H * 0.092);
+      place("planta", colX, H * 0.200, elevX - gap - colX, H * 0.520);
+      place("fachada", elevX, H * 0.195, elevW, H * 0.150);
+      place("seccion", elevX, H * 0.372, elevW, H * 0.132);
+      place("patioalz", elevX, H * 0.530, elevW, H * 0.132);
+
+      /* the bottom row: the table sits under the copy lane, the other
+         three share what is left, evenly */
+      place("tabla", laneL, H * 0.775, laneR - laneL, H * 0.185);
+      var restL = colX, restR = W - Math.max(20, W * 0.03);
+      var cw = (restR - restL - gap * 2) / 3;
+      place("leyenda", restL, H * 0.775, cw, H * 0.165);
+      place("detalle", restL + cw + gap, H * 0.772, cw, H * 0.172);
+      place("cajetin", restL + (cw + gap) * 2, H * 0.790, cw, H * 0.135);
     }
-    gPlan.setAttribute("transform",
-      "translate(" + view.x.toFixed(1) + " " + view.y.toFixed(1) + ") scale(" + view.s.toFixed(4) + ")");
-    /* the three layers slide past each other by a few units */
-    gElev.setAttribute("transform", "translate(0 " + (-38 * drift).toFixed(1) + ")");
-    gBlock.setAttribute("transform", "translate(" + (-16 * drift).toFixed(1) + " 0)");
+
+    for (i = 0; i < ORDER.length; i++) {
+      id = ORDER[i];
+      var c = CL[id];
+      if (!c.on) {
+        if (c.op !== 0) { c.g.setAttribute("opacity", "0"); c.op = 0; }
+        continue;
+      }
+      /* each drawing drifts on its own vector, so the page never moves
+         as one block */
+      var tx = c.x + c.dx * drift, ty = c.y + c.dy * drift;
+      c.g.setAttribute("transform",
+        "translate(" + tx.toFixed(1) + " " + ty.toFixed(1) + ") scale(" + c.s.toFixed(4) + ")");
+      var u = 1 / c.s;
+      if (Math.abs(u - c.u) > 0.003) {
+        c.g.style.setProperty("--af-u", u.toFixed(3));
+        c.u = u;
+      }
+      /* and each has its moment: the one being talked about is at full
+         ink, the rest sit back a little */
+      var f = Math.min(span(p, c.fa - 0.06, c.fa), 1 - span(p, c.fb, c.fb + 0.06));
+      var op = mix(0.52, 1, ease(clamp(f, 0, 1)));
+      if (Math.abs(op - c.op) > 0.004) {
+        c.g.setAttribute("opacity", op.toFixed(3));
+        c.op = op;
+      }
+    }
     gGrid.setAttribute("transform", "translate(0 " + (14 * drift).toFixed(1) + ")");
-    var u = 1 / view.s;
-    if (Math.abs(u - lastU) > 0.002) {
-      svg.style.setProperty("--af-u", u.toFixed(3));
-      lastU = u;
-    }
   }
 
   measure();
@@ -1378,14 +1528,6 @@ window.__initB = function (A, panel) {
       svcRows[i].style.opacity = vt.toFixed(3);
       svcRows[i].style.transform = "translateY(" + mix(14, 0, vt).toFixed(1) + "px)";
     }
-    for (i = 0; i < chips.length; i++) {
-      var pt = seg(p, 0.596 + i * 0.018, 0.652 + i * 0.018) *
-        (1 - span(p, 0.828, 0.876));
-      chips[i].style.opacity = pt.toFixed(3);
-      chips[i].style.transform =
-        "translateY(" + mix(10, 0, pt).toFixed(1) + "px) scale(" + mix(0.94, 1, pt).toFixed(3) + ")";
-    }
-
     if (meter) {
       var mt = seg(p, 0.200, 0.700);
       var rooms = Math.min(8, Math.round(seg(p, 0.360, 0.560) * 8));
