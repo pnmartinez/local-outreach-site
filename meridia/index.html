@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MERIDIA — Inmobiliaria de autor</title>
+<meta name="description" content="Meridia. No vendemos metros cuadrados: acompañamos el viaje desde el solar hasta la llave." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,900&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="./assets/index-IrLTcsZ5.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CdiW4jpG.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%2314181a%22%2F%3E%3Cpath%20d%3D%22M7%2014.5%2016%207l9%207.5%22%20fill%3D%22none%22%20stroke%3D%22%23e3e6e1%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M10%2015v10h12V15%22%20fill%3D%22none%22%20stroke%3D%22%23e3e6e1%22%20stroke-width%3D%222.2%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M14.6%2025v-5.4h2.8V25%22%20fill%3D%22none%22%20stroke%3D%22%23b4532a%22%20stroke-width%3D%222.2%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+</head>
+<body>
+
+<!-- ══════════ PRELOADER ══════════ -->
+<div class="preloader" id="preloader">
+  <div class="pre__grid" aria-hidden="true"></div>
+  <svg class="pre__mark" viewBox="0 0 120 120" fill="none">
+    <path class="pm" d="M20 96 L20 52 L60 22 L100 52 L100 96" stroke="currentColor" stroke-width="1.5"/>
+    <path class="pm" d="M8 58 L60 18 L112 58" stroke="currentColor" stroke-width="1.5"/>
+    <path class="pm" d="M46 96 L46 68 L74 68 L74 96" stroke="currentColor" stroke-width="1.5"/>
+    <circle class="pm" cx="60" cy="46" r="6" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+  <div class="pre__meta">
+    <span class="pre__label">Levantando estructura</span>
+    <span class="pre__count" id="preCount">00</span>
+  </div>
+  <div class="pre__bar"><i id="preBar"></i></div>
+</div>
+
+<!-- ══════════ CURSOR ══════════ -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span><span class="cursor__label"></span></div>
+
+<!-- ══════════ CANVAS 3D FIJO ══════════ -->
+<div class="stage" id="stage" aria-hidden="true">
+  <canvas id="gl"></canvas>
+  <div class="stage__vignette"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ══════════ HUD ══════════ -->
+<header class="hud">
+  <a class="hud__brand" href="#top" data-cursor="Inicio">
+    <svg viewBox="0 0 40 40" fill="none" class="hud__logo"><path d="M6 32V18L20 8l14 10v14" stroke="currentColor" stroke-width="1.6"/><path d="M15 32v-9h10v9" stroke="currentColor" stroke-width="1.6"/></svg>
+    <span>MERIDIA</span>
+  </a>
+  <nav class="hud__nav" id="hudNav">
+    <a href="#acto2" data-idx="01">Terreno</a>
+    <a href="#acto3" data-idx="02">Plano</a>
+    <a href="#acto4" data-idx="03">Obra</a>
+    <a href="#acto6" data-idx="04">Estancias</a>
+    <a href="#acto8" data-idx="05">Catálogo</a>
+  </nav>
+  <a href="#contacto" class="hud__cta" data-magnetic data-cursor="Escríbenos"><span>Hablemos</span></a>
+</header>
+
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+<div class="chapter" id="chapter" aria-hidden="true"><span class="chapter__n">I</span><span class="chapter__t">El horizonte</span></div>
+
+<main id="top">
+
+<!-- ══════════ ACTO I · HERO ══════════ -->
+<section class="sec sec--hero" id="acto1" data-chapter="I" data-title="El horizonte">
+  <div class="hero">
+    <p class="hero__kicker" data-reveal>Inmobiliaria de autor · Rías Baixas, desde 1998</p>
+    <h1 class="hero__title">
+      <span class="line"><span class="w" data-split>Un</span> <span class="w" data-split>lugar</span></span>
+      <span class="line"><span class="w" data-split>antes</span> <span class="w it" data-split>de</span> <span class="w" data-split>ser</span></span>
+      <span class="line"><span class="w hl" data-split>casa.</span></span>
+    </h1>
+    <div class="hero__foot">
+      <p class="hero__lead" data-reveal>Te enseñamos el recorrido completo: el solar, la línea, la luz que entra a las 18:40 en marzo, y la llave en la mano. Baja y hazlo tú.</p>
+      <div class="hero__scroll" data-reveal><span class="hero__scrollline"></span> desplaza para construir</div>
+    </div>
+  </div>
+  <ul class="hero__stats">
+    <li><b data-count="412">0</b><span>viviendas entregadas</span></li>
+    <li><b data-count="28">0</b><span>años en la ría</span></li>
+    <li><b data-count="96" data-suffix="%">0</b><span>clientes que repiten</span></li>
+  </ul>
+</section>
+
+<!-- ══════════ ACTO II · EL TERRENO ══════════ -->
+<section class="sec sec--tall" id="acto2" data-chapter="II" data-title="El terreno">
+  <div class="pin-copy">
+    <span class="tag">Acto II</span>
+    <h2 class="h2" data-reveal-lines>Toda casa<br>empieza siendo<br><em>un solar.</em></h2>
+    <p class="p" data-reveal>Sobrevolamos 340 parcelas al año. Medimos orientación, pendiente, servidumbres y el ruido a las siete de la mañana. Solo una de cada nueve llega a nuestro catálogo.</p>
+    <dl class="specs" data-stagger>
+      <div><dt>Referencia</dt><dd>36038A·074·00219</dd></div>
+      <div><dt>Superficie</dt><dd>1.240 m²</dd></div>
+      <div><dt>Orientación</dt><dd>Sur — 14° O</dd></div>
+      <div><dt>Pendiente</dt><dd>6,2 %</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ══════════ ACTO III · EL PLANO ══════════ -->
+<section class="sec sec--plano" id="acto3" data-chapter="III" data-title="El plano">
+  <div class="plano__wrap">
+    <div class="plano__copy">
+      <span class="tag">Acto III</span>
+      <h2 class="h2" data-reveal-lines>Después,<br>una <em>línea.</em></h2>
+      <p class="p" data-reveal>El plano no es un trámite: es la primera vez que la casa existe. Dibujamos cada estancia contigo antes de que nadie levante un muro.</p>
+    </div>
+    <div class="plano__draw">
+      <svg viewBox="-16 -12 654 496" class="bp" id="blueprint" fill="none" stroke-linecap="square">
+        <g class="bp__grid" stroke="currentColor" stroke-width=".5" opacity=".18"></g>
+        <g class="bp__walls" stroke="currentColor" stroke-width="3">
+          <path d="M60 60 H560 V400 H60 Z"/>
+          <path d="M300 60 V250"/>
+          <path d="M300 250 H560"/>
+          <path d="M170 250 V400"/>
+          <path d="M60 250 H170"/>
+          <path d="M430 250 V400"/>
+        </g>
+        <g class="bp__thin" stroke="currentColor" stroke-width="1.4">
+          <path d="M300 108 v54"/><path d="M300 108 a54 54 0 0 1 54 54"/>
+          <path d="M170 320 v-46"/><path d="M170 320 a46 46 0 0 0 46 -46"/>
+          <path d="M92 60 v34 M140 60 v34"/>
+          <path d="M560 140 h-34 M560 196 h-34"/>
+          <rect x="360" y="300" width="60" height="70" rx="3"/>
+          <circle cx="500" cy="330" r="26"/>
+          <path d="M480 372 h40"/>
+          <path d="M96 300 h48 v70 h-48 Z"/>
+        </g>
+        <g class="bp__dims" stroke="currentColor" stroke-width=".9" opacity=".65">
+          <path d="M60 34 H560"/><path d="M60 28 v12 M560 28 v12"/>
+          <path d="M586 60 V400"/><path d="M580 60 h12 M580 400 h12"/>
+        </g>
+        <g class="bp__labels">
+          <text x="180" y="150" class="bp__t">SALÓN · 34 m²</text>
+          <text x="418" y="150" class="bp__t">COCINA · 18 m²</text>
+          <text x="200" y="330" class="bp__t">DORM. 1 · 16 m²</text>
+          <text x="452" y="292" class="bp__t">BAÑO</text>
+          <text x="300" y="24" class="bp__t bp__t--dim">12,40 m</text>
+        </g>
+      </svg>
+      <div class="plano__legend" data-stagger>
+        <span><i></i>Muro de carga</span><span><i class="b"></i>Tabiquería</span><span><i class="c"></i>Cota</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ACTO IV · LA OBRA ══════════ -->
+<section class="sec sec--tall sec--obra" id="acto4" data-chapter="IV" data-title="La obra">
+  <div class="pin-copy pin-copy--right">
+    <span class="tag">Acto IV</span>
+    <h2 class="h2" data-reveal-lines>Y entonces,<br><em>pieza a pieza.</em></h2>
+    <p class="p" data-reveal>Zapatas, forjado, pilares, jácenas, cerramiento, carpintería, cubierta y revoco. Sigue bajando: la casa se levanta al ritmo de tu scroll.</p>
+    <ol class="build" id="buildList">
+      <li data-step="0"><span>01</span> Cimentación</li>
+      <li data-step="1"><span>02</span> Forjado sanitario</li>
+      <li data-step="2"><span>03</span> Pilares y jácenas</li>
+      <li data-step="3"><span>04</span> Cerramiento</li>
+      <li data-step="4"><span>05</span> Carpintería</li>
+      <li data-step="5"><span>06</span> Cubierta y teja</li>
+      <li data-step="6"><span>07</span> Revoco y remates</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════ ACTO V · LA LUZ ══════════ -->
+<section class="sec sec--tall sec--luz" id="acto5" data-chapter="V" data-title="La luz">
+  <div class="pin-copy pin-copy--luz">
+    <div class="luz__top">
+      <span class="tag">Acto V</span>
+      <h2 class="h2 h2--big" data-reveal-lines>La luz de las<br><em>18:40</em></h2>
+    </div>
+    <div class="luz__bot">
+      <p class="p" data-reveal>Simulamos un año entero de sol sobre cada vivienda. Aquí tienes un día: del café de la mañana a la última luz sobre la ría. Mueve el scroll y mira cómo cambia la casa.</p>
+      <div class="clock" id="clock"><b>11:00</b><span class="clock__bar"><i id="clockFill"></i></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ACTO VI · ESTANCIAS (horizontal) ══════════ -->
+<section class="sec sec--rooms" id="acto6" data-chapter="VI" data-title="Las estancias">
+  <div class="rooms" id="rooms">
+    <div class="rooms__track" id="roomsTrack">
+      <article class="room room--intro">
+        <span class="tag">Acto VI</span>
+        <h2 class="h2" data-reveal-lines>Ahora<br>se <em>habita.</em></h2>
+        <p class="p">Seis estancias dibujadas a mano. Arrastra o sigue bajando.</p>
+        <span class="room__hint">→</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ACTO VII · NÚMEROS ══════════ -->
+<section class="sec sec--data" id="acto7" data-chapter="VII" data-title="Los números">
+  <div class="data__head">
+    <div>
+      <span class="tag">Acto VII</span>
+      <h2 class="h2" data-reveal-lines>Lo que no<br>se ve en la <em>foto.</em></h2>
+    </div>
+    <p class="p" data-reveal>Precio por m² en la comarca, revalorización a 10 años y el dato incómodo: cuánto tardamos de verdad en vender. Los mismos números que enseñamos en la primera visita.</p>
+  </div>
+  <div class="data__grid">
+    <figure class="card card--chart">
+      <figcaption>Precio medio · €/m² · Ría de Pontevedra</figcaption>
+      <svg viewBox="0 0 640 260" class="chart" id="chart" fill="none">
+        <g class="chart__grid" stroke="currentColor" opacity=".14" stroke-width=".8"></g>
+        <path class="chart__area" id="chartArea" fill="url(#gA)"/>
+        <path class="chart__line" id="chartLine" stroke="currentColor" stroke-width="2.4"/>
+        <g class="chart__dots" id="chartDots"></g>
+        <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--accent)" stop-opacity=".38"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/>
+        </linearGradient></defs>
+      </svg>
+      <div class="chart__x" id="chartX"></div>
+    </figure>
+    <div class="data__kpis">
+      <div class="kpi"><b data-count="2840" data-prefix="" data-suffix=" €">0</b><span>por m² construido, media 2026</span></div>
+      <div class="kpi"><b data-count="41" data-suffix=" días">0</b><span>tiempo medio hasta señal</span></div>
+      <div class="kpi"><b data-count="67" data-suffix=" %">0</b><span>revalorización a 10 años</span></div>
+      <div class="kpi"><b data-count="340" data-suffix="">0</b><span>parcelas visitadas al año</span></div>
+      <div class="kpi kpi--wide"><b data-count="9" data-suffix=" de 10">0</b><span>visitas nuestras acaban con informe técnico, tasación y plan de reforma en 72 h</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MARQUEE ══════════ -->
+<div class="marquee" aria-hidden="true"><div class="marquee__in" id="marquee"></div></div>
+
+<!-- ══════════ ACTO VIII · CATÁLOGO ══════════ -->
+<section class="sec sec--cat" id="acto8" data-chapter="VIII" data-title="El catálogo">
+  <div class="cat__head">
+    <span class="tag">Acto VIII</span>
+    <h2 class="h2" data-reveal-lines>Tres llaves<br><em>disponibles.</em></h2>
+  </div>
+  <div class="cat__grid" id="catGrid"></div>
+</section>
+
+<!-- ══════════ CONTACTO ══════════ -->
+<section class="sec sec--end" id="contacto" data-chapter="IX" data-title="La llave">
+  <div class="end">
+    <p class="tag">Acto IX · La llave</p>
+    <h2 class="end__title"><span class="w" data-split>Hablemos</span> <span class="w it" data-split>de</span> <span class="w" data-split>tu</span> <span class="w hl" data-split>sitio.</span></h2>
+    <form class="end__form" id="endForm" novalidate>
+      <label><span>Cómo te llamas</span><input type="text" name="nombre" placeholder="Nombre y apellidos" autocomplete="name"></label>
+      <label><span>Dónde te escribimos</span><input type="email" name="email" placeholder="tu@correo.com" autocomplete="email"></label>
+      <button type="submit" data-magnetic data-cursor="Enviar"><span>Empezar el viaje</span><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <p class="end__ok" id="endOk" hidden>Recibido. Te llamamos en menos de 24 h.</p>
+    </form>
+  </div>
+  <footer class="foot">
+    <div><b>MERIDIA</b><span>Rúa da Barca 14 · Pontevedra</span></div>
+    <div><span>+34 986 000 000</span><span>hola@meridia.gal</span></div>
+    <div class="foot__note">Demo de showcase · animación web 2026 · anime.js v4 · GSAP · Three.js · Lenis</div>
+  </footer>
+</section>
+
+</main>
+</body>
+</html>

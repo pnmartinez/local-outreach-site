@@ -1,0 +1,22 @@
+{
+  "category": "logopeda",
+  "seed": "trabalinguas-v1",
+  "motion": "animejs",
+  "mode": "fonema",
+  "layout": "cuadro",
+  "display": "Bricolage Grotesque",
+  "body": "Inter Tight",
+  "radius": "14px",
+  "density": "compact",
+  "nav": "split",
+  "palette": {
+    "bg": "#f2f2ee",
+    "ink": "#15191b",
+    "muted": "#6b7273",
+    "accent": "#0f7b78",
+    "accent2": "#a8492c",
+    "line": "#d7d8d2",
+    "photo": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "logopeda|animejs|fonema|cuadro|Bricolage Grotesque|Inter Tight|14px|compact|split"
+}

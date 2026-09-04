@@ -1,0 +1,22 @@
+{
+  "category": "inmobiliaria",
+  "seed": "meridia-v1",
+  "motion": "hero:meridia",
+  "mode": "catastro",
+  "layout": "hero",
+  "display": "Fraunces",
+  "body": "Inter Tight",
+  "radius": "14px",
+  "density": "regular",
+  "nav": "overlay",
+  "palette": {
+    "bg": "#eceee9",
+    "ink": "#14181a",
+    "muted": "#697370",
+    "accent": "#b4532a",
+    "accent2": "#3d5a52",
+    "line": "#d4d8d2",
+    "photo": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "inmobiliaria|hero:meridia|catastro|hero|Fraunces|Inter Tight|14px|regular|overlay"
+}
