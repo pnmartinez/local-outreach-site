@@ -1,0 +1,22 @@
+{
+  "category": "veterinario",
+  "seed": "loureiro-crespo-v1",
+  "motion": "hero:clinica-veterinaria-loureiro-crespo",
+  "mode": "apothecary",
+  "layout": "hero",
+  "display": "Fraunces",
+  "body": "Sora",
+  "radius": "14px",
+  "density": "compact",
+  "nav": "top",
+  "palette": {
+    "bg": "#f6f0e6",
+    "ink": "#1c2a22",
+    "muted": "#6b6256",
+    "accent": "#c45c26",
+    "accent2": "#2f4a3a",
+    "line": "#ddd2c0",
+    "photo": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1600&q=80"
+  },
+  "signature": "veterinario|hero:clinica-veterinaria-loureiro-crespo|apothecary|hero|Fraunces|Sora|14px|compact|top"
+}
